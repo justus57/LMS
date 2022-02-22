@@ -1,0 +1,620 @@
+﻿@model LMS.Models.LeaveRecallApplication
+
+@{
+    ViewBag.Title = "LeaveRecallApplication";
+}
+
+<main id="main" class="main">
+
+    <div ID="NavbarContent" runat="server">
+        <!-- #Include virtual="includes/Navbar.aspx" -->
+    </div>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <!-- #Include virtual="includes/Sidebar.aspx" -->
+
+        <div id="content-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">Leave Recalls</li>
+                    <li class="breadcrumb-item active">Leave Recall Application</li>
+                </ol>
+
+                <!-- Leave-->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-folder"></i>
+                        Leave Recall Application
+                    </div>
+                    <form  novalidate="" action="#" method="POST" id="LeaveRecallApplicationForm" autocomplete="off">
+                        <div class="card-body">
+                            <div class="row mb-5">
+                                <div class="col-md-4 mb-4">
+                                    <div>Leave Information</div>
+                                    <div class="text-muted small">Shows information for specific leaves</div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="Leave_Type" class="form-control-label">Leave Type</label>
+                                                @Html.DropDownListFor(m => m.Leave_Type, new SelectList(Enum.GetValues(typeof(Leave))),
+                                           new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.Leave_Type, "", new { @class = "" })
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The leave type must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Leave Opening Balance</label>
+                                                @Html.TextBoxFor(model => model.Leave_Opening_Balance, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(model => model.Leave_Opening_Balance, "", new { @class = "" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Leave Entitled</label>
+                                                @Html.TextBoxFor(model => model.Leave_Entitled, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(model => model.Leave_Entitled, "", new { @class = "" })
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Leave Accrued Days </label>
+                                                @Html.TextBoxFor(model => model.Leave_Accrued_Days, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(model => model.Leave_Accrued_Days, "", new { @class = "" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Leave Days Taken</label>
+                                                @Html.TextBoxFor(model => model.Leave_Days_Taken, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(model => model.Leave_Days_Taken, "", new { @class = "" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Leave Balance</label>
+                                                @Html.TextBoxFor(model => model.Leave_Balance, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(model => model.Leave_Balance, "", new { @class = "" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--Work information-->
+                            <hr>
+                            <div class="row mb-5">
+                                <div class="col-md-4 mb-4">
+                                    <div>Leave Selection</div>
+                                    <div class="text-muted small">Select the leave start and end dates here.</div>
+                                </div>
+
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="ApprovedLeave" class="form-control-label">Approved Leave</label>
+                                                <asp:DropDownList CssClass="form-control" ID="ApprovedLeave" runat="server" required="true" style="width:100%"> </asp:DropDownList>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The leave must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="LeaveStartDay">Leave Recall Start Date</label>
+                                                @Html.TextBoxFor(model => model.LeaveStartDay, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.LeaveStartDay, "", new { @class = "" })
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The leave recall start date must be selected</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="LeaveEndDay">Leave Recall End Date</label>
+                                                @Html.TextBoxFor(model => model.LeaveEndDay, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.LeaveEndDay, "", new { @class = "" })
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The leave recall end date must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="LeaveDaysApplied">Leave Recall Days Applied</label>
+                                                @Html.TextBoxFor(model => model.LeaveDaysApplied, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.LeaveDaysApplied, "", new { @class = "" })
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The leave recall days applied must be specified</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Leave Return Date</label>
+                                                @Html.TextBoxFor(model => model.ReturnDate, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.ReturnDate, "", new { @class = "" })
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The leave return date must be specified</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Comments if any</label>
+                                                @Html.TextBoxFor(model => model.Leave_comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3" })
+                                                @Html.ValidationMessageFor(model => model.Leave_comments, "", new { @class = "" })
+                                                <p class="pull-right text-muted small" id="count_message"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light text-right">
+                            <button id="Save" class="btn btn-primary">Save</button>
+                            <button id="Submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </form>
+
+                    <div class="card-footer small text-muted">Updated today at   @DateTime.Now.ToShortTimeString() </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Bootstrap core JavaScript-->
+<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+<script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template-->
+<link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+<!-- Page level plugin CSS-->
+<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+<!-- Custom styles for this template-->
+
+<link href="~/Assest/css/select2.min.css" rel="stylesheet" />
+<!--jQUERY date picker--->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- Core plugin JavaScript-->
+<script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="~/Assest/js/sb-admin.min.js"></script>
+<script src="~/Assest/js/bootbox.min.js"></script>
+<script src="~/Assest/js/bootboxError.js"></script>
+<!-- JQUERY DATEPICKER-->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="~/Assest/js/select2.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    var jQuery_3_3_1 = $.noConflict(true);
+</script>
+<script src="~/Assest/js/jquery.toast.js"></script>
+<script>
+    $(document).ready(function () {
+        // $('#Leave_Type').append('<option value="foo" selected="selected">Foo</option>');
+        $("#LeaveStartDay").datepicker({ dateFormat: 'dd/mm/yy' }).val();
+        $("#LeaveEndDay").datepicker({ dateFormat: 'dd/mm/yy' }).val();
+        $('#ApprovedLeave').select2({
+            sorter: function (data) {
+                return data.sort(function (a, b) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                });
+            }
+        });
+        $('#Leave_Type').select2({
+            sorter: function (data) {
+                return data.sort(function (a, b) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                });
+            }
+        });
+        $(".MultiLineLimit").on('change keydown paste input', function () {
+            this.value = (this.value.length <= 50 ? this.value : this.value.substring(0, 50));
+        });
+        var text_max = 50;
+        $('#count_message').html(text_max + ' remaining');
+
+        $('#Leave_comments').keyup(function () {
+            var text_length = $('#Leave_comments').val().length;
+            var text_remaining = text_max - text_length;
+
+            $('#count_message').html(text_remaining + ' remaining');
+        });
+    });
+    $("#Leave_Type").change(function () {
+        //selection fields
+        $('#ReturnDate').val('');
+        //$('#Leave_Type').val();//combo
+        $('#Leave_comments').val('');
+        $('#LeaveStartDay').val('');
+        $('#LeaveEndDay').val('');
+        $('#LeaveDaysApplied').val('');
+        //leave details
+        $('#Leave_Opening_Balance').val('');
+        $('#Leave_Entitled').val('');
+        $('#Leave_Accrued_Days').val('');
+        $('#Leave_Days_Taken').val('');
+        $('#Leave_Balance').val('');
+
+        jQuery.ajax({
+            url: '/LeaveApplication/GetLeaveDetails',
+            type: "POST",
+            data: '{param1:"' + $('#Leave_Type').val() + '" }',
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+
+                if (response != null && response.d != null) {
+                    var data = response.d;
+                    // alert(typeof (data)); //it comes out to be string
+                    //we need to parse it to JSON
+                    data = $.parseJSON(data);
+
+                    //set fields values
+                    $('#Leave_Opening_Balance').val(data.OpeningBalance);
+                    $('#Leave_Entitled').val(data.EntitledDays);
+                    $('#Leave_Accrued_Days').val(data.Accrued);
+                    $('#Leave_Days_Taken').val(data.LeaveTaken);
+                    $('#Leave_Balance').val(data.Remaining);
+
+                    GetApprovedLeavesList($('#Leave_Type').val());
+                }
+            }
+        });
+    });
+    $("#ApprovedLeave").change(function () {
+        //selection fields
+        $('#ReturnDate').val('');
+        //$('#Leave_Type').val();//combo
+        $('#Leave_comments').val('');
+        $('#LeaveStartDay').val('');
+        $('#LeaveEndDay').val('');
+        $('#LeaveDaysApplied').val('');
+
+        jQuery.ajax({
+            url: '/LeaveRecallApplication/ApprovedLeaveDetails',
+            type: "POST",
+            data: '{param1:"' + $('#ApprovedLeave').val() + '" }',
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+
+                if (response != null && response.d != null) {
+                    var data = response.d;
+                    // alert(typeof (data)); //it comes out to be string
+                    //we need to parse it to JSON
+                    data = $.parseJSON(data);
+
+                    //set fields values
+                    $('#LeaveEndDay').val(data.EndDate);
+                    $('#LeaveDaysApplied').val(data.Quantity);
+                    $('#ReturnDate').val(data.ReturnDate);
+                    $('#LeaveStartDay').val(data.StartDate);
+                }
+            }
+        });
+    });
+    $("#LeaveStartDay").change(function () {
+        //when the date is changed
+        if ($("#Leave_Type").val() == "0") {
+            //alert user to select a leave type first
+            bootbox.alert("Please select a Leave Type", function () {
+                //set leave start date value to blank
+                $("#LeaveStartDay").val('');
+            });
+        }
+        //reset selection fields
+        if ($("#LeaveEndDay").val() != '') {
+            $("#LeaveEndDay").val('');
+        }
+        if ($("#LeaveDaysApplied").val() != '') {
+            $("#LeaveDaysApplied").val('');
+        }
+        if ($("#ReturnDate").val() != '') {
+            $("#ReturnDate").val('');
+        }
+    });
+    $("#LeaveEndDay").change(function () {
+        //when the date is changed
+        if ($("#Leave_Type").val() == "0") {
+            //alert user to select a leave type first
+            bootbox.alert("Please select a Leave Type", function () {
+                //set leave staEndrt date value to blank
+                $("#LeaveEndDay").val('');
+            });
+
+        } else if ($("#LeaveStartDay").val() == '') {
+            bootbox.alert("Please enter the Leave Start Date");
+        } else if ($("#LeaveEndDay").val() == '') {
+            bootbox.alert("Please enter the Leave End Date");
+        } else {
+            var start_date = convertDate($("#LeaveStartDay").val(), "/", "-");
+            var end_date = convertDate($("#LeaveEndDay").val(), "/", "-");
+
+            var startDate = new Date(start_date);
+            var endDate = new Date(end_date);
+
+            if (startDate <= endDate) {
+                jQuery.ajax({
+                    url: '/LeaveApplication/GetLeaveState',
+                    type: "POST",
+                    data: '{param1:"' + $('#Leave_Type').val() + '",param2:"' + $('#LeaveStartDay').val() + '", param3:"' + $('#LeaveEndDay').val() + '"}',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
+
+                        if (response != null && response.d != null) {
+                            var data = response.d;
+                            // alert(typeof (data)); //it comes out to be string
+                            //we need to parse it to JSON
+                            data = $.parseJSON(data);
+
+                            if (data.Validity == false) {
+                                bootbox.alert(data.Message);
+                            } else {
+                                $("#ReturnDate").val(data.ReturnDate);
+                                $("#LeaveDaysApplied").val(data.Quantity);
+                            }
+                        }
+                    }
+                });
+
+            } else {
+                bootbox.alert("The Leave Start Date must be earlier than the End Date", function () {
+                    $("#ReturnDate").val('');
+                    $("#LeaveDaysApplied").val('');
+                    $("#LeaveEndDay").val('');
+                });
+            }
+        }
+    });
+    $("#LeaveDaysApplied").blur(function () {
+        if (parseInt($("#LeaveDaysApplied").val()) > parseInt($("#Leave_Balance").val())) {
+            bootbox.alert('Applied days cannot zero or more than leave balance days.');
+            $("#LeaveDaysApplied").val('');
+        }
+    });
+    $("#LeaveDaysApplied").keyup(function () {
+        if ($("#LeaveDaysApplied").val().length == 0) {
+            return;
+        }
+        else
+            if ($("#Leave_Type").val() == "0") {
+                bootbox.alert("Please select a Leave Type");
+            }
+            else
+                if ($("#LeaveStartDay").val() == '') {
+                    bootbox.alert("Please enter the Leave Start Date");
+                } else {
+                    jQuery.ajax({
+                        url: '/LeaveApplication/GetLeaveEndDateAndReturnDate',
+                        type: "POST",
+                        data: '{param1:"' + $('#Leave_Type').val() + '",param2:"' + $('#LeaveStartDay').val() + '", param3:"' + $('#LeaveDaysApplied').val() + '"}',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (response) {
+
+                            if (response != null && response.d != null) {
+                                var data = response.d;
+                                // alert(typeof (data)); //it comes out to be string
+                                //we need to parse it to JSON
+                                data = $.parseJSON(data);
+
+                                if (data.Validity == false) {
+                                    bootbox.alert(data.Message);
+                                } else {
+                                    $("#ReturnDate").val(data.ReturnDate);
+                                    $("#LeaveEndDay").val(data.EndDate);
+                                }
+                            }
+                        }
+                    });
+                }
+
+    });
+    jQuery_3_3_1("#Save").click(function (event) {
+
+        // Fetch form to apply custom Bootstrap validation
+        var form = $("#LeaveRecallApplicationForm")
+
+        if (form[0].checkValidity() === false) {
+            event.preventDefault()
+            event.stopPropagation()
+            form.addClass('was-validated');
+        } else if (form[0].checkValidity() === true) {
+            // Perform ajax submit here...
+            showToast('Saving application');
+
+            jQuery.ajax({
+                url: '/LeaveRecallApplication/Save',
+                type: "POST",
+                data: '{param1:"' + $('#ReturnDate').val() + '", param2:"' + $('#Leave_Type').val() + '", param3:"' + $('#Leave_comments').val() + '", param4:"' + $('#LeaveStartDay').val() + '", param5:"' + $('#LeaveEndDay').val() + '", param6:"' + $('#LeaveDaysApplied').val() + '" }',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+
+                    if (response != null && response.d != null) {
+                        var data = response.d;
+                        // alert(typeof (data)); //it comes out to be string
+                        //we need to parse it to JSON
+                        data = $.parseJSON(data);
+
+                        hideLoading();
+
+                        bootbox.alert(data.Message, function () {
+                            //rest form
+                            $("#LeaveRecallApplicationForm")[0].reset();
+                        });
+                    }
+                }
+            });
+        }
+
+        ////uncomment below
+        event.preventDefault();
+    });
+    //submit
+    jQuery_3_3_1("#Submit").click(function (e) {
+        // Fetch form to apply custom Bootstrap validation
+        var form = $("#LeaveRecallApplicationForm")
+
+        if (form[0].checkValidity() === false) {
+            event.preventDefault()
+            event.stopPropagation()
+            form.addClass('was-validated');
+        } else if (form[0].checkValidity() === true) {
+
+            // Perform ajax submit here...
+            showToast('Submitting application');
+
+            jQuery.ajax({
+                url: '/LeaveRecallApplication/Submit',
+                type: "POST",
+                data: '{param1:"' + $('#ReturnDate').val() + '", param2:"' + $('#Leave_Type').val() + '", param3:"' + $('#Leave_comments').val() + '", param4:"' + $('#LeaveStartDay').val() + '", param5:"' + $('#LeaveEndDay').val() + '", param6:"' + $('#LeaveDaysApplied').val() + '" }',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+
+                    if (response != null && response.d != null) {
+                        var data = response.d;
+                        // alert(typeof (data)); //it comes out to be string
+                        //we need to parse it to JSON
+                        data = $.parseJSON(data);
+
+                        hideLoading();
+
+                        bootbox.alert(data.Message, function () {
+                            //rest form
+                            $("#LeaveRecallApplicationForm")[0].reset();
+                        });
+                    }
+                }
+            });
+        }
+        event.preventDefault();
+    });
+    function GetApprovedLeavesList(LeaveCode) {
+        $('#ApprovedLeave').append('<option value="" > </option>');
+
+        if (LeaveCode != '') {
+            jQuery.ajax({
+                url: '/LeaveRecallApplication/LoadApprovedLeaves',
+                type: "POST",
+                data: '{param1:"' + LeaveCode + '" }',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    if (response != null && response.d != null) {
+                        var data = response.d;
+                        // alert(response); //it comes out to be string
+                        //we need to parse it to JSON
+                        data = $.parseJSON(data);
+
+                        $.each(data, function (i, item) {
+                            // alert(item.LeaveNo);
+                            $("#ApprovedLeave").append($('<option></option>').attr("value", item.LeaveNo).text(item.LeaveNo + ': From ' + item.StartDate + ' to ' + item.EndDate));
+                        });
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("Error: " + thrownError);
+                }
+            });
+        }
+    }
+    //dateConverter
+    function convertDate(date, symbol, new_symbol) {
+
+        if (date != '') {
+            var raw_date = date;
+            if (raw_date.indexOf(symbol) > 0) {
+                day = raw_date.substr(0, 2);
+                month = raw_date.substr(3, 2);
+                year = raw_date.substr(6, 4);
+
+                return (year + new_symbol + month + new_symbol + day).toString();
+
+            } else {
+                return date;
+            }
+        } else {
+            return date;
+        }
+    }
+    function showToast(modaltittle) {
+        var title = modaltittle;
+        var icon = 'loading';
+        var duration = 50000 * 1;
+        $.Toast.showToast({ title: title, duration: duration, icon: icon, image: '' });
+    }
+    function hideLoading() {
+        $.Toast.hideToast();
+    }
+</script>
+
+
+
+

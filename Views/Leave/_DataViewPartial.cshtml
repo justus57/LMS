@@ -1,0 +1,12 @@
+@Html.DevExpress().DataView(settings =>
+{
+    settings.Name = "DataView";
+    settings.CallbackRouteValues = new { Controller = "Leave", Action = "DataViewPartial" };
+    settings.AllowPaging = true;
+        settings.SettingsTableLayout.RowsPerPage = 1;
+        settings.SettingsTableLayout.ColumnCount = 1;
+    settings.SetItemTemplateContent(c =>
+    {
+        ViewContext.Writer.Write("Item content");
+    });
+}).Bind(Model).GetHtml()

@@ -1,0 +1,303 @@
+﻿@model LMS.Models.Profile
+
+@{
+    ViewBag.Title = "Profile";
+}
+
+
+
+<main id="main" class="main">
+
+    <div ID="NavbarContent" runat="server">
+        <!-- #Include virtual="includes/Navbar.aspx" -->
+    </div>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <!-- #Include virtual="includes/Sidebar.aspx" -->
+
+        <div id="content-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">User Profile</li>
+                </ol>
+
+                @using (Html.BeginForm(FormMethod.Post))
+                {
+                    @*@Html.AntiForgeryToken()*@
+                    @Html.ValidationSummary(true)
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <i class="fas fa-user"></i>
+                            User Profile
+                        </div>
+                        <div class="card-body">
+                            <fieldset disabled>
+                                <form runat="server">
+                                    <div class="row mb-5">
+                                        <div class="col-md-4 mb-4">
+                                            <div>Personal Information</div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Name</label>
+                                                        @Html.TextBoxFor(model => model.txt_name, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_name, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">National ID</label>
+                                                        @Html.TextBoxFor(model => model.txt_idNumber, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_idNumber, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Date of Birth</label>
+                                                        @Html.TextBoxFor(model => model.txt_dob, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_dob, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Passport</label>
+                                                        @Html.TextBoxFor(model => model.txt_pass, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_pass, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Email Address</label>
+                                                        @Html.TextBoxFor(model => model.txt_email, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_email, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Phone number</label>
+                                                        @Html.TextBoxFor(model => model.txt_phone, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_phone, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">NHIF</label>
+                                                        @Html.TextBoxFor(model => model.txt_nhif, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_nhif, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">NSSF</label>
+                                                        @Html.TextBoxFor(model => model.txt_nssf, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_nssf, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Bank</label>
+                                                        @Html.TextBoxFor(model => model.txt_bank, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_bank, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Bank Branch</label>
+                                                        @Html.TextBoxFor(model => model.txt_bank_branch, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_bank_branch, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Bank Account Number</label>
+                                                        @Html.TextBoxFor(model => model.txt_bankAcc, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_bankAcc, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">KRA PIN Number</label>
+                                                        @Html.TextBoxFor(model => model.txt_krapin, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_krapin, "", new { @class = "" })
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Work information-->
+                                    <hr>
+                                    <div class="row mb-5">
+                                        <div class="col-md-4 mb-4">
+                                            <div>Employment Information</div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Job Title</label>
+                                                        @Html.TextBoxFor(model => model.txt_jobtitle, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_jobtitle, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Payroll Number</label>
+                                                        @Html.TextBoxFor(model => model.txt_payroll, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_payroll, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Employment Number</label>
+                                                        @Html.TextBoxFor(model => model.txt_sesa, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_sesa, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Employment Date</label>
+                                                        @Html.TextBoxFor(model => model.txt_epldate, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_epldate, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Payroll Cut off Date</label>
+                                                        @Html.TextBoxFor(model => model.txt_payroll_cut, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_payroll_cut, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Job Position</label>
+
+                                                        @Html.TextBoxFor(model => model.txt_jobPost, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_jobPost, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Contract End Date</label>
+                                                        @Html.TextBoxFor(model => model.txt_ContractEndDate, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_ContractEndDate, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Department</label>
+                                                        @Html.TextBoxFor(model => model.txt_Department, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_Department, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Supervisor Name</label>
+                                                        @Html.TextBoxFor(model => model.txt_SuperVisorName, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_SuperVisorName, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Company Email</label>
+                                                        @Html.TextBoxFor(model => model.txt_comapnyMail, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_comapnyMail, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Person Number</label>
+                                                        @Html.TextBoxFor(model => model.txt_PersonNumber, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.txt_PersonNumber, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">HR Message</label>
+                                                        @Html.TextBoxFor(model => model.txt_hrmsg, new { @class = "form-control", Columns = "50", Rows = "3", TextMode = "multiline" })
+                                                        @Html.ValidationMessageFor(model => model.txt_hrmsg, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </fieldset>
+                        </div>
+                        <div class="card-footer small text-muted">Updated today at   @DateTime.Now.ToShortTimeString() </div>
+                    </div>
+                }
+
+            </div>
+            <!-- /.container-fluid -->
+          
+        </div>
+        <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+   
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="~/Assest/js/sb-admin.min.js"></script>
+

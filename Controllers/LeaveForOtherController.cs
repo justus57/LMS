@@ -67,7 +67,7 @@ namespace LMS.Controllers
                     List<SelectListItem> items = new List<SelectListItem>();
                     for (int i = 0; i < keyList.Count; i++)
                     {
-                        items.Add(new SelectListItem { Text = keyList[i],Selected = true });
+                        items.Add(new SelectListItem { Text = keyList[i]});
                         
                     }
                   
@@ -90,7 +90,7 @@ namespace LMS.Controllers
             List<SelectListItem> itemz = new List<SelectListItem>();
             foreach (var val in myList)
             {
-                itemz.Add(new SelectListItem { Value = val.Key, Text = val.Value,Selected = true });
+                itemz.Add(new SelectListItem { Value = val.Key, Text = val.Value });
             }
             ViewBag.employees = itemz;
         }

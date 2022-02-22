@@ -26,8 +26,7 @@
                         <i class="fas fa-suitcase"></i>
                         Leave Application
                     </div>
-                       @using (Html.BeginForm("LeaveApplication", "LeaveApplication", FormMethod.Post))
-                    {
+                    <form  novalidate="" action="#" method="POST" id="LeaveApplicationForm" autocomplete="off">
                         <div class="card-body">
                             <div class="row mb-5">
                                 <div class="col-md-4 mb-4">
@@ -38,12 +37,8 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-
                                                 <label for="Leave_Type" class="form-control-label">Leave Type</label>
-                                                @*@Html.DropDownList("ViewBag.Leaves", (IEnumerable<SelectListItem>)ViewBag.Leaves,
-                                                    "Select Leave-Type", new { @class = "form-control", id = "ViewBag.Leaves" })*@
                                                 @Html.DropDownListFor(x => x.Leave_Type, new SelectList(ViewBag.Leaves), "Select Leave-Type", new { @class = "form-control", id = "ViewBag.Leaves" })
-                                                <a class="btn btn-primary" id="hyperlink" asp-controller="LeaveApplication" asp-action="GetUserLeaves"><span></span></a>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave type must be selected</div>
                                             </div>
@@ -92,7 +87,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                             <!--Work information-->
                             <hr>
@@ -159,7 +153,6 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="form-control-label">Comments if any</label>
-
                                                 @Html.TextAreaFor(model => model.Leave_comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3", autofocus = "" })
                                                 @Html.ValidationMessageFor(model => model.Leave_comments, "", new { @class = "" })
                                                 <p class="pull-right text-muted small" id="count_message"></p>
@@ -174,38 +167,15 @@
                             <button id="Save" class="btn btn-primary">Save</button>
                             <button id="Submit" class="btn btn-success">Submit</button>
                         </div>
-                        @*</form>*@
-                    }
-                    <div class="card-footer small text-muted">Updated today at  @DateTime.Now.ToShortTimeString() </div>
+                     </form>
+                     <div class="card-footer small text-muted">Updated today at  @DateTime.Now.ToShortTimeString() </div>
                 </div>
             </div>
-            <!-- /.container-fluid -->
-            <!-- Sticky Footer -->
-        </div>
-        <!-- /.content-wrapper -->
-    </div>
-    <!-- /#wrapper -->
-    <!-- Scroll to Top Button-->
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
-                </div>
-            </div>
+         
         </div>
     </div>
 </main>
-@section Scripts{
+
     <!-- Bootstrap core JavaScript-->
     <script src="~/Assest/vendor/jquery/jquery.min.js"></script>
     <script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -214,19 +184,17 @@
     <script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- Bootstrap core CSS-->
     <link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Custom fonts for this template-->
     <link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
     <!-- Page level plugin CSS-->
     <link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
-    <!--jQUERY date picker--->
+   
     <!-- Custom scripts for all pages-->
     <script src="~/Assest/js/sb-admin.min.js"></script>
     <script src="~/Assest/js/bootbox.min.js"></script>
     <script src="~/Assest/js/bootboxError.js"></script>
-
+    
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- JQUERY DATEPICKER-->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -238,20 +206,21 @@
     </script>
     <script src="~/Assest/js/jquery.toast.js"></script>
  <script>
-     $(document).ready(function () {
+     $(function () {
+         //calculate the words in textarea
          $(".MultiLineLimit").on('change keydown paste input', function () {
              this.value = (this.value.length <= 250 ? this.value : this.value.substring(0, 250));
          });
          var text_max = 250;
-         $('#count_message').html(text_max + ' remaining');
+         $('#count_message').html(text_max + 'remaining');
 
          $('#Leave_comments').keyup(function () {
              var text_length = $('#Leave_comments').val().length;
              var text_remaining = text_max - text_length;
 
-             $('#count_message').html(text_remaining + ' remaining');
+             $('#count_message').html(text_remaining + 'remaining');
          });
-
+         //date picker for the leavestartday
          $("#LeaveStartDay").datepicker({
              dateFormat: 'dd/mm/yy',
 
@@ -262,15 +231,15 @@
 
          }).val();
          $("#LeaveEndDay").datepicker({ dateFormat: 'dd/mm/yy' }).val();
-        
+        //hide upload
          $('#UploadDiv').hide();
          $("#Leave_Type").change(function () {
-             
-
+             var leavedata = $('#Leave_Type').val();
+             //post the selected item to controller
              jQuery.ajax({
                  url: 'LeaveApplication/GetLeaveDetails',
                  type: "POST",
-                 data: {param1:"' + $('#Leave_Type').val() + '" },
+                 data: { param1: leavedata },
                  dataType: "json",
                  contentType: "application/json; charset=utf-8",
                  success: function (response) {
@@ -336,8 +305,9 @@
 
                  var startDate = new Date(start_date);
                  var endDate = new Date(end_date);
-
+                 //post to controller function
                  if (startDate <= endDate) {
+
                      jQuery.ajax({
                          url: 'LeaveApplication/GetLeaveState',
                          type: "POST",
@@ -412,7 +382,7 @@
                      }
 
          });
-         //save button
+         //save button to controller save function
          jQuery_3_3_1("#Save").click(function (event) {
              event.preventDefault();
 
@@ -426,9 +396,9 @@
              } else if (form[0].checkValidity() === true) {
                  // Perform ajax submit here...
                  showToast('Saving application');
-
+                 //function for checkig fileupload
                  $.ajax({
-                     url: 'FileUploadHandler.ashx',
+                     url: 'LeaveApplication/FileUploadHandler',
                      type: 'POST',
                      data: new FormData($('#LeaveApplicationForm')[0]),
                      cache: false,
@@ -437,7 +407,7 @@
                      success: function (file) {
 
                          jQuery.ajax({
-                             url: 'LeaveApplication.aspx/Save',
+                             url: 'LeaveApplication/Save',
                              type: "POST",
                              data: '{param1:"' + $('#ReturnDate').val() + '", param2:"' + $('#Leave_Type').val() + '", param3:"' + $('#Leave_comments').val() + '", param4:"' + $('#LeaveStartDay').val() + '", param5:"' + $('#LeaveEndDay').val() + '", param6:"' + $('#LeaveDaysApplied').val() + '" , param7:"' + file.name + '"}',
                              dataType: "json",
@@ -446,7 +416,6 @@
 
                                  if (response != null && response.d != null) {
                                      var data = response.d;
-                                     // alert(typeof (data)); //it comes out to be string 
                                      //we need to parse it to JSON 
                                      data = $.parseJSON(data);
 
@@ -477,10 +446,10 @@
                      }
                  });
              }
-             ////uncomment below
+             //uncomment below
              event.preventDefault();
          });
-         //submit
+         //submit to controller submit function
          jQuery_3_3_1("#Submit").click(function (e) {
              // Fetch form to apply custom Bootstrap validation
              var form = $("#LeaveApplicationForm")
@@ -494,7 +463,7 @@
                  // Perform ajax submit here...
                  showToast('Submitting application');
                  $.ajax({
-                     url: 'FileUploadHandler.ashx',
+                     url: 'LeaveApplication/FileUploadHandler',
                      type: 'POST',
                      data: new FormData($('#LeaveApplicationForm')[0]),
                      cache: false,
@@ -503,7 +472,7 @@
                      success: function (file) {
 
                          jQuery.ajax({
-                             url: 'LeaveApplication.aspx/Submit',
+                             url: 'LeaveApplication/Submit',
                              type: "POST",
                              data: '{param1:"' + $('#ReturnDate').val() + '", param2:"' + $('#Leave_Type').val() + '", param3:"' + $('#Leave_comments').val() + '", param4:"' + $('#LeaveStartDay').val() + '", param5:"' + $('#LeaveEndDay').val() + '", param6:"' + $('#LeaveDaysApplied').val() + '" , param7:"' + file.name + '"}',
                              dataType: "json",
@@ -512,7 +481,6 @@
 
                                  if (response != null && response.d != null) {
                                      var data = response.d;
-                                     // alert(typeof (data)); //it comes out to be string 
                                      //we need to parse it to JSON 
                                      data = $.parseJSON(data);
 
@@ -565,8 +533,17 @@
          } else {
              return date;
          }
-    </script>
-}
-
+     }
+     function showToast(modaltittle) {
+         var title = modaltittle;
+         var icon = 'loading';
+         var duration = 50000 * 1;
+         $.Toast.showToast({ title: title, duration: duration, icon: icon, image: '' });
+     }
+     function hideLoading() {
+         $.Toast.hideToast();
+     }
+</script>
+ 
 
 

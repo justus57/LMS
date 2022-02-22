@@ -23,10 +23,8 @@ namespace LMS.Controllers
         {
             return View();
         }
-
         public ActionResult LeaveRecallApplication()
         {
-
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
             System.Web.HttpContext.Current.Session["IsDashboardActive"] = "";
             System.Web.HttpContext.Current.Session["IsClaimActive"] = "";
@@ -40,48 +38,58 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
             System.Web.HttpContext.Current.Session["Logged"] = "";
-            if (Session["Logged"].Equals("No"))
-            {
-                Response.Redirect("Login.aspx");
-            }
-            else if (Session["Logged"].Equals("Yes"))
-            {
-                if (Session["RequirePasswordChange"].Equals("TRUE"))
-                {
-                    Response.Redirect("OneTimePass.aspx");
-                }
-                else
-                {
-                }
-            }
           
-                //LoadLeaves();
+                var username1 = System.Web.HttpContext.Current.Session["PayrollNo"];
+                if (Session["Username"] != null)
+                {
+                    string username = Convert.ToString(username1);
 
+                    string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                            <Body>
+                                <ReturnLeaveLookups xmlns = ""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal""> 
+                                     <lookupType>CauseOfAbsenceCode</lookupType> 
+                                     <employeeNo>" + username + @"</employeeNo> 
+                                 </ReturnLeaveLookups> 
+                             </Body>
+                         </Envelope>";
+
+                    string response = Assest.Utility.CallWebService(req);
+
+                    string array = Assest.Utility.GetJSONResponse(response);
+
+                    dynamic json = JObject.Parse(array);
+
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    try
+                    {
+                        array = array.Substring(1, array.Length - 2);
+                        string[] resultArray = array.Split(',');
+
+                        foreach (var item in resultArray)
+                        {
+                            string[] result = item.ToString().Split(':');
+                            dictionary.Add(result[0].ToString().Trim('"'), result[1].ToString().Trim('"'));
+                        }
+
+                        List<string> keyList = new List<string>(dictionary.Keys);
+                        List<SelectListItem> items = new List<SelectListItem>();
+
+                        for (int i = 0; i < keyList.Count; i++)
+                        {
+                            items.Add(new SelectListItem { Text = keyList[i], Selected = true });
+                        }
+                        ViewBag.Leaves = keyList;
+                    }
+                    catch (Exception es)
+                    {
+                        Console.Write(es);
+                    }
+                }
+            
             return View();
         }
-        [HttpPost]
-        //private void LoadLeaves()
-        //{
-        //    try
-        //    {
-        //        string username = System.Web.HttpContext.Current.Session["Username"].ToString();
-
-        //        string GetLeavesResponseString = RecallApplicationXMLRequests.GetLeaves(username);
-
-        //        Leave_Type.Items.Clear();
-
-        //        foreach (var kvp in AppFunctions.BreakDynamicJSON(GetLeavesResponseString))
-        //        {
-        //            Leave_Type.Items.Insert(0, new ListItem(kvp.Value, kvp.Key));
-        //        }
-
-        //        Leave_Type.Items.Insert(0, new ListItem(" ", ""));
-        //    }
-        //    catch (Exception es)
-        //    {
-        //        Console.Write(es);
-        //    }
-        //}
+        
+       
         [WebMethod]
         public static string GetLeaveDetails(string param1)
         {
@@ -123,7 +131,7 @@ namespace LMS.Controllers
             };
             return JsonConvert.SerializeObject(_LeaveCodeDetails);
         }
-        [WebMethod]
+       
         public static string LoadApprovedLeaves(string param1)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();// get session variable
@@ -245,8 +253,6 @@ namespace LMS.Controllers
                 {
                     DocumentNumber = "Leave Recall No.s must be setup";
                 }
-
-                //
             }
             catch (Exception es)
             {

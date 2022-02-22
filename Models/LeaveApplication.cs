@@ -10,7 +10,6 @@ namespace LMS.Models
     public class LeaveApplication
     {
         public string Leave_Opening_Balance { get; set; }
-      
         public List<SelectListItem> Leave_Type { get; set; }
         public string Leave_Entitled { get; set; }
         public string Leave_Accrued_Days { get; set; }

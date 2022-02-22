@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace LMS.Models
 {
     public class LeaveRecallApplication
     {
         public string Leave_Opening_Balance { get; set; }
-        public string Leave_Type { get; set; }
+        public List<SelectListItem> Leave_Type { get; set; }
         public string Leave_Entitled { get; set; }
         public string Leave_Accrued_Days { get; set; }
         public string Leave_Days_Taken { get; set; }

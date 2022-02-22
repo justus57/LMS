@@ -6,18 +6,10 @@
 <main id="main" class="main">
 
     <div ID="NavbarContent" runat="server">
-        <!-- #Include virtual="includes/Navbar.aspx" -->
     </div>
-
     <div id="wrapper">
-
-        <!-- Sidebar -->
-        <!-- #Include virtual="includes/Sidebar.aspx" -->
-
         <div id="content-wrapper">
-
             <div class="container-fluid">
-
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
@@ -26,14 +18,13 @@
                     <li class="breadcrumb-item">Leave Recalls</li>
                     <li class="breadcrumb-item active">Leave Recall Application for other</li>
                 </ol>
-
                 <!-- Leave-->
                 <div class="card mb-3">
                     <div class="card-header">
                         <i class="fas fa-folder"></i>
                         Leave Application
                     </div>
-                    <form runat="server" novalidate="" action="#" method="POST" id="LeaveApplicationForm" autocomplete="off">
+                    <form novalidate="" action="#" method="POST" id="LeaveApplicationForm" autocomplete="off">
                         <div class="card-body">
                             <div class="row mb-5">
                                 <div class="col-md-4 mb-4">
@@ -46,7 +37,7 @@
                                             <div class="form-group">
                                                 <label for="Employee" class="form-control-label">Employee applying for</label>
                                                 @Html.DropDownList("employees", (List<SelectListItem>)ViewBag.employees,
-                                                      "Select Leave-Type", new { @class = "form-control", id = "employees" })
+                                                  "Select Leave-Type", new { @class = "form-control", id = "employees" }) 
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The employee must be selected</div>
                                             </div>
@@ -57,7 +48,7 @@
                                             <div class="form-group">
                                                 <label for="Leave_Type" class="form-control-label">Leave Type</label>
                                                 @Html.DropDownList("Leave_type", (List<SelectListItem>)ViewBag.Leaves,
-                                                    "Select Leave-Type", new { @class = "form-control", id = "Leave_type" })
+                                                   "Select Leave-Type", new { @class = "form-control", id = "Leave_type" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave type must be selected</div>
                                             </div>

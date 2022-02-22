@@ -46,9 +46,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="Leave_Type" class="form-control-label">Leave Type</label>
-                                                @Html.DropDownListFor(m => m.Leave_Type, new SelectList(Enum.GetValues(typeof(Leave))),
-                                           new { @class = "form-control" })
-                                                @Html.ValidationMessageFor(model => model.Leave_Type, "", new { @class = "" })
+                                                @Html.DropDownListFor(x => x.Leave_Type, new SelectList(ViewBag.Leaves), "Select Leave-Type", new { @class = "form-control", id = "ViewBag.Leaves" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave type must be selected</div>
                                             </div>

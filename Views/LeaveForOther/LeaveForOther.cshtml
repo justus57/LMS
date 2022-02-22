@@ -355,7 +355,7 @@
 
             if ($('#Leave_Type').val() != '' && $('#Employee').val() != '') {
                 jQuery.ajax({
-                    url: 'LeaveForOther/LeaveForOther/GetLeaveDetails',
+                    url: 'LeaveForOther/GetLeaveDetails',
                     type: "POST",
                     data: '{param1:"' + $('#Leave_Type').val() + '", param2:"' + $('#Employee').val() + '" }',
                     dataType: "json",
@@ -436,7 +436,7 @@
 
                 if (startDate <= endDate) {
                     jQuery.ajax({
-                        url: 'Leave/LeaveForOther/GetLeaveState',
+                        url: 'LeaveForOther/GetLeaveState',
                         type: "POST",
                         data: '{param1:"' + $('#Leave_Type').val() + '",param2:"' + $('#LeaveStartDay').val() + '", param3:"' + $('#LeaveEndDay').val() + '"}',
                         dataType: "json",
@@ -489,7 +489,7 @@
                         bootbox.alert("Please enter the Leave Start Date");
                     } else {
                         jQuery.ajax({
-                            url: 'Leave/LeaveForOther/GetLeaveEndDateAndReturnDate',
+                            url: 'LeaveForOther/GetLeaveEndDateAndReturnDate',
                             type: "POST",
                             data: '{param1:"' + $('#Leave_Type').val() + '",param2:"' + $('#LeaveStartDay').val() + '", param3:"' + $('#LeaveDaysApplied').val() + '"}',
                             dataType: "json",
@@ -533,7 +533,7 @@
                 showToast('Saving application');
 
                 $.ajax({
-                    url: '~/FileUploadHandler.cs',
+                    url: '/FileUploadHandler.cs',
                     type: 'POST',
                     data: new FormData($('#LeaveApplicationForm')[0]),
                     cache: false,
@@ -542,7 +542,7 @@
                     success: function (file) {
 
                         jQuery.ajax({
-                            url: 'LeaveForOther/LeaveForOther/Save',
+                            url: 'LeaveForOther/Save',
                             type: "POST",
                             data: '{param1:"' + $('#ReturnDate').val() + '", param2:"' + $('#Leave_Type').val() + '", param3:"' + $('#Leave_comments').val() + '", param4:"' + $('#LeaveStartDay').val() + '", param5:"' + $('#LeaveEndDay').val() + '", param6:"' + $('#LeaveDaysApplied').val() + '", param7:"' + $('#Employee').val() + '", param8:"' + $("#Employee option:selected").text() + '", param9:"' + file.name + '"}',
                             dataType: "json",
@@ -614,7 +614,7 @@
                     success: function (file) {
 
                         jQuery.ajax({
-                            url: 'LeaveForOther/LeaveForOther/Submit',
+                            url: 'LeaveForOther/Submit',
                             type: "POST",
                             data: '{param1:"' + $('#ReturnDate').val() + '", param2:"' + $('#Leave_Type').val() + '", param3:"' + $('#Leave_comments').val() + '", param4:"' + $('#LeaveStartDay').val() + '", param5:"' + $('#LeaveEndDay').val() + '", param6:"' + $('#LeaveDaysApplied').val() + '", param7:"' + $('#Employee').val() + '", param8:"' + $("#Employee option:selected").text() + '", param9:"' + file.name + '"}',
                             dataType: "json",

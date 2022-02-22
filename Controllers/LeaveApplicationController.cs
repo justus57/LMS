@@ -25,13 +25,13 @@ namespace LMS.Controllers
         {
             return View();
         }
-        public ActionResult LeaveApplication(LeaveApplication leaveApplication)
+        public ActionResult LeaveApplication()
         {
-           
             var username1 = System.Web.HttpContext.Current.Session["PayrollNo"];
             if (Session["Username"] != null)
             {
                 string username = Convert.ToString(username1);
+
                 string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                             <Body>
                                 <ReturnLeaveLookups xmlns = ""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal""> 
@@ -40,35 +40,39 @@ namespace LMS.Controllers
                                  </ReturnLeaveLookups> 
                              </Body>
                          </Envelope>";
+
                 string response = Assest.Utility.CallWebService(req);
-                
-               string array = Assest.Utility.GetJSONResponse(response);
+
+                string array = Assest.Utility.GetJSONResponse(response);
+
                 dynamic json = JObject.Parse(array);
+
                 Dictionary<string, string> dictionary = new Dictionary<string, string>();
                 try
                 {
                     array = array.Substring(1, array.Length - 2);
                     string[] resultArray = array.Split(',');
+
                     foreach (var item in resultArray)
                     {
                         string[] result = item.ToString().Split(':');
                         dictionary.Add(result[0].ToString().Trim('"'), result[1].ToString().Trim('"'));
                     }
+
                     List<string> keyList = new List<string>(dictionary.Keys);
                     List<SelectListItem> items = new List<SelectListItem>();
+
                     for (int i = 0; i < keyList.Count; i++)
                     {
-                        items.Add(new SelectListItem { Text = keyList[i],Selected = true });                        
+                        items.Add(new SelectListItem { Text = keyList[i], Selected = true });
                     }
-                   ViewBag.Leaves = keyList;
-                    //LeaveApplication application = new LeaveApplication();
-                    //application.Leave_Type = items;
+                    ViewBag.Leaves = keyList;
                 }
                 catch (Exception es)
                 {
                     Console.Write(es);
                 }
-           }
+            }
             else
             {
                 Response.Redirect("/Account/Login");
@@ -76,15 +80,10 @@ namespace LMS.Controllers
             return View();
         }
         [HttpPost]
-        public static string GetUserLeaves(LeaveApplication application)
+        public static string GetUserLeaves(string param1)
         {
-            var SelectedLeave = application.Leave_Type ;
-            List<SelectResult> results = new List<SelectResult>((IEnumerable<SelectResult>)SelectedLeave);
-            var param1 = results.ToString();
             string UserLeavesresponseString = LeaveForOtherXMLRequests.GetUserLeaves(param1);
             List<LeaveTypes> leavetype = new List<LeaveTypes>();
-
-            /////break dynamic json and put it in a list, then serialize the list to json object
             foreach (var kvp in AppFunctions.BreakDynamicJSON(UserLeavesresponseString))
             {
                 leavetype.Add(new LeaveTypes { LeaveCode = kvp.Key, LeaveName = kvp.Value });
@@ -92,7 +91,6 @@ namespace LMS.Controllers
             return JsonConvert.SerializeObject(leavetype);
         }
         [HttpPost]
-        [WebMethod]
         public static string GetLeaveDetails(string param1)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();// get session variable
@@ -105,7 +103,6 @@ namespace LMS.Controllers
             string LeaveCode = "";
             string RequiresAttachment = "";
             string AttachmentMandatory = "";
-
             try
             {
                 string SelectedLeaveDetails = LeaveApplicationXMLRequests.GetSelectedLeaveDetails(username, param1);
@@ -142,7 +139,6 @@ namespace LMS.Controllers
             return JsonConvert.SerializeObject(Leave);
         }     
         [HttpPost]
-        [WebMethod]
         public static string GetLeaveState(string param1, string param2, string param3)
         {
             string employeeNo = System.Web.HttpContext.Current.Session["Username"].ToString(); ;
@@ -185,7 +181,6 @@ namespace LMS.Controllers
             return JsonConvert.SerializeObject(Leave);
         }        
         [HttpPost]
-        [WebMethod]
         public static string GetLeaveEndDateAndReturnDate(string param1, string param2, string param3)
         {
             string employeeNo = System.Web.HttpContext.Current.Session["Username"].ToString(); ;
@@ -246,7 +241,6 @@ namespace LMS.Controllers
             return JsonConvert.SerializeObject(LeaveEndReturnDates);
         }
         [HttpPost]
-        [WebMethod]
         public static string Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7)
         {
             string response = "";
@@ -313,14 +307,13 @@ namespace LMS.Controllers
             string DocumentNo = param2;
             //save attachment if sick leave
             LeaveApplicationXMLRequests.UploadFile(DocumentNo, UploadPath);
-            ////if uploaded delete file from uploads folder
+            //if uploaded delete file from uploads folder
             if (System.IO.File.Exists(UploadPath))
             {
                 System.IO.File.Delete(UploadPath);
             }
         }
         [HttpPost]
-        [WebMethod]
         public static void UploadAttachment(string param1, string param2)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -336,7 +329,6 @@ namespace LMS.Controllers
             }
         }
         [HttpPost]
-        [WebMethod]
         public static string Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7)
         {
             //get Leave number 

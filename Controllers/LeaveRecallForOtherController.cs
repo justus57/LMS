@@ -41,21 +41,46 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
 
-            if (Session["Logged"].Equals("No"))
+            var username1 = System.Web.HttpContext.Current.Session["PayrollNo"];
+            if (Session["PayrollNo"] != null)
             {
-                Response.Redirect("Account/Login");
-            }
-            else if (Session["Logged"].Equals("Yes"))
-            {
-                if (Session["RequirePasswordChange"].Equals("TRUE"))
+                string username = Convert.ToString(username1);
+                string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                            <Body>
+                                <ReturnLeaveLookups xmlns = ""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal""> 
+                                     <lookupType>CauseOfAbsenceCode</lookupType> 
+                                     <employeeNo>" + username + @"</employeeNo> 
+                                 </ReturnLeaveLookups> 
+                             </Body>
+                         </Envelope>";
+                string response = Assest.Utility.CallWebService(req);
+
+                string array = Assest.Utility.GetJSONResponse(response);
+                dynamic json = JObject.Parse(array);
+                Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                try
                 {
-                    Response.Redirect("Account/OneTimePassword");
+                    array = array.Substring(1, array.Length - 2);
+                    string[] resultArray = array.Split(',');
+                    foreach (var item in resultArray)
+                    {
+                        string[] result = item.ToString().Split(':');
+                        dictionary.Add(result[0].ToString().Trim('"'), result[1].ToString().Trim('"'));
+                    }
+                    List<string> keyList = new List<string>(dictionary.Keys);
+                    List<SelectListItem> items = new List<SelectListItem>();
+                    for (int i = 0; i < keyList.Count; i++)
+                    {
+                        items.Add(new SelectListItem { Text = keyList[i] });
+
+                    }
+
+                    ViewBag.Leaves = items;
+                    GetEmployeeList();
                 }
-                else
+                catch (Exception es)
                 {
-                    
-                        GetEmployeeList();
-                   
+                    Console.Write(es);
                 }
             }
             return View();
@@ -93,7 +118,7 @@ namespace LMS.Controllers
             List<SelectListItem> itemz = new List<SelectListItem>();
             foreach (var val in myList)
             {
-                itemz.Add(new SelectListItem { Value = val.Key, Text = val.Value, Selected = true });
+                itemz.Add(new SelectListItem { Value = val.Key, Text = val.Value});
             }
             ViewBag.employees = itemz;
         }

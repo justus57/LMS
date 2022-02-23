@@ -25,9 +25,10 @@ namespace LMS.Controllers
         {
             return View();
         }
+       
         public ActionResult LeaveApplication()
         {
-            var username1 = System.Web.HttpContext.Current.Session["PayrollNo"];
+           var username1 = System.Web.HttpContext.Current.Session["PayrollNo"];
             if (Session["Username"] != null)
             {
                 string username = Convert.ToString(username1);
@@ -58,13 +59,12 @@ namespace LMS.Controllers
                         string[] result = item.ToString().Split(':');
                         dictionary.Add(result[0].ToString().Trim('"'), result[1].ToString().Trim('"'));
                     }
-
                     List<string> keyList = new List<string>(dictionary.Keys);
                     List<SelectListItem> items = new List<SelectListItem>();
 
                     for (int i = 0; i < keyList.Count; i++)
                     {
-                        items.Add(new SelectListItem { Text = keyList[i], Selected = true });
+                        items.Add(new SelectListItem { Text = keyList[i], Value = keyList[i] });
                     }
                     ViewBag.Leaves = keyList;
                 }
@@ -79,6 +79,7 @@ namespace LMS.Controllers
             }
             return View();
         }
+       
         [HttpPost]
         public static string GetUserLeaves(string param1)
         {
@@ -90,8 +91,9 @@ namespace LMS.Controllers
             }
             return JsonConvert.SerializeObject(leavetype);
         }
-        [HttpPost]
-        public static string GetLeaveDetails(string param1)
+        ///[HttpPost]
+      //  public static string GetLeaveDetails(string Code)
+        public JsonResult GetLeaveDetails(string param1)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();// get session variable
             string OpeningBalance = null;
@@ -103,26 +105,19 @@ namespace LMS.Controllers
             string LeaveCode = "";
             string RequiresAttachment = "";
             string AttachmentMandatory = "";
-            try
-            {
-                string SelectedLeaveDetails = LeaveApplicationXMLRequests.GetSelectedLeaveDetails(username, param1);
+            string SelectedLeaveDetails = LeaveApplicationXMLRequests.GetSelectedLeaveDetails(username, "SICK");
 
-                dynamic json = JObject.Parse(SelectedLeaveDetails);
+            dynamic json = JObject.Parse(SelectedLeaveDetails);
 
-                OpeningBalance = json.OpeningBalance;
-                Entitled = json.Entitled;
-                Accrued = json.Accrued;
-                LeaveTaken = json.LeaveTaken;
-                Remaining = json.Remaining;
-                Description = json.Description;
-                LeaveCode = json.Code;
-                RequiresAttachment = json.RequiresAttachment;
-                AttachmentMandatory = json.AttachmentMandatory;
-            }
-            catch (Exception es)
-            {
-                Console.Write(es);
-            }
+            OpeningBalance = json.OpeningBalance;
+            Entitled = json.Entitled;
+            Accrued = json.Accrued;
+            LeaveTaken = json.LeaveTaken;
+            Remaining = json.Remaining;
+            Description = json.Description;
+            LeaveCode = json.Code;
+            RequiresAttachment = json.RequiresAttachment;
+            AttachmentMandatory = json.AttachmentMandatory;
 
             var Leave = new LeaveCodeDetails
             {
@@ -136,7 +131,8 @@ namespace LMS.Controllers
                 RequiresAttachment = RequiresAttachment,
                 AttachmentMandatory = AttachmentMandatory
             };
-            return JsonConvert.SerializeObject(Leave);
+            // return JsonConvert.SerializeObject(Leave);
+            return Json(JsonConvert.SerializeObject(Leave), JsonRequestBehavior.AllowGet);
         }     
         [HttpPost]
         public static string GetLeaveState(string param1, string param2, string param3)

@@ -17,10 +17,10 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace LMS.Controllers
 {
+    //[Authorize(Roles ="Manager")]
     public class LeaveRecallForOtherController : Controller
     {
         private static dynamic items;
-     
         // GET: LeaveRecallForOther
         public ActionResult Index()
         {

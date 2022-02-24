@@ -2906,6 +2906,7 @@
     <Content Include="assetz\images\weather_icons\sun.svg" />
     <Content Include="assetz\images\weather_icons\sunset.svg" />
     <Content Include="assetz\js\demo_1\dashboard.js" />
+    <Content Include="Content\assets\leaveApplication\Leavetype.js" />
     <Content Include="assetz\js\shared\chart.js" />
     <Content Include="assetz\js\shared\misc.js" />
     <Content Include="assetz\js\shared\off-canvas.js" />

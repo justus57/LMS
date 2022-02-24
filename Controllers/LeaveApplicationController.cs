@@ -20,15 +20,15 @@ namespace LMS.Controllers
 {
     public class LeaveApplicationController : Controller
     {
+        public object _RequestResponse { get; private set; }
         // GET: LeaveApplication
         public ActionResult Index()
         {
             return View();
         }
-       
         public ActionResult LeaveApplication()
         {
-           var username1 = System.Web.HttpContext.Current.Session["PayrollNo"];
+            var username1 = System.Web.HttpContext.Current.Session["PayrollNo"];
             if (Session["Username"] != null)
             {
                 string username = Convert.ToString(username1);
@@ -79,8 +79,6 @@ namespace LMS.Controllers
             }
             return View();
         }
-       
-        [HttpPost]
         public static string GetUserLeaves(string param1)
         {
             string UserLeavesresponseString = LeaveForOtherXMLRequests.GetUserLeaves(param1);
@@ -91,11 +89,9 @@ namespace LMS.Controllers
             }
             return JsonConvert.SerializeObject(leavetype);
         }
-        ///[HttpPost]
-      //  public static string GetLeaveDetails(string Code)
         public JsonResult GetLeaveDetails(string param1)
         {
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();// get session variable
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();// get session variable
             string OpeningBalance = null;
             string Entitled = "";
             string Accrued = "";
@@ -105,7 +101,7 @@ namespace LMS.Controllers
             string LeaveCode = "";
             string RequiresAttachment = "";
             string AttachmentMandatory = "";
-            string SelectedLeaveDetails = LeaveApplicationXMLRequests.GetSelectedLeaveDetails(username, "SICK");
+            string SelectedLeaveDetails = LeaveApplicationXMLRequests.GetSelectedLeaveDetails(username, param1);
 
             dynamic json = JObject.Parse(SelectedLeaveDetails);
 
@@ -119,25 +115,23 @@ namespace LMS.Controllers
             RequiresAttachment = json.RequiresAttachment;
             AttachmentMandatory = json.AttachmentMandatory;
 
-            var Leave = new LeaveCodeDetails
+            var Leave = new LeaveApplication
             {
-                Accrued = Accrued,
-                Description = Description,
-                EntitledDays = Entitled,
-                LeaveCode = LeaveCode,
-                LeaveTaken = LeaveTaken,
-                OpeningBalance = OpeningBalance,
-                Remaining = Remaining,
+                Leave_Accrued_Days = Accrued,
+
+                Leave_Entitled = Entitled,
                 RequiresAttachment = RequiresAttachment,
-                AttachmentMandatory = AttachmentMandatory
+                Leave_Days_Taken = LeaveTaken,
+                Leave_Opening_Balance = OpeningBalance,
+                Leave_Balance = Remaining,
+
             };
             // return JsonConvert.SerializeObject(Leave);
             return Json(JsonConvert.SerializeObject(Leave), JsonRequestBehavior.AllowGet);
-        }     
-        [HttpPost]
-        public static string GetLeaveState(string param1, string param2, string param3)
+        }
+        public JsonResult GetLeaveState(string param1, string param2, string param3)
         {
-            string employeeNo = System.Web.HttpContext.Current.Session["Username"].ToString(); ;
+            string employeeNo = System.Web.HttpContext.Current.Session["PayrollNo"].ToString(); ;
             string causeofAbsenceCode = param1;
             string startDate = param2;
             string endDate = param3;
@@ -167,19 +161,18 @@ namespace LMS.Controllers
             }
 
 
-            var Leave = new CustomsClasses.LeaveQuantityAndReturnDate
+            var Leave = new LeaveApplication
             {
-                Quantity = Qty,
+                LeaveDaysApplied = Qty,
                 ReturnDate = CustomsClasses.AppFunctions.ConvertTime(Return_Date),
                 Message = Msg,
                 Validity = validity
             };
-            return JsonConvert.SerializeObject(Leave);
-        }        
-        [HttpPost]
-        public static string GetLeaveEndDateAndReturnDate(string param1, string param2, string param3)
+            return Json(JsonConvert.SerializeObject(Leave), JsonRequestBehavior.AllowGet); ;
+        }
+        public JsonResult GetLeaveEndDateAndReturnDate(string param1, string param2, string param3)
         {
-            string employeeNo = System.Web.HttpContext.Current.Session["Username"].ToString(); ;
+            string employeeNo = System.Web.HttpContext.Current.Session["PayrollNo"].ToString(); ;
             string causeofAbsenceCode = param1;
             string startDate = param2;
             string qty = param3;
@@ -227,21 +220,20 @@ namespace LMS.Controllers
                 Console.Write(es);
             }
 
-            var LeaveEndReturnDates = new CustomsClasses.LeaveEndDateAndReturnDate
+            var LeaveEndReturnDates = new LeaveApplication
             {
-                EndDate = CustomsClasses.AppFunctions.ConvertTime(EndDate),
+                LeaveEndDay = CustomsClasses.AppFunctions.ConvertTime(EndDate),
                 ReturnDate = CustomsClasses.AppFunctions.ConvertTime(Return_Date),
                 Message = Msg,
                 Validity = validity
             };
-            return JsonConvert.SerializeObject(LeaveEndReturnDates);
+            return Json(JsonConvert.SerializeObject(LeaveEndReturnDates), JsonRequestBehavior.AllowGet);
         }
-        [HttpPost]
-        public static string Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7)
+        public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7)
         {
             string response = "";
             string status = "000";
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
             string DocumentNo = "";
             string DocumentNoResponse = GetDocumentNumber();
             dynamic json = JObject.Parse(DocumentNoResponse);
@@ -251,11 +243,11 @@ namespace LMS.Controllers
             {
 
                 DocumentNo = json.DocumentNo;
-                string EmployeeID = System.Web.HttpContext.Current.Session["Username"].ToString();
-                string EmployeeName = System.Web.HttpContext.Current.Session["UserFullName"].ToString();
+                string EmployeeID = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
+                string EmployeeName = System.Web.HttpContext.Current.Session["Username"].ToString();
                 string RequestDate = DateTime.Now.ToString("dd/MM/yyyy");//d/m/Y
                 string DateCreated = DateTime.Now.ToString("dd/MM/yyyy");
-                string AccountId = System.Web.HttpContext.Current.Session["Username"].ToString();
+                string AccountId = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
                 string ReturnDate = param1;
                 string LeaveCode = param2;
                 string Description = param3;
@@ -294,11 +286,11 @@ namespace LMS.Controllers
 
                 Status = status
             };
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         public static void UploadAttachment1(string param1, string param2)
         {
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
             string UploadPath = param1;//full path+file name
             string DocumentNo = param2;
             //save attachment if sick leave
@@ -309,10 +301,9 @@ namespace LMS.Controllers
                 System.IO.File.Delete(UploadPath);
             }
         }
-        [HttpPost]
         public static void UploadAttachment(string param1, string param2)
         {
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
 
             string UploadPath = param1;//full path+file name
             string DocumentNo = param2;
@@ -324,11 +315,10 @@ namespace LMS.Controllers
                 System.IO.File.Delete(UploadPath);
             }
         }
-        [HttpPost]
-        public static string Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7)
+        public JsonResult Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7)
         {
             //get Leave number 
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
             string DocumentNo = "";
             string response = null;
             string status = null;
@@ -354,11 +344,11 @@ namespace LMS.Controllers
                 if (status == "000")
                 {
                     DocumentNo = json.DocumentNo;
-                    string EmployeeID = System.Web.HttpContext.Current.Session["Username"].ToString();
-                    string EmployeeName = System.Web.HttpContext.Current.Session["UserFullName"].ToString();
+                    string EmployeeID = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
+                    string EmployeeName = System.Web.HttpContext.Current.Session["Username"].ToString();
                     string RequestDate = DateTime.Now.ToString("dd/MM/yyyy");//d/m/Y
                     string DateCreated = DateTime.Now.ToString("dd/MM/yyyy");
-                    string AccountId = System.Web.HttpContext.Current.Session["Username"].ToString();
+                    string AccountId = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
                     string ReturnDate = param1;
                     string LeaveCode = param2;
                     string Description = param3;
@@ -379,6 +369,7 @@ namespace LMS.Controllers
 
                         //SendApprovalRequest
                         string responseString = WebserviceConfig.ObjNav.SendApprovalRequest("Absence", DocumentNo);
+
 
                         dynamic jsonSendSubmitRequest = JObject.Parse(responseString);
                         response = jsonSendSubmitRequest.Msg;
@@ -416,29 +407,69 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         private static string GetDocumentNumber()
         {
             //get Leave number
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
-                            <Body>
-                                <GetLeaveNewNo xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                    <documentNo></documentNo>
-                                    <employeeNo>" + username + @"</employeeNo>
-                                    <leaveSubType>Leave</leaveSubType>
-                                </GetLeaveNewNo>
-                            </Body>
-                        </Envelope>";
+                    <Body>
+                        <GetNewDocumentNo xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+                            <hRDocumentType>Absence</hRDocumentType>
+                            <employeeNo>" + username + @"</employeeNo>
+                            <subType>Leave</subType>
+                        </GetNewDocumentNo>
+                    </Body>
+                </Envelope>";
             var response = Assest.Utility.CallWebService(req);
             var GetDocumentNumber = Assest.Utility.GetJSONResponse(response);
             return GetDocumentNumber;
         }
-       public void FileUploadHandlers(HttpContext content)
+        public ActionResult FileUploadHandler()
         {
-            FileUploadHandler.ProcessRequest(content);
+            object Message = null;
+            if (Request.Files.Count > 1)
+            {
+                //Fetch the Uploaded File.
+                HttpPostedFileBase postedFile = Request.Files[0];
+                //Set the Folder Path.
+                string folderPath = Server.MapPath("~/Uploads/");
+
+                //Set the File Name.
+                string fileName = Path.GetFileName(postedFile.FileName);
+
+                string filePath = folderPath + fileName;
+
+                //if exists delete
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+                //Save the File in Folder.
+                postedFile.SaveAs(folderPath + fileName);
+
+                //Send File details in a JSON Response.
+                string json = new JavaScriptSerializer().Serialize(
+                    new
+                    {
+                        name = fileName,
+                        path = filePath,
+                        uploadspath = folderPath
+                    });
+                Response.StatusCode = (int)HttpStatusCode.OK;
+                Response.ContentType = "text/json";
+                Response.Write(json);
+                Response.End();
+                var _RequestResponse = new RequestResponse
+                {
+                    Message = Response.StatusCode.ToString(),
+
+                    Status = "000"
+                };
+            }
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
     }
-    
+
 }

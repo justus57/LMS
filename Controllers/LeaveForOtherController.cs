@@ -110,7 +110,7 @@ namespace LMS.Controllers
             return JsonConvert.SerializeObject(leavetype);
 
         }
-        [WebMethod]
+        
         public static string GetLeaveDetails(string param1, string param2)
         {
             string OpeningBalance = "";

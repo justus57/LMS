@@ -14,7 +14,7 @@ namespace LMS
     /// </summary>
     public class FileUploadHandler 
     {
-        [HttpPost]
+     
         internal static void ProcessRequest(HttpContext context)
         {
             //Check if Request is to Upload the File.

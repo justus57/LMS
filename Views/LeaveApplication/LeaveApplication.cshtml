@@ -38,14 +38,15 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="Leave_Type" class="form-control-label">Leave Type</label>
-                                                  <select Class="form-control" ID ="Leave_Type" name="Leave_Type" AutoPostBack="false" style="width:100%">
-                                                        @foreach (var item in ViewBag.Leaves)
-                                                        {
-                                                            <option value="@item" customAttribute="item.SomethingSpecial">
-                                                               @item
-                                                            </option>
-                                                        }
-                                            </select>
+                                                <select Class="form-control" ID="Leave_Type" name="Leave_Type" AutoPostBack="false" style="width:100%">
+                                                    <option selected value="0">---Select---</option>
+                                                    @foreach (var item in ViewBag.Leaves)
+                                                    {
+                                                        <option value="@item" customAttribute="item.SomethingSpecial">
+                                                            @item
+                                                        </option>
+                                                    }
+                                                </select>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave type must be selected</div>
                                             </div>

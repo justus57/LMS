@@ -255,20 +255,7 @@
         // $('#Leave_Type').append('<option value="foo" selected="selected">Foo</option>');
         $("#LeaveStartDay").datepicker({ dateFormat: 'dd/mm/yy' }).val();
         $("#LeaveEndDay").datepicker({ dateFormat: 'dd/mm/yy' }).val();
-        $('#ApprovedLeave').select2({
-            sorter: function (data) {
-                return data.sort(function (a, b) {
-                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
-                });
-            }
-        });
-        $('#Leave_Type').select2({
-            sorter: function (data) {
-                return data.sort(function (a, b) {
-                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
-                });
-            }
-        });
+       
         $(".MultiLineLimit").on('change keydown paste input', function () {
             this.value = (this.value.length <= 50 ? this.value : this.value.substring(0, 50));
         });
@@ -284,18 +271,7 @@
     });
     $("#Leave_Type").change(function () {
         //selection fields
-        $('#ReturnDate').val('');
-        //$('#Leave_Type').val();//combo
-        $('#Leave_comments').val('');
-        $('#LeaveStartDay').val('');
-        $('#LeaveEndDay').val('');
-        $('#LeaveDaysApplied').val('');
-        //leave details
-        $('#Leave_Opening_Balance').val('');
-        $('#Leave_Entitled').val('');
-        $('#Leave_Accrued_Days').val('');
-        $('#Leave_Days_Taken').val('');
-        $('#Leave_Balance').val('');
+      
 
         jQuery.ajax({
             url: '/LeaveApplication/GetLeaveDetails',

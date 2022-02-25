@@ -1,11 +1,15 @@
 ﻿using LMS.CustomsClasses;
+using LMS.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using System.Web.Services;
 using System.Web.UI.WebControls;
 
@@ -15,6 +19,9 @@ namespace LMS.Controllers
     {
         private dynamic items;
         private dynamic keyList;
+        public readonly object _RequestResponse;
+
+
 
         // GET: LeaveForOther
         public ActionResult Index()
@@ -38,47 +45,8 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
             System.Web.HttpContext.Current.Session["Username"] = "";
             var username1 = System.Web.HttpContext.Current.Session["PayrollNo"];
-            if (Session["PayrollNo"] != null)
-            {
-                string username = Convert.ToString(username1);
-                string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
-                            <Body>
-                                <ReturnLeaveLookups xmlns = ""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal""> 
-                                     <lookupType>CauseOfAbsenceCode</lookupType> 
-                                     <employeeNo>" + username + @"</employeeNo> 
-                                 </ReturnLeaveLookups> 
-                             </Body>
-                         </Envelope>";
-                string response = Assest.Utility.CallWebService(req);
-
-                string array = Assest.Utility.GetJSONResponse(response);
-                dynamic json = JObject.Parse(array);
-                Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                try
-                {
-                    array = array.Substring(1, array.Length - 2);
-                    string[] resultArray = array.Split(',');
-                    foreach (var item in resultArray)
-                    {
-                        string[] result = item.ToString().Split(':');
-                        dictionary.Add(result[0].ToString().Trim('"'), result[1].ToString().Trim('"'));
-                    }
-                    List<string> keyList = new List<string>(dictionary.Keys);
-                    List<SelectListItem> items = new List<SelectListItem>();
-                    for (int i = 0; i < keyList.Count; i++)
-                    {
-                        items.Add(new SelectListItem { Text = keyList[i]});
-                        
-                    }
-                  
-                    ViewBag.Leaves = items;
-                    GetEmployeeList();
-                }
-                catch (Exception es)
-                {
-                    Console.Write(es);
-                }
-            }    
+          
+            GetEmployeeList();
             return View();
         }
         public void GetEmployeeList()
@@ -87,15 +55,16 @@ namespace LMS.Controllers
             var array = castedDico.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             var myList = new List<KeyValuePair<string, string>>(array);
             Dictionary<string, string> dictionary = new Dictionary<string, string>(array);
+            List<string> keyList = new List<string>(dictionary.Keys);
             List<SelectListItem> itemz = new List<SelectListItem>();
             foreach (var val in myList)
             {
                 itemz.Add(new SelectListItem { Value = val.Key, Text = val.Value });
             }
-            ViewBag.employees = itemz;
+            ViewBag.employees = keyList;
         }
-        [WebMethod]
-        public static string GetUserLeaves(string param1)
+       
+        public JsonResult GetUserLeaves(string param1)
         {
             string UserLeavesresponseString = LeaveForOtherXMLRequests.GetUserLeaves(param1);
 
@@ -107,11 +76,11 @@ namespace LMS.Controllers
                 leavetype.Add(new LeaveTypes { LeaveCode = kvp.Key, LeaveName = kvp.Value });
             }
 
-            return JsonConvert.SerializeObject(leavetype);
+            return Json(JsonConvert.SerializeObject(leavetype), JsonRequestBehavior.AllowGet); ;
 
         }
         
-        public static string GetLeaveDetails(string param1, string param2)
+        public JsonResult GetLeaveDetails(string param1, string param2)
         {
             string OpeningBalance = "";
             string Entitled = "";
@@ -143,24 +112,24 @@ namespace LMS.Controllers
                 Console.Write(e);
             }
 
-            var Leave = new LeaveCodeDetails
+
+            var Leave = new LeaveApplication
             {
-                Accrued = Accrued,
-                Description = Description,
-                EntitledDays = Entitled,
-                LeaveCode = LeaveCode,
-                LeaveTaken = LeaveTaken,
-                OpeningBalance = OpeningBalance,
-                Remaining = Remaining,
+                Leave_Accrued_Days = Accrued,
+
+                Leave_Entitled = Entitled,
                 RequiresAttachment = RequiresAttachment,
-                AttachmentMandatory = AttachmentMandatory
+                Leave_Days_Taken = LeaveTaken,
+                Leave_Opening_Balance = OpeningBalance,
+                Leave_Balance = Remaining,
+
             };
-            return JsonConvert.SerializeObject(Leave);
+            return Json(JsonConvert.SerializeObject(Leave), JsonRequestBehavior.AllowGet);
         }
-        [WebMethod]
-        public static string GetLeaveState(string param1, string param2, string param3)
+
+        public JsonResult GetLeaveState(string param1, string param2, string param3)
         {
-            string employeeNo = System.Web.HttpContext.Current.Session["Username"].ToString(); ;
+            string employeeNo = System.Web.HttpContext.Current.Session["PayrollNo"].ToString(); ;
             string causeofAbsenceCode = param1;
             string startDate = param2;
             string endDate = param3;
@@ -201,12 +170,12 @@ namespace LMS.Controllers
                 Message = Msg,
                 Validity = validity
             };
-            return JsonConvert.SerializeObject(_LeaveQuantityAndReturnDate);
+            return Json(JsonConvert.SerializeObject(_LeaveQuantityAndReturnDate), JsonRequestBehavior.AllowGet); ;
         }
-        [WebMethod]
-        public static string GetLeaveEndDateAndReturnDate(string param1, string param2, string param3)
+        
+        public JsonResult GetLeaveEndDateAndReturnDate(string param1, string param2, string param3)
         {
-            string employeeNo = System.Web.HttpContext.Current.Session["Username"].ToString(); ;
+            string employeeNo = System.Web.HttpContext.Current.Session["PayrollNo"].ToString(); ;
             string causeofAbsenceCode = param1;
             string startDate = param2;
             string qty = param3;
@@ -248,18 +217,17 @@ namespace LMS.Controllers
                 Message = Msg,
                 Validity = validity
             };
-            return JsonConvert.SerializeObject(_LeaveEndDateAndReturnDate);
+            return Json(JsonConvert.SerializeObject(_LeaveEndDateAndReturnDate), JsonRequestBehavior.AllowGet); ;
         }
-        [WebMethod]
-        public static string Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
+        public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
             string EmployeeID = param7.Trim();
             string EmployeeName = param8.Trim();
             string DocumentNo = GetDocumentNumber(EmployeeID);
             string RequestDate = DateTime.Now.ToString("dd/MM/yyyy");//d/m/Y
             string DateCreated = DateTime.Now.ToString("dd/MM/yyyy");
-            string AccountId = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string AccountId = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
             string ReturnDate = param1;
             string LeaveCode = param2;
             string Description = param3;
@@ -290,13 +258,13 @@ namespace LMS.Controllers
 
                 Message = Message
             };
-            return JsonConvert.SerializeObject(LeaveSubmitResponses);
+            return Json(JsonConvert.SerializeObject(LeaveSubmitResponses), JsonRequestBehavior.AllowGet); ;
         }
-        [WebMethod]
-        public static string Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
+       
+        public JsonResult Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
             //get Leave number
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
             DateTime _LeaveStartDay = AppFunctions.GetDateTime(param4);
             string response = null;
             string status = null;
@@ -319,7 +287,7 @@ namespace LMS.Controllers
 
                     string RequestDate = DateTime.Now.ToString("dd/MM/yyyy");//d/m/Y
                     string DateCreated = DateTime.Now.ToString("dd/MM/yyyy");
-                    string AccountId = System.Web.HttpContext.Current.Session["Username"].ToString();
+                    string AccountId = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
                     string ReturnDate = param1;
                     string LeaveCode = param2;
                     string Description = param3;
@@ -358,7 +326,7 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet); ;
         }
         private static string GetDocumentNumber(string EmployeeNumber)
         {
@@ -378,7 +346,7 @@ namespace LMS.Controllers
         }
         public static void UploadAttachment(string param1, string param2)
         {
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
 
             string UploadPath = param1;//full path+file name
             string DocumentNo = param2;
@@ -393,6 +361,51 @@ namespace LMS.Controllers
             {
                 System.IO.File.Delete(UploadPath);
             }
+        }
+        public ActionResult FileUploadHandler()
+        {
+            
+        object Message = null;
+            if (Request.Files.Count > 1)
+            {
+                //Fetch the Uploaded File.
+                HttpPostedFileBase postedFile = Request.Files[0];
+                //Set the Folder Path.
+                string folderPath = Server.MapPath("~/Uploads/");
+
+                //Set the File Name.
+                string fileName = Path.GetFileName(postedFile.FileName);
+
+                string filePath = folderPath + fileName;
+
+                //if exists delete
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+                //Save the File in Folder.
+                postedFile.SaveAs(folderPath + fileName);
+
+                //Send File details in a JSON Response.
+                string json = new JavaScriptSerializer().Serialize(
+                    new
+                    {
+                        name = fileName,
+                        path = filePath,
+                        uploadspath = folderPath
+                    });
+                Response.StatusCode = (int)HttpStatusCode.OK;
+                Response.ContentType = "text/json";
+                Response.Write(json);
+                Response.End();
+                var _RequestResponse = new RequestResponse
+                {
+                    Message = Response.StatusCode.ToString(),
+
+                    Status = "000"
+                };
+            }
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
 
     }

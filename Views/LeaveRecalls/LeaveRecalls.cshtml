@@ -18,17 +18,17 @@
                         <a href="#">Dashboard</a>
                     </li>
                     <li class="breadcrumb-item">Leave Recalls</li>
-                    <li class="breadcrumb-item active"> @{Response.Write(Request["status"]);} applications</li>
+                    <li class="breadcrumb-item active"> @Response.Write(Request["status"]); applications</li>
                 </ol>
                 <!-- DataTables Example -->
                 <div class="card mb-3">
                     <div class="card-header">
                         <i class="fas fa-folder"></i>
-                        @{Response.Write(Request["status"]); } Leave Recall Applications
+                        @Response.Write(Request["status"]);  Leave Recall Applications
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <asp:PlaceHolder ID="placeholder" runat="server" />
+                            <PlaceHolder ID="placeholder" />
                         </div>
                     </div>
                     <div class="card-footer small text-muted">Updated today at @DateTime.Now.ToShortTimeString() </div>

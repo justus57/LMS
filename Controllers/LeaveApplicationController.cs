@@ -1,20 +1,15 @@
 ﻿using LMS.CustomsClasses;
-using Microsoft.SharePoint.Client;
+using LMS.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Data;
+using System.IO;
 using System.Linq;
-using System.Text;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Services;
-using System.Web.UI.WebControls;
-using LMS.Models;
-using System.Net;
 using System.Web.Script.Serialization;
-using System.IO;
 
 namespace LMS.Controllers
 {

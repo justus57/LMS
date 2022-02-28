@@ -137,8 +137,8 @@ namespace LMS.Controllers
             
             return str.ToString(); ;
         }       
-        [WebMethod]
-        public static string SubmitOpenLeave(string param1, string param2)
+  
+        public JsonResult SubmitOpenLeave(string param1, string param2)
         {
             string LeaveHeaderNo = AppFunctions.Base64Decode(param1);
 
@@ -176,10 +176,11 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-        [WebMethod]
-        public static string DeleteOpenLeave(string param1)
+    
+
+        public JsonResult DeleteOpenLeave(string param1)
         {
             string status = "";
             string Message = "";
@@ -205,10 +206,10 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-        [WebMethod]
-        public static string CancelOpenLeave(string param1)
+    
+        public JsonResult CancelOpenLeave(string param1)
         {
             string status = null;
             string Message = null;
@@ -234,10 +235,10 @@ namespace LMS.Controllers
                 Message = "Action sent successfully"
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-        [WebMethod]
-        public static string DelegatePendingLeave(string param1)
+
+        public JsonResult DelegatePendingLeave(string param1)
         {
             string username = null;
             string LeaveHeaderNo = AppFunctions.Base64Decode(param1);
@@ -261,7 +262,7 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
       
         [ValidateInput(false)]

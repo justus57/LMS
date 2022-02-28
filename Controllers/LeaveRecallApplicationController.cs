@@ -90,8 +90,8 @@ namespace LMS.Controllers
         }
         
        
-        [WebMethod]
-        public static string GetLeaveDetails(string param1)
+      
+        public JsonResult GetLeaveDetails(string param1)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string OpeningBalance = "";
@@ -129,10 +129,10 @@ namespace LMS.Controllers
                 OpeningBalance = OpeningBalance,
                 Remaining = Remaining
             };
-            return JsonConvert.SerializeObject(_LeaveCodeDetails);
+            return  Json(JsonConvert.SerializeObject(_LeaveCodeDetails), JsonRequestBehavior.AllowGet);
         }
        
-        public static string LoadApprovedLeaves(string param1)
+        public JsonResult LoadApprovedLeaves(string param1)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();// get session variable
             List<AprrovedLeave> respmsg = new List<AprrovedLeave>();
@@ -154,10 +154,10 @@ namespace LMS.Controllers
                 Console.Write(es);
             }
 
-            return JsonConvert.SerializeObject(respmsg);
+            return Json(JsonConvert.SerializeObject(respmsg), JsonRequestBehavior.AllowGet);
         }
-        [WebMethod]
-        public static string ApprovedLeaveDetails(string param1)
+    
+        public JsonResult ApprovedLeaveDetails(string param1)
         {
             string startDate = "";
             string enddate = "";
@@ -186,10 +186,10 @@ namespace LMS.Controllers
                 ReturnDate = AppFunctions.ConvertTime(returndate),
                 StartDate = AppFunctions.ConvertTime(startDate)
             };
-            return JsonConvert.SerializeObject(Leave);
+            return  Json(JsonConvert.SerializeObject(Leave), JsonRequestBehavior.AllowGet);
         }
-        [WebMethod]
-        public static string Save(string param1, string param2, string param3, string param4, string param5, string param6)
+
+        public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6)
         {
             string Msg = "";
             try
@@ -231,7 +231,7 @@ namespace LMS.Controllers
             {
                 Message = Msg
             };
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         private static string GetDocumentNumber()
         {
@@ -261,8 +261,8 @@ namespace LMS.Controllers
 
             return DocumentNumber;
         }
-        [WebMethod]
-        public static string Submit(string param1, string param2, string param3, string param4, string param5, string param6)
+  
+        public JsonResult Submit(string param1, string param2, string param3, string param4, string param5, string param6)
         {
             string response = null;
             string status = null;
@@ -305,7 +305,7 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return  Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
     }
 }

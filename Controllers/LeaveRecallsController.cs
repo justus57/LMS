@@ -131,9 +131,8 @@ namespace LMS.Controllers
             str = new HtmlString(html.ToString());
         }
 
-       
-        [WebMethod]
-        public static string SubmitOpenLeaveRecall(string param1)
+
+        public JsonResult SubmitOpenLeaveRecall(string param1)
         {
             string LeaveHeaderNo = AppFunctions.Base64Decode(param1);
             string response = null;
@@ -158,11 +157,10 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
 
-        [WebMethod]
-        public static string DeleteOpenLeaveRecall(string param1)
+        public JsonResult DeleteOpenLeaveRecall(string param1)
         {
             //decode
             string documentNo = AppFunctions.Base64Decode(param1);
@@ -180,10 +178,10 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-        [WebMethod]
-        public static string CancelOpenLeaveRecall(string param1)
+
+        public JsonResult CancelOpenLeaveRecall(string param1)
         {
             string status = null;
             string Message = null;
@@ -209,7 +207,7 @@ namespace LMS.Controllers
                 Message = "Action sent successfully"
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
     }
 }

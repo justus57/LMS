@@ -58,6 +58,9 @@
     <Reference Include="DevExpress.Web.ASPxThemes.v21.2, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Web.Mvc5.v21.2, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Web.v21.2, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DynamicPlaceholders, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\DynamicPlaceholders.1.2.0.2\lib\net452\DynamicPlaceholders.dll</HintPath>
+    </Reference>
     <Reference Include="Google.Apis, Version=1.55.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
       <HintPath>packages\Google.Apis.1.55.0\lib\net45\Google.Apis.dll</HintPath>
     </Reference>
@@ -391,6 +394,7 @@
     <Compile Include="Models\LeaveRecallApplication.cs" />
     <Compile Include="Models\LeaveRecallForOther.cs" />
     <Compile Include="Models\LeaveRecalls.cs" />
+    <Compile Include="Models\LeavesListViewModel.cs" />
     <Compile Include="Models\LeaveType.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\OneTimePassword.cs" />
@@ -4079,6 +4083,7 @@
     <Content Include="Content\assets\vendor\tinymce\README.md" />
     <Content Include="Content\assets\vendor\tinymce\skins\ui\oxide-dark\fonts\tinymce-mobile.woff" />
     <Content Include="Content\assets\vendor\tinymce\skins\ui\oxide\fonts\tinymce-mobile.woff" />
+    <Content Include="App_Config\Include\DynamicPlaceholders\DynamicPlaceholders.config" />
     <None Include="Assest\Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Assest\Properties\Settings.settings" />
     <None Include="Properties\Settings.settings">

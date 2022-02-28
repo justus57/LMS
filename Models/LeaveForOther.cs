@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace LMS.Models
 {
@@ -18,6 +16,6 @@ namespace LMS.Models
         public string LeaveDaysApplied { get; set; }
         public string ReturnDate { get; set; }
         public string postedFile { get; set; }
-        public string Leave_comments { get; set; }   
+        public string Leave_comments { get; set; }
     }
 }

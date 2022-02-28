@@ -1,5 +1,4 @@
 ﻿using LMS.CustomsClasses;
-
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -8,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+
 namespace LMS.Controllers
 {
     public class LeaveController : Controller
     {
         private string tableview;
+
 
         public HtmlString str { get; private set; }
         // GET: Leave
@@ -126,7 +127,7 @@ namespace LMS.Controllers
             html.Append("</table>");
             string strText = html.ToString();
             //////Append the HTML string to Placeholder.
-            // placeholder.Controls.Add(new Literal { Text = html.ToString() });
+            //placeholder.control.add(new Literal { Text = html.ToString() });
 
             str = new HtmlString(html.ToString());
 

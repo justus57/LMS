@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LMS.CustomsClasses
 {
@@ -15,12 +12,12 @@ namespace LMS.CustomsClasses
         /********************************************************** APPROVAL REQUESTS ***********************************************************/
 
         public static string ApproveApprovalRequest(string DocumentNo, string Username, string DocumentArea)
-        {            
+        {
             return WebserviceConfig.ObjNav.ApproveApprovalRequest("Document", DocumentArea, DocumentNo, Username, 0);
         }
 
         public static string RejectApprovalRequest(string DocumentNo, string Username, string DocumentArea)
-        {            
+        {
             return WebserviceConfig.ObjNav.RejectApprovalRequest("Document", DocumentArea, DocumentNo, Username, 0);
         }
         public static string CancelApprovalRequest(string DocumentNo, string DocumentArea)
@@ -65,13 +62,13 @@ namespace LMS.CustomsClasses
                                           <LeaveSubType></LeaveSubType>
                                       </LeaveHeader>
                                   </leaveList>
-                                  <startRecord>"+ startRecord + @"</startRecord>
-                                  <noOfRecords>"+ noOfRecords + @"</noOfRecords>
+                                  <startRecord>" + startRecord + @"</startRecord>
+                                  <noOfRecords>" + noOfRecords + @"</noOfRecords>
                                   <employeeNo>" + employeeNo + @"</employeeNo>
                                   <requestAs>" + requestAs + @"</requestAs>
                                   <approvalStatus>" + approvalStatus + @"</approvalStatus>
-                                  <leaveSubType>"+ leaveSubType + @"</leaveSubType>
-                                  <totalRecords>"+ totalRecords + @"</totalRecords>
+                                  <leaveSubType>" + leaveSubType + @"</leaveSubType>
+                                  <totalRecords>" + totalRecords + @"</totalRecords>
                               </GetLeaveList>
                           </Body>
                       </Envelope>";
@@ -117,7 +114,7 @@ namespace LMS.CustomsClasses
                             </leaveDetail>
                             <documentNo>" + documentNo + @"</documentNo>
                             <employeeNo>" + employeeNo + @"</employeeNo>
-                            <operation>"+ operation + @"</operation>
+                            <operation>" + operation + @"</operation>
                         </GetLeaveDetail>
                     </Body>
                 </Envelope>";
@@ -154,7 +151,7 @@ namespace LMS.CustomsClasses
                         </Envelope>";
             string str = Assest.Utility.CallWebService(req);
             return Assest.Utility.GetJSONResponse(str);
-        }       
+        }
 
         public static string ChangeEmployeePassword(string username, string oldpass, string newpass)
         {
@@ -226,7 +223,7 @@ namespace LMS.CustomsClasses
             return req;
         }
         public static string GetAdvanceRequestNewNo(string documentType, string RegionCode)
-        {            
+        {
             return WebserviceConfig.ObjNav.GetAdvanceRequestNewNo(documentType, RegionCode);
         }
         /********************************************************** REPORTS ***********************************************************/
@@ -283,9 +280,9 @@ namespace LMS.CustomsClasses
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                             <Body>
                                 <ExportAdvanceRequestReport xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                    <documentType>"+ documentType + @"</documentType>
-                                    <documentNumber>"+ documentNumber + @"</documentNumber>
-                                    <exportToPath>"+ exportToPath + @"</exportToPath>
+                                    <documentType>" + documentType + @"</documentType>
+                                    <documentNumber>" + documentNumber + @"</documentNumber>
+                                    <exportToPath>" + exportToPath + @"</exportToPath>
                                 </ExportAdvanceRequestReport>
                             </Body>
                         </Envelope>";
@@ -300,7 +297,7 @@ namespace LMS.CustomsClasses
         /********************************************************** STAFF ADVANCE ***********************************************************/
         /********************************************************** STAFF ADVANCE ***********************************************************/
         /********************************************************** STAFF ADVANCE ***********************************************************/
-        
+
         public static string GetDimensionCodes()
         {
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
@@ -331,12 +328,12 @@ namespace LMS.CustomsClasses
         }
         public static string UpdateAdvanceRequest(string AdvanceRequestHdrNo, string documentType, string DateOfRequest, string DateDue, string Requester, string RequestBy, string RequestToCompany,
             string GlobalDimCode1, string GlobalDimCode2, string ShortCutDimCode1, string ShortCutDimCode2, string ShortCutDimCode3, string ShortCutDimCode4, string ShortCutDimCode5, string ShortCutDimCode6, string ShortCutDimCode7, string ShortCutDimCode8, string Currency, string staffAdvanceHeaderNo, string preferredPaymentMethod, string MissionSummary)
-        {           
+        {
             return WebserviceConfig.ObjNav.UpdateAdvanceRequest(AdvanceRequestHdrNo, documentType, DateOfRequest, DateDue, Requester, RequestBy, RequestToCompany, GlobalDimCode1, GlobalDimCode2, ShortCutDimCode1, ShortCutDimCode2, ShortCutDimCode3, ShortCutDimCode4, ShortCutDimCode5, ShortCutDimCode6, ShortCutDimCode7, ShortCutDimCode8, Currency, staffAdvanceHeaderNo, Convert.ToInt32(preferredPaymentMethod), MissionSummary);
         }
         public static string CreateAdvanceRequestLine(string AdvanceRequestHdrNo, string DocumentType, string Item, string ItemDescription, string unitOfMeasure, string NoOfUnits, string UnitCost, string Amount, string ActualAmount, string Remarks, string Purpose,
             string globalDimCode1, string globalDimCode2, string shortcutDimCode1, string shortcutDimCode2, string shortcutDimCode3, string shortcutDimCode4, string shortcutDimCode5, string shortcutDimCode6, string shortcutDimCode7, string shortcutDimCode8)
-        {            
+        {
             return WebserviceConfig.ObjNav.CreateAdvanceRequestLine(AdvanceRequestHdrNo, DocumentType, Item, Purpose, unitOfMeasure, NoOfUnits, UnitCost, Amount, ActualAmount, Remarks, ItemDescription,
                 globalDimCode1, globalDimCode2, shortcutDimCode1, shortcutDimCode2, shortcutDimCode3, shortcutDimCode4, shortcutDimCode5, shortcutDimCode6, shortcutDimCode7, shortcutDimCode8);
 
@@ -353,7 +350,7 @@ namespace LMS.CustomsClasses
                                 </AttachFileToRecord>
                             </Body>
                         </Envelope>";
-           
+
             Assest.Utility.CallWebService(req);
         }
         public static string GetAdvanceRequests(string documentArea, string Status, string AdvanceRequestHdrNo, string Requester)
@@ -410,7 +407,7 @@ namespace LMS.CustomsClasses
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                             <Body>
                                 <DeleteAdvanceRequest xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                    <documentType>"+ documentType + @"</documentType>
+                                    <documentType>" + documentType + @"</documentType>
                                     <advanceRequestHdrNo>" + AdvanceRequestHdrNo + @"</advanceRequestHdrNo>
                                 </DeleteAdvanceRequest>
                             </Body>
@@ -424,7 +421,7 @@ namespace LMS.CustomsClasses
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                             <Body>
                                 <DeleteAdvanceRequestLine xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                    <documentType>"+ documentType + @"</documentType>
+                                    <documentType>" + documentType + @"</documentType>
                                     <advanceRequestHdrNo>" + AdvanceRequestHdrNo + @"</advanceRequestHdrNo>
                                     <lineNo>" + LineNo + @"</lineNo>
                                 </DeleteAdvanceRequestLine>
@@ -439,7 +436,7 @@ namespace LMS.CustomsClasses
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                             <Body>
                                 <SubmitAdvanceRequest xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                    <documentType>"+ documentType + @"</documentType>
+                                    <documentType>" + documentType + @"</documentType>
                                     <advanceRequestHdrNo>" + advanceRequestHdrNo + @"</advanceRequestHdrNo>
                                 </SubmitAdvanceRequest>
                             </Body>
@@ -459,8 +456,8 @@ namespace LMS.CustomsClasses
                                             <Desription>[string]</Desription>
                                         </Attachment>
                                     </exportAttachments>
-                                    <documentNo>"+ documentNo + @"</documentNo>
-                                    <documentArea>"+ documentArea + @"</documentArea>
+                                    <documentNo>" + documentNo + @"</documentNo>
+                                    <documentArea>" + documentArea + @"</documentArea>
                                     <lineNo>0</lineNo>
                                 </ExportAttachments>
                             </Body>
@@ -472,7 +469,7 @@ namespace LMS.CustomsClasses
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                             <Body>
                                 <GetAdvanceRequestLine xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                    <documentType>"+ documentType + @"</documentType>
+                                    <documentType>" + documentType + @"</documentType>
                                     <advanceRequestLineNo>" + advanceRequestLineNo + @"</advanceRequestLineNo>
                                 </GetAdvanceRequestLine>
                             </Body>
@@ -513,7 +510,7 @@ namespace LMS.CustomsClasses
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                             <Body>
                                 <DeleteAttachment xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                    <documentNo>"+ DocumentNo + @"</documentNo>
+                                    <documentNo>" + DocumentNo + @"</documentNo>
                                 </DeleteAttachment>
                             </Body>
                         </Envelope>";
@@ -539,17 +536,17 @@ namespace LMS.CustomsClasses
         public static void AttachAttachmentToRecord(string documentArea, string documentType, string documentNo, string fromPath, string description,
             string tableId, string lineNo, string lineNo2)
         {
-            string req= @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+            string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                         <Body>
                             <AttachAttachmentToRecord xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                <documentArea>"+ documentArea + @"</documentArea>
-                                <documentType>"+ documentType + @"</documentType>
-                                <documentNo>"+ documentNo + @"</documentNo>
-                                <fromPath>"+ fromPath + @"</fromPath>
-                                <description>"+ description + @"</description>
-                                <tableId>"+ tableId + @"</tableId>
-                                <lineNo>"+ lineNo + @"</lineNo>
-                                <lineNo2>"+ lineNo2 + @"</lineNo2>
+                                <documentArea>" + documentArea + @"</documentArea>
+                                <documentType>" + documentType + @"</documentType>
+                                <documentNo>" + documentNo + @"</documentNo>
+                                <fromPath>" + fromPath + @"</fromPath>
+                                <description>" + description + @"</description>
+                                <tableId>" + tableId + @"</tableId>
+                                <lineNo>" + lineNo + @"</lineNo>
+                                <lineNo2>" + lineNo2 + @"</lineNo2>
                             </AttachAttachmentToRecord>
                         </Body>
                     </Envelope>";
@@ -560,17 +557,17 @@ namespace LMS.CustomsClasses
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                             <Body>
                                 <ExportAttachmentsToFile xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                    <documentArea>"+ documentArea + @"</documentArea>
+                                    <documentArea>" + documentArea + @"</documentArea>
                                     <tableId>52018772</tableId>
                                     <documentType>0</documentType>
                                     <documentNo>" + documentNo + @"</documentNo>
-                                    <lineNo>"+ lineNo + @"</lineNo>
-                                    <lineNo2>"+ lineNo + @"</lineNo2>
-                                    <exportToPath>"+ exportToPath + @"</exportToPath>
+                                    <lineNo>" + lineNo + @"</lineNo>
+                                    <lineNo2>" + lineNo + @"</lineNo2>
+                                    <exportToPath>" + exportToPath + @"</exportToPath>
                                 </ExportAttachmentsToFile>
                             </Body>
                         </Envelope>";
-           AppFunctions.CallWebService(req);
+            AppFunctions.CallWebService(req);
         }
         public static string GetApprovalEntries(string documentArea, string status, string WorkflowApprovalUserName)
         {
@@ -597,8 +594,8 @@ namespace LMS.CustomsClasses
                                         </ApprovalEntry>
                                     </exportApprovalEntries>
                                     <documentArea>" + documentArea + @"</documentArea>
-                                    <status>"+ status + @"</status>
-                                    <employeeNo>"+ WorkflowApprovalUserName + @"</employeeNo>
+                                    <status>" + status + @"</status>
+                                    <employeeNo>" + WorkflowApprovalUserName + @"</employeeNo>
                                 </GetApprovalEntries>
                             </Body>
                         </Envelope>";
@@ -611,7 +608,7 @@ namespace LMS.CustomsClasses
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                             <Body>
                                 <ApproveWorkflowApprovalRequest xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                    <approvalEntryNo>"+ EntryNo + @"</approvalEntryNo>
+                                    <approvalEntryNo>" + EntryNo + @"</approvalEntryNo>
                                 </ApproveWorkflowApprovalRequest>
                             </Body>
                         </Envelope>";
@@ -623,7 +620,7 @@ namespace LMS.CustomsClasses
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                             <Body>
                                 <RejectWorkflowApprovalRequest xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                    <approvalEntryNo>"+ EntryNo + @"</approvalEntryNo>
+                                    <approvalEntryNo>" + EntryNo + @"</approvalEntryNo>
                                 </RejectWorkflowApprovalRequest>
                             </Body>
                         </Envelope>";
@@ -635,7 +632,7 @@ namespace LMS.CustomsClasses
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                             <Body>
                                 <DelegateWorkflowApprovalRequest xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                    <approvalEntryNo>"+ EntryNo + @"</approvalEntryNo>
+                                    <approvalEntryNo>" + EntryNo + @"</approvalEntryNo>
                                 </DelegateWorkflowApprovalRequest>
                             </Body>
                         </Envelope>";
@@ -647,8 +644,8 @@ namespace LMS.CustomsClasses
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                             <Body>
                                 <CancelWorkflowApprovalRequest xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                    <documentType>"+ DocumentType + @"</documentType>
-                                    <documentNumber>"+ EntryNo + @"</documentNumber>
+                                    <documentType>" + DocumentType + @"</documentType>
+                                    <documentNumber>" + EntryNo + @"</documentNumber>
                                 </CancelWorkflowApprovalRequest>
                             </Body>
                         </Envelope>";
@@ -676,7 +673,7 @@ namespace LMS.CustomsClasses
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                             <Body>
                                 <GetAdvanceRequestType xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                    <code>"+ Code + @"</code>
+                                    <code>" + Code + @"</code>
                                 </GetAdvanceRequestType>
                             </Body>
                         </Envelope>";
@@ -697,13 +694,13 @@ namespace LMS.CustomsClasses
             string str = AppFunctions.CallWebService(req);
             return AppFunctions.GetJSONResponse(str);
         }
-        
+
         public static string ValidateDimensionValueCode(string code)
         {
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                             <Body>
                                 <ValidateDimensionValueCode xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                    <code>"+ code + @"</code>
+                                    <code>" + code + @"</code>
                                 </ValidateDimensionValueCode>
                             </Body>
                         </Envelope>";
@@ -1402,7 +1399,7 @@ namespace LMS.CustomsClasses
                                 </GetHRAppraisalTarget>
                             </Body>
                         </Envelope>";
-            return AppFunctions.CallWebService(req); 
+            return AppFunctions.CallWebService(req);
         }
         public static string SetWhoDefinesSection(string SectionNo, string WhoDefines)
         {
@@ -1435,7 +1432,7 @@ namespace LMS.CustomsClasses
                                 </GetHRAppraisalTargetObjectives>
                             </Body>
                         </Envelope>";
-            return AppFunctions.CallWebService(req); 
+            return AppFunctions.CallWebService(req);
         }
         public static string DeletePML(string pMLCode)
         {
@@ -1494,7 +1491,7 @@ namespace LMS.CustomsClasses
         /********************************************************** TRAINING ***********************************************************/
         /********************************************************** TRAINING ***********************************************************/
         /********************************************************** TRAINING ***********************************************************/
-        
+
         public static string GetTrainingNewNo(string Document)
         {
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">

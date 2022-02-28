@@ -18,7 +18,6 @@ namespace LMS.Controllers
         [HttpPost]
         public ActionResult Login(Login EmployeeData)
         {
-
             var param1 = EmployeeData.EmployeeNumber;
             var param2 = EmployeeData.Password;
             string Msg = null;
@@ -104,8 +103,6 @@ namespace LMS.Controllers
                     {
                         WorkflowApprovalUserName = WorkflowApprovalUserName.Replace("\\\\", "\\");
                     }
-
-
                     string IsMedicalApprover = json.IsMedicalApprover;
                     string IsEmployeeChangesApprover = json.IsEmployeeChangesApprover;
                     string AppraisalAccessLevel = json.AppraisalAccessLevel;
@@ -143,8 +140,6 @@ namespace LMS.Controllers
                 {
                     status = "999";
                     Msg = "Authentication failed. Wrong username or password.";
-                  
-
                 }
                 else
                 {
@@ -160,7 +155,6 @@ namespace LMS.Controllers
                
                 AppFunctions.WriteLog(es.Message);
             }
-
             var _RequestResponse = new RequestResponse
             {
                 Status = status,
@@ -172,12 +166,10 @@ namespace LMS.Controllers
         {
             return View();
         }
-
         public ActionResult Register(Register register)
         {
             object v = System.Web.HttpContext.Current.Session["Logged"] = "Yes";
             string loging = v.ToString();
-
             if (loging.Equals("Yes"))
             {
                 Response.Redirect("~/Dashboard/Dashboard");

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
 
 namespace LMS.Models
 {
@@ -10,11 +8,9 @@ namespace LMS.Models
     {
         [Required(ErrorMessage = "Please enter Employee Number")]
         public string EmployeeNumber { get; set; }
-
         [Required(ErrorMessage = "Please enter Password")]
         public string Password { get; set; }
         public string ErrorMessage { get; set; }
-
     }
     public class LoginResponse
     {
@@ -42,5 +38,5 @@ namespace LMS.Models
         public string IsHRManager { get; set; }
         public string IsAppraisalSupervisor { get; set; }
     }
-   
+
 }

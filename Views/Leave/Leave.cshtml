@@ -4,347 +4,80 @@
 }
 
 <main id="main" class="main">
-    <div class="page-content">
-
-        <div class="page-header">
-            <h1>
-                Leaves
-            </h1>
-        </div><!-- /.page-header -->
-
-        <div class="row">
-            <div class="col-xs-12">
-                <!-- PAGE CONTENT BEGINS -->
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="clearfix">
-                            <div class="pull-right tableTools-container"></div>
-                        </div>
-                        <div class="table-header">
-                            Results for "@ViewBag.ListType Leave applications"
-                        </div>
-
-                        <!-- div.table-responsive -->
-                        <!-- div.dataTables_borderWrap -->
-                        <div>
-                            <table id="leaves-table" class="table table-striped table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th class="center">
-                                            <label class="pos-rel">
-                                                <input type="checkbox" class="ace" />
-                                                <span class="lbl"></span>
-                                            </label>
-                                        </th>
-                                        <th>
-                                            <i class="ace-icon fa fa-calendar bigger-110 hidden-480"></i>
-                                            Date Submitted
-                                        </th>
-                                        <th>
-                                            <i class="ace-icon fa fa-clipboard bigger-110 hidden-480"></i>
-                                            Leave Type
-                                        </th>
-                                        <th>
-                                            <i class="ace-icon fa fa-list-ol bigger-110 hidden-480"></i>
-                                            Leave No
-                                        </th>
-                                        <th class="hidden-480">
-                                            <i class="ace-icon fa fa-calendar bigger-110 hidden-480"></i>
-                                            Start Date
-                                        </th>
-
-                                        <th>
-                                            <i class="ace-icon fa fa-calendar bigger-110 hidden-480"></i>
-                                            End Date
-                                        </th>
-                                        <th class="hidden-480">
-                                            <i class="ace-icon fa fa-calendar bigger-110 hidden-480"></i>
-                                            Days
-                                        </th>
-                                        <th class="hidden-480">
-                                            <i class="ace-icon fa fa-question-circle bigger-110 hidden-480"></i>
-                                            Status
-                                        </th>
-                                        <th class="hidden-480">
-                                            <i class="ace-icon fa fa-question-circle bigger-110 hidden-480"></i>
-                                            Progress
-                                        </th>
-
-                                        <th></th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    @foreach (var leave in Model)
-                                    {
-                                        <tr>
-                                            <td class="center">
-                                                <label class="pos-rel">
-                                                    <input type="checkbox" class="ace" />
-                                                    <span class="lbl"></span>
-                                                </label>
-                                            </td>
-
-                                            <td>
-                                                @leave.DateSubmitted
-                                            </td>
-                                            <td>@leave.LeaveType</td>
-                                            <td>@leave.DocumentNo</td>
-                                            <td class="hidden-480">@leave.StartDate</td>
-                                            <td>@leave.EndDate</td>
-                                            <td> @leave.LeaveDays day(s)</td>
-                                            <td class="hidden-480">
-                                                @if (leave.ApprovalStatus == ((int)DocumentApprovalStatus.Open).ToString())
-                                                {
-                                                    <span class="label label-sm label-warning">@((DocumentApprovalStatus)Convert.ToInt32(leave.ApprovalStatus))</span>
-                                                }
-                                                else if (leave.ApprovalStatus == ((int)DocumentApprovalStatus.ApprovalPending).ToString())
-                                                {
-                                                    <span class="label label-sm label-warning">@((DocumentApprovalStatus)Convert.ToInt32(leave.ApprovalStatus))</span>
-                                                }
-                                                else if (leave.ApprovalStatus == ((int)DocumentApprovalStatus.Approved).ToString())
-                                                {
-                                                    <span class="label label-sm label-success">@((DocumentApprovalStatus)Convert.ToInt32(leave.ApprovalStatus))</span>
-                                                }
-                                                else if (leave.ApprovalStatus == ((int)DocumentApprovalStatus.Rejected).ToString())
-                                                {
-                                                    <span class="label label-sm label-danger">@((DocumentApprovalStatus)Convert.ToInt32(leave.ApprovalStatus))</span>
-                                                }
-
-                                            </td>
-                                            <td class="hidden-480">
-                                                <div class="progress pos-rel" data-percent="@leave.ApprovalProgress%">
-                                                    <div class="progress-bar" style="width:@leave.ApprovalProgress%;"></div>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="hidden-sm hidden-xs action-buttons">
-
-                                                    @if (leave.ApprovalStatus == ((int)DocumentApprovalStatus.Open).ToString())
-                                                    {
-                                                        <a class="blue" href="@Url.Action("ViewLeave", "Leaves", new { id = leave.DocumentNo })">
-                                                            <i class="ace-icon fa fa-search-plus bigger-130"></i>
-                                                        </a>
-
-                                                        <a class="green" href="#">
-                                                            <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                                        </a>
-
-                                                        <a class="green submitleave" href="#" data-docno="@leave.DocumentNo">
-                                                            <i class="ace-icon fa fa-paper-plane-o bigger-130"></i>
-                                                        </a>
-
-                                                        <a class="red deleteleaves" href="#" data-docno="@leave.DocumentNo">
-                                                            <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                                                        </a>
-                                                    }
-                                                    else if (leave.ApprovalStatus == ((int)DocumentApprovalStatus.ApprovalPending).ToString())
-                                                    {
-                                                        <a class="blue" href="@Url.Action("ViewLeave", "Leaves", new { id = leave.DocumentNo })">
-                                                            <i class="ace-icon fa fa-search-plus bigger-130"></i>
-                                                        </a>
-
-                                                        <a class="red cancelleave" href="#" data-docno="@leave.DocumentNo">
-                                                            <i class="ace-icon fa fa-times bigger-130"></i>
-                                                        </a>
-
-
-                                                        <a class="blue delegateleave" href="#" data-docno="@leave.DocumentNo">
-                                                            <i class="ace-icon fa fa-arrow-right bigger-130"></i>
-                                                        </a>
-                                                    }
-                                                    else if (leave.ApprovalStatus == ((int)DocumentApprovalStatus.Approved).ToString())
-                                                    {
-                                                        <a class="blue" href="@Url.Action("ViewLeave", "Leaves", new { id = leave.DocumentNo })">
-                                                            <i class="ace-icon fa fa-search-plus bigger-130"></i>
-                                                        </a>
-                                                    }
-                                                    else if (leave.ApprovalStatus == ((int)DocumentApprovalStatus.Rejected).ToString())
-                                                    {
-                                                        <a class="blue" href="@Url.Action("ViewLeave", "Leaves", new { id = leave.DocumentNo })">
-                                                            <i class="ace-icon fa fa-search-plus bigger-130"></i>
-                                                        </a>
-
-                                                        <a class="red deleteleaves" href="#" data-docno="@leave.DocumentNo">
-                                                            <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                                                        </a>
-                                                    }
-
-                                                </div>
-
-                                                <div class="hidden-md hidden-lg">
-                                                    <div class="inline pos-rel">
-                                                        <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
-                                                            <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
-                                                        </button>
-
-                                                        <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                                            @if (leave.ApprovalStatus == ((int)DocumentApprovalStatus.Open).ToString())
-                                                            {
-                                                                <li>
-                                                                    <a href="@Url.Action("Details", "Leaves", new { id = leave.DocumentNo })" class="tooltip-info" data-rel="tooltip" title="View">
-                                                                        <span class="blue">
-                                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
-                                                                        </span>
-                                                                    </a>
-                                                                </li>
-
-                                                                <li>
-                                                                    <a href="@Url.Action("Edit", "Leaves", new { id = leave.DocumentNo })" class="tooltip-success" data-rel="tooltip" title="Edit">
-                                                                        <span class="green">
-                                                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-                                                                        </span>
-                                                                    </a>
-                                                                </li>
-
-                                                                <li>
-                                                                    <a href="#" class="tooltip-success submitleave" data-docno="@leave.DocumentNo" data-rel="tooltip" title="Submit">
-                                                                        <span class="green">
-                                                                            <i class="ace-icon fa fa-paper-plane-o bigger-120"></i>
-                                                                        </span>
-                                                                    </a>
-                                                                </li>
-
-                                                                <li>
-                                                                    <a href="#" class="tooltip-error cancelleave" data-docno="@leave.DocumentNo" data-rel="tooltip" title="Cancel">
-                                                                        <span class="red">
-                                                                            <i class="ace-icon fa fa-times bigger-120"></i>
-                                                                        </span>
-                                                                    </a>
-                                                                </li>
-
-                                                                <li>
-                                                                    <a href="#" class="tooltip-error deleteleaves" data-docno="@leave.DocumentNo" data-rel="tooltip" title="Delete">
-                                                                        <span class="red">
-                                                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                                                        </span>
-                                                                    </a>
-                                                                </li>
-                                                            }
-
-                                                            @if (leave.ApprovalStatus == ((int)DocumentApprovalStatus.ApprovalPending).ToString())
-                                                            {
-                                                                <li>
-                                                                    <a href="@Url.Action("Details", "Leaves", new { id = leave.DocumentNo })" class="tooltip-info" data-rel="tooltip" title="View">
-                                                                        <span class="blue">
-                                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
-                                                                        </span>
-                                                                    </a>
-                                                                </li>
-
-                                                                <li>
-                                                                    <a href="#" class="tooltip-error cancelleave" data-docno="@leave.DocumentNo" data-rel="tooltip" title="Cancel">
-                                                                        <span class="red">
-                                                                            <i class="ace-icon fa fa-times bigger-120"></i>
-                                                                        </span>
-                                                                    </a>
-                                                                </li>
-
-                                                                <li>
-                                                                    <a href="#" class="tooltip-info delegateleave" data-docno="@leave.DocumentNo" data-rel="tooltip" title="Cancel">
-                                                                        <span class="red">
-                                                                            <i class="ace-icon fa fa-arrow-right bigger-120"></i>
-                                                                        </span>
-                                                                    </a>
-                                                                </li>
-                                                            }
-                                                            @if (leave.ApprovalStatus == ((int)DocumentApprovalStatus.Approved).ToString())
-                                                            {
-                                                                <li>
-                                                                    <a href="@Url.Action("Details", "Leaves", new { id = leave.DocumentNo })" class="tooltip-info" data-rel="tooltip" title="View">
-                                                                        <span class="blue">
-                                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
-                                                                        </span>
-                                                                    </a>
-                                                                </li>
-                                                            }
-                                                            @if (leave.ApprovalStatus == ((int)DocumentApprovalStatus.Rejected).ToString())
-                                                            {
-                                                                <li>
-                                                                    <a href="@Url.Action("Details", "Leaves", new { id = leave.DocumentNo })" class="tooltip-info" data-rel="tooltip" title="View">
-                                                                        <span class="blue">
-                                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
-                                                                        </span>
-                                                                    </a>
-                                                                </li>
-                                                            }
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+    <div id="wrapper">
+        <div id="content-wrapper">
+            <div class="container-fluid">
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">Leaves</li>
+                    <li class="breadcrumb-item active">@{Response.Write(Request["status"]);} applications</li>
+                </ol>
+                <!-- DataTables Example -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-suitcase"></i>
+                        @{Response.Write(Request["status"]);} Leave applications
                     </div>
+                    
+                    <div class="card-footer small text-muted">Updated today at  @DateTime.Now.ToShortTimeString()</div>
                 </div>
-                <!-- PAGE CONTENT ENDS -->
-            </div><!-- /.col -->
-        </div><!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        <!-- /.content-wrapper -->
     </div>
-    <!--<div ID="NavbarContent" runat="server">-->
-    <!-- #Include virtual="includes/Navbar.aspx" -->
-    <!--</div>
-    <div id="wrapper">-->
-    <!-- Sidebar -->
-  
- 
-    <!-- Scroll to Top Button-->
-    <!--<a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>-->
+  </div>
     <!-- Logout Modal-->
-    <!--<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="Logout.aspx">Logout</a>
-                    </div>
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
                 </div>
             </div>
         </div>
-    </div>-->
+    </div>
 </main>
-<!-- Bootstrap core JavaScript-->
-<!--<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+ Bootstrap core JavaScript
+<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
 <script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
+<link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Custom fonts for this template-->
-<!--<link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">-->
+ Custom fonts for this template
+<link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
-<!-- Page level plugin CSS-->
-<!--<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-<link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet">-->
-<!-- Custom styles for this template-->
+ Page level plugin CSS
+<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet">
+ Custom styles for this template
 
-<!--<link href="~/Assest/css/custom.css" rel="stylesheet">-->
-<!-- Core plugin JavaScript-->
-<!--<script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>-->
+<link href="~/Assest/css/custom.css" rel="stylesheet">
+ Core plugin JavaScript
+<script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-<!-- Page level plugin JavaScript-->
-<!--<script src="~/Assest/vendor/datatables/jquery.dataTables.js"></script>
-<script src="~/Assest/vendor/datatables/dataTables.bootstrap4.js"></script>-->
+ Page level plugin JavaScript
+<script src="~/Assest/vendor/datatables/jquery.dataTables.js"></script>
+<script src="~/Assest/vendor/datatables/dataTables.bootstrap4.js"></script>
 
-<!-- Custom scripts for all pages-->
-<!--<script src="~/Assest/js/sb-admin.min.js"></script>
+ Custom scripts for all pages
+<script src="~/Assest/js/sb-admin.min.js"></script>
 <script src="~/Assest/js/bootbox.all.min.js"></script>
 <script src="~/Assest/js/bootboxError.js"></script>
-<script src="~/Assest/js/jquery.pleaseWait.js"></script>-->
+<script src="~/Assest/js/jquery.pleaseWait.js"></script>
 
-<!-- Demo scripts for this page-->
+ Demo scripts for this page
 
-<!--<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
@@ -607,5 +340,5 @@
         $.Toast.hideToast();
     }
 </script>
-    }-->
+    }
 

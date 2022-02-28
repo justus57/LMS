@@ -1876,8 +1876,8 @@ namespace LMS.CustomsClasses
                             </ChangeEmployeePassword>
                         </Body>
                     </Envelope>";
-            string str = AppFunctions.CallWebService(req);
-            return AppFunctions.GetJSONResponse(str);
+            string str = Assest.Utility.CallWebService(req);
+            return Assest.Utility.GetJSONResponse(str);
         }
     }
     public class ProfileXMLRequests

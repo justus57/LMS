@@ -174,7 +174,6 @@ namespace LMS.Controllers
             return View();
         }
 
-        [HttpPost]
         public ActionResult Register( Register register)
         {
             object v = System.Web.HttpContext.Current.Session["Logged"] = "Yes";
@@ -189,7 +188,7 @@ namespace LMS.Controllers
         //allow view for forgotpassword
         public ActionResult ForgotPassword() { return View(); }
         //function for getting password
-        [HttpPost]
+     
         public ActionResult ForgotPassword(ForgotPassword forgot)
         {
 
@@ -232,7 +231,7 @@ namespace LMS.Controllers
             return this.View();
         }
         public ActionResult OneTimePassword() { return View(); }
-        [HttpPost]
+      
         public ActionResult OneTimePassword(OneTimePassword password)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -242,7 +241,6 @@ namespace LMS.Controllers
             string Msg = "";
             string Hashdstring = "";
             string OldPasswordHash = "";
-
             try
             {
                 Hashdstring = AppFunctions.ComputeSha256Hash(newpass);

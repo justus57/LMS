@@ -255,7 +255,7 @@
         // $('#Leave_Type').append('<option value="foo" selected="selected">Foo</option>');
         $("#LeaveStartDay").datepicker({ dateFormat: 'dd/mm/yy' }).val();
         $("#LeaveEndDay").datepicker({ dateFormat: 'dd/mm/yy' }).val();
-       
+
         $(".MultiLineLimit").on('change keydown paste input', function () {
             this.value = (this.value.length <= 50 ? this.value : this.value.substring(0, 50));
         });
@@ -271,28 +271,24 @@
     });
     $("#Leave_Type").change(function () {
         //selection fields
-      
 
+        var ltype = $('#Leave_Type').val();
         jQuery.ajax({
-            url: '/LeaveApplication/GetLeaveDetails',
+            url:"@Url.Action("GetLeaveDetails","LeaveRecallApplication")",
             type: "POST",
-            data: '{param1:"' + $('#Leave_Type').val() + '" }',
+            data: '{param1:"' + ltype + '" }',
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (response) {
 
-                if (response != null && response.d != null) {
-                    var data = response.d;
-                    // alert(typeof (data)); //it comes out to be string
-                    //we need to parse it to JSON
-                    data = $.parseJSON(data);
-
+                if (response != null ) {
+                    var data = $.parseJSON(response);
                     //set fields values
-                    $('#Leave_Opening_Balance').val(data.OpeningBalance);
-                    $('#Leave_Entitled').val(data.EntitledDays);
-                    $('#Leave_Accrued_Days').val(data.Accrued);
-                    $('#Leave_Days_Taken').val(data.LeaveTaken);
-                    $('#Leave_Balance').val(data.Remaining);
+                    $('#Leave_Opening_Balance').val(data.Leave_Opening_Balance);
+                    $('#Leave_Entitled').val(data.Leave_Entitled);
+                    $('#Leave_Accrued_Days').val(data.Leave_Accrued_Days);
+                    $('#Leave_Days_Taken').val(data.Leave_Days_Taken);
+                    $('#Leave_Balance').val(data.Leave_Balance);
 
                     GetApprovedLeavesList($('#Leave_Type').val());
                 }
@@ -307,26 +303,25 @@
         $('#LeaveStartDay').val('');
         $('#LeaveEndDay').val('');
         $('#LeaveDaysApplied').val('');
+        var approvedleave = $('#ApprovedLeave').val();
 
         jQuery.ajax({
-            url: '/LeaveRecallApplication/ApprovedLeaveDetails',
+            url:"@Url.Action("ApprovedLeaveDetails", "LeaveRecallApplication")",
             type: "POST",
-            data: '{param1:"' + $('#ApprovedLeave').val() + '" }',
+            data: '{param1:"' + approvedleave + '" }',
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (response) {
 
-                if (response != null && response.d != null) {
-                    var data = response.d;
-                    // alert(typeof (data)); //it comes out to be string
-                    //we need to parse it to JSON
-                    data = $.parseJSON(data);
+                if (response != null) {
+
+                   var data = $.parseJSON(response);
 
                     //set fields values
-                    $('#LeaveEndDay').val(data.EndDate);
-                    $('#LeaveDaysApplied').val(data.Quantity);
+                    $('#LeaveEndDay').val(data.LeaveEndDay);
+                    $('#LeaveDaysApplied').val(data.LeaveDaysApplied);
                     $('#ReturnDate').val(data.ReturnDate);
-                    $('#LeaveStartDay').val(data.StartDate);
+                    $('#LeaveStartDay').val(data.LeaveStartDay);
                 }
             }
         });
@@ -371,20 +366,21 @@
             var startDate = new Date(start_date);
             var endDate = new Date(end_date);
 
+            var ltype = $('#Leave_Type').val();
+            var lstartday = $('#LeaveStartDay').val();
+            var lEndDay = $('#LeaveEndDay').val();
+
             if (startDate <= endDate) {
                 jQuery.ajax({
-                    url: '/LeaveApplication/GetLeaveState',
+                    url:"@Url.Action("GetLeaveState", "LeaveRecallApplication")",
                     type: "POST",
-                    data: '{param1:"' + $('#Leave_Type').val() + '",param2:"' + $('#LeaveStartDay').val() + '", param3:"' + $('#LeaveEndDay').val() + '"}',
+                    data: '{param1:"' + ltype + '",param2:"' + lstartday + '", param3:"' + lEndDay + '"}',
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function (response) {
 
-                        if (response != null && response.d != null) {
-                            var data = response.d;
-                            // alert(typeof (data)); //it comes out to be string
-                            //we need to parse it to JSON
-                            data = $.parseJSON(data);
+                        if (response != null ) {
+                            var data = $.parseJSON(response);
 
                             if (data.Validity == false) {
                                 bootbox.alert(data.Message);
@@ -423,19 +419,19 @@
                 if ($("#LeaveStartDay").val() == '') {
                     bootbox.alert("Please enter the Leave Start Date");
                 } else {
+                    var ltype = $('#Leave_Type').val();
+                    var lstartday = $('#LeaveStartDay').val();
+                    var LeaveDaysApplied = $('#LeaveDaysApplied').val();
                     jQuery.ajax({
-                        url: '/LeaveApplication/GetLeaveEndDateAndReturnDate',
+                        url:"@Url.Action("GetLeaveEndDateAndReturnDate", "LeaveRecallApplication")",
                         type: "POST",
-                        data: '{param1:"' + $('#Leave_Type').val() + '",param2:"' + $('#LeaveStartDay').val() + '", param3:"' + $('#LeaveDaysApplied').val() + '"}',
+                        data: '{param1:"' + ltype + '",param2:"' + lstartday + '", param3:"' + LeaveDaysApplied + '"}',
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         success: function (response) {
 
-                            if (response != null && response.d != null) {
-                                var data = response.d;
-                                // alert(typeof (data)); //it comes out to be string
-                                //we need to parse it to JSON
-                                data = $.parseJSON(data);
+                            if (response != null) {
+                                var data = $.parseJSON(response);
 
                                 if (data.Validity == false) {
                                     bootbox.alert(data.Message);
@@ -461,20 +457,24 @@
         } else if (form[0].checkValidity() === true) {
             // Perform ajax submit here...
             showToast('Saving application');
+            var ReturnDate = $('#ReturnDate').val();
+            var ltype = $('#Leave_Type').val();
+            var LeaveStartDay = $('#LeaveStartDay').val();
+            var LeaveEndDay = $('#LeaveEndDay').val();
+            var Leave_comments = $('#Leave_comments').val();
+            var LeaveDaysApplied = $('#LeaveDaysApplied').val();
+
 
             jQuery.ajax({
-                url: '/LeaveRecallApplication/Save',
+                url: "@Url.Action("Save", "LeaveRecallApplication")",
                 type: "POST",
-                data: '{param1:"' + $('#ReturnDate').val() + '", param2:"' + $('#Leave_Type').val() + '", param3:"' + $('#Leave_comments').val() + '", param4:"' + $('#LeaveStartDay').val() + '", param5:"' + $('#LeaveEndDay').val() + '", param6:"' + $('#LeaveDaysApplied').val() + '" }',
+                data: '{param1:"' + ReturnDate + '", param2:"' + ltype + '", param3:"' + Leave_comments + '", param4:"' + LeaveStartDay + '", param5:"' + LeaveEndDay + '", param6:"' + LeaveDaysApplied  + '" }',
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
 
-                    if (response != null && response.d != null) {
-                        var data = response.d;
-                        // alert(typeof (data)); //it comes out to be string
-                        //we need to parse it to JSON
-                        data = $.parseJSON(data);
+                    if (response != null ) {
+                        var data = $.parseJSON(response);
 
                         hideLoading();
 
@@ -503,20 +503,22 @@
 
             // Perform ajax submit here...
             showToast('Submitting application');
-
+            var ReturnDate = $('#ReturnDate').val();
+            var Leave_Type = $('#Leave_Type').val();
+            var LeaveStartDay = $('#LeaveStartDay').val();
+            var LeaveEndDay = $('#LeaveEndDay').val();
+            var Leave_comments = $('#Leave_comments').val();
+            var LeaveDaysApplied = $('#LeaveDaysApplied').val();
             jQuery.ajax({
-                url: '/LeaveRecallApplication/Submit',
+                url:"@Url.Action("Submit", "LeaveRecallApplication")",
                 type: "POST",
-                data: '{param1:"' + $('#ReturnDate').val() + '", param2:"' + $('#Leave_Type').val() + '", param3:"' + $('#Leave_comments').val() + '", param4:"' + $('#LeaveStartDay').val() + '", param5:"' + $('#LeaveEndDay').val() + '", param6:"' + $('#LeaveDaysApplied').val() + '" }',
+                data: '{param1:"' + ReturnDate + '", param2:"' + Leave_Type + '", param3:"' + Leave_comments + '", param4:"' + LeaveStartDay + '", param5:"' + LeaveEndDay + '", param6:"' + LeaveDaysApplied + '" }',
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
 
-                    if (response != null && response.d != null) {
-                        var data = response.d;
-                        // alert(typeof (data)); //it comes out to be string
-                        //we need to parse it to JSON
-                        data = $.parseJSON(data);
+                    if (response != null ) {
+                        var data = $.parseJSON(response);
 
                         hideLoading();
 
@@ -535,17 +537,14 @@
 
         if (LeaveCode != '') {
             jQuery.ajax({
-                url: '/LeaveRecallApplication/LoadApprovedLeaves',
+                url:"@Url.Action("LoadApprovedLeaves", "LeaveRecallApplication")",
                 type: "POST",
                 data: '{param1:"' + LeaveCode + '" }',
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
-                    if (response != null && response.d != null) {
-                        var data = response.d;
-                        // alert(response); //it comes out to be string
-                        //we need to parse it to JSON
-                        data = $.parseJSON(data);
+                    if (response != null) {
+                        var data = $.parseJSON(response);
 
                         $.each(data, function (i, item) {
                             // alert(item.LeaveNo);

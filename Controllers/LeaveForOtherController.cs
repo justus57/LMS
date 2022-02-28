@@ -20,9 +20,6 @@ namespace LMS.Controllers
         private dynamic items;
         private dynamic keyList;
         public readonly object _RequestResponse;
-
-
-
         // GET: LeaveForOther
         public ActionResult Index()
         {
@@ -79,7 +76,6 @@ namespace LMS.Controllers
             return Json(JsonConvert.SerializeObject(leavetype), JsonRequestBehavior.AllowGet); ;
 
         }
-        
         public JsonResult GetLeaveDetails(string param1, string param2)
         {
             string OpeningBalance = "";
@@ -91,7 +87,6 @@ namespace LMS.Controllers
             string LeaveCode = "";
             string RequiresAttachment = "";
             string AttachmentMandatory = "";
-
             try
             {
                 string LeaveDetailsresponseString = LeaveForOtherXMLRequests.GetLeaveCodeDetails(param1, param2);
@@ -111,7 +106,6 @@ namespace LMS.Controllers
             {
                 Console.Write(e);
             }
-
 
             var Leave = new LeaveApplication
             {
@@ -172,7 +166,6 @@ namespace LMS.Controllers
             };
             return Json(JsonConvert.SerializeObject(_LeaveQuantityAndReturnDate), JsonRequestBehavior.AllowGet); ;
         }
-        
         public JsonResult GetLeaveEndDateAndReturnDate(string param1, string param2, string param3)
         {
             string employeeNo = System.Web.HttpContext.Current.Session["PayrollNo"].ToString(); ;

@@ -153,18 +153,15 @@
                         showToast('Deleting application');
 
                         jQuery.ajax({
-                            url: 'Leaves/leave',
+                            url: "@Url.Action("leave", "Leave")",
                             type: "POST",
                             data: '{param1:"' + pid + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
 
-                                if (response != null && response.d != null) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-                                    data = $.parseJSON(data);
+                                if (response != null) {
+                                    var data = $.parseJSON(response);
 
                                     hideLoading();
 
@@ -209,18 +206,15 @@
                         showToast('Submitting application');
 
                         jQuery.ajax({
-                            url: 'Leaves/SubmitOpenLeave',
+                            url: "@Url.Action("SubmitOpenLeave", "Leave")",
                             type: "POST",
                             data: '{param1:"' + pid + '", param2:"' + startdate + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
 
-                                if (response != null && response.d != null) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-                                    data = $.parseJSON(data);
+                                if (response != null) {
+                                    var data = $.parseJSON(response);
 
                                     hideLoading();
 
@@ -271,18 +265,15 @@
                         showToast('Cancelling application');
 
                         jQuery.ajax({
-                            url: 'Leaves/CancelOpenLeave',
+                            url:"@Url.Action("CancelOpenLeave", "Leave")",
                             type: "POST",
                             data: '{param1:"' + pid + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
 
-                                if (response != null && response.d != null) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-                                    data = $.parseJSON(data);
+                                if (response != null) {
+                                    var data = $.parseJSON(response);
 
                                     hideLoading();
 
@@ -326,18 +317,15 @@
                         showToast('Delegating application');
 
                         jQuery.ajax({
-                            url: 'Leaves/DelegatePendingLeave',
+                            url:"@Url.Action("DelegatePendingLeave", "Leave")",
                             type: "POST",
                             data: '{param1:"' + pid + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
 
-                                if (response != null && response.d != null) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-                                    data = $.parseJSON(data);
+                                if (response != null ) {
+                                    var data = $.parseJSON(response);
 
                                     hideLoading();
 

@@ -131,7 +131,7 @@ namespace LMS.Controllers
             html.Append("</table>");
             string strText = html.ToString();
             //////Append the HTML string to Placeholder.
-            //placeholder.Controls.Add(new Literal { Text = html.ToString() });
+           // placeholder.Controls.Add(new Literal { Text = html.ToString() });
             
             str= new HtmlString(html.ToString());
             

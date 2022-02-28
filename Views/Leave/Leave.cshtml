@@ -19,10 +19,9 @@
                 <div class="card mb-3">
                     <div class="card-header">
                         <i class="fas fa-suitcase"></i>
-                        @{Response.Write(Request["status"]);} Leave applications
+                        @{Response.Write(Request["status"]);}Leave applications
                     </div>
-                    
-                    <div class="card-footer small text-muted">Updated today at  @DateTime.Now.ToShortTimeString()</div>
+                    <div class="card-footer small text-muted">Updated today at @DateTime.Now.ToShortTimeString()</div>
                 </div>
             </div>
             <!-- /.container-fluid -->

@@ -38,5 +38,4 @@ namespace LMS.Models
         public string IsHRManager { get; set; }
         public string IsAppraisalSupervisor { get; set; }
     }
-
 }

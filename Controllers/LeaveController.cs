@@ -59,7 +59,6 @@ namespace LMS.Controllers
                     }
                 }
             }
-
             return View(tableview);
         }
         private string LoadTable(string status, string owner)

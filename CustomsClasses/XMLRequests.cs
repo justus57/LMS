@@ -122,7 +122,7 @@ namespace LMS.CustomsClasses
                     XmlNode NodeHeaderNo = xmlSoapRequest.GetElementsByTagName("HeaderNo")[count];
                     string HeaderNo = NodeHeaderNo.InnerText;
 
-                    if (HeaderNo != "")
+                    if (HeaderNo != string.Empty)
                     {
                         count++;
                     }
@@ -248,7 +248,7 @@ namespace LMS.CustomsClasses
             table.Columns.Add("Status", typeof(string));
             table.Columns.Add("Action", typeof(string));
 
-            string str = AppFunctions.CallWebService(WebService.GetTrainingList("", username, TrainingStatus, AppliedAs));
+            string str = AppFunctions.CallWebService(WebService.GetTrainingList(string.Empty, username, TrainingStatus, AppliedAs));
 
             XmlDocument xmlSoapRequest = new XmlDocument();
 
@@ -273,7 +273,7 @@ namespace LMS.CustomsClasses
                     XmlNode NodePlannedEndDate = xmlSoapRequest.GetElementsByTagName("PlannedEndDate")[count];
                     string PlannedEndDate = NodePlannedEndDate.InnerText;
 
-                    if (No != "")
+                    if (No != string.Empty)
                     {
                         if (status == "Pending")
                         {
@@ -378,7 +378,7 @@ namespace LMS.CustomsClasses
                 XmlNode NodeSupervisor = xmlSoapRequest.GetElementsByTagName("Supervisor")[count];
                 string Supervisor = NodeSupervisor.InnerText;
 
-                if (EmployeeAppraisalHeaderNo != "")
+                if (EmployeeAppraisalHeaderNo != string.Empty)
                 {
                     string Validity = AppFunctions.Convert_AppraisalDetails(ValidFrom, ValidTo);
 
@@ -505,7 +505,7 @@ namespace LMS.CustomsClasses
 
 
 
-                        if (DocumentNo != "")
+                        if (DocumentNo != string.Empty)
                         {
 
                             if (DocumentType == "0")
@@ -669,7 +669,7 @@ namespace LMS.CustomsClasses
                     XmlNode NodeHeaderNoLink = xmlSoapRequest.GetElementsByTagName("HeaderNo")[count];
                     string HeaderNoLink = NodeHeaderNoLink.InnerText;
 
-                    if (HeaderNoLink != "")
+                    if (HeaderNoLink != string.Empty)
                     {
                         count++;
                     }
@@ -806,7 +806,7 @@ namespace LMS.CustomsClasses
                             </Envelope>";
 
             string str = Assest.Utility.CallWebService(request);
-            string resp = "";
+            string resp = string.Empty;
             if (!string.IsNullOrEmpty(str) && str.TrimStart().StartsWith("<"))
             {
                 resp = "success";
@@ -836,7 +836,7 @@ namespace LMS.CustomsClasses
         }
         public static void UploadFile(string documentNo, string fromPath)
         {
-            WebService.AttachFileToRecord("Absence", documentNo, fromPath, "");
+            WebService.AttachFileToRecord("Absence", documentNo, fromPath, string.Empty);
         }
     }
     public class LeaveForOtherXMLRequests
@@ -1900,7 +1900,7 @@ namespace LMS.CustomsClasses
     {
         public static string LoadLeaveRecallData(string LeaveID, string username)
         {
-            return WebService.GetLeaveDetail(LeaveID, username, "Export", "");
+            return WebService.GetLeaveDetail(LeaveID, username, "Export", string.Empty);
         }
         public static string LoadLeaveDetails(string username, string LeaveCode)
         {
@@ -2158,7 +2158,7 @@ namespace LMS.CustomsClasses
         {
             string username = HttpContext.Current.Session["Username"].ToString();
 
-            string str = AppFunctions.CallWebService(WebService.GetNewAppraisals("New", employeeNo, ""));
+            string str = AppFunctions.CallWebService(WebService.GetNewAppraisals("New", employeeNo, string.Empty));
 
             XmlDocument xmlSoapRequest = new XmlDocument();
             int count = 0;
@@ -2190,7 +2190,7 @@ namespace LMS.CustomsClasses
 
                     string Validity = AppFunctions.ConvertAppraisalDetails(ValidFrom, ValidTo);
 
-                    if (AppraisalCode != "")
+                    if (AppraisalCode != string.Empty)
                     {
                         table.Rows.Add(AppraisalName, Validity, "Open", "<a class = 'btn btn-secondary btn-xs' href = " + "AppraisalApplication.aspx?id=" + AppFunctions.Base64Encode(AppraisalCode) + "&code=" + AppFunctions.Base64Encode(AppraisalName) + "><span class = 'fa fa-edit'> </span></a> ");
                     }
@@ -2248,7 +2248,7 @@ namespace LMS.CustomsClasses
                 XmlNode NodeHRComment = xmlSoapRequest.GetElementsByTagName("HRMComment")[count];
                 string HRComment = NodeHRComment.InnerText;
 
-                if (EmployeeAppraisalHeaderNo != "")
+                if (EmployeeAppraisalHeaderNo != string.Empty)
                 {
                     string Validity = AppFunctions.Convert_AppraisalDetails(ValidFrom, ValidTo);
                     table.Rows.Add(EmployeeAppraisalHeaderNo, AppraisalName, Validity, EmployeeName, status, "<a class = 'btn btn-primary btn-xs' href = " + "ViewAppraisal.aspx?id=" + AppFunctions.Base64Encode(AppraisalCode) + "&code=" + AppFunctions.Base64Encode(AppraisalName) + "&status=" + status + "&emp=" + AppFunctions.Base64Encode(EmployeeNo) + "&viewer=" + AppFunctions.Base64Encode(requestAs) + "&HRC=" + AppFunctions.Base64Encode(HRComment) + "&EmployeeAppraisalHeaderNo=" + AppFunctions.Base64Encode(EmployeeAppraisalHeaderNo) + "><span class = 'fa fa-eye'> </span></a>");
@@ -2262,8 +2262,8 @@ namespace LMS.CustomsClasses
         public static string GetAppraisalHRComment(string employeeNumber, string appraisalHeaderNumber)
         {
             Appraisal fields;
-            string HRMComment = "";
-            string AppraisalCode = "";
+            string HRMComment = string.Empty;
+            string AppraisalCode = string.Empty;
 
             string tabledata = WebService.GetFilledAppraisals(employeeNumber, appraisalHeaderNumber);
 
@@ -2276,7 +2276,7 @@ namespace LMS.CustomsClasses
                 XmlNode NodeAppraisalCode = xmlSoapRequest.GetElementsByTagName("AppraisalHeaderNumber")[count];
                 AppraisalCode = NodeAppraisalCode.InnerText;
 
-                if (AppraisalCode != "")
+                if (AppraisalCode != string.Empty)
                 {
                     XmlNode NodeHRMComment = xmlSoapRequest.GetElementsByTagName("HRMComment")[count];
                     HRMComment = NodeHRMComment.InnerText;
@@ -2492,7 +2492,7 @@ namespace LMS.CustomsClasses
         {
             string username = HttpContext.Current.Session["Username"].ToString();
 
-            string str = AppFunctions.CallWebService(WebService.GetNewAppraisals("CreatedBy", employeeNo, ""));
+            string str = AppFunctions.CallWebService(WebService.GetNewAppraisals("CreatedBy", employeeNo, string.Empty));
 
             XmlDocument xmlSoapRequest = new XmlDocument();
 
@@ -2528,7 +2528,7 @@ namespace LMS.CustomsClasses
 
                     string Validity = AppFunctions.ConvertAppraisalDetails(ValidFrom, ValidTo);
 
-                    if (AppraisalCode != "")
+                    if (AppraisalCode != string.Empty)
                     {
                         if (Status == "0")
                         {
@@ -2560,7 +2560,7 @@ namespace LMS.CustomsClasses
         {
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
 
-            string strText = AppFunctions.CallWebService(WebService.GetNewAppraisals("", employeeNo, ""));
+            string strText = AppFunctions.CallWebService(WebService.GetNewAppraisals(string.Empty, employeeNo, string.Empty));
 
             XmlDocument xmlSoapRequest = new XmlDocument();
             xmlSoapRequest.LoadXml(strText);
@@ -2637,24 +2637,24 @@ namespace LMS.CustomsClasses
         }
         public static string GetAppraisalDetails(string AppraisalHeaderNo, string username)
         {
-            string AppraisalHeaderNumber = "";
-            string AppraisalDescription = "";
-            string AppraisalStartDate = "";
-            string AppraisalEndDate = "";
-            string AppraisalType = "";
-            string AppraisalApplicableTo = "";
+            string AppraisalHeaderNumber = string.Empty;
+            string AppraisalDescription = string.Empty;
+            string AppraisalStartDate = string.Empty;
+            string AppraisalEndDate = string.Empty;
+            string AppraisalType = string.Empty;
+            string AppraisalApplicableTo = string.Empty;
 
             string tabledata = AppFunctions.CallWebService(WebService.GetNewAppraisals("Single", username, AppraisalHeaderNo));
 
             XmlDocument xmlSoapRequest = new XmlDocument();
             xmlSoapRequest.LoadXml(tabledata);
             int count = 0;
-            string AppraisalName = "";
-            string ValidFrom = "";
-            string ValidTo = "";
-            string AppraisalCode = "";
-            string Appraisal_Type = "";
-            string ApplicableTo = "";
+            string AppraisalName = string.Empty;
+            string ValidFrom = string.Empty;
+            string ValidTo = string.Empty;
+            string AppraisalCode = string.Empty;
+            string Appraisal_Type = string.Empty;
+            string ApplicableTo = string.Empty;
 
             foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("Appraisal"))
             {
@@ -2673,7 +2673,7 @@ namespace LMS.CustomsClasses
                 XmlNode NodeApplicableTo = xmlSoapRequest.GetElementsByTagName("ApplicableTo")[count];
                 ApplicableTo = NodeApplicableTo.InnerText;
 
-                if (AppraisalCode != "")
+                if (AppraisalCode != string.Empty)
                 {
                     AppraisalHeaderNumber = AppraisalCode;
                     AppraisalDescription = AppraisalName;
@@ -2740,8 +2740,8 @@ namespace LMS.CustomsClasses
             xmlSoapRequest.LoadXml(strText);
 
 
-            string Code = "";
-            string HRComment = "";
+            string Code = string.Empty;
+            string HRComment = string.Empty;
 
             int count = 0;
             foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("SectionComment"))
@@ -2807,7 +2807,7 @@ namespace LMS.CustomsClasses
         }
         public static DataTable GetAppraisalSections()
         {
-            string str = WebService.GetAppraisalSections("", "");
+            string str = WebService.GetAppraisalSections(string.Empty, string.Empty);
 
             XmlDocument xmlSoapRequest = new XmlDocument();
 
@@ -2835,7 +2835,7 @@ namespace LMS.CustomsClasses
                     XmlNode NodeValidTo = xmlSoapRequest.GetElementsByTagName("IsHRDefined")[count];
                     string IsHRDefined = NodeValidTo.InnerText;
 
-                    if (Code != "")
+                    if (Code != string.Empty)
                     {
                         if (IsHRDefined == "true")
                         {
@@ -2949,7 +2949,7 @@ namespace LMS.CustomsClasses
         {
             string username = HttpContext.Current.Session["Username"].ToString();
 
-            string str = WebService.GetPerformanceMeasurementLevels("");
+            string str = WebService.GetPerformanceMeasurementLevels(string.Empty);
 
             XmlDocument xmlSoapRequest = new XmlDocument();
 
@@ -2976,7 +2976,7 @@ namespace LMS.CustomsClasses
                     XmlNode NodeDescription = xmlSoapRequest.GetElementsByTagName("Description")[count];
                     string Description = NodeDescription.InnerText;
 
-                    if (Code != "")
+                    if (Code != string.Empty)
                     {
                         table.Rows.Add(Code, Description,
                            "<a class = 'btn btn-secondary btn-xs' data-id=" + No + " href = " + "EditPML.aspx?id=" + AppFunctions.Base64Encode(No) + "&code=" + AppFunctions.Base64Encode(No) + "><span class = 'fa fa-pencil-alt' data-toggle='tooltip' title='Edit PML'> </span></a> " +
@@ -3010,9 +3010,9 @@ namespace LMS.CustomsClasses
 
             int count = 0;
 
-            string Code = "";
-            string Description = "";
-            string IsHRDefined = "";
+            string Code = string.Empty;
+            string Description = string.Empty;
+            string IsHRDefined = string.Empty;
 
 
             if (!string.IsNullOrEmpty(str) && str.TrimStart().StartsWith("<"))
@@ -3056,9 +3056,9 @@ namespace LMS.CustomsClasses
 
             int count = 0;
 
-            string No = "";
-            string Code = "";
-            string Description = "";
+            string No = string.Empty;
+            string Code = string.Empty;
+            string Description = string.Empty;
 
             if (!string.IsNullOrEmpty(str) && str.TrimStart().StartsWith("<"))
             {
@@ -3121,7 +3121,7 @@ namespace LMS.CustomsClasses
             table.Columns.Add("Course Name", typeof(string));
             table.Columns.Add("Action", typeof(string));
 
-            string str = AppFunctions.CallWebService(WebService.GetTrainingList("", username, status, AppliedAs));
+            string str = AppFunctions.CallWebService(WebService.GetTrainingList(string.Empty, username, status, AppliedAs));
 
             XmlDocument xmlSoapRequest = new XmlDocument();
 
@@ -3147,7 +3147,7 @@ namespace LMS.CustomsClasses
                     string PlannedEndDate = NodePlannedEndDate.InnerText;
 
 
-                    if (No != "")
+                    if (No != string.Empty)
                     {
                         if (status == "Open")
                         {
@@ -3178,46 +3178,46 @@ namespace LMS.CustomsClasses
         }
         public static string GetTrainingDetail(string TrainingNo)
         {
-            string tabledata = AppFunctions.CallWebService(WebService.GetTrainingList(TrainingNo, "", "", ""));
+            string tabledata = AppFunctions.CallWebService(WebService.GetTrainingList(TrainingNo, string.Empty, string.Empty, string.Empty));
 
             XmlDocument xmlSoapRequest = new XmlDocument();
             xmlSoapRequest.LoadXml(tabledata);
             int count = 0;
 
-            string _AbsenceType = "";
-            string _No = "";
-            string _Description = "";
-            string _PlannedStartDate = "";
-            string _PlannedStartTime = "";
-            string _PlannedEndDate = "";
-            string _PlannedEndTime = "";
-            string _TotalCost = "";
-            string _NoSeries = "";
-            string _CourseCode = "";
-            string _CourseDescription = "";
-            string _Trainer = "";
-            string _TrainerName = "";
-            string _Venue = "";
-            string _Room = "";
-            string _TrainingInstitution = "";
-            string _ScheduledStartDate = "";
-            string _ScheduledStartTime = "";
-            string _ScheduledEndDate = "";
-            string _ScheduledEndTime = "";
-            string _ActualStartDate = "";
-            string _ActualStartTime = "";
-            string _ActualEndDate = "";
-            string _ActualEndTime = "";
-            string _CancellationCompletionDate = "";
-            string _ProgressStatus = "";
-            string _LPONo = "";
-            string _TrainingPlanNo = "";
-            string _Archived = "";
-            string _CancellationReason = "";
-            string _ActualCost = "";
-            string _ApplicableTo = "";
-            string _Approver = "";
-            string _RequirementOfTrainingRequest = "";
+            string _AbsenceType = string.Empty;
+            string _No = string.Empty;
+            string _Description = string.Empty;
+            string _PlannedStartDate = string.Empty;
+            string _PlannedStartTime = string.Empty;
+            string _PlannedEndDate = string.Empty;
+            string _PlannedEndTime = string.Empty;
+            string _TotalCost = string.Empty;
+            string _NoSeries = string.Empty;
+            string _CourseCode = string.Empty;
+            string _CourseDescription = string.Empty;
+            string _Trainer = string.Empty;
+            string _TrainerName = string.Empty;
+            string _Venue = string.Empty;
+            string _Room = string.Empty;
+            string _TrainingInstitution = string.Empty;
+            string _ScheduledStartDate = string.Empty;
+            string _ScheduledStartTime = string.Empty;
+            string _ScheduledEndDate = string.Empty;
+            string _ScheduledEndTime = string.Empty;
+            string _ActualStartDate = string.Empty;
+            string _ActualStartTime = string.Empty;
+            string _ActualEndDate = string.Empty;
+            string _ActualEndTime = string.Empty;
+            string _CancellationCompletionDate = string.Empty;
+            string _ProgressStatus = string.Empty;
+            string _LPONo = string.Empty;
+            string _TrainingPlanNo = string.Empty;
+            string _Archived = string.Empty;
+            string _CancellationReason = string.Empty;
+            string _ActualCost = string.Empty;
+            string _ApplicableTo = string.Empty;
+            string _Approver = string.Empty;
+            string _RequirementOfTrainingRequest = string.Empty;
 
             foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("Training"))
             {
@@ -3443,7 +3443,7 @@ namespace LMS.CustomsClasses
             string UnitOfMeasure = json.UnitOfMeasure;
             string ExchangeRate = json.ExchangeRate;
 
-            UnitCost = UnitCost.Replace(",", "");
+            UnitCost = UnitCost.Replace(",", string.Empty);
 
             var _AdvanceRequestType = new AdvanceRequestType
             {
@@ -3573,7 +3573,7 @@ namespace LMS.CustomsClasses
 
             foreach (var item in bsObj._AdvanceRequestLines)
             {
-                if (item.Item != "")
+                if (item.Item != string.Empty)
                 {
                     AdvanceRequestTypesList.Add(new AdvanceRequestLines { No = item.No, ItemDescription = item.ItemDescription });
                 }
@@ -3588,7 +3588,7 @@ namespace LMS.CustomsClasses
 
             foreach (var item in CreateAdvanceRequestXMLRequests.GetDimCode(Code))
             {
-                if (item.Key != "")
+                if (item.Key != string.Empty)
                 {
                     AdvanceRequestTypesList.Add(new DimensionCode { Code = item.Key, Description = item.Value });
                 }
@@ -3602,7 +3602,7 @@ namespace LMS.CustomsClasses
 
             foreach (var item in CreateAdvanceRequestXMLRequests.GetDimCode(Code))
             {
-                if (item.Key != "")
+                if (item.Key != string.Empty)
                 {
                     list.Add(item.Value);
                 }
@@ -3715,7 +3715,7 @@ namespace LMS.CustomsClasses
         public static string CreateAdvanceRequestLine(string AdvanceRequestHdrNo, string Item, string ItemDescription, string UnitOfMeasure, string NoOfUnits, string UnitCost, string Amount, string Purpose,
             string globalDimCode1, string globalDimCode2, string shortcutDimCode1, string shortcutDimCode2, string shortcutDimCode3, string shortcutDimCode4, string shortcutDimCode5, string shortcutDimCode6, string shortcutDimCode7, string shortcutDimCode8)
         {
-            return WebService.CreateAdvanceRequestLine(AdvanceRequestHdrNo, "0", Item, ItemDescription, UnitOfMeasure, NoOfUnits, UnitCost, Amount, "0", "", Purpose, globalDimCode1, globalDimCode2, shortcutDimCode1, shortcutDimCode2, shortcutDimCode3, shortcutDimCode4, shortcutDimCode5, shortcutDimCode6, shortcutDimCode7, shortcutDimCode8);
+            return WebService.CreateAdvanceRequestLine(AdvanceRequestHdrNo, "0", Item, ItemDescription, UnitOfMeasure, NoOfUnits, UnitCost, Amount, "0", string.Empty, Purpose, globalDimCode1, globalDimCode2, shortcutDimCode1, shortcutDimCode2, shortcutDimCode3, shortcutDimCode4, shortcutDimCode5, shortcutDimCode6, shortcutDimCode7, shortcutDimCode8);
         }
         public static string UpdateAdvanceRequestLine(string AdvanceRequestHdrNo, string Item, string ItemDescription, string UnitOfMeasure, string NoOfUnits, string UnitCost, string Amount, string LineNo, string Remarks, string Purpose,
             string globalDimCode1, string globalDimCode2, string shortCutDimCode1, string shortCutDimCode2, string shortCutDimCode3, string shortCutDimCode4, string shortCutDimCode5, string shortCutDimCode6, string shortCutDimCode7, string shortCutDimCode8)
@@ -3763,7 +3763,7 @@ namespace LMS.CustomsClasses
         public static DataTable GetAdvanceRequestsList(string status, string CreatedBy)
         {
             string username = HttpContext.Current.Session["Username"].ToString();
-            string AdvanceRequestHdrNo = "";
+            string AdvanceRequestHdrNo = string.Empty;
             int count = 0;
 
             DataTable table = new DataTable();
@@ -3812,7 +3812,7 @@ namespace LMS.CustomsClasses
                     XmlNode NodeRejectionComment = xmlSoapRequest.GetElementsByTagName("RejectionComment")[count];
                     string RejectionComment = NodeRejectionComment.InnerText;
 
-                    if (No != "")
+                    if (No != string.Empty)
                     {
                         if (status == "Open")
                         {
@@ -3860,26 +3860,26 @@ namespace LMS.CustomsClasses
 
             XmlDocument xmlSoapRequest = new XmlDocument();
 
-            string AdvanceRequestHdrNo = "";
-            string Requester = "";
-            string DateOfRequest = "";
-            string DateDue = "";
-            string GlobalDimCode1 = "";
-            string GlobalDimCode2 = "";
-            string ShortcutDimCode1 = "";
-            string ShortcutDimCode2 = "";
-            string ShortcutDimCode3 = "";
-            string ShortcutDimCode4 = "";
-            string ShortcutDimCode5 = "";
-            string ShortcutDimCode6 = "";
-            string ShortcutDimCode7 = "";
-            string ShortcutDimCode8 = "";
-            string PreferredPaymentMethod = "";
-            string Currency = "";
-            string Balance = "";
-            string StaffAdvanceHeaderNo = "";
-            string MissionSummary = "";
-            string RejectionComment = "";
+            string AdvanceRequestHdrNo = string.Empty;
+            string Requester = string.Empty;
+            string DateOfRequest = string.Empty;
+            string DateDue = string.Empty;
+            string GlobalDimCode1 = string.Empty;
+            string GlobalDimCode2 = string.Empty;
+            string ShortcutDimCode1 = string.Empty;
+            string ShortcutDimCode2 = string.Empty;
+            string ShortcutDimCode3 = string.Empty;
+            string ShortcutDimCode4 = string.Empty;
+            string ShortcutDimCode5 = string.Empty;
+            string ShortcutDimCode6 = string.Empty;
+            string ShortcutDimCode7 = string.Empty;
+            string ShortcutDimCode8 = string.Empty;
+            string PreferredPaymentMethod = string.Empty;
+            string Currency = string.Empty;
+            string Balance = string.Empty;
+            string StaffAdvanceHeaderNo = string.Empty;
+            string MissionSummary = string.Empty;
+            string RejectionComment = string.Empty;
 
             if (!string.IsNullOrEmpty(str) && str.TrimStart().StartsWith("<"))
             {
@@ -3894,7 +3894,7 @@ namespace LMS.CustomsClasses
                     XmlNode NodeDateOfRequest = xmlSoapRequest.GetElementsByTagName("DateOfRequest")[count];
                     DateOfRequest = NodeDateOfRequest.InnerText;
 
-                    if (DateOfRequest != "")
+                    if (DateOfRequest != string.Empty)
                     {
                         DateOfRequest = Convert.ToDateTime(DateOfRequest).ToString("dd/MM/yyyy");
                     }
@@ -3902,7 +3902,7 @@ namespace LMS.CustomsClasses
                     XmlNode NodeDateDue = xmlSoapRequest.GetElementsByTagName("DateDue")[count];
                     DateDue = NodeDateDue.InnerText;
 
-                    if (DateDue != "")
+                    if (DateDue != string.Empty)
                     {
                         DateDue = Convert.ToDateTime(DateDue).ToString("dd/MM/yyyy");
                     }
@@ -3955,7 +3955,7 @@ namespace LMS.CustomsClasses
                     XmlNode NodeRejectionComment = xmlSoapRequest.GetElementsByTagName("RejectionComment")[count];
                     RejectionComment = NodeRejectionComment.InnerText;
 
-                    if (Currency == "")
+                    if (Currency == string.Empty)
                     {
                         Currency = HttpContext.Current.Session["LCY"].ToString();
                     }
@@ -4001,7 +4001,7 @@ namespace LMS.CustomsClasses
                         string LineShortcutDimCode5 = _LineShortcutDimCode5.InnerText;
                         string ItemDescription = _NodeItemDescription.InnerText;
 
-                        if (LineNo != "")
+                        if (LineNo != string.Empty)
                         {
                             AdvanceRequestLinesList.Add(
 
@@ -4074,7 +4074,7 @@ namespace LMS.CustomsClasses
 
         public static string SubmitAdvanceRequest(string AdvanceRequestHdrNo)
         {
-            string response = "";
+            string response = string.Empty;
 
             int NumberOfAttachments = GetNumberOfAttachments(AdvanceRequestHdrNo);
 
@@ -4115,7 +4115,7 @@ namespace LMS.CustomsClasses
             dynamic json = JObject.Parse(AdvanceRequestData);
             string customerbalance = json.Balance;
 
-            if (customerbalance != "")
+            if (customerbalance != string.Empty)
             {
                 Balance = Convert.ToDouble(customerbalance);
             }
@@ -4152,15 +4152,15 @@ namespace LMS.CustomsClasses
 
             foreach (var item in bsObj._AdvanceRequestLines)
             {
-                if (item.Item != "")
+                if (item.Item != string.Empty)
                 {
                     string itemamount = item.AdvancedAmountLCY;
 
-                    itemamount = itemamount.Replace(",", "");
+                    itemamount = itemamount.Replace(",", string.Empty);
 
                     double itemAmount = 0;
 
-                    if (itemamount != "")
+                    if (itemamount != string.Empty)
                     {
                         itemAmount = Convert.ToDouble(itemamount);
                     }
@@ -4208,7 +4208,7 @@ namespace LMS.CustomsClasses
 
             foreach (var item in bsObj._AdvanceRequestLines)
             {
-                if (item.Item != "")
+                if (item.Item != string.Empty)
                 {
                     html.Append("<tr>");
 
@@ -4287,7 +4287,7 @@ namespace LMS.CustomsClasses
 
                     WebService.ExportAttachmentsToFile(DocumentType, AdvanceRequestHdrNo, "0", exportToPath);
 
-                    if (Desription != "")
+                    if (Desription != string.Empty)
                     {
                         if (status == "Open")
                         {
@@ -4349,7 +4349,7 @@ namespace LMS.CustomsClasses
 
                     WebService.ExportAttachmentsToFile(DocumentType, AdvanceRequestHdrNo, "0", exportToPath);
 
-                    if (Desription != "")
+                    if (Desription != string.Empty)
                     {
                         if (status == "Open")
                         {
@@ -4402,15 +4402,15 @@ namespace LMS.CustomsClasses
             double sum = 0;
             foreach (var item in bsObj._AdvanceRequestLines)
             {
-                if (item.Item != "")
+                if (item.Item != string.Empty)
                 {
                     string itemamount = item.SurrenderedAmountLCY;
 
-                    itemamount = itemamount.Replace(",", "");
+                    itemamount = itemamount.Replace(",", string.Empty);
 
                     double itemAmount = 0;
 
-                    if (itemamount != "")
+                    if (itemamount != string.Empty)
                     {
                         itemAmount = Convert.ToDouble(itemamount);
                     }
@@ -4462,7 +4462,7 @@ namespace LMS.CustomsClasses
 
             foreach (var item in bsObj._AdvanceRequestLines)
             {
-                if (item.Item != "")
+                if (item.Item != string.Empty)
                 {
                     html.Append("<tr>");
 
@@ -4541,7 +4541,7 @@ namespace LMS.CustomsClasses
         }
         public static string GetAdvanceSurrenderLines(string AdvanceRequestHdrNo, string status)
         {
-            string response = "";
+            string response = string.Empty;
 
             string AdvanceRequestJSON = AdvanceRequestsXMLRequests.GetAdvanceRequests("StaffSurrender", AdvanceRequestHdrNo);
             AdvanceRequestHeader bsObj = JsonConvert.DeserializeObject<AdvanceRequestHeader>(AdvanceRequestJSON);
@@ -4555,21 +4555,21 @@ namespace LMS.CustomsClasses
 
             foreach (var item in bsObj._AdvanceRequestLines)
             {
-                if (item.Item != "")
+                if (item.Item != string.Empty)
                 {
                     string itemamount = item.SurrenderedAmountLCY;
                     string itemAdvanceAmt = item.AdvancedAmountLCY;
-                    itemamount = itemamount.Replace(",", "");
-                    itemAdvanceAmt = itemAdvanceAmt.Replace(",", "");
+                    itemamount = itemamount.Replace(",", string.Empty);
+                    itemAdvanceAmt = itemAdvanceAmt.Replace(",", string.Empty);
 
                     double itemAmount = 0;
                     double itemAdvAmount = 0;
 
-                    if (itemamount != "")
+                    if (itemamount != string.Empty)
                     {
                         itemAmount = Convert.ToDouble(itemamount);
                     }
-                    if (itemAdvanceAmt != "")
+                    if (itemAdvanceAmt != string.Empty)
                     {
                         itemAdvAmount = Convert.ToDouble(itemAdvanceAmt);
                     }
@@ -4598,7 +4598,7 @@ namespace LMS.CustomsClasses
         public static DataTable GetAdvanceSurrenders(string status, string CreatedBy)
         {
             string username = HttpContext.Current.Session["Username"].ToString();
-            string AdvanceRequestHdrNo = "";
+            string AdvanceRequestHdrNo = string.Empty;
             int count = 0;
 
             DataTable table = new DataTable();
@@ -4650,7 +4650,7 @@ namespace LMS.CustomsClasses
                     XmlNode NodeRejectionComment = xmlSoapRequest.GetElementsByTagName("RejectionComment")[count];
                     string RejectionComment = NodeRejectionComment.InnerText;
 
-                    if (No != "")
+                    if (No != string.Empty)
                     {
                         if (status == "Open")
                         {
@@ -4721,7 +4721,7 @@ namespace LMS.CustomsClasses
         public static IDictionary<string, string> GetAdvanceRequestList(string status, string CreatedBy)
         {
             string username = HttpContext.Current.Session["Username"].ToString();
-            string AdvanceRequestHdrNo = "";
+            string AdvanceRequestHdrNo = string.Empty;
             int count = 0;
             Dictionary<string, string> AdvanceRequestList = new Dictionary<string, string>();
 
@@ -4747,7 +4747,7 @@ namespace LMS.CustomsClasses
                     XmlNode NodeGlobalDimCode1 = xmlSoapRequest.GetElementsByTagName("GlobalDimCode1")[count];
                     string GlobalDimCode1 = NodeGlobalDimCode1.InnerText;
 
-                    if (DateOfRequest != "")
+                    if (DateOfRequest != string.Empty)
                     {
                         AdvanceRequestList.Add(No, No + " -" + DateOfRequest);
 
@@ -4776,7 +4776,7 @@ namespace LMS.CustomsClasses
         }
         public static string SubmitAdvanceRequest(string AdvanceRequestHdrNo)
         {
-            string response = "";
+            string response = string.Empty;
 
             int NumberOfAttachments = GetNumberOfAttachments(AdvanceRequestHdrNo);
 
@@ -4848,7 +4848,7 @@ namespace LMS.CustomsClasses
 
             foreach (var item in bsObj._AdvanceRequestLines)
             {
-                if (item.Item != "")
+                if (item.Item != string.Empty)
                 {
                     if (status == "Open")
                     {
@@ -4858,7 +4858,7 @@ namespace LMS.CustomsClasses
                     }
                     else
                     {
-                        table.Rows.Add(item.Item, item.ItemDescription, item.UnitOfMeasure, item.UnitCost, item.NoOfUnits, item.ClaimedAmountLCY, "");
+                        table.Rows.Add(item.Item, item.ItemDescription, item.UnitOfMeasure, item.UnitCost, item.NoOfUnits, item.ClaimedAmountLCY, string.Empty);
                     }
 
                 }
@@ -4881,14 +4881,14 @@ namespace LMS.CustomsClasses
             double sum = 0;
             foreach (var item in bsObj._AdvanceRequestLines)
             {
-                if (item.Item != "")
+                if (item.Item != string.Empty)
                 {
                     string itemamount = item.ClaimedAmountLCY;
-                    itemamount = itemamount.Replace(",", "");
+                    itemamount = itemamount.Replace(",", string.Empty);
 
                     double itemAmount = 0;
 
-                    if (itemamount != "")
+                    if (itemamount != string.Empty)
                     {
                         itemAmount = Convert.ToDouble(itemamount);
                     }
@@ -4938,7 +4938,7 @@ namespace LMS.CustomsClasses
 
             foreach (var item in bsObj._AdvanceRequestLines)
             {
-                if (item.Item != "")
+                if (item.Item != string.Empty)
                 {
                     html.Append("<tr>");
 
@@ -5014,7 +5014,7 @@ namespace LMS.CustomsClasses
         public static DataTable GetStaffClaims(string status, string CreatedBy)
         {
             string username = HttpContext.Current.Session["Username"].ToString();
-            string AdvanceRequestHdrNo = "";
+            string AdvanceRequestHdrNo = string.Empty;
             int count = 0;
 
             DataTable table = new DataTable();
@@ -5077,7 +5077,7 @@ namespace LMS.CustomsClasses
                     XmlNode NodeRejectionComment = xmlSoapRequest.GetElementsByTagName("RejectionComment")[count];
                     string RejectionComment = NodeRejectionComment.InnerText;
 
-                    if (No != "")
+                    if (No != string.Empty)
                     {
                         if (status == "Open")
                         {
@@ -5147,7 +5147,7 @@ namespace LMS.CustomsClasses
         public static IDictionary<string, string> GetAdvanceRequestList(string status, string CreatedBy)
         {
             string username = HttpContext.Current.Session["Username"].ToString();
-            string AdvanceRequestHdrNo = "";
+            string AdvanceRequestHdrNo = string.Empty;
             int count = 0;
             Dictionary<string, string> AdvanceRequestList = new Dictionary<string, string>();
 
@@ -5173,7 +5173,7 @@ namespace LMS.CustomsClasses
                     XmlNode NodeGlobalDimCode1 = xmlSoapRequest.GetElementsByTagName("GlobalDimCode1")[count];
                     string GlobalDimCode1 = NodeGlobalDimCode1.InnerText;
 
-                    if (DateOfRequest != "")
+                    if (DateOfRequest != string.Empty)
                     {
                         AdvanceRequestList.Add(No, No + " -" + DateOfRequest);
 
@@ -5199,7 +5199,7 @@ namespace LMS.CustomsClasses
         public static string CreateAdvanceClaimLine(string AdvanceRequestHdrNo, string Item, string ItemDescription, string UnitOfMeasure, string NoOfUnits, string UnitCost, string Amount, string Purpose,
             string globalDimCode1, string globalDimCode2, string shortcutDimCode1, string shortcutDimCode2, string shortcutDimCode3, string shortcutDimCode4, string shortcutDimCode5, string shortcutDimCode6, string shortcutDimCode7, string shortcutDimCode8)
         {
-            return WebService.CreateAdvanceRequestLine(AdvanceRequestHdrNo, "1", Item, ItemDescription, UnitOfMeasure, NoOfUnits, UnitCost, Amount, "0", "", Purpose, globalDimCode1, globalDimCode2, shortcutDimCode1, shortcutDimCode2, shortcutDimCode3, shortcutDimCode4, shortcutDimCode5, shortcutDimCode6, shortcutDimCode7, shortcutDimCode8);
+            return WebService.CreateAdvanceRequestLine(AdvanceRequestHdrNo, "1", Item, ItemDescription, UnitOfMeasure, NoOfUnits, UnitCost, Amount, "0", string.Empty, Purpose, globalDimCode1, globalDimCode2, shortcutDimCode1, shortcutDimCode2, shortcutDimCode3, shortcutDimCode4, shortcutDimCode5, shortcutDimCode6, shortcutDimCode7, shortcutDimCode8);
         }
         public static string UpdatAdvanceClaimLine(string AdvanceRequestHdrNo, string Item, string ItemDescription, string UnitOfMeasure, string NoOfUnits, string UnitCost, string Amount, string LineNo, string Remarks, string Purpose,
             string globalDimCode1, string globalDimCode2, string shortCutDimCode1, string shortCutDimCode2, string shortCutDimCode3, string shortCutDimCode4, string shortCutDimCode5, string shortCutDimCode6, string shortCutDimCode7, string shortCutDimCode8)
@@ -5208,7 +5208,7 @@ namespace LMS.CustomsClasses
         }
         public static string SubmitAdvanceRequest(string AdvanceRequestHdrNo)
         {
-            string response = "";
+            string response = string.Empty;
 
             int NumberOfAttachments = GetNumberOfAttachments(AdvanceRequestHdrNo);
 

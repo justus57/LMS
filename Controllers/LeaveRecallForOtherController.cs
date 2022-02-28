@@ -1,26 +1,18 @@
 ﻿using LMS.CustomsClasses;
-using Microsoft.SharePoint.Client;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Services;
-using System.Web.UI.WebControls;
-using LMS.Models;
 using System.Web.Script.Serialization;
-using static System.Net.Mime.MediaTypeNames;
+using System.Web.UI.WebControls;
 
 namespace LMS.Controllers
 {
     //[Authorize(Roles ="Manager")]
     public class LeaveRecallForOtherController : Controller
     {
-        private static dynamic items;
         // GET: LeaveRecallForOther
         public ActionResult Index()
         {
@@ -85,7 +77,7 @@ namespace LMS.Controllers
             }
             return View();
         }
-       
+
         public JsonResult LoadApprovedLeaves(string param1, string param2)
         {
             List<AprrovedLeave> respmsg = new List<AprrovedLeave>();
@@ -118,43 +110,43 @@ namespace LMS.Controllers
             List<SelectListItem> itemz = new List<SelectListItem>();
             foreach (var val in myList)
             {
-                itemz.Add(new SelectListItem { Value = val.Key, Text = val.Value});
+                itemz.Add(new SelectListItem { Value = val.Key, Text = val.Value });
             }
             ViewBag.employees = itemz;
         }
-      
+
         public JsonResult GetUserLeaves(string param1)
         {
 
             string array = LeaveRecallForOtherXMLRequests.GetUserLeaves(param1);
             List<LeaveTypes> leavetype = new List<LeaveTypes>();
-            var username1 = System.Web.HttpContext.Current.Session["PayrollNo"];               
-                Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                try
+            var username1 = System.Web.HttpContext.Current.Session["PayrollNo"];
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+            try
+            {
+                array = array.Substring(1, array.Length - 2);
+                string[] resultArray = array.Split(',');
+                foreach (var item in resultArray)
                 {
-                    array = array.Substring(1, array.Length - 2);
-                    string[] resultArray = array.Split(',');
-                    foreach (var item in resultArray)
-                    {
-                        string[] result = item.ToString().Split(':');
-                        dictionary.Add(result[0].ToString().Trim('"'), result[1].ToString().Trim('"'));
-                    }
-                    List<string> keyList = new List<string>(dictionary.Keys);
-                    List<SelectListItem> items = new List<SelectListItem>();
-                    for (int i = 0; i < keyList.Count; i++)
-                    {
-                        items.Add(new SelectListItem { Text = keyList[i], Selected = true });
-                    }               
-                   }
-                catch (Exception es)
-                {
-                    Console.Write(es);
+                    string[] result = item.ToString().Split(':');
+                    dictionary.Add(result[0].ToString().Trim('"'), result[1].ToString().Trim('"'));
                 }
-            
+                List<string> keyList = new List<string>(dictionary.Keys);
+                List<SelectListItem> items = new List<SelectListItem>();
+                for (int i = 0; i < keyList.Count; i++)
+                {
+                    items.Add(new SelectListItem { Text = keyList[i], Selected = true });
+                }
+            }
+            catch (Exception es)
+            {
+                Console.Write(es);
+            }
+
             return Json(JsonConvert.SerializeObject(leavetype), JsonRequestBehavior.AllowGet);
 
         }
-    
+
         public JsonResult GetLeaveDetails(string param1, string param2)
         {
             string OpeningBalance = "";
@@ -196,7 +188,7 @@ namespace LMS.Controllers
             };
             return Json(JsonConvert.SerializeObject(_LeaveCodeDetails), JsonRequestBehavior.AllowGet);
         }
-      
+
         public JsonResult GetLeaveState(string param1, string param2, string param3)
         {
             string employeeNo = System.Web.HttpContext.Current.Session["Username"].ToString(); ;
@@ -289,7 +281,7 @@ namespace LMS.Controllers
             };
             return Json(JsonConvert.SerializeObject(_LeaveEndDateAndReturnDate), JsonRequestBehavior.AllowGet);
         }
-       
+
         public JsonResult ApprovedLeaveDetails(string param1, string param2)
         {
             string startDate = "";
@@ -319,7 +311,7 @@ namespace LMS.Controllers
             };
             return Json(JsonConvert.SerializeObject(_SelectedLeaveEndDateAndReturnDate), JsonRequestBehavior.AllowGet);
         }
-      
+
         public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8)
         {
             //LeaveRecall
@@ -370,10 +362,10 @@ namespace LMS.Controllers
 
             dynamic json = JObject.Parse(SendApprovalRequestResponse);
 
-           var response = json.Msg;
+            var response = json.Msg;
             var status = json.Status;
 
-            
+
             var _RequestResponse = new RequestResponse
             {
                 Message = response,

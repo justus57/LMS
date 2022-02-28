@@ -10,15 +10,12 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
-using System.Web.Services;
 using System.Web.UI.WebControls;
 
 namespace LMS.Controllers
 {
     public class LeaveForOtherController : Controller
     {
-        private dynamic items;
-        private dynamic keyList;
         public readonly object _RequestResponse;
         // GET: LeaveForOther
         public ActionResult Index()
@@ -42,7 +39,7 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
             System.Web.HttpContext.Current.Session["Username"] = "";
             var username1 = System.Web.HttpContext.Current.Session["PayrollNo"];
-          
+
             GetEmployeeList();
             return View();
         }
@@ -60,7 +57,7 @@ namespace LMS.Controllers
             }
             ViewBag.employees = keyList;
         }
-       
+
         public JsonResult GetUserLeaves(string param1)
         {
             string UserLeavesresponseString = LeaveForOtherXMLRequests.GetUserLeaves(param1);
@@ -253,7 +250,7 @@ namespace LMS.Controllers
             };
             return Json(JsonConvert.SerializeObject(LeaveSubmitResponses), JsonRequestBehavior.AllowGet); ;
         }
-       
+
         public JsonResult Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
             //get Leave number
@@ -357,8 +354,8 @@ namespace LMS.Controllers
         }
         public ActionResult FileUploadHandler()
         {
-            
-        object Message = null;
+
+            object Message = null;
             if (Request.Files.Count > 1)
             {
                 //Fetch the Uploaded File.

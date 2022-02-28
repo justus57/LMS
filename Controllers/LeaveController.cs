@@ -1,18 +1,13 @@
-﻿using DevExpress.Web.Mvc;
-using LMS.CustomsClasses;
+﻿using LMS.CustomsClasses;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Services;
-using System.Web.UI.WebControls;
-using LMS.Models;
 namespace LMS.Controllers
 {
     public class LeaveController : Controller
@@ -39,34 +34,34 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsTrainingActive"] = "";
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
-            
+
             var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
             var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
             if (log == "No")
+            {
+                Response.Redirect("/Account/login");
+            }
+            else if (log == "yes")
+            {
+                if (passRequired == "true")
                 {
-                    Response.Redirect("/Account/login");
+                    Response.Redirect("/Account/OneTimePassword");
                 }
-                else if (log == "yes")
+                else
                 {
-                    if (passRequired == "true")
+                    string status = Request.QueryString["status"];
+                    string owner = Request.QueryString["owner"];
+                    if (status == "" || owner == "")
                     {
-                        Response.Redirect("/Account/OneTimePassword");
+                        Response.Redirect(Request.UrlReferrer.ToString());
                     }
                     else
-                    {                   
-                        string status = Request.QueryString["status"];
-                        string owner = Request.QueryString["owner"];                   
-                        if (status == "" || owner == "")
-                        {
-                            Response.Redirect(Request.UrlReferrer.ToString());
-                        }
-                        else
-                        {
-                          tableview= LoadTable(status, owner);
-                        }
+                    {
+                        tableview = LoadTable(status, owner);
                     }
                 }
-           
+            }
+
             return View();
         }
         private string LoadTable(string status, string owner)
@@ -131,13 +126,13 @@ namespace LMS.Controllers
             html.Append("</table>");
             string strText = html.ToString();
             //////Append the HTML string to Placeholder.
-           // placeholder.Controls.Add(new Literal { Text = html.ToString() });
-            
-            str= new HtmlString(html.ToString());
-            
+            // placeholder.Controls.Add(new Literal { Text = html.ToString() });
+
+            str = new HtmlString(html.ToString());
+
             return str.ToString(); ;
-        }       
-  
+        }
+
         public JsonResult SubmitOpenLeave(string param1, string param2)
         {
             string LeaveHeaderNo = AppFunctions.Base64Decode(param1);
@@ -178,7 +173,7 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-    
+
 
         public JsonResult DeleteOpenLeave(string param1)
         {
@@ -208,7 +203,7 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-    
+
         public JsonResult CancelOpenLeave(string param1)
         {
             string status = null;
@@ -245,7 +240,7 @@ namespace LMS.Controllers
 
             //if (TempData.ContainsKey("mydata"))
             //    username = TempData["mydata"].ToString();
-           
+
             string response = null;
             string status = null;
 
@@ -264,11 +259,11 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-      
+
         [ValidateInput(false)]
         public ActionResult DataViewPartial()
         {
-            
+
             var model = str;
             return PartialView("~/Views/Leave/_DataViewPartial.cshtml", model);
         }

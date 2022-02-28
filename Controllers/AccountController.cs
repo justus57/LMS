@@ -3,16 +3,13 @@ using LMS.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace LMS.Controllers
 {
     public class AccountController : Controller
-    {    
+    {
         // GET: login
         public ActionResult Login()
         {
@@ -21,13 +18,13 @@ namespace LMS.Controllers
         [HttpPost]
         public ActionResult Login(Login EmployeeData)
         {
-            
+
             var param1 = EmployeeData.EmployeeNumber;
             var param2 = EmployeeData.Password;
             string Msg = null;
             var Result = UserLogin(param1, param2);
-            
-            Models.LoginResponse json = JsonConvert.DeserializeObject<Models.LoginResponse>(Result); 
+
+            Models.LoginResponse json = JsonConvert.DeserializeObject<Models.LoginResponse>(Result);
             var Login = json.Status;
             try
             {
@@ -39,45 +36,46 @@ namespace LMS.Controllers
                         var profileData = new Login
                         {
                             EmployeeNumber = EmployeeData.EmployeeNumber,
-                            
+
                         };
-                         this.Session["UserProfile"] = profileData;
+                        this.Session["UserProfile"] = profileData;
                         ModelState.AddModelError("", "Successful!" + Msg);
-                       
+                        ViewBag.Message = Msg;
                         return RedirectToAction("Dashboard", "Dashboard");
-                    }                 
-                    
+                    }
+
                 }
-                else 
-                {                    
+                else
+                {
                     Msg = "Authentication failed. Wrong username or password. Kindly contact the administrator";
-                    
+                    ViewBag.Message = Msg;
                     ModelState.AddModelError("", "Error! " + Msg);
                     return View("Login");
                 }
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 ex.Message.ToString();
             }
             return View();
         }
         //function for login
-      
+
         public static string UserLogin(string param1, string param2)
         {
             string username = param1;
-            string password = param2;          
+            string password = param2;
             string UserLoginresponseString = "";
             string Msg = null;
             string response = null;
             string status = null;
             try
             {
-                string req= @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                                 <Body>
                                                     <ConfirmEmployeePassword xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                                        <empNo>"+param1+@"</empNo>
-                                                        <prPassword>"+password+@"</prPassword>
+                                                        <empNo>" + param1 + @"</empNo>
+                                                        <prPassword>" + password + @"</prPassword>
                                                     </ConfirmEmployeePassword>
                                                 </Body>
                                             </Envelope>";
@@ -139,12 +137,13 @@ namespace LMS.Controllers
                     System.Web.HttpContext.Current.Session[" IsRecallActive"] = "";
                     System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
                     System.Web.HttpContext.Current.Session[" IsReportsActive"] = "";
-                    
+
                 }
                 else if (status == "300")
                 {
                     status = "999";
                     Msg = "Authentication failed. Wrong username or password.";
+                  
 
                 }
                 else
@@ -158,7 +157,7 @@ namespace LMS.Controllers
 
                 Msg = "Authentication failed. Wrong username or password. Kindly contact the administrator";
                 Msg = es.ToString();
-
+               
                 AppFunctions.WriteLog(es.Message);
             }
 
@@ -174,7 +173,7 @@ namespace LMS.Controllers
             return View();
         }
 
-        public ActionResult Register( Register register)
+        public ActionResult Register(Register register)
         {
             object v = System.Web.HttpContext.Current.Session["Logged"] = "Yes";
             string loging = v.ToString();
@@ -188,7 +187,7 @@ namespace LMS.Controllers
         //allow view for forgotpassword
         public ActionResult ForgotPassword() { return View(); }
         //function for getting password
-     
+
         public ActionResult ForgotPassword(ForgotPassword forgot)
         {
 
@@ -227,11 +226,11 @@ namespace LMS.Controllers
                 Status = status,
                 Message = Msg,
             };
-          
+
             return this.View();
         }
         public ActionResult OneTimePassword() { return View(); }
-      
+
         public ActionResult OneTimePassword(OneTimePassword password)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -271,7 +270,7 @@ namespace LMS.Controllers
                 Status = Status,
                 Message = Msg
             };
-            return View(); 
+            return View();
         }
         public ActionResult LogOut()
         {

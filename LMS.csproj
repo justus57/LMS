@@ -4186,8 +4186,6 @@
     <Content Include="Views\LeaveApplication\LeaveApplication.cshtml" />
     <Content Include="Views\LeaveForOther\LeaveForOther.cshtml" />
     <Content Include="Views\Profile\Profile.cshtml" />
-    <Content Include="Views\Shared\_PartialNavbar.cshtml" />
-    <Content Include="Views\Shared\_PartialSidebar.cshtml" />
     <Content Include="Views\Leave\_DataViewPartial.cshtml" />
     <Content Include="Views\LeaveRecalls\LeaveRecalls.cshtml" />
     <Content Include="Views\LeaveRecallApplication\LeaveRecallApplication.cshtml" />

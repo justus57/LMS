@@ -7,7 +7,6 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 using System.Xml;
 
 namespace LMS.CustomsClasses
@@ -163,7 +162,7 @@ namespace LMS.CustomsClasses
             }
         }
         //variables
-       
+
 
         //functions
         public static string Convert_AppraisalDetails(string ValidFrom, string ValidTo)
@@ -181,7 +180,7 @@ namespace LMS.CustomsClasses
 
                 long DaysRemaining = TimeManager.DateDiff(TimeManager.DateInterval.Day, CurrentDate, ToDate);
 
-                ValidityData = ValidFrom + " to " + ValidTo ;
+                ValidityData = ValidFrom + " to " + ValidTo;
             }
             catch (Exception es)
             {
@@ -190,7 +189,7 @@ namespace LMS.CustomsClasses
 
             return ValidityData;
         }
-        public static string  ConvertAppraisalDetails(string ValidFrom, string ValidTo)
+        public static string ConvertAppraisalDetails(string ValidFrom, string ValidTo)
         {
             string ValidityData = null;
             try
@@ -205,7 +204,7 @@ namespace LMS.CustomsClasses
 
                 long DaysRemaining = TimeManager.DateDiff(TimeManager.DateInterval.Day, CurrentDate, ToDate);
 
-                ValidityData = ValidFrom + " to " + ValidTo + " (" +DaysRemaining.ToString()+ " day(s) left to create appraisal)";
+                ValidityData = ValidFrom + " to " + ValidTo + " (" + DaysRemaining.ToString() + " day(s) left to create appraisal)";
             }
             catch (Exception es)
             {
@@ -420,7 +419,7 @@ namespace LMS.CustomsClasses
                 responseString = e.ToString();
             }
         }
-        
+
     }
     class TimeManager
     {

@@ -39,7 +39,6 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
             System.Web.HttpContext.Current.Session["Username"] = "";
             var username1 = System.Web.HttpContext.Current.Session["PayrollNo"];
-
             GetEmployeeList();
             return View();
         }
@@ -57,13 +56,10 @@ namespace LMS.Controllers
             }
             ViewBag.employees = keyList;
         }
-
         public JsonResult GetUserLeaves(string param1)
         {
             string UserLeavesresponseString = LeaveForOtherXMLRequests.GetUserLeaves(param1);
-
             List<LeaveTypes> leavetype = new List<LeaveTypes>();
-
             /////break dynamic json and put it in a list, then serialize the list to json object
             foreach (var kvp in AppFunctions.BreakDynamicJSON(UserLeavesresponseString))
             {
@@ -354,7 +350,6 @@ namespace LMS.Controllers
         }
         public ActionResult FileUploadHandler()
         {
-
             object Message = null;
             if (Request.Files.Count > 1)
             {
@@ -362,12 +357,9 @@ namespace LMS.Controllers
                 HttpPostedFileBase postedFile = Request.Files[0];
                 //Set the Folder Path.
                 string folderPath = Server.MapPath("~/Uploads/");
-
                 //Set the File Name.
                 string fileName = Path.GetFileName(postedFile.FileName);
-
                 string filePath = folderPath + fileName;
-
                 //if exists delete
                 if (System.IO.File.Exists(filePath))
                 {
@@ -375,7 +367,6 @@ namespace LMS.Controllers
                 }
                 //Save the File in Folder.
                 postedFile.SaveAs(folderPath + fileName);
-
                 //Send File details in a JSON Response.
                 string json = new JavaScriptSerializer().Serialize(
                     new

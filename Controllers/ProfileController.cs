@@ -1,17 +1,13 @@
-﻿using LMS.CustomsClasses;
-using LMS.Models;
+﻿using LMS.Models;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace LMS.Controllers
 {
     public class ProfileController : Controller
-    {      
-        // GET: Profile     
+    {
         public ActionResult Profile(Profile profile)
         {
             string user = null;
@@ -41,7 +37,7 @@ namespace LMS.Controllers
             {
                 try
                 {
-                   // get session variable                                                                                
+                    // get session variable                                                                                
 
                     string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                             <Body>
@@ -115,6 +111,6 @@ namespace LMS.Controllers
             }
             return View(profile);
         }
-       
+
     }
 }

@@ -1,17 +1,12 @@
 ﻿using LMS.CustomsClasses;
-using Microsoft.SharePoint.Client;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Services;
-using System.Web.UI.WebControls;
-using LMS.Models;
 
 namespace LMS.Controllers
 {
@@ -24,6 +19,7 @@ namespace LMS.Controllers
         {
             return View();
         }
+
         public ActionResult LeaveRecalls()
         {
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
@@ -66,6 +62,7 @@ namespace LMS.Controllers
             }
             return View();
         }
+
         private void LoadTable(string status, string owner)
         {
             DataTable dt;
@@ -130,7 +127,6 @@ namespace LMS.Controllers
             ////Append the HTML string to Placeholder.
             str = new HtmlString(html.ToString());
         }
-
 
         public JsonResult SubmitOpenLeaveRecall(string param1)
         {

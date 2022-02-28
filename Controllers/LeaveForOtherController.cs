@@ -42,6 +42,7 @@ namespace LMS.Controllers
             GetEmployeeList();
             return View();
         }
+
         public void GetEmployeeList()
         {
             var castedDico = LeaveForOtherXMLRequests.GetEmpoyeeList();
@@ -56,6 +57,7 @@ namespace LMS.Controllers
             }
             ViewBag.employees = keyList;
         }
+
         public JsonResult GetUserLeaves(string param1)
         {
             string UserLeavesresponseString = LeaveForOtherXMLRequests.GetUserLeaves(param1);
@@ -69,6 +71,7 @@ namespace LMS.Controllers
             return Json(JsonConvert.SerializeObject(leavetype), JsonRequestBehavior.AllowGet); ;
 
         }
+
         public JsonResult GetLeaveDetails(string param1, string param2)
         {
             string OpeningBalance = "";
@@ -159,6 +162,7 @@ namespace LMS.Controllers
             };
             return Json(JsonConvert.SerializeObject(_LeaveQuantityAndReturnDate), JsonRequestBehavior.AllowGet); ;
         }
+
         public JsonResult GetLeaveEndDateAndReturnDate(string param1, string param2, string param3)
         {
             string employeeNo = System.Web.HttpContext.Current.Session["PayrollNo"].ToString(); ;
@@ -205,6 +209,7 @@ namespace LMS.Controllers
             };
             return Json(JsonConvert.SerializeObject(_LeaveEndDateAndReturnDate), JsonRequestBehavior.AllowGet); ;
         }
+
         public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
             string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
@@ -246,6 +251,7 @@ namespace LMS.Controllers
             };
             return Json(JsonConvert.SerializeObject(LeaveSubmitResponses), JsonRequestBehavior.AllowGet); ;
         }
+
 
         public JsonResult Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
@@ -314,6 +320,7 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet); ;
         }
+
         private static string GetDocumentNumber(string EmployeeNumber)
         {
             string DocumentNo = null;
@@ -330,6 +337,7 @@ namespace LMS.Controllers
 
             return DocumentNo;
         }
+
         public static void UploadAttachment(string param1, string param2)
         {
             string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
@@ -348,6 +356,7 @@ namespace LMS.Controllers
                 System.IO.File.Delete(UploadPath);
             }
         }
+
         public ActionResult FileUploadHandler()
         {
             object Message = null;

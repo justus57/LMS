@@ -18,6 +18,7 @@ namespace LMS.Controllers
         {
             return View();
         }
+
         public ActionResult Leave()
         {
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
@@ -61,6 +62,7 @@ namespace LMS.Controllers
             }
             return View(tableview);
         }
+
         private string LoadTable(string status, string owner)
         {
             DataTable dt;
@@ -120,7 +122,6 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-
 
         public JsonResult DeleteOpenLeave(string param1)
         {

@@ -1,17 +1,10 @@
 ﻿using LMS.CustomsClasses;
-using Microsoft.SharePoint.Client;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Services;
-using System.Web.UI.WebControls;
-using LMS.Models;
 using System.Web.Script.Serialization;
 
 namespace LMS.Controllers
@@ -38,13 +31,12 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
             System.Web.HttpContext.Current.Session["Logged"] = "";
-          
-                var username1 = System.Web.HttpContext.Current.Session["PayrollNo"];
-                if (Session["Username"] != null)
-                {
-                    string username = Convert.ToString(username1);
+            var username1 = System.Web.HttpContext.Current.Session["PayrollNo"];
+            if (Session["Username"] != null)
+            {
+                string username = Convert.ToString(username1);
 
-                    string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                             <Body>
                                 <ReturnLeaveLookups xmlns = ""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal""> 
                                      <lookupType>CauseOfAbsenceCode</lookupType> 
@@ -53,44 +45,42 @@ namespace LMS.Controllers
                              </Body>
                          </Envelope>";
 
-                    string response = Assest.Utility.CallWebService(req);
+                string response = Assest.Utility.CallWebService(req);
 
-                    string array = Assest.Utility.GetJSONResponse(response);
+                string array = Assest.Utility.GetJSONResponse(response);
 
-                    dynamic json = JObject.Parse(array);
+                dynamic json = JObject.Parse(array);
 
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    try
+                Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                try
+                {
+                    array = array.Substring(1, array.Length - 2);
+                    string[] resultArray = array.Split(',');
+
+                    foreach (var item in resultArray)
                     {
-                        array = array.Substring(1, array.Length - 2);
-                        string[] resultArray = array.Split(',');
-
-                        foreach (var item in resultArray)
-                        {
-                            string[] result = item.ToString().Split(':');
-                            dictionary.Add(result[0].ToString().Trim('"'), result[1].ToString().Trim('"'));
-                        }
-
-                        List<string> keyList = new List<string>(dictionary.Keys);
-                        List<SelectListItem> items = new List<SelectListItem>();
-
-                        for (int i = 0; i < keyList.Count; i++)
-                        {
-                            items.Add(new SelectListItem { Text = keyList[i], Selected = true });
-                        }
-                        ViewBag.Leaves = keyList;
+                        string[] result = item.ToString().Split(':');
+                        dictionary.Add(result[0].ToString().Trim('"'), result[1].ToString().Trim('"'));
                     }
-                    catch (Exception es)
+
+                    List<string> keyList = new List<string>(dictionary.Keys);
+                    List<SelectListItem> items = new List<SelectListItem>();
+
+                    for (int i = 0; i < keyList.Count; i++)
                     {
-                        Console.Write(es);
+                        items.Add(new SelectListItem { Text = keyList[i], Selected = true });
                     }
+                    ViewBag.Leaves = keyList;
                 }
-            
+                catch (Exception es)
+                {
+                    Console.Write(es);
+                }
+            }
+
             return View();
         }
-        
-       
-      
+
         public JsonResult GetLeaveDetails(string param1)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -129,9 +119,9 @@ namespace LMS.Controllers
                 OpeningBalance = OpeningBalance,
                 Remaining = Remaining
             };
-            return  Json(JsonConvert.SerializeObject(_LeaveCodeDetails), JsonRequestBehavior.AllowGet);
+            return Json(JsonConvert.SerializeObject(_LeaveCodeDetails), JsonRequestBehavior.AllowGet);
         }
-       
+
         public JsonResult LoadApprovedLeaves(string param1)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();// get session variable
@@ -156,7 +146,7 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(respmsg), JsonRequestBehavior.AllowGet);
         }
-    
+
         public JsonResult ApprovedLeaveDetails(string param1)
         {
             string startDate = "";
@@ -186,7 +176,7 @@ namespace LMS.Controllers
                 ReturnDate = AppFunctions.ConvertTime(returndate),
                 StartDate = AppFunctions.ConvertTime(startDate)
             };
-            return  Json(JsonConvert.SerializeObject(Leave), JsonRequestBehavior.AllowGet);
+            return Json(JsonConvert.SerializeObject(Leave), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6)
@@ -233,6 +223,7 @@ namespace LMS.Controllers
             };
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
+
         private static string GetDocumentNumber()
         {
             //get Leave number
@@ -261,7 +252,7 @@ namespace LMS.Controllers
 
             return DocumentNumber;
         }
-  
+
         public JsonResult Submit(string param1, string param2, string param3, string param4, string param5, string param6)
         {
             string response = null;
@@ -305,7 +296,7 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return  Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -16,11 +16,13 @@ namespace LMS.Controllers
     public class LeaveApplicationController : Controller
     {
         public object _RequestResponse { get; private set; }
+
         // GET: LeaveApplication
         public ActionResult Index()
         {
             return View();
         }
+
         public ActionResult LeaveApplication()
         {
             var username1 = System.Web.HttpContext.Current.Session["PayrollNo"];
@@ -74,6 +76,7 @@ namespace LMS.Controllers
             }
             return View();
         }
+
         public static string GetUserLeaves(string param1)
         {
             string UserLeavesresponseString = LeaveForOtherXMLRequests.GetUserLeaves(param1);
@@ -84,6 +87,7 @@ namespace LMS.Controllers
             }
             return JsonConvert.SerializeObject(leavetype);
         }
+
         public JsonResult GetLeaveDetails(string param1)
         {
             string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();// get session variable
@@ -124,6 +128,7 @@ namespace LMS.Controllers
             // return JsonConvert.SerializeObject(Leave);
             return Json(JsonConvert.SerializeObject(Leave), JsonRequestBehavior.AllowGet);
         }
+
         public JsonResult GetLeaveState(string param1, string param2, string param3)
         {
             string employeeNo = System.Web.HttpContext.Current.Session["PayrollNo"].ToString(); ;
@@ -165,6 +170,7 @@ namespace LMS.Controllers
             };
             return Json(JsonConvert.SerializeObject(Leave), JsonRequestBehavior.AllowGet); ;
         }
+
         public JsonResult GetLeaveEndDateAndReturnDate(string param1, string param2, string param3)
         {
             string employeeNo = System.Web.HttpContext.Current.Session["PayrollNo"].ToString(); ;
@@ -224,6 +230,7 @@ namespace LMS.Controllers
             };
             return Json(JsonConvert.SerializeObject(LeaveEndReturnDates), JsonRequestBehavior.AllowGet);
         }
+
         public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7)
         {
             string response = "";
@@ -283,6 +290,7 @@ namespace LMS.Controllers
             };
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
+
         public static void UploadAttachment1(string param1, string param2)
         {
             string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
@@ -296,6 +304,7 @@ namespace LMS.Controllers
                 System.IO.File.Delete(UploadPath);
             }
         }
+
         public static void UploadAttachment(string param1, string param2)
         {
             string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
@@ -310,6 +319,7 @@ namespace LMS.Controllers
                 System.IO.File.Delete(UploadPath);
             }
         }
+
         public JsonResult Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7)
         {
             //get Leave number 
@@ -404,6 +414,7 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
+
         private static string GetDocumentNumber()
         {
             //get Leave number
@@ -421,6 +432,7 @@ namespace LMS.Controllers
             var GetDocumentNumber = Assest.Utility.GetJSONResponse(response);
             return GetDocumentNumber;
         }
+
         public ActionResult FileUploadHandler()
         {
             object Message = null;

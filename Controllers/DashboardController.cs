@@ -1,19 +1,17 @@
 ﻿using LMS.Models;
-using Microsoft.SharePoint.News.DataModel;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Web.Mvc;
 
 namespace LMS.Controllers
 {
-   
     public class DashboardController : Controller
     {
         public string PayrollCutoffDateLabel { get; private set; }
+
         public ActionResult Dashboard(Dashboard dashboard)
         {
             string Password = null;
-
             var log1 = System.Web.HttpContext.Current.Session["logged"] = "yes";
             System.Web.HttpContext.Current.Session["IsDashboardActive"] = "active";
             System.Web.HttpContext.Current.Session["IsClaimActive"] = "";
@@ -28,13 +26,12 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
             System.Web.HttpContext.Current.Session["username"] = "";
 
-            var profileData = this.Session["UserProfile"] as Login;            
+            var profileData = this.Session["UserProfile"] as Login;
             try
             {
                 string GetUserInformationresponseString = null;
                 string response = null;
                 string EmployeeNm = null;
-         
                 if (log1 == "No")
                 {
                     Response.Redirect("/Account/Login");
@@ -42,8 +39,8 @@ namespace LMS.Controllers
                 else
                 {
                     var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
-                   Session["IsAdvanceActive"] = "";
-                
+                    Session["IsAdvanceActive"] = "";
+
                     if (passRequired == "true")
                     {
                         Response.Redirect("/Account/OneTimePassword");
@@ -59,7 +56,7 @@ namespace LMS.Controllers
                                                 </GetEmployeeHomeData>
                                             </Body>
                                         </Envelope>";
-                      
+
                         /*string GetUserInformationresponseString = WebserviceConfig.ObjNav.GetEmployeeHomeData(username);*///ProfileXMLRequests.GetUserInformation(username);
                         response = Assest.Utility.CallWebService(req);
 
@@ -70,7 +67,7 @@ namespace LMS.Controllers
 
                         string Status = json.Status;
                         dashboard.txt_name = json.EmployeeName;
-                       
+
                         string EmployeeName = json.EmployeeName;
                         System.Web.HttpContext.Current.Session["UserFullName"] = EmployeeName;
                         System.Web.HttpContext.Current.Session["username"] = EmployeeName;
@@ -170,10 +167,10 @@ namespace LMS.Controllers
             }
             return View(dashboard);
         }
+
         public static string DrawCahrt()
         {
             return "";
         }
-
     }
 }

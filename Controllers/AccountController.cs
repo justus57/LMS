@@ -10,7 +10,6 @@ namespace LMS.Controllers
 {
     public class AccountController : Controller
     {
-        // GET: login
         public ActionResult Login()
         {
             return View();
@@ -59,7 +58,6 @@ namespace LMS.Controllers
             return View();
         }
         //function for login
-
         public static string UserLogin(string param1, string param2)
         {
             string username = param1;
@@ -179,7 +177,6 @@ namespace LMS.Controllers
         //allow view for forgotpassword
         public ActionResult ForgotPassword() { return View(); }
         //function for getting password
-
         public ActionResult ForgotPassword(ForgotPassword forgot)
         {
 
@@ -222,7 +219,6 @@ namespace LMS.Controllers
             return this.View();
         }
         public ActionResult OneTimePassword() { return View(); }
-
         public ActionResult OneTimePassword(OneTimePassword password)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();

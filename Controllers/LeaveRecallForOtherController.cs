@@ -18,6 +18,7 @@ namespace LMS.Controllers
         {
             return View();
         }
+
         public ActionResult LeaveRecallForOther()
         {
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
@@ -101,6 +102,7 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(respmsg), JsonRequestBehavior.AllowGet);
         }
+
         public void GetEmployeeList()
         {
             var castedDico = LeaveForOtherXMLRequests.GetEmpoyeeList();
@@ -374,6 +376,7 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
+
         private static string GetDocumentNumber(string username)
         {
             string DocumentNumberResponse = LeaveRecallForOtherXMLRequests.GetDocumentNumber(username);

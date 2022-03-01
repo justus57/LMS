@@ -92,7 +92,6 @@
                     if (result == true) {
 
                         showToast('Deleting application');
-
                         jQuery.ajax({
                             url: "@Url.Action("leave", "Leave")",
                             type: "POST",
@@ -141,9 +140,7 @@
                     }
                 },
                 callback: function (result) {
-
                     if (result == true) {
-
                         showToast('Submitting application');
 
                         jQuery.ajax({

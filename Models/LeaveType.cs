@@ -10,8 +10,7 @@
 namespace LMS.Models
 {
     using System;
-    using System.Collections.Generic;
-    
+
     public partial class LeaveType
     {
         public string Code { get; set; }

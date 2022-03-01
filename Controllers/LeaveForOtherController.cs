@@ -10,19 +10,13 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
-using System.Web.Services;
 using System.Web.UI.WebControls;
 
 namespace LMS.Controllers
 {
     public class LeaveForOtherController : Controller
     {
-        private dynamic items;
-        private dynamic keyList;
         public readonly object _RequestResponse;
-
-
-
         // GET: LeaveForOther
         public ActionResult Index()
         {
@@ -45,10 +39,10 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
             System.Web.HttpContext.Current.Session["Username"] = "";
             var username1 = System.Web.HttpContext.Current.Session["PayrollNo"];
-          
             GetEmployeeList();
             return View();
         }
+
         public void GetEmployeeList()
         {
             var castedDico = LeaveForOtherXMLRequests.GetEmpoyeeList();
@@ -63,13 +57,11 @@ namespace LMS.Controllers
             }
             ViewBag.employees = keyList;
         }
-       
+
         public JsonResult GetUserLeaves(string param1)
         {
             string UserLeavesresponseString = LeaveForOtherXMLRequests.GetUserLeaves(param1);
-
             List<LeaveTypes> leavetype = new List<LeaveTypes>();
-
             /////break dynamic json and put it in a list, then serialize the list to json object
             foreach (var kvp in AppFunctions.BreakDynamicJSON(UserLeavesresponseString))
             {
@@ -79,7 +71,7 @@ namespace LMS.Controllers
             return Json(JsonConvert.SerializeObject(leavetype), JsonRequestBehavior.AllowGet); ;
 
         }
-        
+
         public JsonResult GetLeaveDetails(string param1, string param2)
         {
             string OpeningBalance = "";
@@ -91,7 +83,6 @@ namespace LMS.Controllers
             string LeaveCode = "";
             string RequiresAttachment = "";
             string AttachmentMandatory = "";
-
             try
             {
                 string LeaveDetailsresponseString = LeaveForOtherXMLRequests.GetLeaveCodeDetails(param1, param2);
@@ -111,7 +102,6 @@ namespace LMS.Controllers
             {
                 Console.Write(e);
             }
-
 
             var Leave = new LeaveApplication
             {
@@ -172,7 +162,7 @@ namespace LMS.Controllers
             };
             return Json(JsonConvert.SerializeObject(_LeaveQuantityAndReturnDate), JsonRequestBehavior.AllowGet); ;
         }
-        
+
         public JsonResult GetLeaveEndDateAndReturnDate(string param1, string param2, string param3)
         {
             string employeeNo = System.Web.HttpContext.Current.Session["PayrollNo"].ToString(); ;
@@ -219,6 +209,7 @@ namespace LMS.Controllers
             };
             return Json(JsonConvert.SerializeObject(_LeaveEndDateAndReturnDate), JsonRequestBehavior.AllowGet); ;
         }
+
         public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
             string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
@@ -260,7 +251,8 @@ namespace LMS.Controllers
             };
             return Json(JsonConvert.SerializeObject(LeaveSubmitResponses), JsonRequestBehavior.AllowGet); ;
         }
-       
+
+
         public JsonResult Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
             //get Leave number
@@ -328,6 +320,7 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet); ;
         }
+
         private static string GetDocumentNumber(string EmployeeNumber)
         {
             string DocumentNo = null;
@@ -344,6 +337,7 @@ namespace LMS.Controllers
 
             return DocumentNo;
         }
+
         public static void UploadAttachment(string param1, string param2)
         {
             string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
@@ -362,22 +356,19 @@ namespace LMS.Controllers
                 System.IO.File.Delete(UploadPath);
             }
         }
+
         public ActionResult FileUploadHandler()
         {
-            
-        object Message = null;
+            object Message = null;
             if (Request.Files.Count > 1)
             {
                 //Fetch the Uploaded File.
                 HttpPostedFileBase postedFile = Request.Files[0];
                 //Set the Folder Path.
                 string folderPath = Server.MapPath("~/Uploads/");
-
                 //Set the File Name.
                 string fileName = Path.GetFileName(postedFile.FileName);
-
                 string filePath = folderPath + fileName;
-
                 //if exists delete
                 if (System.IO.File.Exists(filePath))
                 {
@@ -385,7 +376,6 @@ namespace LMS.Controllers
                 }
                 //Save the File in Folder.
                 postedFile.SaveAs(folderPath + fileName);
-
                 //Send File details in a JSON Response.
                 string json = new JavaScriptSerializer().Serialize(
                     new

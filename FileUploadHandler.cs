@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
-using System.Web.Http;
 using System.Web.Script.Serialization;
 
 namespace LMS
@@ -12,9 +10,9 @@ namespace LMS
     /// <summary>
     /// Summary description for FileUploadHandler
     /// </summary>
-    public class FileUploadHandler 
+    public class FileUploadHandler
     {
-     
+
         internal static void ProcessRequest(HttpContext context)
         {
             //Check if Request is to Upload the File.
@@ -69,9 +67,8 @@ namespace LMS
             }
         }
 
-        
-    }
 
+    }
     internal class Request
     {
     }

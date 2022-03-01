@@ -18,17 +18,18 @@
                         <a href="#">Dashboard</a>
                     </li>
                     <li class="breadcrumb-item">Leave Recalls</li>
-                    <li class="breadcrumb-item active"> @Response.Write(Request["status"]); applications</li>
+                    <li class="breadcrumb-item active"> @{Response.Write(Request["status"]); } applications</li>
                 </ol>
                 <!-- DataTables Example -->
                 <div class="card mb-3">
                     <div class="card-header">
                         <i class="fas fa-folder"></i>
-                        @Response.Write(Request["status"]);  Leave Recall Applications
+                        @{Response.Write(Request["status"]); } Leave Recall Applications
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <PlaceHolder ID="placeholder" />
+                        
                         </div>
                     </div>
                     <div class="card-footer small text-muted">Updated today at @DateTime.Now.ToShortTimeString() </div>
@@ -93,10 +94,10 @@
     </script>
     <script src="js/jquery.toast.js"></script>
     <script>
-        $(document).ready(function () {
+        $(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
-        $(document).ready(function () {
+        $(function () {
             var table = $('#dataTable').DataTable({
                 lengthChange: false,
                 buttons: ['copy', 'excel', 'pdf', 'colvis'],
@@ -129,18 +130,15 @@
                             showToast('Deleting application');
 
                             jQuery.ajax({
-                                url: 'LeaveRecalls/DeleteOpenLeaveRecall',
+                                url:"@Url.Action("DeleteOpenLeaveRecall", "LeaveRecalls")",
                                 type: "POST",
                                 data: '{param1:"' + pid + '"}',
                                 dataType: "json",
                                 contentType: "application/json; charset=utf-8",
                                 success: function (response) {
 
-                                    if (response != null && response.d != null) {
-                                        var data = response.d;
-                                        // alert(typeof (data)); //it comes out to be string
-                                        //we need to parse it to JSON
-                                        data = $.parseJSON(data);
+                                    if (response != null ) {
+                                        var data = $.parseJSON(response);
 
                                         hideLoading();
 
@@ -182,21 +180,19 @@
                             showToast('Submitting application');
 
                             jQuery.ajax({
-                                url: 'LeaveRecalls/SubmitOpenLeaveRecall',
+                                url:"@Url.Action("SubmitOpenLeaveRecall", "LeaveRecalls")",
                                 type: "POST",
                                 data: '{param1:"' + pid + '"}',
                                 dataType: "json",
                                 contentType: "application/json; charset=utf-8",
                                 success: function (response) {
 
-                                    if (response != null && response.d != null) {
-                                        var data = response.d;
+                                    if (response != null) {
+                                        var data = $.parseJSON(response);;
                                         // alert(typeof (data)); //it comes out to be string
                                         //we need to parse it to JSON
 
                                         hideLoading();
-
-                                        data = $.parseJSON(data);
 
                                         if (data.Status == "000") {
                                             bootbox.alert(data.Message);
@@ -243,18 +239,15 @@
                             showToast('Cancelling application');
 
                             jQuery.ajax({
-                                url: 'LeaveRecalls/CancelOpenLeaveRecall',
+                                url:"@Url.Action("CancelOpenLeaveRecall", "LeaveRecalls")",
                                 type: "POST",
                                 data: '{param1:"' + pid + '"}',
                                 dataType: "json",
                                 contentType: "application/json; charset=utf-8",
                                 success: function (response) {
 
-                                    if (response != null && response.d != null) {
-                                        var data = response.d;
-                                        // alert(typeof (data)); //it comes out to be string
-                                        //we need to parse it to JSON
-                                        data = $.parseJSON(data);
+                                    if (response != null ) {
+                                        var data = $.parseJSON(response);
 
                                         hideLoading();
 

@@ -16,16 +16,12 @@ namespace LMS.Assest
         public static string CallWebService(string req)
         {
             string action = "";
-            
-
             var _url = "http://btl-svr-01.btl.local:7047/BC180/WS/CRONUS%20International%20Ltd./Codeunit/HRWebPortal";
-
             var _action = action;
             try
             {
                 XmlDocument soapEnvelopeXml = CreateSoapEnvelope(req);
                 HttpWebRequest webRequest = CreateWebRequest(_url, _action);
-
                 try
                 {
                     InsertSoapEnvelopeIntoWebRequest(soapEnvelopeXml, webRequest);
@@ -106,7 +102,7 @@ namespace LMS.Assest
             webRequest.Method = "POST";
             /////////////////webRequest.Credentials = CredentialCache.DefaultCredentials;
             webRequest.Timeout = 10000; //time-out value in milliseconds
-            NetworkCredential creds = new System.Net.NetworkCredential("BTL/Kasyoki.justus",@"$BTL?@2021/2022/S#.&\$");
+            NetworkCredential creds = new System.Net.NetworkCredential("BTL/Kasyoki.justus", @"$BTL?@2021/2022/S#.&\$");
             webRequest.Credentials = creds;
             webRequest.PreAuthenticate = true;
             webRequest.UseDefaultCredentials = true;

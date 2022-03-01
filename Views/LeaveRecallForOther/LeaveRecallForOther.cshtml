@@ -252,7 +252,7 @@
 <script src="~/Assest/js/jquery.toast.js"></script>
 <script>
 
-    $(document).ready(function () {
+    $(function () {
         $('#Leave_Type').append('<option value=""> </option>');
         $("#LeaveStartDay").datepicker({ dateFormat: 'dd/mm/yy' }).val();
         $("#LeaveEndDay").datepicker({ dateFormat: 'dd/mm/yy' }).val();
@@ -270,36 +270,20 @@
         });
     });
     $("#Employee").change(function () {
-        //selection fields
-        $('#ReturnDate').val('');
-        //$('#Leave_Type').val();//combo
-        $('#Leave_comments').val('');
-        $('#LeaveStartDay').val('');
-        $('#LeaveEndDay').val('');
-        $('#LeaveDaysApplied').val('');
-        //leave details
-        $('#Leave_Opening_Balance').val('');
-        $('#Leave_Entitled').val('');
-        $('#Leave_Accrued_Days').val('');
-        $('#Leave_Days_Taken').val('');
-        $('#Leave_Balance').val('');
-
         $("#Leave_Type").children('option:not(:first)').remove();
 
         if ($('#Employee').val() != '') {
+            var Employee = $('#Employee').val();
             jQuery.ajax({
-                url: 'LeaveForOther/GetUserLeaves',
+                url:"@Url.Action("GetUserLeaves", "LeaveRecallForOther")",
                 type: "POST",
-                data: '{param1:"' + $('#Employee').val() + '" }',
+                data: '{param1:"' + Employee + '" }',
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
 
-                    if (response != null && response.d != null) {
-                        var data = response.d;
-                        // alert(response); //it comes out to be string
-                        //we need to parse it to JSON
-                        data = $.parseJSON(data);
+                    if (response != null) {
+                        var data = $.parseJSON(data);
 
                         $.each(data, function (i, item) {
                             // alert(item.LeaveNo);
@@ -312,41 +296,29 @@
     });
     $("#Leave_Type").change(function () {
         debugger;
-        //selection fields
-        $('#ReturnDate').val('');
-        //$('#Leave_Type').val();//combo
-        $('#Leave_comments').val('');
-        $('#LeaveStartDay').val('');
-        $('#LeaveEndDay').val('');
-        $('#LeaveDaysApplied').val('');
-        //leave details
-        $('#Leave_Opening_Balance').val('');
-        $('#Leave_Entitled').val('');
-        $('#Leave_Accrued_Days').val('');
-        $('#Leave_Days_Taken').val('');
-        $('#Leave_Balance').val('');
+
+        var Leave_Type = $('#Leave_Type').val();
+        var Employee = $('#Employee').val();
+
 
         if ($('#Leave_Type').val() != '' && $('#Employee').val() != '') {
             jQuery.ajax({
-                url: 'LeaveForOther/GetLeaveDetails',
+                url:"@Url.Action("GetLeaveDetails", "LeaveRecallForOther")",
                 type: "POST",
-                data: '{param1:"' + $('#Leave_Type').val() + '", param2:"' + $('#Employee').val() + '" }',
+                data: '{param1:"' + Leave_Type + '", param2:"' + Employee + '" }',
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
 
-                    if (response != null && response.d != null) {
-                        var data = response.d;
-                        // alert(typeof (data)); //it comes out to be string
-                        //we need to parse it to JSON
-                        data = $.parseJSON(data);
+                    if (response != null) {
+                        var data = $.parseJSON(response);
 
                         //set fields values
-                        $('#Leave_Opening_Balance').val(data.OpeningBalance);
-                        $('#Leave_Entitled').val(data.EntitledDays);
-                        $('#Leave_Accrued_Days').val(data.Accrued);
-                        $('#Leave_Days_Taken').val(data.LeaveTaken);
-                        $('#Leave_Balance').val(data.Remaining);
+                        $('#Leave_Opening_Balance').val(data.Leave_Opening_Balance);
+                        $('#Leave_Entitled').val(data.Leave_Entitled);
+                        $('#Leave_Accrued_Days').val(data.Leave_Accrued_Days);
+                        $('#Leave_Days_Taken').val(data.Leave_Days_Taken);
+                        $('#Leave_Balance').val(data.Leave_Balance);
                         GetApprovedLeavesList($('#Leave_Type').val());
                     }
                 }
@@ -396,25 +368,26 @@
             var endDate = new Date(end_date);
 
             if (startDate <= endDate) {
+                var Leave_Type = $('#Leave_Type').val();
+                var LeaveStartDay = $('#LeaveStartDay').val();
+                var LeaveEndDay = $('#LeaveEndDay').val();
+
                 jQuery.ajax({
-                    url: 'LeaveForOther/GetLeaveState',
+                    url:"@Url.Action("GetLeaveState", "LeaveRecallForOther")",
                     type: "POST",
-                    data: '{param1:"' + $('#Leave_Type').val() + '",param2:"' + $('#LeaveStartDay').val() + '", param3:"' + $('#LeaveEndDay').val() + '"}',
+                    data: '{param1:"' + Leave_Type + '",param2:"' + LeaveStartDay + '", param3:"' + LeaveEndDay + '"}',
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function (response) {
 
-                        if (response != null && response.d != null) {
-                            var data = response.d;
-                            // alert(typeof (data)); //it comes out to be string
-                            //we need to parse it to JSON
-                            data = $.parseJSON(data);
+                        if (response != null ) {
+                            var data = $.parseJSON(response);
 
                             if (data.Validity == false) {
                                 bootbox.alert(data.Message);
                             } else {
                                 $("#ReturnDate").val(data.ReturnDate);
-                                $("#LeaveDaysApplied").val(data.Quantity);
+                                $("#LeaveDaysApplied").val(data.LeaveDaysApplied);
                             }
                         }
                     }
@@ -448,19 +421,19 @@
                 if ($("#LeaveStartDay").val() == '') {
                     bootbox.alert("Please enter the Leave Start Date");
                 } else {
+                    var ApprovedLeave = $('#ApprovedLeave').val();
+                    var Leave_Type = $('#Leave_Type').val();
+                    var LeaveStartDay = $('#LeaveStartDay').val();
                     jQuery.ajax({
-                        url: 'LeaveForOther/GetLeaveEndDateAndReturnDate',
+                        url:"@Url.Action("GetLeaveEndDateAndReturnDate", "LeaveRecallForOther")",
                         type: "POST",
-                        data: '{param1:"' + $('#Leave_Type').val() + '",param2:"' + $('#LeaveStartDay').val() + '", param3:"' + $('#LeaveDaysApplied').val() + '"}',
+                        data: '{param1:"' + LeaveStartDay + '",param2:"' + Leave_Type + '", param3:"' + ApprovedLeave + '"}',
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         success: function (response) {
 
-                            if (response != null && response.d != null) {
-                                var data = response.d;
-                                // alert(typeof (data)); //it comes out to be string
-                                //we need to parse it to JSON
-                                data = $.parseJSON(data);
+                            if (response != null) {
+                                var data = $.parseJSON(response);
 
                                 if (data.Validity == false) {
                                     bootbox.alert(data.Message);
@@ -475,33 +448,24 @@
 
     });
     $("#ApprovedLeave").change(function () {
-        //selection fields
-        $('#ReturnDate').val('');
-        //$('#Leave_Type').val();//combo
-        $('#Leave_comments').val('');
-        $('#LeaveStartDay').val('');
-        $('#LeaveEndDay').val('');
-        $('#LeaveDaysApplied').val('');
-
+        var ApprovedLeave = $('#ApprovedLeave').val();
+        var Employee = $('#Employee').val();
 
         jQuery.ajax({
-            url: '/LeaveRecallForOther/ApprovedLeaveDetails',
+            url:"@Url.Action("ApprovedLeaveDetails", "LeaveRecallForOther")",
             type: "POST",
-            data: '{param1:"' + $('#ApprovedLeave').val() + '", param2:"' + $('#Employee').val() + '"  }',
+            data: '{param1:"' + ApprovedLeave + '", param2:"' + Employee + '"  }',
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (response) {
 
-                if (response != null && response.d != null) {
-                    var data = response.d;
-                    // alert(typeof (data)); //it comes out to be string
-                    //we need to parse it to JSON
-                    data = $.parseJSON(data);
+                if (response != null) {
+                    var data = $.parseJSON(response);
                     //set fields values
-                    $('#LeaveEndDay').val(data.EndDate);
-                    $('#LeaveDaysApplied').val(data.Quantity);
+                    $('#LeaveEndDay').val(data.LeaveEndDay);
+                    $('#LeaveDaysApplied').val(data.LeaveDaysApplied);
                     $('#ReturnDate').val(data.ReturnDate);
-                    $('#LeaveStartDay').val(data.StartDate);
+                    $('#LeaveStartDay').val(data.LeaveStartDay);
                 }
             }
         });
@@ -521,19 +485,25 @@
 
             showToast('Saving application');
 
+            var ReturnDate = $('#ReturnDate').val();
+            var Leave_Type = $('#Leave_Type').val();
+            var Leave_comments = $('#Leave_comments').val();
+            var LeaveStartDay = $('#LeaveStartDay').val();
+            var LeaveEndDay = $('#LeaveEndDay').val();
+            var LeaveDaysApplied = $('#LeaveDaysApplied').val();
+            var Employee = $('#Employee').val();
+            var SelectedEmployee = $("#Employee option:selected").text();
+
             jQuery.ajax({
-                url: '/LeaveRecallForOther/Save',
+                url:"@Url.Action("Save", "LeaveRecallForOther")",
                 type: "POST",
-                data: '{param1:"' + $('#ReturnDate').val() + '", param2:"' + $('#Leave_Type').val() + '", param3:"' + $('#Leave_comments').val() + '", param4:"' + $('#LeaveStartDay').val() + '", param5:"' + $('#LeaveEndDay').val() + '", param6:"' + $('#LeaveDaysApplied').val() + '", param7:"' + $('#Employee').val() + '", param8:"' + $("#Employee option:selected").text() + '" }',
+                data: '{param1:"' + ReturnDate + '", param2:"' + Leave_Type + '", param3:"' + Leave_comments + '", param4:"' + LeaveStartDay + '", param5:"' + LeaveEndDay + '", param6:"' + LeaveDaysApplied + '", param7:"' + Employee + '", param8:"' + SelectedEmployee + '" }',
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
                     debugger;
-                    if (response != null && response.d != null) {
-                        var data = response.d;
-                        // alert(typeof (data)); //it comes out to be string
-                        //we need to parse it to JSON
-                        data = $.parseJSON(data);
+                    if (response != null) {
+                        var data  = $.parseJSON(data);
 
                         hideLoading();
 
@@ -564,11 +534,19 @@
             event.preventDefault();
 
             showToast('Submitting application');
+            var ReturnDate = $('#ReturnDate').val();
+            var Leave_Type = $('#Leave_Type').val();
+            var Leave_comments = $('#Leave_comments').val();
+            var LeaveStartDay = $('#LeaveStartDay').val();
+            var LeaveEndDay = $('#LeaveEndDay').val();
+            var LeaveDaysApplied = $('#LeaveDaysApplied').val();
+            var Employee = $('#Employee').val();
+            var SelectedEmployee = $("#Employee option:selected").text();
 
             jQuery.ajax({
-                url: '/LeaveRecallForOther/Submit',
+                url:"@Url.Action("Submit", "LeaveRecallForOther")",
                 type: "POST",
-                data: '{param1:"' + $('#ReturnDate').val() + '", param2:"' + $('#Leave_Type').val() + '", param3:"' + $('#Leave_comments').val() + '", param4:"' + $('#LeaveStartDay').val() + '", param5:"' + $('#LeaveEndDay').val() + '", param6:"' + $('#LeaveDaysApplied').val() + '", param7:"' + $('#Employee').val() + '", param8:"' + $("#Employee option:selected").text() + '" }',
+                data: '{param1:"' + ReturnDate + '", param2:"' + Leave_Type + '", param3:"' + Leave_comments + '", param4:"' + LeaveStartDay + '", param5:"' + LeaveEndDay + '", param6:"' + LeaveDaysApplied + '", param7:"' + Employee + '", param8:"' + SelectedEmployee + '" }',
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
@@ -599,10 +577,11 @@
     function GetApprovedLeavesList(LeaveCode) {
         $('#ApprovedLeave').append('<option value="" > </option>');
         if (LeaveCode != '') {
+            var Employee = $('#Employee').val();
             jQuery.ajax({
-                url: 'LeaveRecallForOther/LoadApprovedLeaves',
+                url:"@Url.Action("LoadApprovedLeaves", "LeaveRecallForOther")",
                 type: "POST",
-                data: '{param1:"' + LeaveCode + '", param2:"' + $('#Employee').val() + '" }',
+                data: '{param1:"' + LeaveCode + '", param2:"' + Employee + '" }',
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {

@@ -27,7 +27,6 @@
     <link href="~/Content/assets/img/favicon.png" rel="icon">
 </head>
 <body>
-
     <div class="container-scroller">
         <div class="container-fluid page-body-wrapper full-page-wrapper">
             <div class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
@@ -60,10 +59,18 @@
                                             </span>
                                         </div>
                                     </div>
-                                </div>                                
+                                </div>
                                 <div class="form-group">
                                     <button class="btn btn-primary submit-btn btn-block">Login</button>
                                 </div>
+                                @if (ViewBag.Message != null)
+                                {
+                                    <script type="text/javascript">
+                                            window.onload = function () {
+                                                alert("@ViewBag.Message");
+                                            };
+                                    </script>
+                                }
                                 <div class="form-group d-flex justify-content-between">
                                     <div class="form-check form-check-flat mt-0">
                                         <label class="form-check-label">
@@ -72,7 +79,6 @@
 
                                     </div>
                                 </div>
-
                                 <div class="text-block text-center my-3">
                                     <P class="footer-text text-center" href="http://brightsofttech.co.ke/" target="_blank">Powered By Brightsoft Technologies Limited</P>
                                 </div>

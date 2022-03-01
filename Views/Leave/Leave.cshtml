@@ -4,130 +4,71 @@
 }
 
 <main id="main" class="main">
-    <div ID="NavbarContent" runat="server">
-        <!-- #Include virtual="includes/Navbar.aspx" -->
-    </div>
     <div id="wrapper">
-        <!-- Sidebar -->
-        <!-- #Include virtual="includes/Sidebar.aspx" -->
         <div id="content-wrapper">
-            @using (Html.BeginForm())
-            {
-                <div class="container-fluid">
-                    <!-- Breadcrumbs-->
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="#">Dashboard</a>
-                        </li>
-                        <li class="breadcrumb-item">Leaves</li>
-                        <li class="breadcrumb-item active"> @{Response.Write(Request["status"]); } applications</li>
-                    </ol>
-
-                    <!-- DataTables Example -->
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            <i class="fas fa-suitcase"></i>
-                            @{Response.Write(Request["status"]); } Leave applications
-                        </div>
+            <div class="container-fluid">
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">Leaves</li>
+                    <li class="breadcrumb-item active">@{Response.Write(Request["status"]);} applications</li>
+                </ol>
+                <!-- DataTables Example -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-suitcase"></i>
+                        @{Response.Write(Request["status"]);}Leave applications
                         <div class="card-body">
                             <div class="table-responsive">
-                                @*@Html.Action("DataViewPartial", "Leave")*@
-                                
-
+                                <asp:PlaceHolder ID="placeholder"/>
                             </div>
                         </div>
-                        <div class="card-footer small text-muted">Updated today at  @DateTime.Now.ToShortTimeString() </div>
                     </div>
-
+                    <div class="card-footer small text-muted">Updated today at @DateTime.Now.ToShortTimeString()</div>
                 </div>
-            }
-
-        </div>
-        <!-- /#wrapper -->
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
-
-        <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="Logout.aspx">Logout</a>
-                    </div>
+            </div>
+            <!-- /.container-fluid -->
+        <!-- /.content-wrapper -->
+    </div>
+  </div>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
                 </div>
             </div>
         </div>
     </div>
 </main>
-<!-- Bootstrap core JavaScript-->
-<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
-<script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Custom fonts for this template-->
-<link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
-<!-- Page level plugin CSS-->
-<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-<link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet">
-<!-- Custom styles for this template-->
-
-<link href="~/Assest/css/custom.css" rel="stylesheet">
-<!-- Core plugin JavaScript-->
-<script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Page level plugin JavaScript-->
-<script src="~/Assest/vendor/datatables/jquery.dataTables.js"></script>
-<script src="~/Assest/vendor/datatables/dataTables.bootstrap4.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="~/Assest/js/sb-admin.min.js"></script>
-<script src="~/Assest/js/bootbox.all.min.js"></script>
-<script src="~/Assest/js/bootboxError.js"></script>
-<script src="~/Assest/js/jquery.pleaseWait.js"></script>
-
-<!-- Demo scripts for this page-->
-
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+ @*Bootstrap core JavaScript*@
 <script type="text/javascript">
     var jQuery_3_3_1 = $.noConflict(true);
 </script>
 <script src="~/Assest/js/jquery.toast.js"></script>
 <script>
-    $(document).ready(function () {
+    $(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
-    $(document).ready(function () {
-
+    $(function () {
         var table = $('#dataTable').DataTable({
             lengthChange: false,
             buttons: ['copy', 'excel', 'pdf', 'colvis'],
             "order": [[0, "desc"]]
         });
-
         table.buttons().container()
             .appendTo('#dataTable_wrapper .col-md-6:eq(0)');
-
         jQuery_3_3_1("#dataTable").on("click", ".delete_record", function (e) {
             e.preventDefault();
 
@@ -151,20 +92,16 @@
                     if (result == true) {
 
                         showToast('Deleting application');
-
                         jQuery.ajax({
-                            url: 'Leaves/leave',
+                            url: "@Url.Action("leave", "Leave")",
                             type: "POST",
                             data: '{param1:"' + pid + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
 
-                                if (response != null && response.d != null) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-                                    data = $.parseJSON(data);
+                                if (response != null) {
+                                    var data = $.parseJSON(response);
 
                                     hideLoading();
 
@@ -203,24 +140,19 @@
                     }
                 },
                 callback: function (result) {
-
                     if (result == true) {
-
                         showToast('Submitting application');
 
                         jQuery.ajax({
-                            url: 'Leaves/SubmitOpenLeave',
+                            url: "@Url.Action("SubmitOpenLeave", "Leave")",
                             type: "POST",
                             data: '{param1:"' + pid + '", param2:"' + startdate + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
 
-                                if (response != null && response.d != null) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-                                    data = $.parseJSON(data);
+                                if (response != null) {
+                                    var data = $.parseJSON(response);
 
                                     hideLoading();
 
@@ -271,18 +203,15 @@
                         showToast('Cancelling application');
 
                         jQuery.ajax({
-                            url: 'Leaves/CancelOpenLeave',
+                            url:"@Url.Action("CancelOpenLeave", "Leave")",
                             type: "POST",
                             data: '{param1:"' + pid + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
 
-                                if (response != null && response.d != null) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-                                    data = $.parseJSON(data);
+                                if (response != null) {
+                                    var data = $.parseJSON(response);
 
                                     hideLoading();
 
@@ -326,18 +255,15 @@
                         showToast('Delegating application');
 
                         jQuery.ajax({
-                            url: 'Leaves/DelegatePendingLeave',
+                            url:"@Url.Action("DelegatePendingLeave", "Leave")",
                             type: "POST",
                             data: '{param1:"' + pid + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
 
-                                if (response != null && response.d != null) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-                                    data = $.parseJSON(data);
+                                if (response != null ) {
+                                    var data = $.parseJSON(response);
 
                                     hideLoading();
 

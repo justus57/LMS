@@ -10,7 +10,6 @@ namespace LMS
     {
         public static WebRef.HRWebPortal ObjNav
         {
-
             get
             {
                 string URL_status = "http://btl-svr-01.btl.local:7047/BC180/WS/CRONUS%20International%20Ltd./Codeunit/HRWebPortal";

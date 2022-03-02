@@ -1,4 +1,5 @@
 ﻿using LMS.CustomsClasses;
+using LMS.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -109,19 +110,118 @@ namespace LMS.Controllers
             {
                 Console.Write(es);
             }
-            var _LeaveCodeDetails = new LeaveCodeDetails
+            var _LeaveCodeDetails = new LeaveRecallApplication
             {
-                Accrued = Accrued,
+                Leave_Accrued_Days = Accrued,
+                Leave_Entitled = Entitled,
+                Leave_Days_Taken = LeaveTaken,
+                Leave_Opening_Balance = OpeningBalance,
+                Leave_Balance = Remaining,
                 Description = Description,
-                EntitledDays = Entitled,
                 LeaveCode = LeaveCode,
-                LeaveTaken = LeaveTaken,
-                OpeningBalance = OpeningBalance,
-                Remaining = Remaining
             };
             return Json(JsonConvert.SerializeObject(_LeaveCodeDetails), JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetLeaveState(string param1, string param2, string param3)
+        {
+            string employeeNo = System.Web.HttpContext.Current.Session["PayrollNo"].ToString(); ;
+            string causeofAbsenceCode = param1;
+            string startDate = param2;
+            string endDate = param3;
 
+            string GetLeaveStateresponse = LeaveApplicationXMLRequests.GetLeaveQuantityAndReturnDate(employeeNo, causeofAbsenceCode, startDate, endDate);
+            //{"Status":"000","EndDate":"10","ReturnDate":"22102018"}
+            dynamic json = JObject.Parse(GetLeaveStateresponse);
+
+            bool validity = false;
+            string Msg = null;
+            string status = json.Status;
+            string Return_Date = null;
+            string Qty = null;
+
+            if (status == "000")
+            {
+                validity = true;
+                Msg = "Successful";
+                Return_Date = json.ReturnDate;
+                Qty = json.EndDate;
+            }
+            else
+            {
+                validity = false;
+                Msg = "Failed";
+
+            }
+
+
+            var Leave = new LeaveRecallApplication
+            {
+                LeaveDaysApplied = Qty,
+                ReturnDate = CustomsClasses.AppFunctions.ConvertTime(Return_Date),
+                Message = Msg,
+                Validity = validity
+            };
+            return Json(JsonConvert.SerializeObject(Leave), JsonRequestBehavior.AllowGet); ;
+        }
+        public JsonResult GetLeaveEndDateAndReturnDate(string param1, string param2, string param3)
+        {
+            string employeeNo = System.Web.HttpContext.Current.Session["PayrollNo"].ToString(); ;
+            string causeofAbsenceCode = param1;
+            string startDate = param2;
+            string qty = param3;
+            bool validity = false;
+            string Msg = null;
+            string Return_Date = null;
+            string EndDate = null;
+
+            try
+            {
+                string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                            <Body>
+                                <GetEndDateAndReturnDate xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+                                    <employeeNo>" + employeeNo + @"</employeeNo>
+                                    <causeofAbsenceCode>" + causeofAbsenceCode + @"</causeofAbsenceCode>
+                                    <startDate>" + startDate + @"</startDate>
+                                    <qty>" + qty + @"</qty>
+                                </GetEndDateAndReturnDate>
+                            </Body>
+                        </Envelope>";
+
+                var response = Assest.Utility.CallWebService(req);
+                string GetLeaveEndDateAndReturnDateResponseString = Assest.Utility.GetJSONResponse(response);
+
+                //json 
+                dynamic json = JObject.Parse(GetLeaveEndDateAndReturnDateResponseString);
+                string status = json.Status;
+
+                if (status == "000")
+                {
+                    validity = true;
+                    Msg = "Successful";
+                    Return_Date = json.ReturnDate;
+                    EndDate = json.EndDate;
+                }
+                else
+                {
+                    validity = false;
+                    Msg = "Failed";
+                }
+
+            }
+            catch (Exception es)
+            {
+                Console.Write(es);
+            }
+
+            var LeaveEndReturnDates = new LeaveRecallApplication
+            {
+                LeaveEndDay = CustomsClasses.AppFunctions.ConvertTime(EndDate),
+                ReturnDate = CustomsClasses.AppFunctions.ConvertTime(Return_Date),
+                Message = Msg,
+                Validity = validity
+            };
+            return Json(JsonConvert.SerializeObject(LeaveEndReturnDates), JsonRequestBehavior.AllowGet);
+        }
         public JsonResult LoadApprovedLeaves(string param1)
         {
             string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();// get session variable

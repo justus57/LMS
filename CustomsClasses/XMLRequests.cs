@@ -1072,50 +1072,58 @@ namespace LMS.CustomsClasses
         public static void SaveLeaveRecallApplication(string DocumentNo, string EmployeeID, string EmployeeName, string RequestDate, string DateCreated,
             string AccountId, string LeaveCode, string Description, string StartDate, string EndDate, string LeaveDays, string ReturnDate)
         {
+            //string request = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+            //                <Body>
+            //                    <GetLeaveDetail xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+            //                        <leaveDetail>
+            //                            <LeaveHeader xmlns=""urn:microsoft-dynamics-nav/xmlports/GetLeaveDetail"">
+            //                                <HeaderDocumentType>1</HeaderDocumentType>
+            //                                <HeaderNo>" + DocumentNo + @"</HeaderNo>
+            //                                <EmployeeID>" + EmployeeID + @"</EmployeeID>
+            //                                <EmployeeName>" + EmployeeName + @"</EmployeeName>
+            //                                <RequestDate>" + RequestDate + @"</RequestDate>
+            //                                <ApprovalStatus>0</ApprovalStatus>
+            //                                <DateCreated>" + DateCreated + @"</DateCreated>
+            //                                <ApproverID></ApproverID>
+            //                                <ApproverName></ApproverName>
+            //                                <LeaveSubType>LeaveRecall</LeaveSubType>
+            //                                <RejectionComment></RejectionComment>
+            //                                <AppliedBy>" + AccountId + @"</AppliedBy>
+            //                                <HasAttachment></HasAttachment>
+            //                                <AttachmentName></AttachmentName>
+            //                                <LeaveLine>
+            //                                    <LineDocumentNo>" + DocumentNo + @"</LineDocumentNo>
+            //                                    <LineDocumentType>1</LineDocumentType>
+            //                                    <LineNo>10000</LineNo>
+            //                                    <LeaveCode>" + LeaveCode + @"</LeaveCode>
+            //                                    <ExternalDocNo></ExternalDocNo>
+            //                                    <Description>" + Description + @"</Description>
+            //                                    <UnitOfMeasure>DAY</UnitOfMeasure>
+            //                                    <StartDate>" + StartDate + @"</StartDate>
+            //                                    <EndDate>" + EndDate + @"</EndDate>
+            //                                    <LeaveDays>" + LeaveDays + @"</LeaveDays>
+            //                                    <ReturnDate>" + ReturnDate + @"</ReturnDate>
+            //                                    <ApprovedStartDate>" + StartDate + @"</ApprovedStartDate>
+            //                                    <ApprovedEndDate>" + EndDate + @"</ApprovedEndDate>
+            //                                    <ApprovedQty>" + LeaveDays + @"</ApprovedQty>
+            //                                    <ApprovedReturnDate>" + ReturnDate + @"</ApprovedReturnDate>
+            //                                </LeaveLine>
+            //                            </LeaveHeader>
+            //                        </leaveDetail>
+            //                        <documentNo>" + DocumentNo + @"</documentNo>
+            //                        <employeeNo>" + EmployeeID + @"</employeeNo>
+            //                        <operation>Import</operation>
+            //                    </GetLeaveDetail>
+            //                </Body>
+            //            </Envelope>";
             string request = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
-                            <Body>
-                                <GetLeaveDetail xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                    <leaveDetail>
-                                        <LeaveHeader xmlns=""urn:microsoft-dynamics-nav/xmlports/GetLeaveDetail"">
-                                            <HeaderDocumentType>1</HeaderDocumentType>
-                                            <HeaderNo>" + DocumentNo + @"</HeaderNo>
-                                            <EmployeeID>" + EmployeeID + @"</EmployeeID>
-                                            <EmployeeName>" + EmployeeName + @"</EmployeeName>
-                                            <RequestDate>" + RequestDate + @"</RequestDate>
-                                            <ApprovalStatus>0</ApprovalStatus>
-                                            <DateCreated>" + DateCreated + @"</DateCreated>
-                                            <ApproverID></ApproverID>
-                                            <ApproverName></ApproverName>
-                                            <LeaveSubType>LeaveRecall</LeaveSubType>
-                                            <RejectionComment></RejectionComment>
-                                            <AppliedBy>" + AccountId + @"</AppliedBy>
-                                            <HasAttachment></HasAttachment>
-                                            <AttachmentName></AttachmentName>
-                                            <LeaveLine>
-                                                <LineDocumentNo>" + DocumentNo + @"</LineDocumentNo>
-                                                <LineDocumentType>1</LineDocumentType>
-                                                <LineNo>10000</LineNo>
-                                                <LeaveCode>" + LeaveCode + @"</LeaveCode>
-                                                <ExternalDocNo></ExternalDocNo>
-                                                <Description>" + Description + @"</Description>
-                                                <UnitOfMeasure>DAY</UnitOfMeasure>
-                                                <StartDate>" + StartDate + @"</StartDate>
-                                                <EndDate>" + EndDate + @"</EndDate>
-                                                <LeaveDays>" + LeaveDays + @"</LeaveDays>
-                                                <ReturnDate>" + ReturnDate + @"</ReturnDate>
-                                                <ApprovedStartDate>" + StartDate + @"</ApprovedStartDate>
-                                                <ApprovedEndDate>" + EndDate + @"</ApprovedEndDate>
-                                                <ApprovedQty>" + LeaveDays + @"</ApprovedQty>
-                                                <ApprovedReturnDate>" + ReturnDate + @"</ApprovedReturnDate>
-                                            </LeaveLine>
-                                        </LeaveHeader>
-                                    </leaveDetail>
-                                    <documentNo>" + DocumentNo + @"</documentNo>
-                                    <employeeNo>" + EmployeeID + @"</employeeNo>
-                                    <operation>Import</operation>
-                                </GetLeaveDetail>
-                            </Body>
-                        </Envelope>";
+                        <Body>
+                            <GetLeaveDetail xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+                                <documentNo>" + DocumentNo + @"</documentNo>
+                            </GetLeaveDetail>
+                        </Body>
+                    </Envelope>";
+
 
             string LeaveApplied = Assest.Utility.CallWebService(request);
         }
@@ -1123,11 +1131,11 @@ namespace LMS.CustomsClasses
         {
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                             <Body>
-                                <GetLeaveNewNo xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                    <documentNo></documentNo>
-                                    <employeeNo>" + username + @"</employeeNo>
-                                    <leaveSubType>LeaveRecall</leaveSubType>
-                                </GetLeaveNewNo>
+                                <GetNewDocumentNo xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+                                    <hRDocumentType>Absence</hRDocumentType>
+                                    <employeeNo>" + username+@"</employeeNo>
+                                    <subType>LeaveRecall</subType>
+                                </GetNewDocumentNo>
                             </Body>
                         </Envelope>";
 
@@ -1153,16 +1161,15 @@ namespace LMS.CustomsClasses
     {
         public static string GetDocumentNumber(string username)
         {
-            string req =
-                @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
-                            <Body>
-                                <GetLeaveNewNo xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                    <documentNo></documentNo>
-                                    <employeeNo>" + username + @"</employeeNo>
-                                    <leaveSubType>Leave</leaveSubType>
-                                </GetLeaveNewNo>
-                            </Body>
-                        </Envelope>";
+            string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                        <Body>
+                            <GetNewDocumentNo xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+                                <hRDocumentType>Absence</hRDocumentType>
+                                <employeeNo>" + username + @"</employeeNo>
+                                <subType>Leave</subType>
+                            </GetNewDocumentNo>
+                        </Body>
+                    </Envelope>";
 
             string str = Assest.Utility.CallWebService(req);
             return Assest.Utility.GetJSONResponse(str);
@@ -1466,7 +1473,7 @@ namespace LMS.CustomsClasses
                 LeaveStatus = "Rejected";
             }
 
-            string username = HttpContext.Current.Session["Username"].ToString();
+            string username = HttpContext.Current.Session["PayrollNo"].ToString();
 
             string tabledata = WebService.GetLeaveList("0", "10", username, AppliedAs, LeaveStatus, "LeaveRecall", "500");
 
@@ -1485,7 +1492,7 @@ namespace LMS.CustomsClasses
             table.Columns.Add("View", typeof(string));
 
 
-            if (Convert.ToInt16(xmlSoapRequest.GetElementsByTagName("totalRecords")[count].InnerText) > 0)
+            if (xmlSoapRequest.GetElementsByTagName("EmployeeID")[count].InnerText != "")
             {
                 foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("LeaveHeader"))
                 {
@@ -1524,11 +1531,11 @@ namespace LMS.CustomsClasses
                     }
                     else if (status == "Approved")
                     {
-                        table.Rows.Add(CustomsClasses.AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, CustomsClasses.AppFunctions.ConvertTime(StartDate), CustomsClasses.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-primary btn-xs' href = " + "ViewLeaveRecall.aspx?id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + "&status=Approved" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
+                        table.Rows.Add(CustomsClasses.AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, CustomsClasses.AppFunctions.ConvertTime(StartDate), CustomsClasses.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-primary btn-xs' href = " + "ViewLeaveRecall?id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + "&status=Approved" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
                     }
                     else if (status == "Rejected")
                     {
-                        table.Rows.Add(CustomsClasses.AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, CustomsClasses.AppFunctions.ConvertTime(StartDate), CustomsClasses.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-primary btn-xs' href = " + "ViewLeaveRecall.aspx?id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + "&status=Rejected" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
+                        table.Rows.Add(CustomsClasses.AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, CustomsClasses.AppFunctions.ConvertTime(StartDate), CustomsClasses.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-primary btn-xs' href = " + "ViewLeaveRecall?id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + "&status=Rejected" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
                     }
 
                     // table.Rows.Add(classes.AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, classes.AppFunctions.ConvertTime(StartDate), classes.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a href = " + "ViewApprovedLeave.aspx?id=" + classes.AppFunctions.Base64Encode(HeaderNoLink) + "><span class = 'fa fa-eye'> View Record</span></a>");

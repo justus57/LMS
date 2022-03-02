@@ -34,15 +34,17 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
 
-            if (Session["Logged"].Equals("No"))
+            var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
+            var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
+            if (log == "No")
             {
-                Response.Redirect("Account/Login");
+                Response.Redirect("/Account/login");
             }
-            else if (Session["Logged"].Equals("Yes"))
+            else if (log == "yes")
             {
-                if (Session["RequirePasswordChange"].Equals("TRUE"))
+                if (passRequired == "true")
                 {
-                    Response.Redirect("/Account/OneTimePass");
+                    Response.Redirect("/Account/OneTimePassword");
                 }
                 else
                 {
@@ -59,6 +61,8 @@ namespace LMS.Controllers
                     }
                 }
             }
+        
+    
             return View();
         }
 

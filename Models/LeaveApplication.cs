@@ -22,6 +22,7 @@ namespace LMS.Models
         public string Leave_comments { get; set; }
         public string Message { get; set; }
         public bool Validity { get; set; }
+        
     }
 
 

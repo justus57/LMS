@@ -36,8 +36,15 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="Employee" class="form-control-label">Employee applying for</label>
-                                                @Html.DropDownList("employees", (List<SelectListItem>)ViewBag.employees,
-                                                  "Select Leave-Type", new { @class = "form-control", id = "employees" }) 
+                                                <select Class="form-control" ID="Employee" name="employee" AutoPostBack="false" style="width:100%">
+                                                    <option selected value="0">---Select---</option>
+                                                    @foreach (var item in ViewBag.employees)
+                                                    {
+                                                        <option value="@item" customAttribute="item.SomethingSpecial">
+                                                            @item
+                                                        </option>
+                                                    }
+                                                </select> 
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The employee must be selected</div>
                                             </div>
@@ -47,8 +54,9 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="Leave_Type" class="form-control-label">Leave Type</label>
-                                                @Html.DropDownList("Leave_type", (List<SelectListItem>)ViewBag.Leaves,
-                                                   "Select Leave-Type", new { @class = "form-control", id = "Leave_type" })
+                                                <select Class="form-control" ID="Leave_Type" name="Leave_Type" AutoPostBack="false" style="width:100%">
+                                                    <option value="Select">Select</option>
+                                                </select>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave type must be selected</div>
                                             </div>
@@ -116,7 +124,9 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="ApprovedLeave" class="form-control-label">Approved Leave</label>
-                                                <asp:DropDownList CssClass="form-control" ID="ApprovedLeave" runat="server" required="true" style="width:100%"> </asp:DropDownList>
+                                                <select Class="form-control" ID="ApprovedLeave" name="ApprovedLeave" AutoPostBack="false" style="width:100%">
+                                                    <option value="Select">Select</option>
+                                                </select>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave must be selected</div>
                                             </div>
@@ -231,9 +241,6 @@
 <!-- Page level plugin CSS-->
 <link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
-<!-- Custom styles for this template-->
-
-<link href="~/Assest/css/select2.min.css" rel="stylesheet" />
 <!--jQUERY date picker--->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
@@ -244,7 +251,6 @@
 <!-- JQUERY DATEPICKER-->
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="~/Assest/js/select2.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
 <script type="text/javascript">
     var jQuery_3_3_1 = $.noConflict(true);
@@ -273,34 +279,37 @@
         $("#Leave_Type").children('option:not(:first)').remove();
 
         if ($('#Employee').val() != '') {
-            var Employee = $('#Employee').val();
-            jQuery.ajax({
-                url:"@Url.Action("GetUserLeaves", "LeaveRecallForOther")",
-                type: "POST",
-                data: '{param1:"' + Employee + '" }',
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                success: function (response) {
+            var employee = $('#Employee').val();
+                $.ajax({
+                    url: "@Url.Action("GetUserLeaves", "LeaveForOther")",
+                    type: "POST",
+                    data: '{param1:"' + employee + '" }',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
 
-                    if (response != null) {
-                        var data = $.parseJSON(data);
+                        if (response != null ) {
+                            var data = $.parseJSON(response);
 
-                        $.each(data, function (i, item) {
-                            // alert(item.LeaveNo);
-                            $("#Leave_Type").append($('<option></option>').attr("value", item.LeaveCode).text(item.LeaveName));
-                        });
+                            $.each(data, function (i, item) {
+                                $('#Leave_Type').html('');
+                                var options = '';
+                                options += '<option value="Select">---Select---</option>';
+                                for (var i = 0; i < data.length; i++) {
+                                    options += '<option value="' + data[i].LeaveCode + '">' + data[i].LeaveName + '</option>';
+                                }
+                                $('#Leave_Type').append(options);
+                            });
+                        }
                     }
-                }
-            });
-        }
+                });
+            }
     });
     $("#Leave_Type").change(function () {
         debugger;
 
         var Leave_Type = $('#Leave_Type').val();
         var Employee = $('#Employee').val();
-
-
         if ($('#Leave_Type').val() != '' && $('#Employee').val() != '') {
             jQuery.ajax({
                 url:"@Url.Action("GetLeaveDetails", "LeaveRecallForOther")",
@@ -439,7 +448,7 @@
                                     bootbox.alert(data.Message);
                                 } else {
                                     $("#ReturnDate").val(data.ReturnDate);
-                                    $("#LeaveEndDay").val(data.EndDate);
+                                    $("#LeaveEndDay").val(data.LeaveEndDay);
                                 }
                             }
                         }
@@ -551,11 +560,8 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
 
-                    if (response != null && response.d != null) {
-                        var data = response.d;
-                        // alert(typeof (data)); //it comes out to be string
-                        //we need to parse it to JSON
-                        data = $.parseJSON(data);
+                    if (response != null) {
+                        var data = $.parseJSON(data);
 
                         hideLoading();
 
@@ -585,11 +591,8 @@
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
-                    if (response != null && response.d != null) {
-                        var data = response.d;
-                        // alert(response); //it comes out to be string
-                        //we need to parse it to JSON
-                        data = $.parseJSON(data);
+                    if (response != null) {
+                        var data = $.parseJSON(data);
 
                         $.each(data, function (i, item) {
                             // alert(item.LeaveNo);

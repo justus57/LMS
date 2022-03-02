@@ -36,13 +36,13 @@ namespace LMS.Controllers
 
             if (Session["Logged"].Equals("No"))
             {
-                Response.Redirect("Login.aspx");
+                Response.Redirect("Account/Login");
             }
             else if (Session["Logged"].Equals("Yes"))
             {
                 if (Session["RequirePasswordChange"].Equals("TRUE"))
                 {
-                    Response.Redirect("OneTimePass.aspx");
+                    Response.Redirect("/Account/OneTimePass");
                 }
                 else
                 {
@@ -124,7 +124,7 @@ namespace LMS.Controllers
             html.Append("</table>");
             string strText = html.ToString();
             ////Append the HTML string to Placeholder.
-            str = new HtmlString(html.ToString());
+            ViewBag.Table = strText;
         }
 
         public JsonResult SubmitOpenLeaveRecall(string param1)

@@ -103,7 +103,7 @@ namespace LMS.Controllers
                 Console.Write(e);
             }
 
-            var Leave = new LeaveApplication
+            var Leave = new LeaveForOther
             {
                 Leave_Accrued_Days = Accrued,
 
@@ -153,9 +153,9 @@ namespace LMS.Controllers
                 Console.Write(es);
             }
 
-            var _LeaveQuantityAndReturnDate = new LeaveQuantityAndReturnDate
+            var _LeaveQuantityAndReturnDate = new LeaveForOther
             {
-                Quantity = Qty,
+                LeaveEndDay = Qty,
                 ReturnDate = AppFunctions.ConvertTime(Return_Date),
                 Message = Msg,
                 Validity = validity
@@ -173,7 +173,6 @@ namespace LMS.Controllers
             string Msg = null;
             string Return_Date = null;
            string EndDate = null;
-
             try
             {
                 string LeaveForOtherResponse = LeaveForOtherXMLRequests.GetLeaveEndDateAndReturnDate(employeeNo, causeofAbsenceCode, startDate, qty);
@@ -192,24 +191,21 @@ namespace LMS.Controllers
                 {
                     validity = false;
                     Msg = "Failed";
-
                 }
             }
             catch (Exception es)
             {
                 Console.Write(es);
             }
-
-            var _LeaveEndDateAndReturnDate = new LeaveEndDateAndReturnDate
+            var _LeaveEndDateAndReturnDate = new LeaveForOther
             {
-                EndDate = AppFunctions.ConvertTime(EndDate),
+                LeaveEndDay = AppFunctions.ConvertTime(EndDate),
                 ReturnDate = AppFunctions.ConvertTime(Return_Date),
                 Message = Msg,
                 Validity = validity
             };
             return Json(JsonConvert.SerializeObject(_LeaveEndDateAndReturnDate), JsonRequestBehavior.AllowGet); ;
         }
-
         public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
             string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();

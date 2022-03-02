@@ -83,7 +83,7 @@ namespace LMS.Controllers
 
         public JsonResult GetLeaveDetails(string param1)
         {
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
             string OpeningBalance = "";
             string Entitled = "";
             string Accrued = "";
@@ -124,20 +124,21 @@ namespace LMS.Controllers
 
         public JsonResult LoadApprovedLeaves(string param1)
         {
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();// get session variable
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();// get session variable
             List<AprrovedLeave> respmsg = new List<AprrovedLeave>();
             JavaScriptSerializer ser = new JavaScriptSerializer();
             try
             {
                 string ApprovedLeavesResponse = RecallApplicationXMLRequests.GetApprovedLeaves(username, param1);
-
-                var LeaveRecords = ser.Deserialize<List<AprrovedLeave>>(ApprovedLeavesResponse);
-
-                foreach (var LeaveDetail in LeaveRecords)
+                if (ApprovedLeavesResponse != "")
                 {
-                    respmsg.Add(new AprrovedLeave { LeaveNo = LeaveDetail.LeaveNo, StartDate = AppFunctions.ConvertTime(LeaveDetail.StartDate), EndDate = AppFunctions.ConvertTime(LeaveDetail.EndDate), Qty = LeaveDetail.Qty });
-                }
+                    var LeaveRecords = ser.Deserialize<List<AprrovedLeave>>(ApprovedLeavesResponse);
 
+                    foreach (var LeaveDetail in LeaveRecords)
+                    {
+                        respmsg.Add(new AprrovedLeave { LeaveNo = LeaveDetail.LeaveNo, StartDate = AppFunctions.ConvertTime(LeaveDetail.StartDate), EndDate = AppFunctions.ConvertTime(LeaveDetail.EndDate), Qty = LeaveDetail.Qty });
+                    }
+                }
             }
             catch (Exception es)
             {
@@ -155,7 +156,7 @@ namespace LMS.Controllers
             string quantity = "";
             try
             {
-                string username = System.Web.HttpContext.Current.Session["Username"].ToString();// get session variable
+                string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();// get session variable
 
                 string ApprovedLeaveDetails = RecallApplicationXMLRequests.GetApprovedLeaveDetails(username, param1);
 
@@ -192,11 +193,11 @@ namespace LMS.Controllers
                 }
                 else
                 {
-                    string EmployeeID = System.Web.HttpContext.Current.Session["Username"].ToString();
+                    string EmployeeID = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
                     string EmployeeName = System.Web.HttpContext.Current.Session["UserFullName"].ToString();
                     string RequestDate = DateTime.Now.ToString("dd/MM/yyyy");//d/m/Y
                     string DateCreated = DateTime.Now.ToString("dd/MM/yyyy");
-                    string AccountId = System.Web.HttpContext.Current.Session["Username"].ToString();
+                    string AccountId = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
                     string ReturnDate = param1;
                     string LeaveCode = param2;
                     string Description = param3;
@@ -230,7 +231,7 @@ namespace LMS.Controllers
             string DocumentNumber = null;
             try
             {
-                string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+                string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
                 string GetLeaveNewNoReqponse = RecallApplicationXMLRequests.GetDocumentNumber(username);
                 dynamic json = JObject.Parse(GetLeaveNewNoReqponse);
 
@@ -263,7 +264,7 @@ namespace LMS.Controllers
             try
             {
                 string DocumentNo = GetDocumentNumber();
-                string EmployeeID = System.Web.HttpContext.Current.Session["Username"].ToString();
+                string EmployeeID = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
                 string EmployeeName = System.Web.HttpContext.Current.Session["UserFullName"].ToString();
                 string RequestDate = DateTime.Now.ToString("dd/MM/yyyy");//d/m/Y
                 string DateCreated = DateTime.Now.ToString("dd/MM/yyyy");

@@ -28,8 +28,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <PlaceHolder ID="placeholder" />
-                        
+                            @Html.Raw(ViewBag.Table)
                         </div>
                     </div>
                     <div class="card-footer small text-muted">Updated today at @DateTime.Now.ToShortTimeString() </div>

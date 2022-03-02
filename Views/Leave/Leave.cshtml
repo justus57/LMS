@@ -22,7 +22,7 @@
                         @{Response.Write(Request["status"]);}Leave applications
                         <div class="card-body">
                             <div class="table-responsive">
-                                <asp:PlaceHolder ID="placeholder"/>
+                                @Html.Raw(ViewBag.Table)
                             </div>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
+                    <a class="btn btn-primary" href="#">Logout</a>
                 </div>
             </div>
         </div>

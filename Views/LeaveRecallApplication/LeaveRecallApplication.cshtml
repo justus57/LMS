@@ -46,13 +46,20 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="Leave_Type" class="form-control-label">Leave Type</label>
-                                                @Html.DropDownListFor(x => x.Leave_Type, new SelectList(ViewBag.Leaves), "Select Leave-Type", new { @class = "form-control", id = "ViewBag.Leaves" })
+                                                <select Class="form-control" ID="Leave_Type" name="Leave_Type" AutoPostBack="false" style="width:100%">
+                                                    <option selected value="0">---Select---</option>
+                                                    @foreach (var item in ViewBag.Leaves)
+                                                    {
+                                                        <option value="@item" customAttribute="item.SomethingSpecial">
+                                                            @item
+                                                        </option>
+                                                    }
+                                                </select>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave type must be selected</div>
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -114,7 +121,15 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="ApprovedLeave" class="form-control-label">Approved Leave</label>
-                                                <asp:DropDownList CssClass="form-control" ID="ApprovedLeave" runat="server" required="true" style="width:100%"> </asp:DropDownList>
+                                                <select Class="form-control" ID="ApprovedLeave" name="ApprovedLeave" AutoPostBack="false" style="width:100%">
+                                                    <option selected value="0">---Select---</option>
+                                                    @*@foreach (var item in ViewBag.Leaves)
+                                                    {
+                                                        <option value="@item" customAttribute="item.SomethingSpecial">
+                                                            @item
+                                                        </option>
+                                                    }*@
+                                                </select>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave must be selected</div>
                                             </div>
@@ -283,6 +298,7 @@
 
                 if (response != null ) {
                     var data = $.parseJSON(response);
+                    console.log(data);
                     //set fields values
                     $('#Leave_Opening_Balance').val(data.Leave_Opening_Balance);
                     $('#Leave_Entitled').val(data.Leave_Entitled);
@@ -290,21 +306,15 @@
                     $('#Leave_Days_Taken').val(data.Leave_Days_Taken);
                     $('#Leave_Balance').val(data.Leave_Balance);
 
-                    GetApprovedLeavesList($('#Leave_Type').val());
+                   
                 }
+                GetApprovedLeavesList($('#Leave_Type').val());
             }
         });
     });
     $("#ApprovedLeave").change(function () {
-        //selection fields
-        $('#ReturnDate').val('');
-        //$('#Leave_Type').val();//combo
-        $('#Leave_comments').val('');
-        $('#LeaveStartDay').val('');
-        $('#LeaveEndDay').val('');
-        $('#LeaveDaysApplied').val('');
+      
         var approvedleave = $('#ApprovedLeave').val();
-
         jQuery.ajax({
             url:"@Url.Action("ApprovedLeaveDetails", "LeaveRecallApplication")",
             type: "POST",

@@ -149,7 +149,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -161,7 +160,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row" id="UploadDiv">
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -195,71 +193,44 @@
                     <div class="card-footer small text-muted">Updated today at @DateTime.Now.ToShortTimeString() </div>
                 </div>
             </div>
-            <!-- /.container-fluid -->
-            <!-- Sticky Footer -->
-
-
         </div>
         <!-- /.content-wrapper -->
-
     </div>
     <!-- /#wrapper -->
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 </main>
-<!-- Bootstrap core JavaScript-->
-<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
-<script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Bootstrap core CSS-->
-<link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Custom fonts for this template-->
-<link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
-<!-- Page level plugin CSS-->
-<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-
-<!-- Custom styles for this template-->
-
 <link href="~/Assest/css/select2.min.css" rel="stylesheet" />
 <!--jQUERY date picker--->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-
+<!-- Bootstrap core JavaScript-->
+<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+<script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Core plugin JavaScript-->
 <script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
-
+<!-- Bootstrap core CSS-->
+<link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+<!-- Custom fonts for this template-->
+<link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<!-- Page level plugin CSS-->
+<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 <!-- Custom scripts for all pages-->
 <script src="~/Assest/js/sb-admin.min.js"></script>
 <script src="~/Assest/js/bootbox.min.js"></script>
 <script src="~/Assest/js/bootboxError.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- JQUERY DATEPICKER-->
+<link rel="manifest" href="manifest.json">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="~/Assest/js/jquery.pleaseWait.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
 <script type="text/javascript">
     var jQuery_3_3_1 = $.noConflict(true);
 </script>
 <script src="~/Assest/js/jquery.toast.js"></script>
-
 <script>
+
     $(function () {
 
         $(".MultiLineLimit").on('change keydown paste input', function () {
@@ -278,55 +249,32 @@
         $('#Leave_Type').append('<option value=""> </option>');
         $("#LeaveStartDay").datepicker({ dateFormat: 'dd/mm/yy' }).val();
         $("#LeaveEndDay").datepicker({ dateFormat: 'dd/mm/yy' }).val();
-        $('#Leave_Type').select2({
-            sorter: function (data) {
-                return data.sort(function (a, b) {
-                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
-                });
-            }
-        });
-        $('#Employee').select2({
-            sorter: function (data) {
-                return data.sort(function (a, b) {
-                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
-                });
-            }
-        });
+
         $("#Employee").change(function () {
             //selection fields
-            $('#ReturnDate').val('');
-            //$('#Leave_Type').val();//combo
-            $('#Leave_comments').val('');
-            $('#LeaveStartDay').val('');
-            $('#LeaveEndDay').val('');
-            $('#LeaveDaysApplied').val('');
-            //leave details
-            $('#Leave_Opening_Balance').val('');
-            $('#Leave_Entitled').val('');
-            $('#Leave_Accrued_Days').val('');
-            $('#Leave_Days_Taken').val('');
-            $('#Leave_Balance').val('');
-
             $("#Leave_Type").children('option:not(:first)').remove();
-
+            var employee = $('#Employee').val();
+            
             if ($('#Employee').val() != '') {
-                jQuery.ajax({
-                    url: 'LeaveForOther.aspx/GetUserLeaves',
+                $.ajax({
+                    url: "@Url.Action("GetUserLeaves", "LeaveForOther")",
                     type: "POST",
-                    data: '{param1:"' + $('#Employee').val() + '" }',
+                    data: '{param1:"' + employee + '" }',
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function (response) {
 
-                        if (response != null && response.d != null) {
-                            var data = response.d;
-                            // alert(response); //it comes out to be string
-                            //we need to parse it to JSON
-                            data = $.parseJSON(data);
+                        if (response != null ) {
+                            var data = $.parseJSON(response);
 
                             $.each(data, function (i, item) {
-                                // alert(item.LeaveNo);
-                                $("#Leave_Type").append($('<option></option>').attr("value", item.LeaveCode).text(item.LeaveName));
+                                $('#Leave_Type').html('');
+                                var options = '';
+                                options += '<option value="Select">---Select---</option>';
+                                for (var i = 0; i < data.length; i++) {
+                                    options += '<option value="' + data[i].LeaveCode + '">' + data[i].LeaveName + '</option>';
+                                }
+                                $('#Leave_Type').append(options);
                             });
                         }
                     }
@@ -335,42 +283,29 @@
         });
         $("#Leave_Type").change(function () {
             //selection fields
-            $('#ReturnDate').val('');
-            //$('#Leave_Type').val();//combo
-            $('#Leave_comments').val('');
-            $('#LeaveStartDay').val('');
-            $('#LeaveEndDay').val('');
-            $('#LeaveDaysApplied').val('');
-            //leave details
-            $('#Leave_Opening_Balance').val('');
-            $('#Leave_Entitled').val('');
-            $('#Leave_Accrued_Days').val('');
-            $('#Leave_Days_Taken').val('');
-            $('#Leave_Balance').val('');
-
             if ($('#Leave_Type').val() != '' && $('#Employee').val() != '') {
+
+                var leavetype = $('#Leave_Type').val();
+                var Employee = $('#Employee').val();
+                
                 jQuery.ajax({
-                    url: 'LeaveForOther.aspx/GetLeaveDetails',
+                    url: "@Url.Action("GetLeaveDetails", "LeaveForOther")",
                     type: "POST",
-                    data: '{param1:"' + $('#Leave_Type').val() + '", param2:"' + $('#Employee').val() + '" }',
+                    data: '{param1:"' + leavetype + '", param2:"' + Employee + '" }',
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function (response) {
 
-                        if (response != null && response.d != null) {
-                            var data = response.d;
-
-                            //we need to parse it to JSON
-                            data = $.parseJSON(data);
-
+                        if (response != null ) {
+                            var data = $.parseJSON(response);
                             //set fields values
-
+                            console.log(data);
                             //alert($('#Leave_Type').val());
-                            $('#Leave_Opening_Balance').val(data.OpeningBalance);
-                            $('#Leave_Entitled').val(data.EntitledDays);
-                            $('#Leave_Accrued_Days').val(data.Accrued);
-                            $('#Leave_Days_Taken').val(data.LeaveTaken);
-                            $('#Leave_Balance').val(data.Remaining);
+                            $('#Leave_Opening_Balance').val(data.Leave_Opening_Balance);
+                            $('#Leave_Entitled').val(data.Leave_Entitled);
+                            $('#Leave_Accrued_Days').val(data.Leave_Accrued_Days);
+                            $('#Leave_Days_Taken').val(data.Leave_Days_Taken);
+                            $('#Leave_Balance').val(data.Leave_Balance);
 
                             if (data.RequiresAttachment == 'Yes') {
                                 //  alert('now');
@@ -430,25 +365,25 @@
                 var endDate = new Date(end_date);
 
                 if (startDate <= endDate) {
+                    var leavet = $('#Leave_Type').val();
+                    var leavestart = $('#LeaveStartDay').val();
+                    var leaveend = $('#LeaveEndDay').val();
                     jQuery.ajax({
-                        url: 'LeaveForOther.aspx/GetLeaveState',
+                        url: "@Url.Action("GetLeaveState", "LeaveForOther")",
                         type: "POST",
-                        data: '{param1:"' + $('#Leave_Type').val() + '",param2:"' + $('#LeaveStartDay').val() + '", param3:"' + $('#LeaveEndDay').val() + '"}',
+                        data: '{param1:"' + leavet + '",param2:"' + leavestart + '", param3:"' + leaveend + '"}',
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         success: function (response) {
 
-                            if (response != null && response.d != null) {
-                                var data = response.d;
-                                // alert(typeof (data)); //it comes out to be string
-                                //we need to parse it to JSON
-                                data = $.parseJSON(data);
+                            if (response != null ) {
+                                var data = $.parseJSON(response);
 
                                 if (data.Validity == false) {
                                     bootbox.alert(data.Message);
                                 } else {
                                     $("#ReturnDate").val(data.ReturnDate);
-                                    $("#LeaveDaysApplied").val(data.Quantity);
+                                    $("#LeaveDaysApplied").val(data.LeaveDaysApplied);
                                 }
                             }
                         }
@@ -463,6 +398,7 @@
                 }
             }
         });
+
         //days applied events
         $("#LeaveDaysApplied").blur(function () {
             if (parseInt($("#LeaveDaysApplied").val()) > parseInt($("#Leave_Balance").val())) {
@@ -482,72 +418,80 @@
                     if ($("#LeaveStartDay").val() == '') {
                         bootbox.alert("Please enter the Leave Start Date");
                     } else {
+
+                        var ltype = $('#Leave_Type').val();
+                        var lstartday = $('#LeaveStartDay').val();
+                        var lendday = $('#LeaveDaysApplied').val();
                         jQuery.ajax({
-                            url: 'LeaveForOther.aspx/GetLeaveEndDateAndReturnDate',
+                            url:"@Url.Action("GetLeaveEndDateAndReturnDate", "LeaveForOther")",
                             type: "POST",
-                            data: '{param1:"' + $('#Leave_Type').val() + '",param2:"' + $('#LeaveStartDay').val() + '", param3:"' + $('#LeaveDaysApplied').val() + '"}',
+                            data: '{param1:"' + ltype + '",param2:"' + lstartday + '", param3:"' + lendday + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
 
-                                if (response != null && response.d != null) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-                                    data = $.parseJSON(data);
-
+                                if (response != null ) {
+                                    var data = $.parseJSON(response);
                                     if (data.Validity == false) {
                                         bootbox.alert(data.Message);
                                     } else {
                                         $("#ReturnDate").val(data.ReturnDate);
-                                        $("#LeaveEndDay").val(data.EndDate);
+                                        $("#LeaveEndDay").val(data.LeaveEndDay);
                                     }
                                 }
                             }
                         });
                     }
-
-        });
+       });
         //save button
-        jQuery_3_3_1("#Save").click(function (event) {
-
+    });
+    $(function () {
+          jQuery_3_3_1("#Save").click(function (event) {
+            event.preventDefault();
             // Fetch form to apply custom Bootstrap validation
-
-            var form = $("#LeaveApplicationForm")
-
-            if (form[0].checkValidity() === false) {
+              var form = $("#LeaveApplicationForm")
+              
+            if (form[0].checkValidity() === true) {
                 event.preventDefault()
                 event.stopPropagation()
                 form.addClass('was-validated');
-            } else if (form[0].checkValidity() === true) {
+            } else if (form[0].checkValidity() === false) {
                 // Perform ajax submit here...
-
-                event.preventDefault();
-
                 showToast('Saving application');
-
+                 //function for checkig fileupload
+                var dataform = new FormData($('#LeaveApplicationForm')[0]);
+                console.log(dataform);
+               
                 $.ajax({
-                    url: 'FileUploadHandler.ashx',
+
+                    url:"@Url.Action("FileUploadHandler", "LeaveForOther")",
                     type: 'POST',
-                    data: new FormData($('#LeaveApplicationForm')[0]),
+                    data: dataform,
                     cache: false,
                     contentType: false,
                     processData: false,
                     success: function (file) {
+                        var rdate = $('#ReturnDate').val();
+                        var ltypes = $('#Leave_Type').val();
+                        var leavec = $('#Leave_comments').val();
+                        var lstart = $('#LeaveStartDay').val();
+                        var lend = $('#LeaveEndDay').val();
+                        var lapllieddy = $('#LeaveDaysApplied').val();
+                        var employeenm = $('#Employee').val();
+                        var selected = $("#Employee option:selected").text();
+
+                        console.log(selected, employeenm, lapllieddy);
 
                         jQuery.ajax({
-                            url: 'LeaveForOther.aspx/Save',
+                            url:"@Url.Action("Save", "LeaveForOther")",
                             type: "POST",
-                            data: '{param1:"' + $('#ReturnDate').val() + '", param2:"' + $('#Leave_Type').val() + '", param3:"' + $('#Leave_comments').val() + '", param4:"' + $('#LeaveStartDay').val() + '", param5:"' + $('#LeaveEndDay').val() + '", param6:"' + $('#LeaveDaysApplied').val() + '", param7:"' + $('#Employee').val() + '", param8:"' + $("#Employee option:selected").text() + '", param9:"' + file.name + '"}',
+                            data: '{param1:"' + rdate + '", param2:"' + ltypes + '", param3:"' + leavec + '", param4:"' + lstart + '", param5:"' + lend + '", param6:"' + lapllieddy + '", param7:"' + employeenm + '", param8:"' + selected + '", param9:"' + file.name + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
 
-                                if (response != null && response.d != null) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-                                    data = $.parseJSON(data);
+                                if (response != null ) {
+                                    var data = $.parseJSON(response);
 
                                     hideLoading();
 
@@ -555,9 +499,9 @@
                                     //reset fields
                                     $("#LeaveApplicationForm")[0].reset();
 
-                                    $("select").each(function () {
-                                        $(this).select2('val', '')
-                                    });
+                                    //$("select").each(function () {
+                                    //    $(this).select2('val', '')
+                                    //});
                                 }
                             }
                         });
@@ -586,36 +530,46 @@
             // Fetch form to apply custom Bootstrap validation
 
             var form = $("#LeaveApplicationForm")
-
-            if (form[0].checkValidity() === false) {
+            console.log(form);
+            if (form[0].checkValidity() === true) {
                 event.preventDefault()
                 event.stopPropagation()
                 form.addClass('was-validated');
-            } else if (form[0].checkValidity() === true) {
+            } else if (form[0].checkValidity() === false) {
                 // Perform ajax submit here...
 
                 event.preventDefault();
+                var formdata = new FormData($('#LeaveApplicationForm')[0]);
 
                 showToast('Submitting application');
 
                 $.ajax({
-                    url: 'FileUploadHandler.ashx',
+                    url:"@Url.Action("FileUploadHandler", "LeaveForOther")",
                     type: 'POST',
-                    data: new FormData($('#LeaveApplicationForm')[0]),
+                    data: formdata ,
                     cache: false,
                     contentType: false,
                     processData: false,
                     success: function (file) {
+                        console.log(data);
+                        var rdate = $('#ReturnDate').val();
+                        var ltypes = $('#Leave_Type').val();
+                        var leavec = $('#Leave_comments').val();
+                        var lstart = $('#LeaveStartDay').val();
+                        var lend = $('#LeaveEndDay').val();
+                        var lapllieddy = $('#LeaveDaysApplied').val();
+                        var employeenm = $('#Employee').val();
+                        var selected = $("#Employee option:selected").text();
 
                         jQuery.ajax({
-                            url: 'LeaveForOther.aspx/Submit',
+                            url:"@Url.Action("Submit", "LeaveForOther")",
                             type: "POST",
-                            data: '{param1:"' + $('#ReturnDate').val() + '", param2:"' + $('#Leave_Type').val() + '", param3:"' + $('#Leave_comments').val() + '", param4:"' + $('#LeaveStartDay').val() + '", param5:"' + $('#LeaveEndDay').val() + '", param6:"' + $('#LeaveDaysApplied').val() + '", param7:"' + $('#Employee').val() + '", param8:"' + $("#Employee option:selected").text() + '", param9:"' + file.name + '"}',
+                            data: '{param1:"' + rdate + '", param2:"' + ltypes + '", param3:"' + leavec + '", param4:"' + lstart + '", param5:"' + lend + '", param6:"' + lapllieddy + '", param7:"' + employeenm + '", param8:"' + selected + '", param9:"' + file.name + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
 
-                                if (response != null && response.d != null) {
+                                if (response != null ) {
                                     var data = response.d;
                                     // alert(typeof (data)); //it comes out to be string
                                     //we need to parse it to JSON
@@ -627,9 +581,9 @@
                                     //reset fields
                                     $("#LeaveApplicationForm")[0].reset();
 
-                                    $("select").each(function () {
-                                        $(this).select2('val', '')
-                                    });
+                                    //$("select").each(function () {
+                                    //    $(this).select2('val', '')
+                                    //});
                                 }
                             }
                         });

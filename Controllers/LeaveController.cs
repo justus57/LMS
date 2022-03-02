@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -18,7 +19,6 @@ namespace LMS.Controllers
         {
             return View();
         }
-
         public ActionResult Leave()
         {
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
@@ -56,14 +56,14 @@ namespace LMS.Controllers
                     }
                     else
                     {
-                        tableview = LoadTable(status, owner);
+                        LoadTable(status, owner);
                     }
                 }
             }
-            return View(tableview);
+            return View();
         }
 
-        private string LoadTable(string status, string owner)
+        private void LoadTable(string status, string owner)
         {
             DataTable dt;
 
@@ -79,7 +79,52 @@ namespace LMS.Controllers
             {
                 dt = LeavesXMLRequests.GetSelfPageData(status, owner);
             }
-            return dt.ToString();
+            //Building an HTML string.
+            StringBuilder html = new StringBuilder();
+            //Table start.
+            html.Append("<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>");
+            //Building the Header row.
+            html.Append("<thead>");
+            html.Append("<tr>");
+            foreach (DataColumn column in dt.Columns)
+            {
+                html.Append("<th>");
+                html.Append(column.ColumnName);
+                html.Append("</th>");
+            }
+            html.Append("</tr>");
+            html.Append("</thead>");
+
+            html.Append("<tfoot>");
+            html.Append("<tr>");
+            foreach (DataColumn column in dt.Columns)
+            {
+                html.Append("<th>");
+                html.Append(column.ColumnName);
+                html.Append("</th>");
+            }
+            html.Append("</tr>");
+            html.Append("</tfoot>");
+
+            //Building the Data rows.
+            html.Append("<tbody>");
+            foreach (DataRow row in dt.Rows)
+            {
+                html.Append("<tr>");
+                foreach (DataColumn column in dt.Columns)
+                {
+                    html.Append("<td>");
+                    html.Append(row[column.ColumnName]);
+                    html.Append("</td>");
+                }
+                html.Append("</tr>");
+            }
+            html.Append("</tbody>");
+            //Table end.
+            html.Append("</table>");
+            string strText = html.ToString();
+
+            ViewBag.Table = strText;
         }
 
         public JsonResult SubmitOpenLeave(string param1, string param2)

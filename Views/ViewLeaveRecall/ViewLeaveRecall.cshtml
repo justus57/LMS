@@ -25,7 +25,7 @@
                         <i class="fas fa-folder"></i>
                         Leave Recall Application Information
                     </div>
-                    <form runat="server" novalidate="" action="" method="POST" id="LeaveRecallApplicationForm" autocomplete="off">
+                    <form  novalidate="" action="" method="POST" id="LeaveRecallApplicationForm" autocomplete="off">
                         <div class="card-body">
                             <div class="row mb-5">
                                 <div class="col-md-4 mb-4">
@@ -37,7 +37,8 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="LeaveCodeTxt" class="form-control-label">Leave Code</label>
-                                                <asp:TextBox runat="server" id="LeaveCodeTxt" class="form-control" readonly="true"></asp:TextBox>
+                                                @Html.TextBoxFor(model => model.LeaveCodeTxt, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(model => model.LeaveCodeTxt, "", new { @class = "" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave code must be specified</div>
                                             </div>
@@ -47,7 +48,8 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="LeaveType" class="form-control-label">Leave Type</label>
-                                                <asp:TextBox runat="server" id="LeaveType" class="form-control" readonly="true"></asp:TextBox>
+                                                @Html.TextBoxFor(model => model.LeaveType, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(model => model.LeaveType, "", new { @class = "" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave type must be specified</div>
                                             </div>
@@ -57,13 +59,15 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Leave Opening Balance</label>
-                                                <asp:TextBox runat="server" id="Leave_Opening_Balance" class="form-control" readonly="true"></asp:TextBox>
+                                                @Html.TextBoxFor(model => model.Leave_Opening_Balance, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(model => model.Leave_Opening_Balance, "", new { @class = "" })
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Leave Entitled</label>
-                                                <asp:TextBox runat="server" readonly="true" class="form-control" id="Leave_Entitled"></asp:TextBox>
+                                                @Html.TextBoxFor(model => model.Leave_Entitled, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(model => model.Leave_Entitled, "", new { @class = "" })
                                             </div>
                                         </div>
                                     </div>
@@ -71,14 +75,16 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Leave Accrued Days </label>
-                                                <asp:TextBox runat="server" readonly="true" class="form-control" id="Leave_Accrued_Days"></asp:TextBox>
+                                                @Html.TextBoxFor(model => model.Leave_Accrued_Days, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(model => model.Leave_Accrued_Days, "", new { @class = "" })
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Leave Days Taken</label>
-                                                <asp:TextBox runat="server" readonly="true" class="form-control" id="Leave_Days_Taken"></asp:TextBox>
+                                                @Html.TextBoxFor(model => model.Leave_Days_Taken, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(model => model.Leave_Days_Taken, "", new { @class = "" })
                                             </div>
                                         </div>
                                     </div>
@@ -87,7 +93,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Leave Balance</label>
-                                                <asp:TextBox runat="server" readonly="true" class="form-control" id="Leave_Balance"></asp:TextBox>
+                                                @Html.TextBoxFor(model => model.Leave_Balance, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(model => model.Leave_Balance, "", new { @class = "" })
                                             </div>
                                         </div>
                                     </div>
@@ -118,7 +125,8 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="LeaveStartDay">Leave Start Date</label>
-                                                    <asp:TextBox class="form-control" id="LeaveStartDay" runat="server" required="true"></asp:TextBox>
+                                                    @Html.TextBoxFor(model => model.LeaveStartDay, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.LeaveStartDay, "", new { @class = "" })
                                                     <div class="valid-feedback">Looks good!</div>
                                                     <div class="invalid-feedback">The leave start date must be selected</div>
                                                 </div>
@@ -127,7 +135,8 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="LeaveEndDay">Leave End Date</label>
-                                                    <asp:TextBox class="form-control" id="LeaveEndDay" runat="server" required="true"></asp:TextBox>
+                                                    @Html.TextBoxFor(model => model.LeaveEndDay, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.LeaveEndDay, "", new { @class = "" })
                                                     <div class="valid-feedback">Looks good!</div>
                                                     <div class="invalid-feedback">The leave end date must be selected</div>
                                                 </div>
@@ -138,7 +147,8 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="LeaveDaysApplied">Leave Days Applied</label>
-                                                    <asp:TextBox class="form-control" id="LeaveDaysApplied" runat="server" required="true"></asp:TextBox>
+                                                    @Html.TextBoxFor(model => model.LeaveDaysApplied, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.LeaveDaysApplied, "", new { @class = "" })
                                                     <div class="valid-feedback">Looks good!</div>
                                                     <div class="invalid-feedback">The leave days applied must be specified</div>
                                                 </div>
@@ -149,7 +159,8 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-control-label">Return Date</label>
-                                                    <asp:TextBox class="form-control" ReadOnly="true" id="ReturnDate" runat="server"></asp:TextBox>
+                                                    @Html.TextBoxFor(model => model.ReturnDate, new { @class = "form-control" , ReadOnly = "ReadOnly" })
+                                                    @Html.ValidationMessageFor(model => model.ReturnDate, "", new { @class = "" })
                                                     <div class="valid-feedback">Looks good!</div>
                                                     <div class="invalid-feedback">The leave return date must be specified</div>
                                                 </div>
@@ -159,7 +170,8 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-control-label">Approver</label>
-                                                    <asp:TextBox class="form-control" ReadOnly="true" id="LeaveApprover" runat="server"></asp:TextBox>
+                                                    @Html.TextBoxFor(model => model.LeaveApprover, new { @class = "form-control", ReadOnly = "ReadOnly" })
+                                                    @Html.ValidationMessageFor(model => model.LeaveApprover, "", new { @class = "" })
                                                     <div class="valid-feedback">Looks good!</div>
                                                     <div class="invalid-feedback">The leave approver must be specified</div>
                                                 </div>
@@ -171,6 +183,8 @@
                                                 <div class="form-group">
                                                     <label class="form-control-label">Comments if any</label>
                                                     <asp:TextBox TextMode="multiline" Columns="50" Rows="3" runat="server" ID="Leave_comments" class="form-control MultiLineLimit"></asp:TextBox>
+                                                    @Html.TextAreaFor(model => model.Leave_comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3", autofocus = "" })
+                                                    @Html.ValidationMessageFor(model => model.Leave_comments, "", new { @class = "" })
                                                     <p class="pull-right text-muted small" id="count_message"></p>
                                                 </div>
                                             </div>
@@ -198,7 +212,6 @@
                 </div>
             </div>
             <!-- /.container-fluid -->
-   
             <!-- Sticky Footer -->
         </div>
         <!-- /.content-wrapper -->
@@ -206,26 +219,39 @@
     </div>
 </main>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Bootstrap core JavaScript-->
+<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+<script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin.min.js"></script>
-    <script src="js/bootbox.min.js"></script>
-    <script src="js/bootbox.all.min.js"></script>
-    <script src="js/bootboxError.js"></script>
-    <!-- JQUERY DATEPICKER-->
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
-    <script type="text/javascript">
+<link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template-->
+<link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+<!-- Page level plugin CSS-->
+<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="~/Assest/css/sb-admin.css" rel="stylesheet">
+<!--jQUERY date picker--->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<!-- Custom scripts for all pages-->
+<script src="~/Assest/js/sb-admin.min.js"></script>
+<script src="~/Assest/js/bootbox.min.js"></script>
+<script src="~/Assest/js/bootbox.all.min.js"></script>
+<script src="~/Assest/js/bootboxError.js"></script>
+<!-- JQUERY DATEPICKER-->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+<script type="text/javascript">
     var jQuery_3_3_1 = $.noConflict(true);
-    </script>
-    <script src="js/jquery.toast.js"></script>
-    <script>
+</script>
+<script src="~/Assest/js/jquery.toast.js"></script>
+<script>
     $(function () {
         $(".MultiLineLimit").on('change keydown paste input', function () {
             this.value = (this.value.length <= 50 ? this.value : this.value.substring(0, 50));
@@ -263,7 +289,7 @@
                         showToast('Deleting application');
 
                         jQuery.ajax({
-                            url: 'ViewLeaveRecall.aspx/DeleteOpenLeaveRecall',
+                            url:"@Url.Action("DeleteOpenLeaveRecall", "ViewLeaveRecall")",
                             type: "POST",
                             data: '{param1:"' + $("#LeaveCodeTxt").val() + '"}',
                             dataType: "json",
@@ -314,7 +340,7 @@
                         showToast('Submitting application');
 
                         jQuery.ajax({
-                            url: 'ViewLeaveRecall.aspx/SubmitOpenLeaveRecall',
+                            url: "@Url.Action("SubmitOpenLeaveRecall", "ViewLeaveRecall")",
                             type: "POST",
                             data: '{param1:"' + $("#LeaveCodeTxt").val() + '"}',
                             dataType: "json",
@@ -371,7 +397,7 @@
                         showToast('Cancelling application');
 
                         jQuery.ajax({
-                            url: 'ViewLeaveRecall.aspx/CancelOpenLeaveRecall',
+                            url:"@Url.Action("CancelOpenLeaveRecall", "ViewLeaveRecall")",
                             type: "POST",
                             data: '{param1:"' + $("#LeaveCodeTxt").val() + '"}',
                             dataType: "json",
@@ -408,7 +434,7 @@
     function hideLoading() {
         $.Toast.hideToast();
     }
-    </script>
+</script>
 
 
 

@@ -22,6 +22,6 @@ namespace LMS.Models
         public string LeaveApprover { get; set; }
         public string LeaveCode { get; internal set; }
         public string DownloadAttachment { get; set; }
-        public string Reject_Comments { get; set; }
+        public string LeaveType { get; set; }
     }
 }

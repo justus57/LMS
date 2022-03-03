@@ -19,7 +19,6 @@ namespace LMS.Controllers
         {
             return View();
         }
-
         public ActionResult LeaveRecallForOther()
         {
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";

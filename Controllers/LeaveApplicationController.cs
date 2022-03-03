@@ -453,7 +453,6 @@ namespace LMS.Controllers
                         //SendApprovalRequest
                         string responseString = WebserviceConfig.ObjNav.SendApprovalRequest("Absence", DocumentNo);
 
-
                         dynamic jsonSendSubmitRequest = JObject.Parse(responseString);
                         response = jsonSendSubmitRequest.Msg;
 
@@ -482,8 +481,6 @@ namespace LMS.Controllers
                     status = "999";
                 }
             }
-
-
             var _RequestResponse = new RequestResponse
             {
                 Message = response,

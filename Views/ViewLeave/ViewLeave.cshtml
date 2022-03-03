@@ -50,12 +50,12 @@
                                             <label for="Leave_Type" class="form-control-label">Leave Type</label>
                                             <select Class="form-control" ID="Leave_Type" name="Leave_Type" AutoPostBack="false" style="width:100%">
                                                 <option selected value="0">---Select---</option>
-                                                @*@foreach (var item in ViewBag.Leaves)
+                                                @foreach (var item in ViewBag.Leaves)
                                                 {
                                                     <option value="@item" customAttribute="item.SomethingSpecial">
                                                         @item
                                                     </option>
-                                                }*@
+                                                }
                                             </select>
                                             <div class="valid-feedback">Looks good!</div>
                                             <div class="invalid-feedback">The leave type must be selected</div>
@@ -173,7 +173,7 @@
                                                 <label class="form-control-label">Attachment</label>
                                                 @Html.TextBoxFor(model => model.DownloadAttachment, new { @class = "form-control-plaintext", id = "DownloadAttachment" })
                                                 @Html.ValidationMessageFor(model => model.DownloadAttachment, "", new { @class = "" })
-                                                <LinkButton  OnClick="View_Click" ID="btn_view_attachment">View</LinkButton>
+                                                <LinkButton runat="server" OnClick="View_Click" ID="btn_view_attachment">View</LinkButton>
                                                 <LinkButton runat="server" onclick="btn_download_Click" ID="btn_download_attachment">Download</LinkButton>
                                                 <LinkButton runat="server" ID="btn_delete_attachment">Delete </LinkButton>
                                                 <div class="valid-feedback">Looks good!</div>
@@ -196,7 +196,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="form-control-label">Leave Comments</label>
-                                                @Html.TextAreaFor(model => model.Leave_comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3", autofocus = "" })
+                                                @Html.TextAreaFor(model => model.Leave_comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3"})
                                                 @Html.ValidationMessageFor(model => model.Leave_comments, "", new { @class = "" })
                                                 <p class="pull-right" id="count_message"></p>
                                             </div>
@@ -208,7 +208,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="form-control-label">Rejecttion comments</label>
-                                                    @Html.TextAreaFor(model => model.Reject_Comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3", autofocus = "" })
+                                                    @Html.TextAreaFor(model => model.Reject_Comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3" })
                                                     @Html.ValidationMessageFor(model => model.Reject_Comments, "", new { @class = "" })
                                                     <p class="pull-right" id="count_message_reject"></p>
                                                 </div>
@@ -308,11 +308,8 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
 
-                    if (response != null && response.d != null) {
-                        var data = response.d;
-                        // alert(typeof (data)); //it comes out to be string
-                        //we need to parse it to JSON
-                        data = $.parseJSON(data);
+                    if (response != null) {
+                        var data = $.parseJSON(data);
 
                         setTimeout(function () {// wait for 5 secs(2)
                             location.reload(); // then reload the page.(3)

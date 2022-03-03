@@ -23,8 +23,9 @@ namespace LMS.Controllers
         string attachmentName = "";
         static string documentNo = "";
         private object Leave_Type;
+        private object data;
 
-        public object leavetype { get; private set; }
+        public bool LeaveCode { get; private set; }
 
         // GET: ViewLeave
         public ActionResult Index()
@@ -33,7 +34,6 @@ namespace LMS.Controllers
         }
         public ActionResult ViewLeave()
         {
-
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
             System.Web.HttpContext.Current.Session["IsDashboardActive"] = "";
             System.Web.HttpContext.Current.Session["IsClaimActive"] = "";
@@ -72,191 +72,124 @@ namespace LMS.Controllers
                         string LeaveID = AppFunctions.Base64Decode(s);
 
                         documentNo = LeaveID;
-                        ViewLeave leave = new ViewLeave();
-                        leave.LeaveCodeTxt = LeaveID;
 
-                        GetLeaveData(LeaveID);
+                        //GetLeaveData(LeaveID);
+                        //ViewLeaveRecall view = new ViewLeaveRecall();
+                        documentNo = LeaveID;
+                        ViewLeave view = new ViewLeave();
+                        try
+                        {
+                            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
+                            string x = ViewLeaveXMLRequest.GetLeaveData(LeaveID, username);
+                            string datax = Assest.Utility.GetJSONResponse(x);
+                            dynamic json = JObject.Parse(datax);
+                            string StartDate = json.StartDate;
+                            string EndDate = json.EndDate;
+                            string LeaveDays = json.LeaveDaysApplied;
+                            string Return_Date = json.ReturnDate;
+                            string ApproverName = json.ApproverName;
+                            string Description = json.Description;
+                            string RejectionComment = json.RejectionComment;
+                            string AttachmentName = json.AttachmentName;
+                            string LeaveCode = json.LeaveType;
+
+                            if (LeaveCode != "")
+                            {
+                                //LoadLeaveDetails(LeaveCode);
+                                try
+                                {
+                                    string username1 = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();// get session variable
+                                    string GetLeaveDetailsresponseString = ViewLeaveXMLRequest.GetLeaveDetails(username1, LeaveCode);
+
+                                    dynamic json1 = JObject.Parse(GetLeaveDetailsresponseString);
+                                    view.Leave_Opening_Balance = json1.OpeningBalance;
+                                    view.Leave_Entitled = json1.Entitled;
+                                    view.Leave_Accrued_Days = json1.Accrued;
+                                    view.Leave_Days_Taken = json1.LeaveTaken;
+                                    view.Leave_Balance = json1.Remaining;
+                                    view.LeaveStartDay = StartDate;
+                                    view.LeaveEndDay = EndDate;
+                                    view.LeaveDaysApplied = Convert.ToInt16(decimal.Parse(LeaveDays)).ToString();
+                                    view.ReturnDate =Return_Date;
+                                    view.LeaveApprover = ApproverName;
+                                    view.Leave_comments = Description;
+                                    view.Reject_Comments = RejectionComment;
+                                    view.LeaveCodeTxt = LeaveID;
+                                    //         _LeaveStartDay = AppFunctions.GetDateTime(StartDate);
+                                    fileforDownload = folderPath + AttachmentName;
+                                    attachmentName = AttachmentName;
+                                }
+                                catch (Exception es)
+                                {
+                                    Console.Write(es);
+                                }
+                                // LeaveType.Text = LeaveCode;
+                                //set to DropDownList
+                                
 
 
+                                GetLeaves();
+                                //making sure the previous selection has been cleared
+
+                            }
+                            else
+                            {
+                                Response.Redirect(Request.UrlReferrer.ToString());
+                            }
+                        }
+                        catch (Exception es)
+                        {
+                            Console.Write(es);
+                        }
+                        data = view;
                     }
                 }
             }
         
-            return View();
+            return View(data);
         }
         private void GetLeaveData(string LeaveID)
         {
-            documentNo = LeaveID;
+           
+        }
+        public void GetLeaves()
+        {
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
+
+            string array = LeaveApplicationXMLRequests.GetUserLeaves(username);
+
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
             try
             {
-                string username = System.Web.HttpContext.Current.Session["Username"].ToString();
-                string x = ViewLeaveXMLRequest.GetLeaveData(LeaveID, username);
-                XmlDocument xmlSoapRequest = new XmlDocument();
-                xmlSoapRequest.LoadXml(x);
-                //get elements
-                //
-                XmlNode NodeHeaderNo = xmlSoapRequest.GetElementsByTagName("HeaderNo")[0];
-                string HeaderNo = NodeHeaderNo.InnerText;
-                ViewLeave view = new ViewLeave();
-                view.LeaveStartDay = AppFunctions.ConvertTime(HeaderNo);
-                //
-                if (HeaderNo != "")
+                array = array.Substring(1, array.Length - 2);
+                string[] resultArray = array.Split(',');
+
+                foreach (var item in resultArray)
                 {
-                    XmlNode HasAttachmentNode = xmlSoapRequest.GetElementsByTagName("HasAttachment")[0];
-                    string HasAttachment = HasAttachmentNode.InnerText;
-
-                    XmlNode AttachmentNameNode = xmlSoapRequest.GetElementsByTagName("AttachmentName")[0];
-                    string AttachmentName = AttachmentNameNode.InnerText;
-
-                    XmlNode NodeEmployeeID = xmlSoapRequest.GetElementsByTagName("EmployeeID")[0];
-                    string EmployeeID = NodeEmployeeID.InnerText;
-                    //            
-                    XmlNode NodeEmployeeName = xmlSoapRequest.GetElementsByTagName("EmployeeName")[0];
-                    string EmployeeName = NodeEmployeeName.InnerText;
-                    //
-                    XmlNode NodeRequestDate = xmlSoapRequest.GetElementsByTagName("RequestDate")[0];
-                    string RequestDate = NodeRequestDate.InnerText;
-                    //
-                    XmlNode NodeApprovalStatus = xmlSoapRequest.GetElementsByTagName("ApprovalStatus")[0];
-                    string ApprovalStatus = NodeApprovalStatus.InnerText;
-                    //
-                    XmlNode NodeDateCreated = xmlSoapRequest.GetElementsByTagName("DateCreated")[0];
-                    string DateCreated = NodeDateCreated.InnerText;
-                    //
-                    XmlNode NodeApproverID = xmlSoapRequest.GetElementsByTagName("ApproverID")[0];
-                    string ApproverID = NodeApproverID.InnerText;
-                    //
-                    XmlNode NodeApproverName = xmlSoapRequest.GetElementsByTagName("ApproverName")[0];
-                    string ApproverName = NodeApproverName.InnerText;
-                    //
-                    XmlNode NodeLeaveSubType = xmlSoapRequest.GetElementsByTagName("LeaveSubType")[0];
-                    string LeaveSubType = NodeLeaveSubType.InnerText;
-                    //
-                    XmlNode NodeRejectionComment = xmlSoapRequest.GetElementsByTagName("RejectionComment")[0];
-                    string RejectionComment = NodeRejectionComment.InnerText;
-                    //
-                    XmlNode NodeAppliedBy = xmlSoapRequest.GetElementsByTagName("AppliedBy")[0];
-                    string AppliedBy = NodeAppliedBy.InnerText;
-                    //
-                    XmlNode NodeLineDocumentNo = xmlSoapRequest.GetElementsByTagName("LineDocumentNo")[0];
-                    string LineDocumentNo = NodeLineDocumentNo.InnerText;
-                    //
-                    XmlNode NodeLineDocumentType = xmlSoapRequest.GetElementsByTagName("LineDocumentType")[0];
-                    string LineDocumentType = NodeLineDocumentType.InnerText;
-                    //
-                    XmlNode NodeLineNo = xmlSoapRequest.GetElementsByTagName("LineNo")[0];
-                    string LineNo = NodeLineNo.InnerText;
-                    //
-                    XmlNode NodeLeaveCode = xmlSoapRequest.GetElementsByTagName("LeaveCode")[0];
-                    string LeaveCode = NodeLeaveCode.InnerText;
-                    //
-                    XmlNode NodeExternalDocNo = xmlSoapRequest.GetElementsByTagName("ExternalDocNo")[0];
-                    string ExternalDocNo = NodeExternalDocNo.InnerText;
-                    //
-                    XmlNode NodeDescription = xmlSoapRequest.GetElementsByTagName("Description")[0];
-                    string Description = NodeDescription.InnerText;
-                    //
-                    XmlNode NodeUnitOfMeasure = xmlSoapRequest.GetElementsByTagName("UnitOfMeasure")[0];
-                    string UnitOfMeasure = NodeUnitOfMeasure.InnerText;
-                    //
-                    XmlNode NodeStartDate = xmlSoapRequest.GetElementsByTagName("StartDate")[0];
-                    string StartDate = NodeStartDate.InnerText;
-                    //
-                    XmlNode NodeEndDate = xmlSoapRequest.GetElementsByTagName("EndDate")[0];
-                    string EndDate = NodeEndDate.InnerText;
-                    //
-                    XmlNode NodeLeaveDays = xmlSoapRequest.GetElementsByTagName("LeaveDays")[0];
-                    string LeaveDays = NodeLeaveDays.InnerText;
-                    //
-                    XmlNode NodeReturnDate = xmlSoapRequest.GetElementsByTagName("ReturnDate")[0];
-                    string Return_Date = NodeReturnDate.InnerText;
-                    //
-                    XmlNode NodeApprovedStartDate = xmlSoapRequest.GetElementsByTagName("ApprovedStartDate")[0];
-                    string ApprovedStartDate = NodeApprovedStartDate.InnerText;
-                    //
-                    XmlNode NodeApprovedEndDate = xmlSoapRequest.GetElementsByTagName("ApprovedEndDate")[0];
-                    string ApprovedEndDate = NodeApprovedEndDate.InnerText;
-                    //
-                    XmlNode NodeApprovedQty = xmlSoapRequest.GetElementsByTagName("ApprovedQty")[0];
-                    string ApprovedQty = NodeApprovedQty.InnerText;
-                    //
-                    XmlNode NodeApprovedReturnDate = xmlSoapRequest.GetElementsByTagName("ApprovedReturnDate")[0];
-                    string ApprovedReturnDate = NodeApprovedReturnDate.InnerText;
-
-                    LoadLeaveDetails(LeaveCode);
-                    // LeaveType.Text = LeaveCode;
-                    //set to DropDownList
-
-
-                    view.LeaveStartDay = AppFunctions.ConvertTime(StartDate);
-                    view.LeaveEndDay = AppFunctions.ConvertTime(EndDate);
-                    view.LeaveDaysApplied = Convert.ToInt16(decimal.Parse(LeaveDays)).ToString();
-                    view.ReturnDate = AppFunctions.ConvertTime(Return_Date);
-                    view.LeaveApprover = ApproverName;
-                    view.Leave_comments = Description;
-                    view.Reject_Comments = RejectionComment;
-                    _LeaveStartDay = AppFunctions.GetDateTime(StartDate);
-                    fileforDownload = folderPath + AttachmentName;
-                    attachmentName = AttachmentName;
-
-
-
-                    //if (HasAttachment == "Yes")
-                    //{
-                    //    if (System.IO.File.Exists(fileforDownload))
-                    //    {
-                    //        System.IO.File.Delete(fileforDownload);
-                    //    }
-
-                    //    view.DownloadAttachment = AttachmentName;
-
-                    //    GetAttachment(HeaderNo);
-
-                    //    UploadDiv.Visible = false;
-                    //}
-                    //else if (HasAttachment == "No")
-                    //{
-                    //    view.DownloadAttachment = "";
-                    //    Attacho.Visible = false;
-                    //    UploadDiv.Visible = true;
-                    //    //Download.Enabled = false;
-                    //    //View.Enabled = false;
-                    //}
-                    HasAttachment = "No";
-
-                    GetLeaves();
-                     //making sure the previous selection has been cleared
-                 
+                    string[] result = item.ToString().Split(':');
+                    dictionary.Add(result[0].ToString().Trim('"'), result[1].ToString().Trim('"'));
                 }
-                else
+                List<string> keyList = new List<string>(dictionary.Keys);
+                List<SelectListItem> items = new List<SelectListItem>();
+
+                for (int i = 0; i < keyList.Count; i++)
                 {
-                    Response.Redirect(Request.UrlReferrer.ToString());
+                    items.Add(new SelectListItem { Text = keyList[i], Value = keyList[i] ,Selected = LeaveCode });
                 }
+                ViewBag.Leaves = keyList;
             }
             catch (Exception es)
             {
                 Console.Write(es);
             }
-        }
-        public JsonResult GetLeaves()
-        {
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
 
-            string userLeaves = LeaveApplicationXMLRequests.GetUserLeaves(username);
-
-            List<LeaveTypes> leavetype = new List<LeaveTypes>();
-            foreach (var kvp in AppFunctions.BreakDynamicJSON(userLeaves))
-            {
-                leavetype.Add(new LeaveTypes { LeaveCode = kvp.Key, LeaveName = kvp.Value });
-            }
-
-            return Json(JsonConvert.SerializeObject(leavetype), JsonRequestBehavior.AllowGet);;
+            
         }
         private void LoadLeaveDetails(string LeaveCode)
         {
             try
             {
-                string username = System.Web.HttpContext.Current.Session["Username"].ToString();// get session variable
+                string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();// get session variable
                 string GetLeaveDetailsresponseString = ViewLeaveXMLRequest.GetLeaveDetails(username, LeaveCode);
 
                 dynamic json = JObject.Parse(GetLeaveDetailsresponseString);
@@ -309,7 +242,7 @@ namespace LMS.Controllers
       
         public static string GetLeaveDetails(string param1)
         {
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();// get session variable
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();// get session variable
             string OpeningBalance = null;
             string Entitled = "";
             string Accrued = "";
@@ -358,7 +291,7 @@ namespace LMS.Controllers
         
         public static string GetLeaveState(string param1, string param2, string param3)
         {
-            string employeeNo = System.Web.HttpContext.Current.Session["Username"].ToString(); ;
+            string employeeNo = System.Web.HttpContext.Current.Session["PayrollNo"].ToString(); ;
             string causeofAbsenceCode = param1;
             string startDate = param2;
             string endDate = param3;
@@ -400,7 +333,7 @@ namespace LMS.Controllers
         
         public static string GetLeaveEndDateAndReturnDate(string param1, string param2, string param3)
         {
-            string employeeNo = System.Web.HttpContext.Current.Session["Username"].ToString(); ;
+            string employeeNo = System.Web.HttpContext.Current.Session["PayrollNo"].ToString(); ;
             string causeofAbsenceCode = param1;
             string startDate = param2;
             string qty = param3;
@@ -461,9 +394,9 @@ namespace LMS.Controllers
             else
             {
 
-                string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+                string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
 
-                string EmployeeID = System.Web.HttpContext.Current.Session["Username"].ToString();
+                string EmployeeID = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
                 string EmployeeName = System.Web.HttpContext.Current.Session["UserFullName"].ToString();
                 string RequestDate = DateTime.Now.ToString("dd/MM/yyyy");//d/m/Y
                 string DateCreated = DateTime.Now.ToString("dd/MM/yyyy");
@@ -574,7 +507,7 @@ namespace LMS.Controllers
         public static string DelegatePendingLeave(string param1)
         {
             string LeaveHeaderNo = AppFunctions.Base64Decode(param1);
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
             string response = null;
             string status = null;
 
@@ -609,13 +542,13 @@ namespace LMS.Controllers
             string response = null;
             string status = "000";
 
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
 
-            string EmployeeID = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string EmployeeID = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
             string EmployeeName = System.Web.HttpContext.Current.Session["UserFullName"].ToString();
             string RequestDate = DateTime.Now.ToString("dd/MM/yyyy");//d/m/Y
             string DateCreated = DateTime.Now.ToString("dd/MM/yyyy");
-            string AccountId = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string AccountId = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
             string ReturnDate = param1;
             string LeaveCode = param2;
             string Description = param3;
@@ -654,7 +587,7 @@ namespace LMS.Controllers
         }
         public static void UploadAttachment(string param1, string param2)
         {
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
 
             string UploadPath = param1;//full path+file name
             string DocumentNo = param2;

@@ -12,7 +12,6 @@ namespace LMS.Controllers
 {
     public class LeaveController : Controller
     {
-       
         public HtmlString str { get; private set; }
         // GET: Leave
         public ActionResult Index()

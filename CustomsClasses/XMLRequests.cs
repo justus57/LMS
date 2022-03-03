@@ -713,8 +713,8 @@ namespace LMS.CustomsClasses
                                  </ReturnLeaveLookups> 
                              </Body>
                          </Envelope>";
-            string str = AppFunctions.CallWebService(req);
-            return AppFunctions.GetJSONResponse(str);
+            string str = Assest.Utility.CallWebService(req);
+            return Assest.Utility.GetJSONResponse(str);
         }
         public static string GetSelectedLeaveDetails(string username, string leaveCode)
         {
@@ -2047,67 +2047,74 @@ namespace LMS.CustomsClasses
         }
         public static string GetLeaveData(string LeaveID, string username)
         {
+            //    string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+            //    <Body>
+            //        <GetLeaveDetail xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+            //            <leaveDetail>
+            //                <LeaveHeader xmlns=""urn:microsoft-dynamics-nav/xmlports/GetLeaveDetail"">
+            //                    <HeaderDocumentType></HeaderDocumentType>
+            //                    <HeaderNo></HeaderNo>
+            //                    <EmployeeID></EmployeeID>
+            //                    <EmployeeName></EmployeeName>
+            //                    <RequestDate></RequestDate>
+            //                    <ApprovalStatus></ApprovalStatus>
+            //                    <DateCreated></DateCreated>
+            //                    <ApproverID></ApproverID>
+            //                    <ApproverName></ApproverName>
+            //                    <LeaveSubType></LeaveSubType>
+            //                    <RejectionComment></RejectionComment>
+            //                    <AppliedBy></AppliedBy>
+            //                    <HasAttachment></HasAttachment>
+            //                    <AttachmentName></AttachmentName>
+            //                    <LeaveLine>
+            //                        <LineDocumentNo></LineDocumentNo>
+            //                        <LineDocumentType></LineDocumentType>
+            //                        <LineNo></LineNo>
+            //                        <LeaveCode></LeaveCode>
+            //                        <ExternalDocNo></ExternalDocNo>
+            //                        <Description></Description>
+            //                        <UnitOfMeasure></UnitOfMeasure>
+            //                        <StartDate></StartDate>
+            //                        <EndDate></EndDate>
+            //                        <LeaveDays></LeaveDays>
+            //                        <ReturnDate></ReturnDate>
+            //                        <ApprovedStartDate></ApprovedStartDate>
+            //                        <ApprovedEndDate></ApprovedEndDate>
+            //                        <ApprovedQty></ApprovedQty>
+            //                        <ApprovedReturnDate></ApprovedReturnDate>
+            //                    </LeaveLine>
+            //                </LeaveHeader>
+            //            </leaveDetail>
+            //            <documentNo>" + LeaveID + @"</documentNo>
+            //            <employeeNo>" + username + @"</employeeNo>
+            //            <operation>Export</operation>
+            //        </GetLeaveDetail>
+            //    </Body>
+            //</Envelope>";
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
-            <Body>
-                <GetLeaveDetail xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                    <leaveDetail>
-                        <LeaveHeader xmlns=""urn:microsoft-dynamics-nav/xmlports/GetLeaveDetail"">
-                            <HeaderDocumentType></HeaderDocumentType>
-                            <HeaderNo></HeaderNo>
-                            <EmployeeID></EmployeeID>
-                            <EmployeeName></EmployeeName>
-                            <RequestDate></RequestDate>
-                            <ApprovalStatus></ApprovalStatus>
-                            <DateCreated></DateCreated>
-                            <ApproverID></ApproverID>
-                            <ApproverName></ApproverName>
-                            <LeaveSubType></LeaveSubType>
-                            <RejectionComment></RejectionComment>
-                            <AppliedBy></AppliedBy>
-                            <HasAttachment></HasAttachment>
-                            <AttachmentName></AttachmentName>
-                            <LeaveLine>
-                                <LineDocumentNo></LineDocumentNo>
-                                <LineDocumentType></LineDocumentType>
-                                <LineNo></LineNo>
-                                <LeaveCode></LeaveCode>
-                                <ExternalDocNo></ExternalDocNo>
-                                <Description></Description>
-                                <UnitOfMeasure></UnitOfMeasure>
-                                <StartDate></StartDate>
-                                <EndDate></EndDate>
-                                <LeaveDays></LeaveDays>
-                                <ReturnDate></ReturnDate>
-                                <ApprovedStartDate></ApprovedStartDate>
-                                <ApprovedEndDate></ApprovedEndDate>
-                                <ApprovedQty></ApprovedQty>
-                                <ApprovedReturnDate></ApprovedReturnDate>
-                            </LeaveLine>
-                        </LeaveHeader>
-                    </leaveDetail>
-                    <documentNo>" + LeaveID + @"</documentNo>
-                    <employeeNo>" + username + @"</employeeNo>
-                    <operation>Export</operation>
-                </GetLeaveDetail>
-            </Body>
-        </Envelope>";
-            return AppFunctions.CallWebService(req);
+                            <Body>
+                                <GetLeaveDetail xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+                                    <documentNo>" + LeaveID + @"</documentNo>
+                                </GetLeaveDetail>
+                            </Body>
+                        </Envelope>";
+           var RESPO =  Assest.Utility.CallWebService(req);
+            
+            return RESPO;
         }
         public static string GetLeaveDetails(string username, string LeaveCode)
         {
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
-                            <Body>
-                                <ReturnLeaveCodeDetails xmlns = ""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal""> 
-                                     <employeeNo>" + username + @"</employeeNo> 
-                                     <leaveCode>" + LeaveCode + @"</leaveCode> 
-                                 </ReturnLeaveCodeDetails> 
-                             </Body>
-                         </Envelope>";
-
-            string str = AppFunctions.CallWebService(req);
-            return AppFunctions.GetJSONResponse(str);
+                                <Body>
+                                    <ReturnLeaveCodeDetails xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+                                        <employeeNo>EH</employeeNo>
+                                        <leaveCode>HOMESICK</leaveCode>
+                                    </ReturnLeaveCodeDetails>
+                                </Body>
+                            </Envelope>";
+            string str = Assest.Utility.CallWebService(req);
+            return Assest.Utility.GetJSONResponse(str);
         }
-
     }
     public class AppraisalsXMLRequests
     {

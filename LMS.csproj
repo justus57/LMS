@@ -378,6 +378,7 @@
     <Compile Include="Controllers\LeaveRecallsController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ViewLeaveController.cs" />
+    <Compile Include="Controllers\ViewLeaveRecallController.cs" />
     <Compile Include="CustomsClasses\AppClasses.cs" />
     <Compile Include="CustomsClasses\AppFunctions.cs" />
     <Compile Include="CustomsClasses\Config.cs" />
@@ -402,6 +403,7 @@
     <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\Register.cs" />
     <Compile Include="Models\ViewLeave.cs" />
+    <Compile Include="Models\ViewLeaveRecall.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -4196,6 +4198,7 @@
     <Content Include="Views\LeaveRecallApplication\LeaveRecallApplication.cshtml" />
     <Content Include="Views\LeaveRecallForOther\LeaveRecallForOther.cshtml" />
     <Content Include="Views\ViewLeave\ViewLeave.cshtml" />
+    <Content Include="Views\ViewLeaveRecall\ViewLeaveRecall.cshtml" />
     <None Include="Web References\WebRef\HRWebPortal.wsdl" />
     <Content Include="Web References\WebRef\LeaveDetail.datasource">
       <DependentUpon>Reference.map</DependentUpon>

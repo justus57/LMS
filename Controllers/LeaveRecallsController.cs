@@ -50,14 +50,14 @@ namespace LMS.Controllers
                 {
                     string status = Request.QueryString["status"].Trim();
                     string owner = Request.QueryString["owner"].Trim();
-
+                    string endpoint = Url.Action("ViewLeaveRecall", "ViewLeaveRecall", new { id = "" });
                     if (status == "" || owner == "")
                     {
                         Response.Redirect(Request.UrlReferrer.ToString());
                     }
                     else
                     {
-                        LoadTable(status, owner);
+                        LoadTable(status, owner, endpoint);
                     }
                 }
             }
@@ -66,21 +66,21 @@ namespace LMS.Controllers
             return View();
         }
 
-        private void LoadTable(string status, string owner)
+        private void LoadTable(string status, string owner ,string endpoint)
         {
             DataTable dt;
 
             if (owner == "self")
             {
-                dt = LeaverecallsXMLRequests.GetSelfPageData(status, owner);
+                dt = LeaverecallsXMLRequests.GetSelfPageData(status, owner, endpoint);
             }
             else if (owner == "others")
             {
-                dt = LeaverecallsXMLRequests.GetOthersPageData(status, owner);
+                dt = LeaverecallsXMLRequests.GetOthersPageData(status, owner, endpoint);
             }
             else
             {
-                dt = LeaverecallsXMLRequests.GetSelfPageData(status, owner);
+                dt = LeaverecallsXMLRequests.GetSelfPageData(status, owner, endpoint);
             }
 
             //Building an HTML string.

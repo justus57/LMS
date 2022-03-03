@@ -12,7 +12,7 @@ namespace LMS.Controllers
 {
     public class LeaveController : Controller
     {
-        private string tableview;
+       
         public HtmlString str { get; private set; }
         // GET: Leave
         public ActionResult Index()
@@ -50,34 +50,35 @@ namespace LMS.Controllers
                 {
                     string status = Request.QueryString["status"];
                     string owner = Request.QueryString["owner"];
+                    string endpoint = Url.Action("ViewLeave", "ViewLeave", new {id= "" });
                     if (status == "" || owner == "")
                     {
                         Response.Redirect(Request.UrlReferrer.ToString());
                     }
                     else
                     {
-                        LoadTable(status, owner);
+                        LoadTable(status, owner, endpoint);
                     }
                 }
             }
             return View();
         }
 
-        private void LoadTable(string status, string owner)
+        private void LoadTable(string status, string owner,string endpoint)
         {
             DataTable dt;
 
             if (owner == "self")
             {
-                dt = LeavesXMLRequests.GetSelfPageData(status, owner);
+                dt = LeavesXMLRequests.GetSelfPageData(status, owner ,endpoint);
             }
             else if (owner == "others")
             {
-                dt = LeavesXMLRequests.GetOthersPageData(status, owner);
+                dt = LeavesXMLRequests.GetOthersPageData(status, owner, endpoint);
             }
             else
             {
-                dt = LeavesXMLRequests.GetSelfPageData(status, owner);
+                dt = LeavesXMLRequests.GetSelfPageData(status, owner, endpoint);
             }
             //Building an HTML string.
             StringBuilder html = new StringBuilder();

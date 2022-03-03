@@ -24,6 +24,8 @@ namespace LMS.Controllers
         static string documentNo = "";
         private object Leave_Type;
 
+        public object leavetype { get; private set; }
+
         // GET: ViewLeave
         public ActionResult Index()
         {
@@ -31,6 +33,55 @@ namespace LMS.Controllers
         }
         public ActionResult ViewLeave()
         {
+
+            System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
+            System.Web.HttpContext.Current.Session["IsDashboardActive"] = "";
+            System.Web.HttpContext.Current.Session["IsClaimActive"] = "";
+            System.Web.HttpContext.Current.Session["IsSurrenderActive"] = "";
+            System.Web.HttpContext.Current.Session["IsAppriasalActive"] = "";
+            System.Web.HttpContext.Current.Session["IsApprovalEntriesActive"] = "";
+            System.Web.HttpContext.Current.Session["IsLeavesActive"] = "active";
+            System.Web.HttpContext.Current.Session["IsRecallActive"] = "";
+            System.Web.HttpContext.Current.Session["IsReportsActive"] = "";
+            System.Web.HttpContext.Current.Session["IsTrainingActive"] = "";
+            System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
+            System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
+
+            var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
+            var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
+            if (log == "No")
+            {
+                Response.Redirect("/Account/login");
+            }
+            else if (log == "yes")
+            {
+                if (passRequired == "true")
+                {
+                    Response.Redirect("/Account/OneTimePassword");
+                }
+                else
+                {
+                    string s = Request.QueryString["id"].Trim();
+
+                    if (s == "")
+                    {
+                        Response.Redirect(Request.UrlReferrer.ToString());
+                    }
+                    else
+                    {
+                        string LeaveID = AppFunctions.Base64Decode(s);
+
+                        documentNo = LeaveID;
+                        ViewLeave leave = new ViewLeave();
+                        leave.LeaveCodeTxt = LeaveID;
+
+                        GetLeaveData(LeaveID);
+
+
+                    }
+                }
+            }
+        
             return View();
         }
         private void GetLeaveData(string LeaveID)
@@ -46,8 +97,8 @@ namespace LMS.Controllers
                 //
                 XmlNode NodeHeaderNo = xmlSoapRequest.GetElementsByTagName("HeaderNo")[0];
                 string HeaderNo = NodeHeaderNo.InnerText;
-
-                LeaveStartDay.Text = AppFunctions.ConvertTime(HeaderNo);
+                ViewLeave view = new ViewLeave();
+                view.LeaveStartDay = AppFunctions.ConvertTime(HeaderNo);
                 //
                 if (HeaderNo != "")
                 {
@@ -137,45 +188,45 @@ namespace LMS.Controllers
                     //set to DropDownList
 
 
-                    LeaveStartDay.Text = AppFunctions.ConvertTime(StartDate);
-                    LeaveEndDay.Text = AppFunctions.ConvertTime(EndDate);
-                    LeaveDaysApplied.Text = Convert.ToInt16(decimal.Parse(LeaveDays)).ToString();
-                    ReturnDate.Text = AppFunctions.ConvertTime(Return_Date);
-                    LeaveApprover.Text = ApproverName;
-                    Leave_comments.Text = Description;
-                    Reject_Comments.Text = RejectionComment;
+                    view.LeaveStartDay = AppFunctions.ConvertTime(StartDate);
+                    view.LeaveEndDay = AppFunctions.ConvertTime(EndDate);
+                    view.LeaveDaysApplied = Convert.ToInt16(decimal.Parse(LeaveDays)).ToString();
+                    view.ReturnDate = AppFunctions.ConvertTime(Return_Date);
+                    view.LeaveApprover = ApproverName;
+                    view.Leave_comments = Description;
+                    view.Reject_Comments = RejectionComment;
                     _LeaveStartDay = AppFunctions.GetDateTime(StartDate);
                     fileforDownload = folderPath + AttachmentName;
                     attachmentName = AttachmentName;
 
 
 
-                    if (HasAttachment == "Yes")
-                    {
-                        if (System.IO.File.Exists(fileforDownload))
-                        {
-                            System.IO.File.Delete(fileforDownload);
-                        }
+                    //if (HasAttachment == "Yes")
+                    //{
+                    //    if (System.IO.File.Exists(fileforDownload))
+                    //    {
+                    //        System.IO.File.Delete(fileforDownload);
+                    //    }
 
-                        DownloadAttachment.Text = AttachmentName;
+                    //    view.DownloadAttachment = AttachmentName;
 
-                        GetAttachment(HeaderNo);
+                    //    GetAttachment(HeaderNo);
 
-                        UploadDiv.Visible = false;
-                    }
-                    else if (HasAttachment == "No")
-                    {
-                        DownloadAttachment.Text = "";
-                        Attacho.Visible = false;
-                        UploadDiv.Visible = true;
-                        //Download.Enabled = false;
-                        //View.Enabled = false;
-                    }
+                    //    UploadDiv.Visible = false;
+                    //}
+                    //else if (HasAttachment == "No")
+                    //{
+                    //    view.DownloadAttachment = "";
+                    //    Attacho.Visible = false;
+                    //    UploadDiv.Visible = true;
+                    //    //Download.Enabled = false;
+                    //    //View.Enabled = false;
+                    //}
                     HasAttachment = "No";
 
                     GetLeaves();
-                    Leave_Type.ClearSelection(); //making sure the previous selection has been cleared
-                    Leave_Type.Items.FindByValue(LeaveCode).Selected = true;
+                     //making sure the previous selection has been cleared
+                 
                 }
                 else
                 {
@@ -187,21 +238,19 @@ namespace LMS.Controllers
                 Console.Write(es);
             }
         }
-        public void GetLeaves()
+        public JsonResult GetLeaves()
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
 
             string userLeaves = LeaveApplicationXMLRequests.GetUserLeaves(username);
 
-            Leave_Type.Items.Clear();
-
+            List<LeaveTypes> leavetype = new List<LeaveTypes>();
             foreach (var kvp in AppFunctions.BreakDynamicJSON(userLeaves))
             {
-                Leave_Type.Items.Insert(0, new ListItem(kvp.Value, kvp.Key));
+                leavetype.Add(new LeaveTypes { LeaveCode = kvp.Key, LeaveName = kvp.Value });
             }
-            Leave_Type.Items.Insert(0, new ListItem(" ", ""));
 
-
+            return Json(JsonConvert.SerializeObject(leavetype), JsonRequestBehavior.AllowGet);;
         }
         private void LoadLeaveDetails(string LeaveCode)
         {
@@ -211,12 +260,12 @@ namespace LMS.Controllers
                 string GetLeaveDetailsresponseString = ViewLeaveXMLRequest.GetLeaveDetails(username, LeaveCode);
 
                 dynamic json = JObject.Parse(GetLeaveDetailsresponseString);
-
-                Leave_Opening_Balance.Text = json.OpeningBalance;
-                Leave_Entitled.Text = json.Entitled;
-                Leave_Accrued_Days.Text = json.Accrued;
-                Leave_Days_Taken.Text = json.LeaveTaken;
-                Leave_Balance.Text = json.Remaining;
+                ViewLeave viewLeave = new ViewLeave();
+                viewLeave.Leave_Opening_Balance = json.OpeningBalance;
+                viewLeave.Leave_Entitled = json.Entitled;
+                viewLeave.Leave_Accrued_Days = json.Accrued;
+                viewLeave.Leave_Days_Taken = json.LeaveTaken;
+                viewLeave.Leave_Balance = json.Remaining;
             }
             catch (Exception es)
             {

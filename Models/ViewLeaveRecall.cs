@@ -5,10 +5,10 @@ using System.Web;
 
 namespace LMS.Models
 {
-    public class ViewLeave
+    public class ViewLeaveRecall
     {
         public string Leave_Opening_Balance { get; set; }
-        public  string LeaveCodeTxt { get; set; }
+        public string LeaveCodeTxt { get; set; }
         public string Leave_Entitled { get; set; }
         public string Leave_Accrued_Days { get; set; }
         public string Leave_Days_Taken { get; set; }

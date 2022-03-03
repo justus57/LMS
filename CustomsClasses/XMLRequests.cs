@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Linq;
+
 using System.Text;
 using System.Web;
+using System.Web.Mvc;
 using System.Xml;
 
 namespace LMS.CustomsClasses
@@ -1340,7 +1342,7 @@ namespace LMS.CustomsClasses
     }
     public class LeaverecallsXMLRequests
     {
-        public static DataTable GetOthersPageData(string status, string owner)
+        public static DataTable GetOthersPageData(string status, string owner,string endpoint)
         {
             string LeaveStatus = null;
             string AppliedAs = null;
@@ -1389,7 +1391,6 @@ namespace LMS.CustomsClasses
             table.Columns.Add("Leave Days", typeof(string));
             table.Columns.Add("View", typeof(string));
 
-
             if (Convert.ToInt16(xmlSoapRequest.GetElementsByTagName("totalRecords")[count].InnerText) > 0)
             {
                 foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("LeaveHeader"))
@@ -1421,19 +1422,19 @@ namespace LMS.CustomsClasses
 
                     if (status == "Open")
                     {
-                        table.Rows.Add(CustomsClasses.AppFunctions.ConvertTime(DateCreated), EmployeeName, LeaveCode, HeaderNo, CustomsClasses.AppFunctions.ConvertTime(StartDate), CustomsClasses.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = btn btn-succes btn-xs 'submit_record' data-id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + " href = 'javascript:void(0)' data-toggle='tooltip' title='Submit Application'><span class = 'fa fa-paper-plane' > </span></a> <a class = 'btn btn-danger btn-xs delete_record' data-id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + "&status=Open" + " href = 'javascript:void(0)'><span class = 'fa fa-trash' data-toggle='tooltip' title='Delete Application'> </span></a> <a href = " + "ViewLeaveRecall.aspx?id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
+                        table.Rows.Add(CustomsClasses.AppFunctions.ConvertTime(DateCreated), EmployeeName, LeaveCode, HeaderNo, CustomsClasses.AppFunctions.ConvertTime(StartDate), CustomsClasses.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = btn btn-succes btn-xs 'submit_record' data-id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + " href = 'javascript:void(0)' data-toggle='tooltip' title='Submit Application'><span class = 'fa fa-paper-plane' > </span></a> <a class = 'btn btn-danger btn-xs delete_record' data-id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + "&status=Open" + " href = 'javascript:void(0)'><span class = 'fa fa-trash' data-toggle='tooltip' title='Delete Application'> </span></a> <a href = " + endpoint + "?id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
                     }
                     else if (status == "Pending")
                     {
-                        table.Rows.Add(CustomsClasses.AppFunctions.ConvertTime(DateCreated), EmployeeName, LeaveCode, HeaderNo, CustomsClasses.AppFunctions.ConvertTime(StartDate), CustomsClasses.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-danger btn-xs cancel_record' data-id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + " href = 'javascript:void(0)'><span class = 'fa fa-times' data-toggle='tooltip' title='Cancel Application'> </span></a> <a class = 'btn btn-primary btn-xs' href = " + "ViewLeaveRecall.aspx?id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + "&status=Pending" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
+                        table.Rows.Add(CustomsClasses.AppFunctions.ConvertTime(DateCreated), EmployeeName, LeaveCode, HeaderNo, CustomsClasses.AppFunctions.ConvertTime(StartDate), CustomsClasses.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-danger btn-xs cancel_record' data-id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + " href = 'javascript:void(0)'><span class = 'fa fa-times' data-toggle='tooltip' title='Cancel Application'> </span></a> <a class = 'btn btn-primary btn-xs' href = " + endpoint + "?id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + "&status=Pending" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
                     }
                     else if (status == "Approved")
                     {
-                        table.Rows.Add(CustomsClasses.AppFunctions.ConvertTime(DateCreated), EmployeeName, LeaveCode, HeaderNo, CustomsClasses.AppFunctions.ConvertTime(StartDate), CustomsClasses.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-primary btn-xs' href = " + "ViewLeaveRecall.aspx?id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + "&status=Approved" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
+                        table.Rows.Add(CustomsClasses.AppFunctions.ConvertTime(DateCreated), EmployeeName, LeaveCode, HeaderNo, CustomsClasses.AppFunctions.ConvertTime(StartDate), CustomsClasses.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-primary btn-xs' href = " + endpoint + "?id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + "&status=Approved" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
                     }
                     else if (status == "Rejected")
                     {
-                        table.Rows.Add(CustomsClasses.AppFunctions.ConvertTime(DateCreated), EmployeeName, LeaveCode, HeaderNo, CustomsClasses.AppFunctions.ConvertTime(StartDate), CustomsClasses.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-primary btn-xs' href = " + "ViewLeaveRecall.aspx?id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + "&status=Rejected" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
+                        table.Rows.Add(CustomsClasses.AppFunctions.ConvertTime(DateCreated), EmployeeName, LeaveCode, HeaderNo, CustomsClasses.AppFunctions.ConvertTime(StartDate), CustomsClasses.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-primary btn-xs' href = " + endpoint + "?id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + "&status=Rejected" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
                     }
 
                     count++;
@@ -1442,7 +1443,7 @@ namespace LMS.CustomsClasses
 
             return table;
         }
-        public static DataTable GetSelfPageData(string status, string owner)
+        public static DataTable GetSelfPageData(string status, string owner,string endpoint)
         {
             string LeaveStatus = null;
             string AppliedAs = null;
@@ -1503,7 +1504,7 @@ namespace LMS.CustomsClasses
                     //XmlNode NodeEmployeeName = xmlSoapRequest.GetElementsByTagName("EmployeeName")[count];
                     //string EmployeeName = NodeEmployeeName.InnerText;
 
-                    XmlNode NodeLeaveCode = xmlSoapRequest.GetElementsByTagName("LeaveCode")[count];
+                    XmlNode NodeLeaveCode = xmlSoapRequest.GetElementsByTagName("HeaderNo")[count];
                     string LeaveCode = NodeLeaveCode.InnerText;
 
                     XmlNode NodeHeaderNo = xmlSoapRequest.GetElementsByTagName("HeaderNo")[count];
@@ -1523,19 +1524,19 @@ namespace LMS.CustomsClasses
 
                     if (status == "Open")
                     {
-                        table.Rows.Add(CustomsClasses.AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, CustomsClasses.AppFunctions.ConvertTime(StartDate), CustomsClasses.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-success btn-xs submit_record' data-id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + " href = 'javascript:void(0)' data-toggle='tooltip' title='Submit Application'><span class = 'fa fa-paper-plane'> </span></a> <a class = 'btn btn-danger btn-xs delete_record' data-id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + " href = 'javascript:void(0)' data-toggle='tooltip' title='Delete Application'><span class = 'fa fa-trash' > </span></a> <a class = 'btn btn-primary btn-xs' href = " + "ViewLeaveRecall.aspx?id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + "&status=Open" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
+                        table.Rows.Add(CustomsClasses.AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, CustomsClasses.AppFunctions.ConvertTime(StartDate), CustomsClasses.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-success btn-xs submit_record' data-id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + " href = 'javascript:void(0)' data-toggle='tooltip' title='Submit Application'><span class = 'fa fa-paper-plane'> </span></a> <a class = 'btn btn-danger btn-xs delete_record' data-id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + " href = 'javascript:void(0)' data-toggle='tooltip' title='Delete Application'><span class = 'fa fa-trash' > </span></a> <a class = 'btn btn-primary btn-xs' href = " + endpoint +"?id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + "&status=Open" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
                     }
                     else if (status == "Pending")
                     {
-                        table.Rows.Add(CustomsClasses.AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, CustomsClasses.AppFunctions.ConvertTime(StartDate), CustomsClasses.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-danger btn-xs cancel_record' data-id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + " href = 'javascript:void(0)' data-toggle='tooltip' title='Cancel Application'><span class = 'fa fa-times'> </span></a> <a class = 'btn btn-primary btn-xs' href = " + "ViewLeaveRecall.aspx?id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + "&status=Pending" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
+                        table.Rows.Add(CustomsClasses.AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, CustomsClasses.AppFunctions.ConvertTime(StartDate), CustomsClasses.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-danger btn-xs cancel_record' data-id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + " href = 'javascript:void(0)' data-toggle='tooltip' title='Cancel Application'><span class = 'fa fa-times'> </span></a> <a class = 'btn btn-primary btn-xs' href = " + endpoint + "?id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + "&status=Pending" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
                     }
                     else if (status == "Approved")
                     {
-                        table.Rows.Add(CustomsClasses.AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, CustomsClasses.AppFunctions.ConvertTime(StartDate), CustomsClasses.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-primary btn-xs' href = " + "ViewLeaveRecall?id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + "&status=Approved" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
+                        table.Rows.Add(CustomsClasses.AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, CustomsClasses.AppFunctions.ConvertTime(StartDate), CustomsClasses.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-primary btn-xs' href = " + endpoint + "?id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + "&status=Approved" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
                     }
                     else if (status == "Rejected")
                     {
-                        table.Rows.Add(CustomsClasses.AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, CustomsClasses.AppFunctions.ConvertTime(StartDate), CustomsClasses.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-primary btn-xs' href = " + "ViewLeaveRecall?id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + "&status=Rejected" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
+                        table.Rows.Add(CustomsClasses.AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, CustomsClasses.AppFunctions.ConvertTime(StartDate), CustomsClasses.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-primary btn-xs' href = " + endpoint + "?id=" + CustomsClasses.AppFunctions.Base64Encode(HeaderNoLink) + "&status=Rejected" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
                     }
 
                     // table.Rows.Add(classes.AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, classes.AppFunctions.ConvertTime(StartDate), classes.AppFunctions.ConvertTime(EndDate), LeaveDays, "<a href = " + "ViewApprovedLeave.aspx?id=" + classes.AppFunctions.Base64Encode(HeaderNoLink) + "><span class = 'fa fa-eye'> View Record</span></a>");
@@ -1571,7 +1572,7 @@ namespace LMS.CustomsClasses
     }
     public class LeavesXMLRequests
     {
-        public static DataTable GetOthersPageData(string status, string owner)
+        public static DataTable GetOthersPageData(string status, string owner,string endpoint)
         {
             string LeaveStatus = null;
             string AppliedAs = null;
@@ -1673,7 +1674,7 @@ namespace LMS.CustomsClasses
 
             return table;
         }
-        public static DataTable GetSelfPageData(string status, string owner)
+        public static DataTable GetSelfPageData(string status, string owner, string endpoint)
         {
             string LeaveStatus = null;
             string AppliedAs = null;
@@ -1720,7 +1721,7 @@ namespace LMS.CustomsClasses
             table.Columns.Add("End Date", typeof(string));
             table.Columns.Add("Leave Days", typeof(string));
             table.Columns.Add("View", typeof(string));
-
+            
             if (xmlSoapRequest.GetElementsByTagName("EmployeeID")[count].InnerText !="")
             {
                 foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("LeaveHeader"))
@@ -1749,19 +1750,19 @@ namespace LMS.CustomsClasses
                    
                     if (status == "Open")
                     {
-                        table.Rows.Add(AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, AppFunctions.ConvertTime(StartDate), AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-secondary btn-xs' href = " + "ViewLeave?id=" + AppFunctions.Base64Encode(HeaderNoLink) + "&status=Open" + " data-toggle='tooltip' title='Edit Application'><span class = 'fa fa-edit'> </span></a>                                               <a class = 'btn btn-success btn-xs submit_record' data-id=" + AppFunctions.Base64Encode(HeaderNoLink) + " data-date=" + AppFunctions.ConvertTime(StartDate) + " href = 'javascript:void(0)'><span class = 'fa fa-paper-plane' data-toggle='tooltip' title='Submit Application'> </span></a> <a class = 'btn btn-danger btn-xs delete_record' data-id=" + AppFunctions.Base64Encode(HeaderNoLink) + " href = 'javascript:void(0)'><span class = 'fa fa-trash' data-toggle='tooltip' title='Delete Application'> </span></a> <a class = 'btn btn-primary btn-xs' href = " + "ViewLeave.aspx?id=" + AppFunctions.Base64Encode(HeaderNoLink) + "&status=Open" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
+                        table.Rows.Add(AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, AppFunctions.ConvertTime(StartDate), AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-secondary btn-xs' href = " + endpoint+"?id=" + AppFunctions.Base64Encode(HeaderNoLink) + "&status=Open" + " data-toggle='tooltip' title='Edit Application'><span class = 'fa fa-edit'> </span></a>                                               <a class = 'btn btn-success btn-xs submit_record' data-id=" + AppFunctions.Base64Encode(HeaderNoLink) + " data-date=" + AppFunctions.ConvertTime(StartDate) + " href = 'javascript:void(0)'><span class = 'fa fa-paper-plane' data-toggle='tooltip' title='Submit Application'> </span></a> <a class = 'btn btn-danger btn-xs delete_record' data-id=" + AppFunctions.Base64Encode(HeaderNoLink) + " href = 'javascript:void(0)'><span class = 'fa fa-trash' data-toggle='tooltip' title='Delete Application'> </span></a> <a class = 'btn btn-primary btn-xs' href = " + endpoint+"?id=" + AppFunctions.Base64Encode(HeaderNoLink) + "&status=Open" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
                     }
                     else if (status == "Pending")
                     {
-                        table.Rows.Add(AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, AppFunctions.ConvertTime(StartDate), AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-success btn-xs delegate_record' data-id=" + AppFunctions.Base64Encode(HeaderNoLink) + " href = 'javascript:void(0)' data-toggle='tooltip' title='Delegate Application'><span class = 'fa fa-fighter-jet'> </span></a>                             <a class = 'btn btn-danger btn-xs cancel_record' data-id=" + AppFunctions.Base64Encode(HeaderNoLink) + " href = 'javascript:void(0)' data-toggle='tooltip' title='Cancel Application'><span class = 'fa fa-times'> </span></a> <a class = 'btn btn-primary btn-xs' href = " + "ViewLeave.aspx?id=" + AppFunctions.Base64Encode(HeaderNoLink) + "&status=Pending" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
+                        table.Rows.Add(AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, AppFunctions.ConvertTime(StartDate), AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-success btn-xs delegate_record' data-id=" + AppFunctions.Base64Encode(HeaderNoLink) + " href = 'javascript:void(0)' data-toggle='tooltip' title='Delegate Application'><span class = 'fa fa-fighter-jet'> </span></a>                             <a class = 'btn btn-danger btn-xs cancel_record' data-id=" + AppFunctions.Base64Encode(HeaderNoLink) + " href = 'javascript:void(0)' data-toggle='tooltip' title='Cancel Application'><span class = 'fa fa-times'> </span></a> <a class = 'btn btn-primary btn-xs' href = " + endpoint + "?id=" + AppFunctions.Base64Encode(HeaderNoLink) + "&status=Pending" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
                     }
                     else if (status == "Approved")
                     {
-                        table.Rows.Add(AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, AppFunctions.ConvertTime(StartDate), AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-primary btn-xs' href = " + "ViewLeave?id=" + AppFunctions.Base64Encode(HeaderNoLink) + "&status=Approved" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
+                        table.Rows.Add(AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, AppFunctions.ConvertTime(StartDate), AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-primary btn-xs' href = " + endpoint + "?id=" + AppFunctions.Base64Encode(HeaderNoLink) + "&status=Approved" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
                     }
                     else if (status == "Rejected")
                     {
-                        table.Rows.Add(AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, AppFunctions.ConvertTime(StartDate), AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-primary btn-xs' href = " + "ViewLeave?id=" + AppFunctions.Base64Encode(HeaderNoLink) + "&status=Rejected" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
+                        table.Rows.Add(AppFunctions.ConvertTime(DateCreated), LeaveCode, HeaderNo, AppFunctions.ConvertTime(StartDate), AppFunctions.ConvertTime(EndDate), LeaveDays, "<a class = 'btn btn-primary btn-xs' href = " + endpoint + "?id=" + AppFunctions.Base64Encode(HeaderNoLink) + "&status=Rejected" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
                     }
 
                     count++;

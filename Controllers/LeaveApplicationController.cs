@@ -376,7 +376,6 @@ namespace LMS.Controllers
             //can user apply a backdated Leaave?
             string CanApplyBackdatedLeave = System.Web.HttpContext.Current.Session["CanApplyBackdatedLeave"].ToString();
 
-
             if (LeaveStartDay < DateTime.Today && CanApplyBackdatedLeave == "FALSE")
             {
                 status = "999";
@@ -384,7 +383,6 @@ namespace LMS.Controllers
             }
             else
             {
-
                 string DocumentNoResponse = GetDocumentNumber();
                 dynamic json = JObject.Parse(DocumentNoResponse);
                 status = json.Status;
@@ -491,7 +489,6 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-
         private static string GetDocumentNumber()
         {
             //get Leave number

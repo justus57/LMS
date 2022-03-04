@@ -17,7 +17,6 @@ namespace LMS.Controllers
     public class LeaveForOtherController : Controller
     {
         public readonly object _RequestResponse;
-
         public string namelist { get; private set; }
 
         // GET: LeaveForOther
@@ -61,8 +60,6 @@ namespace LMS.Controllers
                 ValueList.Add(namelist = "" + data.Key + "," + data.Value);
              
             }
-           // var namelist = keyList;
-
             ViewBag.employees = ValueList;
         }
         public JsonResult GetUserLeaves(string param1)
@@ -293,14 +290,11 @@ namespace LMS.Controllers
                     string folderPath = System.Web.HttpContext.Current.Server.MapPath("~/Uploads/");
                     string documentpath = folderPath + param9;
 
-
                     LeaveForOtherXMLRequests.SaveLeaveApplicationForOther(DocumentNo, EmployeeID, EmployeeName, RequestDate, DateCreated, username, LeaveCode, Description, StartDate, EndDate, LeaveDays, ReturnDate);
 
                     UploadAttachment(documentpath, DocumentNo);
 
-
                     ///send approval request here
-
                     string ApprovalRequestResponseString = LeaveForOtherXMLRequests.SendApprovalRequest(DocumentNo);
 
                     dynamic json = JObject.Parse(ApprovalRequestResponseString);
@@ -322,7 +316,6 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet); ;
         }
-
         private static string GetDocumentNumber(string EmployeeNumber)
         {
             string DocumentNo = null;
@@ -347,8 +340,7 @@ namespace LMS.Controllers
             string UploadPath = param1;//full path+file name
             string DocumentNo = param2;
 
-
-            //save attachment if sick leave
+           //save attachment if sick leave
             LeaveApplicationXMLRequests.UploadFile(DocumentNo, UploadPath);
 
             //if uploaded delete file from uploads folder

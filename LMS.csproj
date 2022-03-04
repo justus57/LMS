@@ -368,6 +368,7 @@
     <Compile Include="Assest\Utilities\WebserviceConfig.cs" />
     <Compile Include="Assest\Utility.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApprovalEntriesController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaveApplicationController.cs" />
@@ -4194,12 +4195,12 @@
     <Content Include="Views\LeaveApplication\LeaveApplication.cshtml" />
     <Content Include="Views\LeaveForOther\LeaveForOther.cshtml" />
     <Content Include="Views\Profile\Profile.cshtml" />
-    <Content Include="Views\Leave\_DataViewPartial.cshtml" />
     <Content Include="Views\LeaveRecalls\LeaveRecalls.cshtml" />
     <Content Include="Views\LeaveRecallApplication\LeaveRecallApplication.cshtml" />
     <Content Include="Views\LeaveRecallForOther\LeaveRecallForOther.cshtml" />
     <Content Include="Views\ViewLeave\ViewLeave.cshtml" />
     <Content Include="Views\ViewLeaveRecall\ViewLeaveRecall.cshtml" />
+    <Content Include="Views\ApprovalEntries\ApprovalEntries.cshtml" />
     <None Include="Web References\WebRef\HRWebPortal.wsdl" />
     <Content Include="Web References\WebRef\LeaveDetail.datasource">
       <DependentUpon>Reference.map</DependentUpon>

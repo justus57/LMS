@@ -16,6 +16,7 @@ namespace LMS.Controllers
     public class LeaveApplicationController : Controller
     {
         public object _RequestResponse { get; private set; }
+        public string Qty { get; set; }
 
         // GET: LeaveApplication
         public ActionResult Index()
@@ -123,6 +124,7 @@ namespace LMS.Controllers
                 Leave_Days_Taken = LeaveTaken,
                 Leave_Opening_Balance = OpeningBalance,
                 Leave_Balance = Remaining,
+                AttachmentMandatory = AttachmentMandatory
 
             };
             // return JsonConvert.SerializeObject(Leave);
@@ -144,14 +146,14 @@ namespace LMS.Controllers
             string Msg = null;
             string status = json.Status;
             string Return_Date = null;
-            string Qty = null;
+            //string Qty = null;
 
             if (status == "000")
             {
                 validity = true;
                 Msg = "Successful";
                 Return_Date = json.ReturnDate;
-                Qty = json.EndDate;
+                Qty = json.LeaveDaysApplied;
             }
             else
             {

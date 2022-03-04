@@ -17,6 +17,9 @@ namespace LMS.Controllers
     public class LeaveForOtherController : Controller
     {
         public readonly object _RequestResponse;
+
+        public string namelist { get; private set; }
+
         // GET: LeaveForOther
         public ActionResult Index()
         {
@@ -42,7 +45,6 @@ namespace LMS.Controllers
             GetEmployeeList();
             return View();
         }
-
         public void GetEmployeeList()
         {
             var castedDico = LeaveForOtherXMLRequests.GetEmpoyeeList();
@@ -50,28 +52,32 @@ namespace LMS.Controllers
             var myList = new List<KeyValuePair<string, string>>(array);
             Dictionary<string, string> dictionary = new Dictionary<string, string>(array);
             List<string> keyList = new List<string>(dictionary.Keys);
-            List<SelectListItem> itemz = new List<SelectListItem>();
-            foreach (var val in myList)
+            List<string> ValueList = new List<string>();
+            
+            foreach (KeyValuePair<string, string> item in castedDico)
             {
-                itemz.Add(new SelectListItem { Value = val.Key, Text = val.Value });
-            }
-            ViewBag.employees = keyList;
-        }
+                var data = (item.Key, item.Value);
 
+                ValueList.Add(namelist = "" + data.Key + "," + data.Value);
+             
+            }
+           // var namelist = keyList;
+
+            ViewBag.employees = ValueList;
+        }
         public JsonResult GetUserLeaves(string param1)
         {
-            string UserLeavesresponseString = LeaveForOtherXMLRequests.GetUserLeaves(param1);
+            int position = param1.IndexOf(',');
+            var param = param1.Substring(0, position);
+            string UserLeavesresponseString = LeaveForOtherXMLRequests.GetUserLeaves(param);
             List<LeaveTypes> leavetype = new List<LeaveTypes>();
             /////break dynamic json and put it in a list, then serialize the list to json object
             foreach (var kvp in AppFunctions.BreakDynamicJSON(UserLeavesresponseString))
             {
                 leavetype.Add(new LeaveTypes { LeaveCode = kvp.Key, LeaveName = kvp.Value });
             }
-
             return Json(JsonConvert.SerializeObject(leavetype), JsonRequestBehavior.AllowGet); ;
-
         }
-
         public JsonResult GetLeaveDetails(string param1, string param2)
         {
             string OpeningBalance = "";
@@ -85,7 +91,10 @@ namespace LMS.Controllers
             string AttachmentMandatory = "";
             try
             {
-                string LeaveDetailsresponseString = LeaveForOtherXMLRequests.GetLeaveCodeDetails(param1, param2);
+                int position = param2.IndexOf(',');
+                var param = param2.Substring(0, position);
+
+                string LeaveDetailsresponseString = LeaveForOtherXMLRequests.GetLeaveCodeDetails(param1, param);
                 dynamic json = JObject.Parse(LeaveDetailsresponseString);
 
                 OpeningBalance = json.OpeningBalance;
@@ -102,17 +111,14 @@ namespace LMS.Controllers
             {
                 Console.Write(e);
             }
-
             var Leave = new LeaveForOther
             {
                 Leave_Accrued_Days = Accrued,
-
                 Leave_Entitled = Entitled,
                 RequiresAttachment = RequiresAttachment,
                 Leave_Days_Taken = LeaveTaken,
                 Leave_Opening_Balance = OpeningBalance,
                 Leave_Balance = Remaining,
-
             };
             return Json(JsonConvert.SerializeObject(Leave), JsonRequestBehavior.AllowGet);
         }
@@ -140,7 +146,7 @@ namespace LMS.Controllers
                     validity = true;
                     Msg = "Successful";
                     Return_Date = json.ReturnDate;
-                    Qty = json.EndDate;
+                    Qty = json.LeaveDaysApplied;
                 }
                 else
                 {
@@ -155,7 +161,7 @@ namespace LMS.Controllers
 
             var _LeaveQuantityAndReturnDate = new LeaveForOther
             {
-                LeaveEndDay = Qty,
+                LeaveDaysApplied = Qty,
                 ReturnDate = AppFunctions.ConvertTime(Return_Date),
                 Message = Msg,
                 Validity = validity
@@ -185,7 +191,7 @@ namespace LMS.Controllers
                     validity = true;
                     Msg = "Successful";
                     Return_Date = json.ReturnDate;
-                    EndDate = json.EndDate;
+                    EndDate = json.LeaveDaysApplied;
                 }
                 else
                 {

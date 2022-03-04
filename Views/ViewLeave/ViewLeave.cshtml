@@ -159,7 +159,7 @@
                                     <div class="row" id="UploadDiv" runat="server">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="txt_name" class="form-control-label">Attachment File</label>
+                                                <label for="txt_name" class="form-control-label">Attachment File</label><br/>
                                                 @Html.TextBoxFor(m => Model.postedFile, new { type = "file", multiple = "true" , required = ".pdf" })
                                                 @Html.ValidationMessageFor(model => model.postedFile, "", new { @class = "" })
                                                 <div class="valid-feedback">Looks good!</div>
@@ -171,8 +171,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="form-control-label">Attachment</label>
-                                                @Html.TextBoxFor(model => model.DownloadAttachment, new { @class = "form-control-plaintext", id = "DownloadAttachment" })
-                                                @Html.ValidationMessageFor(model => model.DownloadAttachment, "", new { @class = "" })
+                                                @Html.TextBoxFor(model => model.DownloadAttachment, new { @class = "form-control", id = "DownloadAttachment" })
                                                 <LinkButton runat="server" OnClick="View_Click" ID="btn_view_attachment">View</LinkButton>
                                                 <LinkButton runat="server" onclick="btn_download_Click" ID="btn_download_attachment">Download</LinkButton>
                                                 <LinkButton runat="server" ID="btn_delete_attachment">Delete </LinkButton>
@@ -219,7 +218,6 @@
                             </div>
                         </fieldset>
                     </div>
-
                     <!--Chack Conditions here-->
                     @if (!String.IsNullOrEmpty(Request["status"]) && Request["status"] == "Open")
                     {
@@ -278,7 +276,7 @@
         if (status != "Open") {
             $(Leave_Type).prop("disabled", true);
         }
- 
+
         $(".MultiLineLimit").on('change keydown paste input', function () {
             this.value = (this.value.length <= 50 ? this.value : this.value.substring(0, 50));
         });
@@ -301,7 +299,7 @@
         $("#btn_delete_attachment").click(function (e) {
             // some actions here
             jQuery.ajax({
-                url: 'ViewLeave.aspx/DeleteAttachment',
+                url:"@Url.Action("DeleteAttachment", "ViewLeave")",
                 type: "POST",
                 data: '{param1:"' + $('#LeaveCodeTxt').val() + '"}',
                 dataType: "json",
@@ -395,24 +393,21 @@
 
                 if (startDate <= endDate) {
                     jQuery.ajax({
-                        url: 'ViewLeave.aspx/GetLeaveState',
+                        url:"@Url.Action("GetLeaveState", "ViewLeave")",
                         type: "POST",
                         data: '{param1:"' + $('#Leave_Type').val() + '",param2:"' + $('#LeaveStartDay').val() + '", param3:"' + $('#LeaveEndDay').val() + '"}',
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         success: function (response) {
 
-                            if (response != null && response.d != null) {
-                                var data = response.d;
-                                // alert(typeof (data)); //it comes out to be string
-                                //we need to parse it to JSON
-                                data = $.parseJSON(data);
+                            if (response != null) {
+                                var data = $.parseJSON(data);
 
                                 if (data.Validity == false) {
                                     bootbox.alert(data.Message);
                                 } else {
                                     $("#ReturnDate").val(data.ReturnDate);
-                                    $("#LeaveDaysApplied").val(data.Quantity);
+                                    $("#LeaveDaysApplied").val(data.LeaveDaysApplied);
                                 }
                             }
                         }
@@ -447,24 +442,21 @@
                         bootbox.alert("Please enter the Leave Start Date");
                     } else {
                         jQuery.ajax({
-                            url: 'ViewLeave.aspx/GetLeaveEndDateAndReturnDate',
+                            url:"@Url.Action("GetLeaveEndDateAndReturnDate", "ViewLeave")",
                             type: "POST",
                             data: '{param1:"' + $('#Leave_Type').val() + '",param2:"' + $('#LeaveStartDay').val() + '", param3:"' + $('#LeaveDaysApplied').val() + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
 
-                                if (response != null && response.d != null) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-                                    data = $.parseJSON(data);
+                                if (response != null) {
+                                    var data = $.parseJSON(data);
 
                                     if (data.Validity == false) {
                                         bootbox.alert(data.Message);
                                     } else {
                                         $("#ReturnDate").val(data.ReturnDate);
-                                        $("#LeaveEndDay").val(data.EndDate);
+                                        $("#LeaveEndDay").val(data.LeaveEndDay);
                                     }
                                 }
                             }
@@ -488,7 +480,7 @@
                 showToast('Saving application');
 
                 $.ajax({
-                    url: 'FileUploadHandler.ashx',
+                    url: "@Url.Action("FileUploadHandler", "LeaveApplication")",
                     type: 'POST',
                     data: new FormData($('#LeaveApplicationForm')[0]),
                     cache: false,
@@ -497,18 +489,15 @@
                     success: function (file) {
 
                         jQuery.ajax({
-                            url: 'ViewLeave.aspx/Save',
+                            url: "@Url.Action("Save", "ViewLeave")",
                             type: "POST",
                             data: '{param1:"' + $('#ReturnDate').val() + '", param2:"' + $('#Leave_Type').val() + '", param3:"' + $('#Leave_comments').val() + '", param4:"' + $('#LeaveStartDay').val() + '", param5:"' + $('#LeaveEndDay').val() + '", param6:"' + $('#LeaveDaysApplied').val() + '" , param7:"' + file.name + '", param8:"' + $('#LeaveCodeTxt').val() + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
 
-                                if (response != null && response.d != null) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-                                    data = $.parseJSON(data);
+                                if (response != null) {
+                                    var data = $.parseJSON(data);
 
                                     hideLoading();
 
@@ -566,18 +555,15 @@
                         showToast('Deleting application');
 
                         jQuery.ajax({
-                            url: 'ViewLeave.aspx/DeleteLeave',
+                            url: "@Url.Action("DeleteLeave", "ViewLeave")",
                             type: "POST",
                             data: '{param1:"' + $('#LeaveCodeTxt').val() + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
 
-                                if (response != null && response.d != null) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-                                    data = $.parseJSON(data);
+                                if (response != null) {
+                                    var data = $.parseJSON(data);
 
                                     hideLoading();;
 
@@ -620,7 +606,7 @@
                         showToast('Submitting application');
 
                         $.ajax({
-                            url: 'FileUploadHandler.ashx',
+                            url:"@Url.Action("FileUploadHandler", "LeaveApplication")",
                             type: 'POST',
                             data: new FormData($('#LeaveApplicationForm')[0]),
                             cache: false,
@@ -629,18 +615,15 @@
                             success: function (file) {
 
                                 jQuery.ajax({
-                                    url: 'ViewLeave.aspx/SubmitLeave',
+                                    url:"@Url.Action("SubmitLeave", "ViewLeave")",
                                     type: "POST",
                                     data: '{param1:"' + $('#ReturnDate').val() + '", param2:"' + $('#Leave_Type').val() + '", param3:"' + $('#Leave_comments').val() + '", param4:"' + $('#LeaveStartDay').val() + '", param5:"' + $('#LeaveEndDay').val() + '", param6:"' + $('#LeaveDaysApplied').val() + '" , param7:"' + file.name + '", param8:"' + $('#LeaveCodeTxt').val() + '"}',
                                     dataType: "json",
                                     contentType: "application/json; charset=utf-8",
                                     success: function (response) {
 
-                                        if (response != null && response.d != null) {
-                                            var data = response.d;
-                                            // alert(typeof (data)); //it comes out to be string
-                                            //we need to parse it to JSON
-                                            data = $.parseJSON(data);
+                                        if (response != null) {
+                                            var data = $.parseJSON(data);
 
                                             hideLoading();;
 
@@ -704,18 +687,15 @@
                         showToast('Cancelling application');
 
                         jQuery.ajax({
-                            url: 'ViewLeave.aspx/CancelLeave',
+                            url: "@Url.Action("CancelLeave", "ViewLeave")",
                             type: "POST",
                             data: '{param1:"' + $('#LeaveCodeTxt').val() + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
 
-                                if (response != null && response.d != null) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-                                    data = $.parseJSON(data);
+                                if (response != null) {
+                                    var data = $.parseJSON(data);
 
                                     hideLoading();;
 
@@ -758,18 +738,15 @@
                         showToast('Delegating application');
 
                         jQuery.ajax({
-                            url: 'ViewLeave.aspx/DelegatePendingLeave',
+                            url:"@Url.Action("DelegatePendingLeave", "ViewLeave")",
                             type: "POST",
                             data: '{param1:"' + $('#LeaveCodeTxt').val() + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
 
-                                if (response != null && response.d != null) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-                                    data = $.parseJSON(data);
+                                if (response != null) {
+                                    var data = $.parseJSON(data);
 
                                     hideLoading();
 
@@ -809,25 +786,22 @@
     }
     function GetLeaveDetails() {
         jQuery.ajax({
-            url: 'ViewLeave.aspx/GetLeaveDetails',
+            url: "@Url.Action("GetLeaveDetails", "ViewLeave")",
             type: "POST",
             data: '{param1:"' + $('#Leave_Type').val() + '" }',
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (response) {
 
-                if (response != null && response.d != null) {
-                    var data = response.d;
-                    // alert(typeof (data)); //it comes out to be string
-                    //we need to parse it to JSON
-                    data = $.parseJSON(data);
+                if (response != null) {
+                    var data = $.parseJSON(data);
 
                     //set fields values
-                    $('#Leave_Opening_Balance').val(data.OpeningBalance);
-                    $('#Leave_Entitled').val(data.EntitledDays);
-                    $('#Leave_Accrued_Days').val(data.Accrued);
-                    $('#Leave_Days_Taken').val(data.LeaveTaken);
-                    $('#Leave_Balance').val(data.Remaining);
+                    $('#Leave_Opening_Balance').val(data.Leave_Opening_Balance);
+                    $('#Leave_Entitled').val(data.Leave_Entitled);
+                    $('#Leave_Accrued_Days').val(data.Leave_Accrued_Days);
+                    $('#Leave_Days_Taken').val(data.Leave_Days_Taken);
+                    $('#Leave_Balance').val(data.Leave_Balance);
 
                     if (data.RequiresAttachment == 'Yes') {
                         //  alert('now');

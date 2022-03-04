@@ -1125,8 +1125,6 @@ namespace LMS.CustomsClasses
                             </GetLeaveDetail>
                         </Body>
                     </Envelope>";
-
-
             string LeaveApplied = Assest.Utility.CallWebService(request);
         }
         public static string GetDocumentNumber(string username)

@@ -76,97 +76,28 @@ namespace LMS.Controllers
         }
         private void GetLeaveData(string LeaveID)
         {
+            ViewLeaveRecall recall = new ViewLeaveRecall();
             try
             {
-                string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+                string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
 
                 string LoadLeaveRecallresponse = ViewLeaveRecallXMLRequests.LoadLeaveRecallData(LeaveID, username);
-                XmlDocument xmlSoapRequest = new XmlDocument();
-                xmlSoapRequest.LoadXml(LoadLeaveRecallresponse);
-                //get elements
-                XmlNode HeaderDocumentTypeNode = xmlSoapRequest.GetElementsByTagName("HeaderDocumentType")[0];
-                string HeaderDocumentType = HeaderDocumentTypeNode.InnerText;
-                //
-                XmlNode NodeHeaderNo = xmlSoapRequest.GetElementsByTagName("HeaderNo")[0];
-                string HeaderNo = NodeHeaderNo.InnerText;
-                //
-                if (HeaderNo != "")
+                string datax = Assest.Utility.GetJSONResponse(LoadLeaveRecallresponse);
+                dynamic json = JObject.Parse(datax);
+
+                string StartDate = json.StartDate;
+                string EndDate = json.EndDate;
+                string LeaveDays = json.LeaveDaysApplied;
+                string Return_Date = json.ReturnDate;
+                string ApproverName = json.ApproverName;
+                string Description = json.Description;
+                string RejectionComment = json.RejectionComment;
+                string AttachmentName = json.AttachmentName;
+                string LeaveCode = json.LeaveType;
+
+                if (LeaveID != "")
                 {
-                    XmlNode NodeEmployeeID = xmlSoapRequest.GetElementsByTagName("EmployeeID")[0];
-                    string EmployeeID = NodeEmployeeID.InnerText;
-                    //            
-                    XmlNode NodeEmployeeName = xmlSoapRequest.GetElementsByTagName("EmployeeName")[0];
-                    string EmployeeName = NodeEmployeeName.InnerText;
-                    //
-                    XmlNode NodeRequestDate = xmlSoapRequest.GetElementsByTagName("RequestDate")[0];
-                    string RequestDate = NodeRequestDate.InnerText;
-                    //
-                    XmlNode NodeApprovalStatus = xmlSoapRequest.GetElementsByTagName("ApprovalStatus")[0];
-                    string ApprovalStatus = NodeApprovalStatus.InnerText;
-                    //
-                    XmlNode NodeDateCreated = xmlSoapRequest.GetElementsByTagName("DateCreated")[0];
-                    string DateCreated = NodeDateCreated.InnerText;
-                    //
-                    XmlNode NodeApproverID = xmlSoapRequest.GetElementsByTagName("ApproverID")[0];
-                    string ApproverID = NodeApproverID.InnerText;
-                    //
-                    XmlNode NodeApproverName = xmlSoapRequest.GetElementsByTagName("ApproverName")[0];
-                    string ApproverName = NodeApproverName.InnerText;
-                    //
-                    XmlNode NodeLeaveSubType = xmlSoapRequest.GetElementsByTagName("LeaveSubType")[0];
-                    string LeaveSubType = NodeLeaveSubType.InnerText;
-                    //
-                    XmlNode NodeRejectionComment = xmlSoapRequest.GetElementsByTagName("RejectionComment")[0];
-                    string RejectionComment = NodeRejectionComment.InnerText;
-                    //
-                    XmlNode NodeAppliedBy = xmlSoapRequest.GetElementsByTagName("AppliedBy")[0];
-                    string AppliedBy = NodeAppliedBy.InnerText;
-                    //
-                    XmlNode NodeLineDocumentNo = xmlSoapRequest.GetElementsByTagName("LineDocumentNo")[0];
-                    string LineDocumentNo = NodeLineDocumentNo.InnerText;
-                    //
-                    XmlNode NodeLineDocumentType = xmlSoapRequest.GetElementsByTagName("LineDocumentType")[0];
-                    string LineDocumentType = NodeLineDocumentType.InnerText;
-                    //
-                    XmlNode NodeLineNo = xmlSoapRequest.GetElementsByTagName("LineNo")[0];
-                    string LineNo = NodeLineNo.InnerText;
-                    //
-                    XmlNode NodeLeaveCode = xmlSoapRequest.GetElementsByTagName("LeaveCode")[0];
-                    string LeaveCode = NodeLeaveCode.InnerText;
-                    //
-                    XmlNode NodeExternalDocNo = xmlSoapRequest.GetElementsByTagName("ExternalDocNo")[0];
-                    string ExternalDocNo = NodeExternalDocNo.InnerText;
-                    //
-                    XmlNode NodeDescription = xmlSoapRequest.GetElementsByTagName("Description")[0];
-                    string Description = NodeDescription.InnerText;
-                    //
-                    XmlNode NodeUnitOfMeasure = xmlSoapRequest.GetElementsByTagName("UnitOfMeasure")[0];
-                    string UnitOfMeasure = NodeUnitOfMeasure.InnerText;
-                    //
-                    XmlNode NodeStartDate = xmlSoapRequest.GetElementsByTagName("StartDate")[0];
-                    string StartDate = NodeStartDate.InnerText;
-                    //
-                    XmlNode NodeEndDate = xmlSoapRequest.GetElementsByTagName("EndDate")[0];
-                    string EndDate = NodeEndDate.InnerText;
-                    //
-                    XmlNode NodeLeaveDays = xmlSoapRequest.GetElementsByTagName("LeaveDays")[0];
-                    string LeaveDays = NodeLeaveDays.InnerText;
-                    //
-                    XmlNode NodeReturnDate = xmlSoapRequest.GetElementsByTagName("ReturnDate")[0];
-                    string Return_Date = NodeReturnDate.InnerText;
-                    //
-                    XmlNode NodeApprovedStartDate = xmlSoapRequest.GetElementsByTagName("ApprovedStartDate")[0];
-                    string ApprovedStartDate = NodeApprovedStartDate.InnerText;
-                    //
-                    XmlNode NodeApprovedEndDate = xmlSoapRequest.GetElementsByTagName("ApprovedEndDate")[0];
-                    string ApprovedEndDate = NodeApprovedEndDate.InnerText;
-                    //
-                    XmlNode NodeApprovedQty = xmlSoapRequest.GetElementsByTagName("ApprovedQty")[0];
-                    string ApprovedQty = NodeApprovedQty.InnerText;
-                    //
-                    XmlNode NodeApprovedReturnDate = xmlSoapRequest.GetElementsByTagName("ApprovedReturnDate")[0];
-                    string ApprovedReturnDate = NodeApprovedReturnDate.InnerText;
-                    ViewLeaveRecall recall = new ViewLeaveRecall();
+                    
                     LoadLeaveDetails(LeaveCode);
                     recall.LeaveType = LeaveCode;
                     recall.LeaveStartDay = AppFunctions.ConvertTime(StartDate);
@@ -201,7 +132,7 @@ namespace LMS.Controllers
         {
             try
             {
-                string username = System.Web.HttpContext.Current.Session["Username"].ToString();// get session variable
+                string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();// get session variable
                 string LoadLeaveDetailsresponseString = ViewLeaveRecallXMLRequests.LoadLeaveDetails(username, LeaveCode);
                 //{"Code":"ANNUAL","Description":"Annual Leave","Entitled":"23","OpeningBalance":"0","LeaveTaken":"14","Accrued":"40","Remaining":"26"}
                 dynamic json = JObject.Parse(LoadLeaveDetailsresponseString);

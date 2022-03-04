@@ -144,7 +144,7 @@ namespace LMS.Controllers
                 validity = true;
                 Msg = "Successful";
                 Return_Date = json.ReturnDate;
-                Qty = json.EndDate;
+                Qty = json.LeaveDaysApplied;
             }
             else
             {
@@ -199,7 +199,7 @@ namespace LMS.Controllers
                     validity = true;
                     Msg = "Successful";
                     Return_Date = json.ReturnDate;
-                    EndDate = json.EndDate;
+                    EndDate = json.LeaveDaysApplied;
                 }
                 else
                 {

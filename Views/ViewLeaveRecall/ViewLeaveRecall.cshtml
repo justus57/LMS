@@ -37,7 +37,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="LeaveCodeTxt" class="form-control-label">Leave Code</label>
-                                                @Html.TextBoxFor(model => model.LeaveCodeTxt, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.TextBoxFor(model => model.LeaveCodeTxt, new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(model => model.LeaveCodeTxt, "", new { @class = "" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave code must be specified</div>
@@ -48,8 +48,15 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="LeaveType" class="form-control-label">Leave Type</label>
-                                                @Html.TextBoxFor(model => model.LeaveType, new { @class = "form-control", @readonly = "readonly" })
-                                                @Html.ValidationMessageFor(model => model.LeaveType, "", new { @class = "" })
+                                                <select Class="form-control" ID="Leave_Type" name="Leave_Type" AutoPostBack="false" style="width:100%">
+                                                    <option selected value="0">---Select---</option>
+                                                    @*@foreach (var item in ViewBag.Leaves)
+                                                    {
+                                                        <option value="@item" customAttribute="item.SomethingSpecial">
+                                                            @item
+                                                        </option>
+                                                    }*@
+                                                </select>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave type must be specified</div>
                                             </div>
@@ -115,7 +122,9 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="ApprovedLeave" class="form-control-label">Approved Leave</label>
-                                                    <asp:DropDownList CssClass="form-control" ID="ApprovedLeave" runat="server" required="true"> </asp:DropDownList>
+                                                    <select Class="form-control" ID="ApprovedLeave" name="ApprovedLeave" AutoPostBack="false" style="width:100%">
+                                                        <option value="Select">Select</option>
+                                                    </select>
                                                     <div class="valid-feedback">Looks good!</div>
                                                     <div class="invalid-feedback">The leave must be selected</div>
                                                 </div>
@@ -170,7 +179,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-control-label">Approver</label>
-                                                    @Html.TextBoxFor(model => model.LeaveApprover, new { @class = "form-control", ReadOnly = "ReadOnly" })
+                                                    @Html.TextBoxFor(model => model.LeaveApprover, new { @class = "form-control" })
                                                     @Html.ValidationMessageFor(model => model.LeaveApprover, "", new { @class = "" })
                                                     <div class="valid-feedback">Looks good!</div>
                                                     <div class="invalid-feedback">The leave approver must be specified</div>
@@ -182,8 +191,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="form-control-label">Comments if any</label>
-                                                    <asp:TextBox TextMode="multiline" Columns="50" Rows="3" runat="server" ID="Leave_comments" class="form-control MultiLineLimit"></asp:TextBox>
-                                                    @Html.TextAreaFor(model => model.Leave_comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3", autofocus = "" })
+                                                    @Html.TextAreaFor(model => model.Leave_comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3"})
                                                     @Html.ValidationMessageFor(model => model.Leave_comments, "", new { @class = "" })
                                                     <p class="pull-right text-muted small" id="count_message"></p>
                                                 </div>
@@ -391,7 +399,6 @@
                     }
                 },
                 callback: function (result) {
-
                     if (result == true) {
 
                         showToast('Cancelling application');

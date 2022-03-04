@@ -392,6 +392,7 @@
     <Compile Include="Models\Dashboard.cs" />
     <Compile Include="Models\ForgotPassword.cs" />
     <Compile Include="Models\LeaveApplication.cs" />
+    <Compile Include="Models\LeaveDetails.cs" />
     <Compile Include="Models\LeaveForOther.cs" />
     <Compile Include="Models\LeaveRecallApplication.cs" />
     <Compile Include="Models\LeaveRecallForOther.cs" />

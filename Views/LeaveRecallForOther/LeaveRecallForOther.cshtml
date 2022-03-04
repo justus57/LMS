@@ -116,7 +116,7 @@
                             <div class="row mb-5">
                                 <div class="col-md-4 mb-4">
                                     <div>Leave Selection</div>
-                                    <div class="text-muted small">Select the leave start and end dates here.</div>
+                                    <div class="text-muted small">Select the leave Recall start and Recall end dates here.</div>
                                 </div>
 
                                 <div class="col-md-8">
@@ -135,7 +135,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-control-label" for="LeaveStartDay">Leave Start Date</label>
+                                                <label class="form-control-label" for="LeaveStartDay">Leave Recall Start Date</label>
                                                 @Html.TextBoxFor(model => model.LeaveStartDay, new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(model => model.LeaveStartDay, "", new { @class = "" })
                                                 <div class="valid-feedback">Looks good!</div>
@@ -145,7 +145,7 @@
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-control-label" for="LeaveEndDay">Leave End Date</label>
+                                                <label class="form-control-label" for="LeaveEndDay">Leave Recall End Date</label>
                                                 @Html.TextBoxFor(model => model.LeaveEndDay, new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(model => model.LeaveEndDay, "", new { @class = "" })
                                                 <div class="valid-feedback">Looks good!</div>
@@ -157,7 +157,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-control-label" for="LeaveDaysApplied">Leave Days Applied</label>
+                                                <label class="form-control-label" for="LeaveDaysApplied">Leave Recall Days Applied</label>
                                                 @Html.TextBoxFor(model => model.LeaveDaysApplied, new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(model => model.LeaveDaysApplied, "", new { @class = "" })
                                                 <div class="valid-feedback">Looks good!</div>

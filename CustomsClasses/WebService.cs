@@ -72,7 +72,9 @@ namespace LMS.CustomsClasses
                               </GetLeaveList>
                           </Body>
                       </Envelope>";
-            return Assest.Utility.CallWebService(req);
+            var str = Assest.Utility.CallWebService(req);
+           
+            return str;
         }
         public static string GetLeaveDetail(string documentNo, string employeeNo, string operation, string LeaveSubType)
         {

@@ -34,49 +34,53 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
 
-            if (Session["Logged"].Equals("No"))
+            var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
+            var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
+            if (log == "No")
             {
-                Response.Redirect("Login.aspx");
+                Response.Redirect("/Account/login");
             }
-            else if (Session["Logged"].Equals("Yes"))
+            else if (log == "yes")
             {
-                if (Session["RequirePasswordChange"].Equals("TRUE"))
+                if (passRequired == "true")
                 {
-                    Response.Redirect("OneTimePass.aspx");
+                    Response.Redirect("/Account/OneTimePassword");
                 }
                 else
                 {
                     string status = Request.QueryString["status"].Trim();
                     string owner = Request.QueryString["owner"].Trim();
-
+                    string endpoint = Url.Action("ViewLeaveRecall", "ViewLeaveRecall", new { id = "" });
                     if (status == "" || owner == "")
                     {
                         Response.Redirect(Request.UrlReferrer.ToString());
                     }
                     else
                     {
-                        LoadTable(status, owner);
+                        LoadTable(status, owner, endpoint);
                     }
                 }
             }
+        
+    
             return View();
         }
 
-        private void LoadTable(string status, string owner)
+        private void LoadTable(string status, string owner ,string endpoint)
         {
             DataTable dt;
 
             if (owner == "self")
             {
-                dt = LeaverecallsXMLRequests.GetSelfPageData(status, owner);
+                dt = LeaverecallsXMLRequests.GetSelfPageData(status, owner, endpoint);
             }
             else if (owner == "others")
             {
-                dt = LeaverecallsXMLRequests.GetOthersPageData(status, owner);
+                dt = LeaverecallsXMLRequests.GetOthersPageData(status, owner, endpoint);
             }
             else
             {
-                dt = LeaverecallsXMLRequests.GetSelfPageData(status, owner);
+                dt = LeaverecallsXMLRequests.GetSelfPageData(status, owner, endpoint);
             }
 
             //Building an HTML string.
@@ -124,7 +128,7 @@ namespace LMS.Controllers
             html.Append("</table>");
             string strText = html.ToString();
             ////Append the HTML string to Placeholder.
-            str = new HtmlString(html.ToString());
+            ViewBag.Table = strText;
         }
 
         public JsonResult SubmitOpenLeaveRecall(string param1)

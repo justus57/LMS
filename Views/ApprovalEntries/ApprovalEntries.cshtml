@@ -1,0 +1,980 @@
+﻿
+@{
+    ViewBag.Title = "ApprovalEntries";
+}
+
+<main>
+    <div id="wrapper">
+        <div id="content-wrapper">
+            <div class="container-fluid">
+                    @*Breadcrumbs*@
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#">Approval Entries</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                       @{Response.Write(Request["status"]); Response.Write(" ");   Response.Write(Request["parent"]);}
+                    </li>
+                </ol>
+
+                    @*DataTables Example*@ 
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-paper-plane"></i>
+                        @*Approval Entries*@
+                    </div>
+                    <div class="card-body">
+                        @if (HttpContext.Current.Session["ErrorMessage"].ToString() != "") {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>An error occured!</strong>  @{Response.Write(HttpContext.Current.Session["ErrorMessage"].ToString()); }.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                         } 
+                    <div class="table-responsive">
+                        @Html.Raw(ViewBag.Table)
+                    </div>
+                    </div>
+                    <div class="card-footer small text-muted">Updated today at  @DateTime.Now.ToShortTimeString() </div>
+                </div>
+
+            </div>
+            </div>
+
+</div>           
+   
+    @*Leave rejection comment modal*@
+    <div class="modal fade" id="ApplicationRejectionComment" tabindex="-1" role="dialog" aria-labelledby="RejectionCommentTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="RejectionCommentTitle">Reject approval request</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form novalidate="" action="#" method="POST" id="RejectForm" autocomplete="off">
+
+                    <div class="modal-body">
+                        <input class="form-control" id="DocumentNo" disabled required="required" hidden>
+                        <div class="form-group">
+                            <label for="Comment">Rejection Comment</label>
+                            <textarea class="form-control MultiLineLimit" id="Comment" rows="3" required="required"></textarea>
+                            <p class="pull-right text-muted small" id="count_message"></p>
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">A rejection comment must be provided</div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" id="SubmitCommentReject" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+ 
+
+        @*Bootstrap core JavaScript*@
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        @*Core plugin JavaScript*@
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+        @*Page level plugin JavaScript*@
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+
+        @*Custom scripts for all pages*@
+    <script src="js/sb-admin.min.js"></script>
+
+    <script src="js/bootbox.all.min.js"></script>
+    <script src="js/bootboxError.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+    var jQuery_3_3_1 = $.noConflict(true);
+    </script>
+    <script src="js/jquery.toast.js"></script>
+    <script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        $(".MultiLineLimit").on('change keydown paste input', function () {
+            this.value = (this.value.length <= 50 ? this.value : this.value.substring(0, 50));
+        });
+        var text_max = 50;
+        $('#count_message').html(text_max + ' remaining');
+
+        $('#Comment').keyup(function () {
+            var text_length = $('#Comment').val().length;
+            var text_remaining = text_max - text_length;
+
+            $('#count_message').html(text_remaining + ' remaining');
+        });
+    });
+    $(document).ready(function () {
+        var table = $('#dataTable').DataTable({
+            lengthChange: false,
+            buttons: ['copy', 'excel', 'pdf', 'colvis']
+        });
+
+        table.buttons().container()
+            .appendTo('#dataTable_wrapper .col-md-6:eq(0)');
+        jQuery_3_3_1("#dataTable").on("click", ".reject_leaverecall", function (e) {
+            e.preventDefault();
+            var pid = $(this).attr('data-id');
+
+            bootbox.confirm({
+                title: "<i class='fa fa-times'></i> Reject application?",
+                message: "Do you wish to reject this Leave Recall application?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        //prompt for comment
+
+                        $('#ApplicationRejectionComment').modal('show');
+
+                        $("#ApplicationRejectionComment #DocumentNo").val(pid);
+                    }
+                }
+            });
+        });
+        jQuery_3_3_1("#dataTable").on("click", ".approve_leaverecall", function (e) {
+            e.preventDefault();
+            var pid = $(this).attr('data-id');
+
+            bootbox.confirm({
+                title: "<i class='fa fa-paper-plane'></i> Approve?",
+                message: "Do you wish to approve this application?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        showToast('Approving application');
+
+                        jQuery.ajax({
+                            url: 'ApprovalEntries.aspx/ApproveApplication',
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+
+                                if (response != null && response.d != null) {
+                                    var data = response.d;
+                                    // alert(typeof (data)); //it comes out to be string
+                                    //we need to parse it to JSON
+                                    data = $.parseJSON(data);
+
+                                    hideLoading();
+
+                                    if (data.Status == "000") {
+                                        bootbox.alert({
+                                            message: data.Message,
+                                            callback: function () {
+                                                location.reload();
+                                            }
+                                        })
+                                    } else {
+                                        //error dialog
+                                        bootbox.error({ title: "Authorization error", message: data.Message });
+                                    }
+                                }
+                            },
+                            error: function () {
+                                bootbox.error({ title: "System error", message: "An error occured." });
+                            }
+                        });
+                    }
+                }
+            });
+
+        });
+        jQuery_3_3_1("#dataTable").on("click", ".reject_leave", function (e) {
+            e.preventDefault();
+            var pid = $(this).attr('data-id');
+
+            bootbox.confirm({
+                title: "<i class='fa fa-times'></i> Reject application?",
+                message: "Do you wish to reject this Leave application?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+                        //rejection comment
+
+                        $('#ApplicationRejectionComment').modal('show');
+
+                        $("#ApplicationRejectionComment #DocumentNo").val(pid);
+                    }
+                }
+            });
+        });
+        jQuery_3_3_1("#dataTable").on("click", ".approve_leave", function (e) {
+            e.preventDefault();
+            var pid = $(this).attr('data-id');
+            var parent = $(this).parent("td").parent("tr");
+
+            bootbox.confirm({
+                title: "<i class='fa fa-check'></i> Approve application?",
+                message: "Do you wish to Approve this Leave application?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        showToast('Approving application');
+
+                        jQuery.ajax({
+                            url: 'ApprovalEntries.aspx/ApproveApplication',
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+
+                                if (response != null && response.d != null) {
+                                    var data = response.d;
+                                    // alert(typeof (data)); //it comes out to be string
+                                    //we need to parse it to JSON
+
+                                    data = $.parseJSON(data);
+
+                                    hideLoading();
+
+                                    if (data.Status == "000") {
+                                        bootbox.alert({
+                                            message: data.Message,
+                                            callback: function () {
+                                                location.reload();
+                                            }
+                                        })
+                                    } else {
+                                        //error dialog
+                                        bootbox.error({ title: "Authorization error", message: data.Message });
+                                    }
+                                }
+                            },
+                            error: function () {
+                                bootbox.error({ title: "System error", message: "An error occured." });
+                            }
+                        });
+                    }
+                }
+            });
+        });
+        jQuery_3_3_1("#dataTable").on("click", ".reject_training_request", function (e) {
+            e.preventDefault();
+            var pid = $(this).attr('data-id');
+            var parent = $(this).parent("td").parent("tr");
+
+            bootbox.confirm({
+                title: "<i class='fa fa-times'></i> Reject?",
+                message: "Do you wish to reject this training request?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        //prompt for comment
+
+                        $('#ApplicationRejectionComment').modal('show');
+
+                        $("#ApplicationRejectionComment #DocumentNo").val(pid);
+                    }
+                }
+            });
+        });
+        jQuery_3_3_1("#dataTable").on("click", ".approve_training_request", function (e) {
+            e.preventDefault();
+            var pid = $(this).attr('data-id');
+            var parent = $(this).parent("td").parent("tr");
+
+            bootbox.confirm({
+                title: "<i class='fa fa-check'></i> Approve?",
+                message: "Do you wish to approve this training request?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        showToast('Approving request');
+
+                        jQuery.ajax({
+                            url: 'ApprovalEntries.aspx/ApproveTraining',
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+
+                                if (response != null && response.d != null) {
+                                    var data = response.d;
+                                    // alert(typeof (data)); //it comes out to be string
+                                    //we need to parse it to JSON
+
+                                    data = $.parseJSON(data);
+
+                                    hideLoading();
+
+                                    if (data.Status == "000") {
+                                        bootbox.alert({
+                                            message: data.Message,
+                                            callback: function () {
+                                                location.reload();
+                                            }
+                                        })
+                                    } else {
+                                        //error dialog
+                                        bootbox.error({ title: "Authorization error", message: data.Message });
+                                    }
+                                }
+                            },
+                            error: function () {
+                                bootbox.error({ title: "System error", message: "An error occured." });
+                            }
+                        });
+                    }
+                }
+            });
+        });
+        jQuery_3_3_1("#dataTable").on("click", ".approve_staffadvance", function (e) {
+            e.preventDefault();
+            var pid = $(this).attr('data-id');
+            var parent = $(this).parent("td").parent("tr");
+
+            bootbox.confirm({
+                title: "<i class='fa fa-check'></i> Approve?",
+                message: "Do you wish to approve this staff advance request?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        showToast('Approving request');
+
+                        jQuery.ajax({
+                            url: 'ApprovalEntries.aspx/ApproveStaffAdvance',
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+
+                                if (response != null && response.d != null) {
+                                    var data = response.d;
+                                    // alert(typeof (data)); //it comes out to be string
+                                    //we need to parse it to JSON
+
+                                    data = $.parseJSON(data);
+
+                                    hideLoading();
+
+                                    if (data.Status == "000") {
+                                        bootbox.alert({
+                                            message: data.Message,
+                                            callback: function () {
+                                                location.reload();
+                                            }
+                                        })
+                                    } else {
+                                        //error dialog
+                                        bootbox.error({ title: "Authorization error", message: data.Message });
+                                    }
+                                }
+                            },
+                            error: function () {
+                                bootbox.error({ title: "System error", message: "An error occured." });
+                            }
+                        });
+                    }
+                }
+            });
+        });
+        jQuery_3_3_1("#dataTable").on("click", ".reject_staffadvance", function (e) {
+            e.preventDefault();
+            var pid = $(this).attr('data-id');
+            var parent = $(this).parent("td").parent("tr");
+
+            bootbox.confirm({
+                title: "<i class='fa fa-times'></i> Reject?",
+                message: "Do you wish to reject this staff advance request?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        //prompt for comment
+                        $('#ApplicationRejectionComment').modal('show');
+                        $("#ApplicationRejectionComment #DocumentNo").val(pid);
+
+                        //showToast('Reject request');
+
+                        //jQuery.ajax({
+                        //    url: 'ApprovalEntries.aspx/RejectStaffAdvance',
+                        //    type: "POST",
+                        //    data: '{param1:"' + pid + '"}',
+                        //    dataType: "json",
+                        //    contentType: "application/json; charset=utf-8",
+                        //    success: function (response) {
+
+                        //        if (response != null && response.d != null) {
+                        //            var data = response.d;
+                        //            // alert(typeof (data)); //it comes out to be string
+                        //            //we need to parse it to JSON
+
+                        //            data = $.parseJSON(data);
+
+                        //            hideLoading();
+
+                        //            if (data.Status == "000") {
+                        //                bootbox.alert({
+                        //                    message: data.Message,
+                        //                    callback: function () {
+                        //                        location.reload();
+                        //                    }
+                        //                })
+                        //            } else {
+                        //                //error dialog
+                        //                bootbox.error({ title: "Authorization error", message: data.Message });
+                        //            }
+                        //        }
+                        //    },
+                        //    error: function () {
+                        //        bootbox.error({ title: "System error", message: "An error occured." });
+                        //    }
+                        //});
+                    }
+                }
+            });
+        });
+        //
+        jQuery_3_3_1("#dataTable").on("click", ".approve_staffsurrender", function (e) {
+            e.preventDefault();
+            var pid = $(this).attr('data-id');
+            var parent = $(this).parent("td").parent("tr");
+
+            bootbox.confirm({
+                title: "<i class='fa fa-check'></i> Approve?",
+                message: "Do you wish to approve this staff surrender request?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        showToast('Approving request');
+
+                        jQuery.ajax({
+                            url: 'ApprovalEntries.aspx/ApproveStaffSurrender',
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+
+                                if (response != null && response.d != null) {
+                                    var data = response.d;
+                                    // alert(typeof (data)); //it comes out to be string
+                                    //we need to parse it to JSON
+
+                                    data = $.parseJSON(data);
+
+                                    hideLoading();
+
+                                    if (data.Status == "000") {
+                                        bootbox.alert({
+                                            message: data.Message,
+                                            callback: function () {
+                                                location.reload();
+                                            }
+                                        })
+                                    } else {
+                                        //error dialog
+                                        bootbox.error({ title: "Authorization error", message: data.Message });
+                                    }
+                                }
+                            },
+                            error: function () {
+                                bootbox.error({ title: "System error", message: "An error occured." });
+                            }
+                        });
+                    }
+                }
+            });
+        });
+        jQuery_3_3_1("#dataTable").on("click", ".reject_staffsurrender", function (e) {
+            e.preventDefault();
+            var pid = $(this).attr('data-id');
+            var parent = $(this).parent("td").parent("tr");
+
+            bootbox.confirm({
+                title: "<i class='fa fa-times'></i> Reject?",
+                message: "Do you wish to reject this staff surrender request?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        $('#ApplicationRejectionComment').modal('show');
+                        $("#ApplicationRejectionComment #DocumentNo").val(pid);
+
+                        //showToast('Rejecting request');
+
+                        //jQuery.ajax({
+                        //    url: 'ApprovalEntries.aspx/RejectStaffSurrender',
+                        //    type: "POST",
+                        //    data: '{param1:"' + pid + '"}',
+                        //    dataType: "json",
+                        //    contentType: "application/json; charset=utf-8",
+                        //    success: function (response) {
+
+                        //        if (response != null && response.d != null) {
+                        //            var data = response.d;
+                        //            // alert(typeof (data)); //it comes out to be string
+                        //            //we need to parse it to JSON
+
+                        //            data = $.parseJSON(data);
+
+                        //            hideLoading();
+
+                        //            if (data.Status == "000") {
+                        //                bootbox.alert({
+                        //                    message: data.Message,
+                        //                    callback: function () {
+                        //                        location.reload();
+                        //                    }
+                        //                })
+                        //            } else {
+                        //                //error dialog
+                        //                bootbox.error({ title: "Authorization error", message: data.Message });
+                        //            }
+                        //        }
+                        //    },
+                        //    error: function () {
+                        //        bootbox.error({ title: "System error", message: "An error occured." });
+                        //    }
+                        //});
+                    }
+                }
+            });
+        });
+        //
+        jQuery_3_3_1("#dataTable").on("click", ".approve_staffclaim", function (e) {
+            e.preventDefault();
+            var pid = $(this).attr('data-id');
+            var parent = $(this).parent("td").parent("tr");
+
+            bootbox.confirm({
+                title: "<i class='fa fa-check'></i> Approve?",
+                message: "Do you wish to approve this staff claim request?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        showToast('Approving request');
+
+                        jQuery.ajax({
+                            url: 'ApprovalEntries.aspx/ApproveStaffClaim',
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+
+                                if (response != null && response.d != null) {
+                                    var data = response.d;
+                                    // alert(typeof (data)); //it comes out to be string
+                                    //we need to parse it to JSON
+
+                                    data = $.parseJSON(data);
+
+                                    hideLoading();
+
+                                    if (data.Status == "000") {
+                                        bootbox.alert({
+                                            message: data.Message,
+                                            callback: function () {
+                                                location.reload();
+                                            }
+                                        })
+                                    } else {
+                                        //error dialog
+                                        bootbox.error({ title: "Authorization error", message: data.Message });
+                                    }
+                                }
+                            },
+                            error: function () {
+                                bootbox.error({ title: "System error", message: "An error occured." });
+                            }
+                        });
+                    }
+                }
+            });
+        });
+        jQuery_3_3_1("#dataTable").on("click", ".reject_staffclaim", function (e) {
+            e.preventDefault();
+            var pid = $(this).attr('data-id');
+            var parent = $(this).parent("td").parent("tr");
+
+            bootbox.confirm({
+                title: "<i class='fa fa-times'></i> Reject?",
+                message: "Do you wish to reject this staff claim request?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        $('#ApplicationRejectionComment').modal('show');
+                        $("#ApplicationRejectionComment #DocumentNo").val(pid);
+
+                        //showToast('Approving request');
+
+                        //jQuery.ajax({
+                        //    url: 'ApprovalEntries.aspx/RejectStaffClaim',
+                        //    type: "POST",
+                        //    data: '{param1:"' + pid + '"}',
+                        //    dataType: "json",
+                        //    contentType: "application/json; charset=utf-8",
+                        //    success: function (response) {
+
+                        //        if (response != null && response.d != null) {
+                        //            var data = response.d;
+                        //            // alert(typeof (data)); //it comes out to be string
+                        //            //we need to parse it to JSON
+
+                        //            data = $.parseJSON(data);
+
+                        //            hideLoading();
+
+                        //            if (data.Status == "000") {
+                        //                bootbox.alert({
+                        //                    message: data.Message,
+                        //                    callback: function () {
+                        //                        location.reload();
+                        //                    }
+                        //                })
+                        //            } else {
+                        //                //error dialog
+                        //                bootbox.error({ title: "Authorization error", message: data.Message });
+                        //            }
+                        //        }
+                        //    },
+                        //    error: function () {
+                        //        bootbox.error({ title: "System error", message: "An error occured." });
+                        //    }
+                        //});
+                    }
+                }
+            });
+        });
+        //transport req
+        jQuery_3_3_1("#dataTable").on("click", ".approve_transportrequest", function (e) {
+            e.preventDefault();
+            var pid = $(this).attr('data-id');
+            var parent = $(this).parent("td").parent("tr");
+
+            bootbox.confirm({
+                title: "<i class='fa fa-check'></i> Approve?",
+                message: "Do you wish to approve this transport request?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        showToast('Approving request');
+
+                        jQuery.ajax({
+                            url: 'ApprovalEntries.aspx/ApproveTransportRequest',
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+
+                                if (response != null && response.d != null) {
+                                    var data = response.d;
+                                    // alert(typeof (data)); //it comes out to be string
+                                    //we need to parse it to JSON
+
+                                    data = $.parseJSON(data);
+
+                                    hideLoading();
+
+                                    if (data.Status == "000") {
+                                        bootbox.alert({
+                                            message: data.Message,
+                                            callback: function () {
+                                                location.reload();
+                                            }
+                                        })
+                                    } else {
+                                        //error dialog
+                                        bootbox.error({ title: "Authorization error", message: data.Message });
+                                    }
+                                }
+                            },
+                            error: function () {
+                                bootbox.error({ title: "System error", message: "An error occured." });
+                            }
+                        });
+                    }
+                }
+            });
+        });
+        jQuery_3_3_1("#dataTable").on("click", ".reject_transportrequest", function (e) {
+            e.preventDefault();
+            var pid = $(this).attr('data-id');
+            var parent = $(this).parent("td").parent("tr");
+
+            bootbox.confirm({
+                title: "<i class='fa fa-times'></i> Reject?",
+                message: "Do you wish to reject this transport request?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        $('#ApplicationRejectionComment').modal('show');
+                        $("#ApplicationRejectionComment #DocumentNo").val(pid);
+
+                        //showToast('Approving request');
+
+                        //jQuery.ajax({
+                        //    url: 'ApprovalEntries.aspx/RejectStaffClaim',
+                        //    type: "POST",
+                        //    data: '{param1:"' + pid + '"}',
+                        //    dataType: "json",
+                        //    contentType: "application/json; charset=utf-8",
+                        //    success: function (response) {
+
+                        //        if (response != null && response.d != null) {
+                        //            var data = response.d;
+                        //            // alert(typeof (data)); //it comes out to be string
+                        //            //we need to parse it to JSON
+
+                        //            data = $.parseJSON(data);
+
+                        //            hideLoading();
+
+                        //            if (data.Status == "000") {
+                        //                bootbox.alert({
+                        //                    message: data.Message,
+                        //                    callback: function () {
+                        //                        location.reload();
+                        //                    }
+                        //                })
+                        //            } else {
+                        //                //error dialog
+                        //                bootbox.error({ title: "Authorization error", message: data.Message });
+                        //            }
+                        //        }
+                        //    },
+                        //    error: function () {
+                        //        bootbox.error({ title: "System error", message: "An error occured." });
+                        //    }
+                        //});
+                    }
+                }
+            });
+        });
+
+        jQuery_3_3_1('#SubmitCommentReject').click(function (e) {
+
+            e.preventDefault();
+            //validate
+
+            var form = $("#RejectForm")
+            if (form[0].checkValidity() === false) {
+                event.preventDefault()
+                event.stopPropagation()
+                form.addClass('was-validated');
+            } else if (form[0].checkValidity() === true) {
+                showToast('Rejecting application');
+                jQuery.ajax({
+                    url: 'ApprovalEntries.aspx/RejectApplication',
+                    type: "POST",
+                    data: '{param1:"' + $('#DocumentNo').val() + '", param2:"' + $('#Comment').val() + '"}',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
+
+                        if (response != null && response.d != null) {
+                            var data = response.d;
+                            // alert(typeof (data)); //it comes out to be string
+                            //we need to parse it to JSON
+                            data = $.parseJSON(data);
+
+                            hideLoading();
+
+                            bootbox.alert({
+                                message: data.Message,
+                                callback: function () {
+                                    location.reload();
+                                }
+                            })
+                        }
+                    },
+                    error: function () {
+                        bootbox.error({ title: "System error", message: "An error occured." });
+                    }
+                });
+            }
+        });
+    });
+    function showToast(modaltittle) {
+        var title = modaltittle;
+        var icon = 'loading';
+        var duration = 50000 * 1;
+        $.Toast.showToast({ title: title, duration: duration, icon: icon, image: '' });
+    }
+    function hideLoading() {
+        $.Toast.hideToast();
+    }
+    </script>
+   
+</main>
+

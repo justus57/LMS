@@ -34,7 +34,7 @@
                         <i class="fas fa-folder"></i>
                         Leave Recall Application
                     </div>
-                    <form  novalidate="" action="#" method="POST" id="LeaveRecallApplicationForm" autocomplete="off">
+                    <form  novalidate="" action="#" method="POST" id="LeaveRecallApplicationForm">
                         <div class="card-body">
                             <div class="row mb-5">
                                 <div class="col-md-4 mb-4">
@@ -46,18 +46,25 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="Leave_Type" class="form-control-label">Leave Type</label>
-                                                @Html.DropDownListFor(x => x.Leave_Type, new SelectList(ViewBag.Leaves), "Select Leave-Type", new { @class = "form-control", id = "ViewBag.Leaves" })
+                                                <select Class="form-control" ID="Leave_Type" name="Leave_Type" AutoPostBack="false" style="width:100%">
+                                                    <option selected value="0">---Select---</option>
+                                                    @foreach (var item in ViewBag.Leaves)
+                                                    {
+                                                        <option value="@item" customAttribute="item.SomethingSpecial">
+                                                            @item
+                                                        </option>
+                                                    }
+                                                </select>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave type must be selected</div>
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Leave Opening Balance</label>
-                                                @Html.TextBoxFor(model => model.Leave_Opening_Balance, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.TextBoxFor(model => model.Leave_Opening_Balance, new { @class = "form-control", @readonly = "readonly", id = "Leave_Opening_Balance" })
                                                 @Html.ValidationMessageFor(model => model.Leave_Opening_Balance, "", new { @class = "" })
                                             </div>
                                         </div>
@@ -65,7 +72,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Leave Entitled</label>
-                                                @Html.TextBoxFor(model => model.Leave_Entitled, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.TextBoxFor(model => model.Leave_Entitled, new { @class = "form-control", @readonly = "readonly",id= "Leave_Entitled" })
                                                 @Html.ValidationMessageFor(model => model.Leave_Entitled, "", new { @class = "" })
 
                                             </div>
@@ -75,7 +82,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Leave Accrued Days </label>
-                                                @Html.TextBoxFor(model => model.Leave_Accrued_Days, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.TextBoxFor(model => model.Leave_Accrued_Days, new { @class = "form-control", @readonly = "readonly",id = "Leave_Accrued_Days" })
                                                 @Html.ValidationMessageFor(model => model.Leave_Accrued_Days, "", new { @class = "" })
                                             </div>
                                         </div>
@@ -83,7 +90,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Leave Days Taken</label>
-                                                @Html.TextBoxFor(model => model.Leave_Days_Taken, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.TextBoxFor(model => model.Leave_Days_Taken, new { @class = "form-control", @readonly = "readonly",id = "Leave_Days_Taken" })
                                                 @Html.ValidationMessageFor(model => model.Leave_Days_Taken, "", new { @class = "" })
                                             </div>
                                         </div>
@@ -93,7 +100,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Leave Balance</label>
-                                                @Html.TextBoxFor(model => model.Leave_Balance, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.TextBoxFor(model => model.Leave_Balance, new { @class = "form-control", @readonly = "readonly", id = "Leave_Balance" })
                                                 @Html.ValidationMessageFor(model => model.Leave_Balance, "", new { @class = "" })
                                             </div>
                                         </div>
@@ -114,7 +121,15 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="ApprovedLeave" class="form-control-label">Approved Leave</label>
-                                                <asp:DropDownList CssClass="form-control" ID="ApprovedLeave" runat="server" required="true" style="width:100%"> </asp:DropDownList>
+                                                <select Class="form-control" ID="ApprovedLeave" name="ApprovedLeave" AutoPostBack="false" style="width:100%">
+                                                    <option selected value="0">---Select---</option>
+                                                    @*@foreach (var item in ViewBag.Leaves)
+                                                    {
+                                                        <option value="@item" customAttribute="item.SomethingSpecial">
+                                                            @item
+                                                        </option>
+                                                    }*@
+                                                </select>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave must be selected</div>
                                             </div>
@@ -124,7 +139,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="LeaveStartDay">Leave Recall Start Date</label>
-                                                @Html.TextBoxFor(model => model.LeaveStartDay, new { @class = "form-control" })
+                                                @Html.TextBoxFor(model => model.LeaveStartDay, new { @class = "form-control", id = "LeaveStartDay" })
                                                 @Html.ValidationMessageFor(model => model.LeaveStartDay, "", new { @class = "" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave recall start date must be selected</div>
@@ -134,7 +149,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="LeaveEndDay">Leave Recall End Date</label>
-                                                @Html.TextBoxFor(model => model.LeaveEndDay, new { @class = "form-control" })
+                                                @Html.TextBoxFor(model => model.LeaveEndDay, new { @class = "form-control" , id = "LeaveEndDay" })
                                                 @Html.ValidationMessageFor(model => model.LeaveEndDay, "", new { @class = "" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave recall end date must be selected</div>
@@ -146,7 +161,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="LeaveDaysApplied">Leave Recall Days Applied</label>
-                                                @Html.TextBoxFor(model => model.LeaveDaysApplied, new { @class = "form-control" })
+                                                @Html.TextBoxFor(model => model.LeaveDaysApplied, new { @class = "form-control",id = "LeaveDaysApplied" })
                                                 @Html.ValidationMessageFor(model => model.LeaveDaysApplied, "", new { @class = "" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave recall days applied must be specified</div>
@@ -158,7 +173,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Leave Return Date</label>
-                                                @Html.TextBoxFor(model => model.ReturnDate, new { @class = "form-control" })
+                                                @Html.TextBoxFor(model => model.ReturnDate, new { @class = "form-control",id = "ReturnDate" })
                                                 @Html.ValidationMessageFor(model => model.ReturnDate, "", new { @class = "" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave return date must be specified</div>
@@ -170,7 +185,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="form-control-label">Comments if any</label>
-                                                @Html.TextBoxFor(model => model.Leave_comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3" })
+                                                @Html.TextAreaFor(model => model.Leave_comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3" , id = "Leave_comments" })
                                                 @Html.ValidationMessageFor(model => model.Leave_comments, "", new { @class = "" })
                                                 <p class="pull-right text-muted small" id="count_message"></p>
                                             </div>
@@ -231,7 +246,7 @@
 
 <!-- Custom styles for this template-->
 
-<link href="~/Assest/css/select2.min.css" rel="stylesheet" />
+
 <!--jQUERY date picker--->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- Core plugin JavaScript-->
@@ -244,7 +259,7 @@
 <!-- JQUERY DATEPICKER-->
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="~/Assest/js/select2.min.js"></script>
+
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
 <script type="text/javascript">
     var jQuery_3_3_1 = $.noConflict(true);
@@ -273,6 +288,7 @@
         //selection fields
 
         var ltype = $('#Leave_Type').val();
+
         jQuery.ajax({
             url:"@Url.Action("GetLeaveDetails","LeaveRecallApplication")",
             type: "POST",
@@ -280,31 +296,24 @@
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (response) {
-
-                if (response != null ) {
+                if (response != null) {
                     var data = $.parseJSON(response);
+                    console.log(data);
                     //set fields values
                     $('#Leave_Opening_Balance').val(data.Leave_Opening_Balance);
                     $('#Leave_Entitled').val(data.Leave_Entitled);
                     $('#Leave_Accrued_Days').val(data.Leave_Accrued_Days);
                     $('#Leave_Days_Taken').val(data.Leave_Days_Taken);
                     $('#Leave_Balance').val(data.Leave_Balance);
-
-                    GetApprovedLeavesList($('#Leave_Type').val());
+                   
                 }
+                GetApprovedLeavesList($('#Leave_Type').val());
             }
         });
     });
     $("#ApprovedLeave").change(function () {
-        //selection fields
-        $('#ReturnDate').val('');
-        //$('#Leave_Type').val();//combo
-        $('#Leave_comments').val('');
-        $('#LeaveStartDay').val('');
-        $('#LeaveEndDay').val('');
-        $('#LeaveDaysApplied').val('');
+      
         var approvedleave = $('#ApprovedLeave').val();
-
         jQuery.ajax({
             url:"@Url.Action("ApprovedLeaveDetails", "LeaveRecallApplication")",
             type: "POST",
@@ -365,7 +374,6 @@
 
             var startDate = new Date(start_date);
             var endDate = new Date(end_date);
-
             var ltype = $('#Leave_Type').val();
             var lstartday = $('#LeaveStartDay').val();
             var lEndDay = $('#LeaveEndDay').val();
@@ -386,7 +394,7 @@
                                 bootbox.alert(data.Message);
                             } else {
                                 $("#ReturnDate").val(data.ReturnDate);
-                                $("#LeaveDaysApplied").val(data.Quantity);
+                                $("#LeaveDaysApplied").val(data.LeaveDaysApplied);
                             }
                         }
                     }
@@ -437,7 +445,7 @@
                                     bootbox.alert(data.Message);
                                 } else {
                                     $("#ReturnDate").val(data.ReturnDate);
-                                    $("#LeaveEndDay").val(data.EndDate);
+                                    $("#LeaveEndDay").val(data.LeaveEndDay);
                                 }
                             }
                         }

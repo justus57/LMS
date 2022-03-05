@@ -1,0 +1,830 @@
+﻿@model LMS.Models.ViewLeave
+
+@{
+    ViewBag.Title = "ViewLeave";
+}
+
+
+<main id="main" class="main">
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item">Leaves</li>
+                <li class="breadcrumb-item active">@{Response.Write(LMS.CustomsClasses.AppFunctions.Base64Decode(Request["id"])); }</li>
+            </ol>
+
+            <!-- Leave-->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-suitcase"></i>
+                    Leave Application Information
+                </div>
+
+                <form novalidate="" action="" method="POST" id="LeaveApplicationForm" autocomplete="off">
+
+                    <div class="card-body">
+                        <div class="row mb-5">
+                            <div class="col-md-4 mb-4">
+                                <div>Leave Information</div>
+                                <div class="text-muted small">Shows information for specific leaves</div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1" class="form-control-label">Leave Code</label>
+                                            @Html.TextBoxFor(model => model.LeaveCodeTxt, new { @class = "form-control", @readonly = "readonly", id = "Leave_Opening_Balance" })
+                                            @Html.ValidationMessageFor(model => model.LeaveCodeTxt, "", new { @class = "" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="Leave_Type" class="form-control-label">Leave Type</label>
+                                            <select Class="form-control" ID="Leave_Type" name="Leave_Type" AutoPostBack="false" style="width:100%">
+                                                <option selected value="0">---Select---</option>
+                                                @foreach (var item in ViewBag.Leaves)
+                                                {
+                                                    <option value="@item" customAttribute="item.SomethingSpecial">
+                                                        @item
+                                                    </option>
+                                                }
+                                            </select>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">The leave type must be selected</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Leave Opening Balance</label>
+                                            @Html.TextBoxFor(model => model.Leave_Opening_Balance, new { @class = "form-control", @readonly = "readonly", id = "Leave_Opening_Balance" })
+                                            @Html.ValidationMessageFor(model => model.Leave_Opening_Balance, "", new { @class = "" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Leave Entitled</label>
+                                            @Html.TextBoxFor(model => model.Leave_Entitled, new { @class = "form-control", @readonly = "readonly", id = "Leave_Opening_Balance" })
+                                            @Html.ValidationMessageFor(model => model.Leave_Entitled, "", new { @class = "" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Leave Accrued Days </label>
+                                            @Html.TextBoxFor(model => model.Leave_Accrued_Days, new { @class = "form-control", @readonly = "readonly", id = "Leave_Opening_Balance" })
+                                            @Html.ValidationMessageFor(model => model.Leave_Accrued_Days, "", new { @class = "" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Leave Days Taken</label>
+                                            @Html.TextBoxFor(model => model.Leave_Days_Taken, new { @class = "form-control", @readonly = "readonly", id = "Leave_Opening_Balance" })
+                                            @Html.ValidationMessageFor(model => model.Leave_Days_Taken, "", new { @class = "" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Leave Balance</label>
+                                            @Html.TextBoxFor(model => model.Leave_Balance, new { @class = "form-control"})
+                                            @Html.ValidationMessageFor(model => model.Leave_Balance, "", new { @class = "" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Work information-->
+                        <hr>
+                        <fieldset @if (Request["status"] == "Open") { Response.Write("enabled"); } else { Response.Write("disabled"); }>
+                            <div class="row mb-5">
+                                <div class="col-md-4 mb-4">
+                                    <div>Leave Selection</div>
+                                    <div class="text-muted small">Select the leave start and end dates here.</div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="LeaveStartDay">Leave Start Date</label>
+                                                @Html.TextBoxFor(model => model.LeaveStartDay, new { @class = "form-control"})
+                                                @Html.ValidationMessageFor(model => model.LeaveStartDay, "", new { @class = "" })
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The leave start date must be selected</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="LeaveEndDay">Leave End Date</label>
+                                                @Html.TextBoxFor(model => model.LeaveEndDay, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.LeaveEndDay, "", new { @class = "" })
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The leave end date must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="LeaveDaysApplied">Leave Days Applied</label>
+                                                @Html.TextBoxFor(model => model.LeaveDaysApplied, new { @class = "form-control"})
+                                                @Html.ValidationMessageFor(model => model.LeaveDaysApplied, "", new { @class = "" })
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The leave days applied must be specified</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Return Date</label>
+                                                @Html.TextBoxFor(model => model.ReturnDate, new { @class = "form-control", @readonly = "readonly", id = "Leave_Opening_Balance" })
+                                                @Html.ValidationMessageFor(model => model.ReturnDate, "", new { @class = "" })
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The leave return date must be specified</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="UploadDiv" runat="server">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txt_name" class="form-control-label">Attachment File</label><br/>
+                                                @Html.TextBoxFor(m => Model.postedFile, new { type = "file", multiple = "true" , required = ".pdf" })
+                                                @Html.ValidationMessageFor(model => model.postedFile, "", new { @class = "" })
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">A file to upload must be chosen</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="Attacho" runat="server">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Attachment</label>
+                                                @Html.TextBoxFor(model => model.DownloadAttachment, new { @class = "form-control", id = "DownloadAttachment" })
+                                                <LinkButton runat="server" OnClick="View_Click" ID="btn_view_attachment">View</LinkButton>
+                                                <LinkButton runat="server" onclick="btn_download_Click" ID="btn_download_attachment">Download</LinkButton>
+                                                <LinkButton runat="server" ID="btn_delete_attachment">Delete </LinkButton>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The attachment must be specified</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Approver</label>
+                                                @Html.TextBoxFor(model => model.LeaveApprover, new { @class = "form-control"})
+                                                @Html.ValidationMessageFor(model => model.LeaveApprover, "", new { @class = "" })
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The leave return date must be specified</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Leave Comments</label>
+                                                @Html.TextAreaFor(model => model.Leave_comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3"})
+                                                @Html.ValidationMessageFor(model => model.Leave_comments, "", new { @class = "" })
+                                                <p class="pull-right" id="count_message"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (!String.IsNullOrEmpty(Request["status"]) && Request["status"] == "Rejected")
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Rejecttion comments</label>
+                                                    @Html.TextAreaFor(model => model.Reject_Comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3" })
+                                                    @Html.ValidationMessageFor(model => model.Reject_Comments, "", new { @class = "" })
+                                                    <p class="pull-right" id="count_message_reject"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <!--Chack Conditions here-->
+                    @if (!String.IsNullOrEmpty(Request["status"]) && Request["status"] == "Open")
+                    {
+                        <div class="card-footer bg-light text-right">
+                            <button id="delete_record" class="btn btn-danger">Delete</button>
+                            <button id="save_record" class="btn btn-primary">Save</button>
+                            <button id="submit_record" class="btn btn-success">Submit</button>
+                        </div>
+                    }
+                    @if (!String.IsNullOrEmpty(Request["status"]) && Request["status"] == "Pending")
+                    {
+                        <div class="card-footer bg-light text-right">
+                            <button id="delegate_record" class="btn btn-success">Delegate Application</button>
+                            <button id="cancel_record" class="btn btn-warning">Cancel</button>
+                        </div>
+                    }
+                </form>
+
+                <div class="card-footer small text-muted">Updated today at  @DateTime.Now.ToShortTimeString() </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+        <!-- Sticky Footer -->
+        <!-- Sticky Footer -->
+    </div>
+</main>
+<!-- Bootstrap core JavaScript-->
+<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+<script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="~/Assest/js/sb-admin.min.js"></script>
+<script src="~/Assest/js/bootbox.all.min.js"></script>
+<script src="~/Assest/js/bootboxError.js"></script>
+<!-- JQUERY DATEPICKER-->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="~/Assest/js/select2.min.js"></script>
+<script src="~/Assest/js/jquery.pleaseWait.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    var jQuery_3_3_1 = $.noConflict(true);
+</script>
+<script src="~/Assest/js/jquery.toast.js"></script>
+<script>
+
+    $(function () {
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const status = urlParams.get('status')
+
+        if (status != "Open") {
+            $(Leave_Type).prop("disabled", true);
+        }
+
+        $(".MultiLineLimit").on('change keydown paste input', function () {
+            this.value = (this.value.length <= 50 ? this.value : this.value.substring(0, 50));
+        });
+        var text_max = 50;
+        $('#count_message').html(text_max + ' remaining');
+        $('#count_message_reject').html(text_max + ' remaining');
+        $('#Leave_comments').keyup(function () {
+            var text_length = $('#Leave_comments').val().length;
+            var text_remaining = text_max - text_length;
+
+            $('#count_message').html(text_remaining + ' remaining');
+        });
+        $('#Reject_Comments').keyup(function () {
+            var text_length = $('#Reject_Comments').val().length;
+            var text_remaining = text_max - text_length;
+
+            $('#count_message_reject').html(text_remaining + ' remaining');
+        });
+
+        $("#btn_delete_attachment").click(function (e) {
+            // some actions here
+            jQuery.ajax({
+                url:"@Url.Action("DeleteAttachment", "ViewLeave")",
+                type: "POST",
+                data: '{param1:"' + $('#LeaveCodeTxt').val() + '"}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+
+                    if (response != null) {
+                        var data = $.parseJSON(data);
+
+                        setTimeout(function () {// wait for 5 secs(2)
+                            location.reload(); // then reload the page.(3)
+                        }, 1000);
+                    }
+                },
+                error: function () {
+                    bootbox.alert('An error occured');
+                }
+            });
+            e.preventDefault();
+        });
+
+
+        $("#LeaveStartDay").datepicker({ dateFormat: 'dd/mm/yy' }).val();
+        $("#LeaveEndDay").datepicker({ dateFormat: 'dd/mm/yy' }).val();
+        $('#Leave_Type').select2({
+            sorter: function (data) {
+                return data.sort(function (a, b) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                });
+            }
+        });
+        //$('#UploadDiv').hide();
+
+        $("#Leave_Type").change(function () {
+            //selection fields
+            $('#ReturnDate').val('');
+            //$('#Leave_Type').val();//combo
+            $('#Leave_comments').val('');
+            $('#LeaveStartDay').val('');
+            $('#LeaveEndDay').val('');
+            $('#LeaveDaysApplied').val('');
+            //leave details
+            $('#Leave_Opening_Balance').val('');
+            $('#Leave_Entitled').val('');
+            $('#Leave_Accrued_Days').val('');
+            $('#Leave_Days_Taken').val('');
+            $('#Leave_Balance').val('');
+            GetLeaveDetails();
+
+        });
+        // LeaveStartDay datepicker event handler
+        $("#LeaveStartDay").change(function () {
+            //when the date is changed
+            if ($("#Leave_Type").val() == "0") {
+                //alert user to select a leave type first
+                bootbox.alert("Please select a Leave Type", function () {
+                    //set leave start date value to blank
+                    $("#LeaveStartDay").val('');
+                });
+            }
+            //reset selection fields
+            if ($("#LeaveEndDay").val() != '') {
+                $("#LeaveEndDay").val('');
+            }
+            if ($("#LeaveDaysApplied").val() != '') {
+                $("#LeaveDaysApplied").val('');
+            }
+            if ($("#ReturnDate").val() != '') {
+                $("#ReturnDate").val('');
+            }
+        });
+        $("#LeaveEndDay").change(function () {
+            //when the date is changed
+            if ($("#Leave_Type").val() == "0") {
+                //alert user to select a leave type first
+                bootbox.alert("Please select a Leave Type", function () {
+                    //set leave staEndrt date value to blank
+                    $("#LeaveEndDay").val('');
+                });
+
+            } else if ($("#LeaveStartDay").val() == '') {
+                bootbox.alert("Please enter the Leave Start Date");
+            } else if ($("#LeaveEndDay").val() == '') {
+                bootbox.alert("Please enter the Leave End Date");
+            } else {
+                var start_date = convertDate($("#LeaveStartDay").val(), "/", "-");
+                var end_date = convertDate($("#LeaveEndDay").val(), "/", "-");
+
+                var startDate = new Date(start_date);
+                var endDate = new Date(end_date);
+
+                if (startDate <= endDate) {
+                    jQuery.ajax({
+                        url:"@Url.Action("GetLeaveState", "ViewLeave")",
+                        type: "POST",
+                        data: '{param1:"' + $('#Leave_Type').val() + '",param2:"' + $('#LeaveStartDay').val() + '", param3:"' + $('#LeaveEndDay').val() + '"}',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (response) {
+
+                            if (response != null) {
+                                var data = $.parseJSON(data);
+
+                                if (data.Validity == false) {
+                                    bootbox.alert(data.Message);
+                                } else {
+                                    $("#ReturnDate").val(data.ReturnDate);
+                                    $("#LeaveDaysApplied").val(data.LeaveDaysApplied);
+                                }
+                            }
+                        }
+                    });
+
+                } else {
+                    bootbox.alert("The Leave Start Date must be earlier than the End Date", function () {
+                        $("#ReturnDate").val('');
+                        $("#LeaveDaysApplied").val('');
+                        $("#LeaveEndDay").val('');
+                    });
+                }
+            }
+        });
+        //days applied events
+        $("#LeaveDaysApplied").blur(function () {
+            if (parseInt($("#LeaveDaysApplied").val()) > parseInt($("#Leave_Balance").val())) {
+                bootbox.alert('Applied days cannot zero or more than leave balance days.');
+                $("#LeaveDaysApplied").val('');
+            }
+        });
+        $("#LeaveDaysApplied").keyup(function () {
+            if ($("#LeaveDaysApplied").val().length == 0) {
+                return;
+            }
+            else
+                if ($("#Leave_Type").val() == "0") {
+                    bootbox.alert("Please select a Leave Type");
+                }
+                else
+                    if ($("#LeaveStartDay").val() == '') {
+                        bootbox.alert("Please enter the Leave Start Date");
+                    } else {
+                        jQuery.ajax({
+                            url:"@Url.Action("GetLeaveEndDateAndReturnDate", "ViewLeave")",
+                            type: "POST",
+                            data: '{param1:"' + $('#Leave_Type').val() + '",param2:"' + $('#LeaveStartDay').val() + '", param3:"' + $('#LeaveDaysApplied').val() + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+
+                                if (response != null) {
+                                    var data = $.parseJSON(data);
+
+                                    if (data.Validity == false) {
+                                        bootbox.alert(data.Message);
+                                    } else {
+                                        $("#ReturnDate").val(data.ReturnDate);
+                                        $("#LeaveEndDay").val(data.LeaveEndDay);
+                                    }
+                                }
+                            }
+                        });
+                    }
+
+        });
+        jQuery_3_3_1("#save_record").click(function (event) {
+            event.preventDefault();
+
+            // Fetch form to apply custom Bootstrap validation
+            var form = $("#LeaveApplicationForm")
+
+            if (form[0].checkValidity() === false) {
+                event.preventDefault()
+                event.stopPropagation()
+                form.addClass('was-validated');
+            } else if (form[0].checkValidity() === true) {
+                // Perform ajax submit here...
+
+                showToast('Saving application');
+
+                $.ajax({
+                    url: "@Url.Action("FileUploadHandler", "LeaveApplication")",
+                    type: 'POST',
+                    data: new FormData($('#LeaveApplicationForm')[0]),
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (file) {
+
+                        jQuery.ajax({
+                            url: "@Url.Action("Save", "ViewLeave")",
+                            type: "POST",
+                            data: '{param1:"' + $('#ReturnDate').val() + '", param2:"' + $('#Leave_Type').val() + '", param3:"' + $('#Leave_comments').val() + '", param4:"' + $('#LeaveStartDay').val() + '", param5:"' + $('#LeaveEndDay').val() + '", param6:"' + $('#LeaveDaysApplied').val() + '" , param7:"' + file.name + '", param8:"' + $('#LeaveCodeTxt').val() + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+
+                                if (response != null) {
+                                    var data = $.parseJSON(data);
+
+                                    hideLoading();
+
+                                    bootbox.alert(data.Message);
+                                    //reset fields
+                                    $("#LeaveApplicationForm")[0].reset();
+                                    $("#Leave_Type").select2("val", "");
+                                }
+                            }
+                        });
+
+                    },
+                    xhr: function () {
+                        var fileXhr = $.ajaxSettings.xhr();
+                        if (fileXhr.upload) {
+                            $("progress").show();
+                            fileXhr.upload.addEventListener("progress", function (e) {
+                                if (e.lengthComputable) {
+                                    $("#fileProgress").attr({
+                                        value: e.loaded,
+                                        max: e.total
+                                    });
+                                }
+                            }, false);
+                        }
+                        return fileXhr;
+                    }
+                });
+            }
+
+            ////uncomment below
+            event.preventDefault();
+        });
+        jQuery_3_3_1('#delete_record').click(function (e) {
+
+            e.preventDefault();
+
+            bootbox.confirm({
+                title: "<i class='fa fa-trash'></i> Delete record?",
+                message: "Do you wish to delete this Leave application?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        showToast('Deleting application');
+
+                        jQuery.ajax({
+                            url: "@Url.Action("DeleteLeave", "ViewLeave")",
+                            type: "POST",
+                            data: '{param1:"' + $('#LeaveCodeTxt').val() + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+
+                                if (response != null) {
+                                    var data = $.parseJSON(data);
+
+                                    hideLoading();;
+
+                                    bootbox.alert(data.Message);
+                                    //
+                                    window.setTimeout(function () {
+                                        parent.history.back();
+                                    }, 2000);
+                                }
+                            },
+                            error: function () {
+                                bootbox.alert('An error occured');
+                            }
+                        });
+                    }
+                }
+            });
+        });
+        jQuery_3_3_1('#submit_record').click(function (e) {
+
+            e.preventDefault();
+
+            bootbox.confirm({
+                title: "<i class='fa fa-paper-plane'></i> Submit?",
+                message: "Do you wish to submit this Leave application?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        showToast('Submitting application');
+
+                        $.ajax({
+                            url:"@Url.Action("FileUploadHandler", "LeaveApplication")",
+                            type: 'POST',
+                            data: new FormData($('#LeaveApplicationForm')[0]),
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            success: function (file) {
+
+                                jQuery.ajax({
+                                    url:"@Url.Action("SubmitLeave", "ViewLeave")",
+                                    type: "POST",
+                                    data: '{param1:"' + $('#ReturnDate').val() + '", param2:"' + $('#Leave_Type').val() + '", param3:"' + $('#Leave_comments').val() + '", param4:"' + $('#LeaveStartDay').val() + '", param5:"' + $('#LeaveEndDay').val() + '", param6:"' + $('#LeaveDaysApplied').val() + '" , param7:"' + file.name + '", param8:"' + $('#LeaveCodeTxt').val() + '"}',
+                                    dataType: "json",
+                                    contentType: "application/json; charset=utf-8",
+                                    success: function (response) {
+
+                                        if (response != null) {
+                                            var data = $.parseJSON(data);
+
+                                            hideLoading();;
+
+                                            if (data.Status == "000") {
+                                                bootbox.alert(data.Message);
+                                                parent.history.back();
+                                            } else {
+                                                //error dialog
+                                                bootbox.error({ title: "Authorization error", message: data.Message });
+                                            }
+                                            //reset fields
+                                            $("#LeaveApplicationForm")[0].reset();
+                                            $("#Leave_Type").select2("val", "");
+                                        }
+                                    }
+                                });
+
+                            },
+                            xhr: function () {
+                                var fileXhr = $.ajaxSettings.xhr();
+                                if (fileXhr.upload) {
+                                    $("progress").show();
+                                    fileXhr.upload.addEventListener("progress", function (e) {
+                                        if (e.lengthComputable) {
+                                            $("#fileProgress").attr({
+                                                value: e.loaded,
+                                                max: e.total
+                                            });
+                                        }
+                                    }, false);
+                                }
+                                return fileXhr;
+                            }
+                        });
+                    }
+                }
+            });
+
+        });
+        jQuery_3_3_1('#cancel_record').click(function (e) {
+
+            e.preventDefault();
+
+            bootbox.confirm({
+                title: "<i class='fa fa-times'></i> Cancel?",
+                message: "Do you wish to cancel this Leave application?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        showToast('Cancelling application');
+
+                        jQuery.ajax({
+                            url: "@Url.Action("CancelLeave", "ViewLeave")",
+                            type: "POST",
+                            data: '{param1:"' + $('#LeaveCodeTxt').val() + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+
+                                if (response != null) {
+                                    var data = $.parseJSON(data);
+
+                                    hideLoading();;
+
+                                    bootbox.alert(data.Message);
+                                    parent.history.back();
+                                    //window.setTimeout(function () {
+                                    //    location.reload()
+                                    //}, 3000);
+                                }
+                            },
+                            error: function () {
+                                bootbox.alert('An error occured');
+                            }
+                        });
+                    }
+                }
+            });
+        });
+        jQuery_3_3_1('#delegate_record').click(function (e) {
+
+            e.preventDefault();
+
+            bootbox.confirm({
+                title: "<i class='fa fa-fighter-jet'></i> Delegate?",
+                message: "Do you wish to delegate this Leave application?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        showToast('Delegating application');
+
+                        jQuery.ajax({
+                            url:"@Url.Action("DelegatePendingLeave", "ViewLeave")",
+                            type: "POST",
+                            data: '{param1:"' + $('#LeaveCodeTxt').val() + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+
+                                if (response != null) {
+                                    var data = $.parseJSON(data);
+
+                                    hideLoading();
+
+                                    bootbox.alert(data.Message);
+                                    // parent.history.back();
+                                    //window.setTimeout(function () {
+                                    //    location.reload()
+                                    //}, 3000);
+                                }
+                            },
+                            error: function () {
+                                bootbox.alert('An error occured');
+                            }
+                        });
+                    }
+                }
+            });
+        });
+    });
+    function convertDate(date, symbol, new_symbol) {
+
+        if (date != '') {
+            var raw_date = date;
+            if (raw_date.indexOf(symbol) > 0) {
+                day = raw_date.substr(0, 2);
+                month = raw_date.substr(3, 2);
+                year = raw_date.substr(6, 4);
+
+                return (year + new_symbol + month + new_symbol + day).toString();
+
+            } else {
+                return date;
+            }
+        } else {
+            return date;
+        }
+    }
+    function GetLeaveDetails() {
+        jQuery.ajax({
+            url: "@Url.Action("GetLeaveDetails", "ViewLeave")",
+            type: "POST",
+            data: '{param1:"' + $('#Leave_Type').val() + '" }',
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+
+                if (response != null) {
+                    var data = $.parseJSON(data);
+
+                    //set fields values
+                    $('#Leave_Opening_Balance').val(data.Leave_Opening_Balance);
+                    $('#Leave_Entitled').val(data.Leave_Entitled);
+                    $('#Leave_Accrued_Days').val(data.Leave_Accrued_Days);
+                    $('#Leave_Days_Taken').val(data.Leave_Days_Taken);
+                    $('#Leave_Balance').val(data.Leave_Balance);
+
+                    if (data.RequiresAttachment == 'Yes') {
+                        //  alert('now');
+                        $('#UploadDiv').show();
+                    } else {
+                        $('#UploadDiv').hide();
+                    }
+
+                    if (data.AttachmentMandatory == 'No') {
+                        document.getElementById('postedFile').required = false;
+                    }
+                }
+            }
+        });
+    }
+    function showToast(modaltittle) {
+        var title = modaltittle;
+        var icon = 'loading';
+        var duration = 50000 * 1;
+        $.Toast.showToast({ title: title, duration: duration, icon: icon, image: '' });
+    }
+    function hideLoading() {
+        $.Toast.hideToast();
+    }
+</script>
+

@@ -5,15 +5,13 @@ namespace LMS.Models
 {
     public class LeavesListViewModel
     {
-        public string DocumentType { get; set; }
-        public string DateSubmitted { get; set; }
-        public string DocumentNo { get; set; }
-        public string EmployeeName { get; set; }
-        public string LeaveType { get; set; }
+        public string DateCreated { get; set; }
+        public string LeaveCode { get; set; }
+        public string HeaderNo { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public string LeaveDays { get; set; }
+        public string HeaderNoLink { get; set; }
         public string ApprovalStatus { get; set; }
-        public int ApprovalProgress { get; set; }
     }
 }

@@ -27,7 +27,7 @@
                         <i class="fas fa-suitcase"></i>
                         Leave Application
                     </div>
-                    <form runat="server" novalidate="" action="#" method="POST" id="LeaveApplicationForm" autocomplete="off">
+                    <form novalidate="" action="#" method="POST" id="LeaveApplicationForm" autocomplete="off">
                         <div class="card-body">
                             <div class="row mb-5">
                                 <div class="col-md-4 mb-4">
@@ -57,21 +57,19 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="Leave_Type" class="form-control-label">Leave Type</label>
-                                             @*<asp:DropDownList Class="form-control" ID="Leave_Type" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>*@
-                                            <select Class="form-control" ID="Leave_Type" name="Leave_Type" AutoPostBack="false" style="width:100%">
-                                                <option value="Select">Select</option>
-                                            </select>
-                                                    <div class="valid-feedback">Looks good!</div>
-                                                    <div class="invalid-feedback">The leave type must be selected</div>
+                                                <select Class="form-control" ID="Leave_Type" name="Leave_Type" AutoPostBack="false" style="width:100%">
+                                                    <option value="Select">Select</option>
+                                                </select>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The leave type must be selected</div>
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Leave Opening Balance</label>
-                                                @Html.TextBoxFor(model => model.Leave_Opening_Balance, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.TextBoxFor(model => model.Leave_Opening_Balance, new { @class = "form-control", @readonly = "readonly", id = "Leave_Opening_Balance" })
                                                 @Html.ValidationMessageFor(model => model.Leave_Opening_Balance, "", new { @class = "" })
                                             </div>
                                         </div>
@@ -79,7 +77,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Leave Entitled</label>
-                                                @Html.TextBoxFor(model => model.Leave_Entitled, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.TextBoxFor(model => model.Leave_Entitled, new { @class = "form-control", @readonly = "readonly", id = "Leave_Entitled" })
                                                 @Html.ValidationMessageFor(model => model.Leave_Entitled, "", new { @class = "" })
                                             </div>
                                         </div>
@@ -88,7 +86,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Leave Accrued Days </label>
-                                                @Html.TextBoxFor(model => model.Leave_Accrued_Days, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.TextBoxFor(model => model.Leave_Accrued_Days, new { @class = "form-control", @readonly = "readonly", id = "Leave_Accrued_Days" })
                                                 @Html.ValidationMessageFor(model => model.Leave_Accrued_Days, "", new { @class = "" })
                                             </div>
                                         </div>
@@ -96,23 +94,21 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Leave Days Taken</label>
-                                                @Html.TextBoxFor(model => model.Leave_Days_Taken, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.TextBoxFor(model => model.Leave_Days_Taken, new { @class = "form-control", @readonly = "readonly", id = "Leave_Days_Taken" })
                                                 @Html.ValidationMessageFor(model => model.Leave_Days_Taken, "", new { @class = "" })
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Leave Balance</label>
-                                                @Html.TextBoxFor(model => model.Leave_Balance, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.TextBoxFor(model => model.Leave_Balance, new { @class = "form-control", @readonly = "readonly", id = "Leave_Balance" })
                                                 @Html.ValidationMessageFor(model => model.Leave_Balance, "", new { @class = "" })
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                             <!--Work information-->
                             <hr>
@@ -121,73 +117,66 @@
                                     <div>Leave Selection</div>
                                     <div class="text-muted small">Select the leave start and end dates here.</div>
                                 </div>
-
                                 <div class="col-md-8">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="LeaveStartDay">Leave Start Date</label>
-                                                @Html.TextBoxFor(model => model.LeaveStartDay, new { @class = "form-control" })
+                                                @Html.TextBoxFor(model => model.LeaveStartDay, new { @class = "form-control", id = "LeaveStartDay" })
                                                 @Html.ValidationMessageFor(model => model.LeaveStartDay, "", new { @class = "" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave start date must be selected</div>
                                             </div>
                                         </div>
-
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="LeaveEndDay">Leave End Date</label>
-                                                @Html.TextBoxFor(model => model.LeaveEndDay, new { @class = "form-control" })
+                                                @Html.TextBoxFor(model => model.LeaveEndDay, new { @class = "form-control", id = "LeaveEndDay" })
                                                 @Html.ValidationMessageFor(model => model.LeaveEndDay, "", new { @class = "" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave end date must be selected</div>
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="LeaveDaysApplied">Leave Days Applied</label>
-                                                @Html.TextBoxFor(model => model.LeaveDaysApplied, new { @class = "form-control" })
+                                                @Html.TextBoxFor(model => model.LeaveDaysApplied, new { @class = "form-control", id = "LeaveDaysApplied" })
                                                 @Html.ValidationMessageFor(model => model.LeaveDaysApplied, "", new { @class = "" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave days applied must be specified</div>
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Return Date</label>
-
-                                                @Html.TextBoxFor(model => model.ReturnDate, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.TextBoxFor(model => model.ReturnDate, new { @class = "form-control", @readonly = "readonly", id = "ReturnDate" })
                                                 @Html.ValidationMessageFor(model => model.ReturnDate, "", new { @class = "" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The leave return date must be specified</div>
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row" id="UploadDiv">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="txt_name" class="form-control-label">Attachment File</label>
                                                 <input type="file" id="postedFile" name="postedFile" class="form-control-file" required accept=".pdf" />
-                                                @Html.TextBoxFor(model => model.LeaveDaysApplied, new { @class = "form-control" })
+                                                @Html.TextBoxFor(model => model.LeaveDaysApplied, new { @class = "form-control", id = "LeaveDaysApplied" })
                                                 @Html.ValidationMessageFor(model => model.LeaveDaysApplied, "", new { @class = "" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">A file to upload must be chosen</div>
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="form-control-label">Comments if any</label>
-                                                @Html.TextAreaFor(model => model.Leave_comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3", autofocus = "" })
+                                                @Html.TextAreaFor(model => model.Leave_comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3", id = "Leave_comments" })
                                                 @Html.ValidationMessageFor(model => model.Leave_comments, "", new { @class = "" })
                                                 <p class="pull-right text-muted small" id="count_message"></p>
                                             </div>
@@ -201,69 +190,40 @@
                             <button id="Submit" class="btn btn-success">Submit</button>
                         </div>
                     </form>
-                    <div class="card-footer small text-muted">Updated today at   @DateTime.Now.ToShortTimeString() </div>
+                    <div class="card-footer small text-muted">Updated today at @DateTime.Now.ToShortTimeString() </div>
                 </div>
             </div>
-            <!-- /.container-fluid -->
-            <!-- Sticky Footer -->
-
-
         </div>
         <!-- /.content-wrapper -->
-
     </div>
     <!-- /#wrapper -->
-   
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 </main>
-<!-- Bootstrap core JavaScript-->
-<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
-<script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Bootstrap core CSS-->
-<link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Custom fonts for this template-->
-<link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
-<!-- Page level plugin CSS-->
-<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-
-<!-- Custom styles for this template-->
-
 <link href="~/Assest/css/select2.min.css" rel="stylesheet" />
 <!--jQUERY date picker--->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-
+<!-- Bootstrap core JavaScript-->
+<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+<script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Core plugin JavaScript-->
 <script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
-
+<!-- Bootstrap core CSS-->
+<link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+<!-- Custom fonts for this template-->
+<link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<!-- Page level plugin CSS-->
+<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 <!-- Custom scripts for all pages-->
 <script src="~/Assest/js/sb-admin.min.js"></script>
 <script src="~/Assest/js/bootbox.min.js"></script>
 <script src="~/Assest/js/bootboxError.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- JQUERY DATEPICKER-->
+<link rel="manifest" href="manifest.json">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<script src="~/Assest/js/jquery.pleaseWait.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
 <script type="text/javascript">
     var jQuery_3_3_1 = $.noConflict(true);
@@ -294,7 +254,7 @@
             //selection fields
             $("#Leave_Type").children('option:not(:first)').remove();
             var employee = $('#Employee').val();
-            console.log(employee);
+            
             if ($('#Employee').val() != '') {
                 $.ajax({
                     url: "@Url.Action("GetUserLeaves", "LeaveForOther")",
@@ -323,23 +283,11 @@
         });
         $("#Leave_Type").change(function () {
             //selection fields
-            $('#ReturnDate').val('');
-            //$('#Leave_Type').val();//combo
-            $('#Leave_comments').val('');
-            $('#LeaveStartDay').val('');
-            $('#LeaveEndDay').val('');
-            $('#LeaveDaysApplied').val('');
-            //leave details
-            $('#Leave_Opening_Balance').val('');
-            $('#Leave_Entitled').val('');
-            $('#Leave_Accrued_Days').val('');
-            $('#Leave_Days_Taken').val('');
-            $('#Leave_Balance').val('');
-
             if ($('#Leave_Type').val() != '' && $('#Employee').val() != '') {
 
                 var leavetype = $('#Leave_Type').val();
                 var Employee = $('#Employee').val();
+                
                 jQuery.ajax({
                     url: "@Url.Action("GetLeaveDetails", "LeaveForOther")",
                     type: "POST",
@@ -351,7 +299,7 @@
                         if (response != null ) {
                             var data = $.parseJSON(response);
                             //set fields values
-
+                            console.log(data);
                             //alert($('#Leave_Type').val());
                             $('#Leave_Opening_Balance').val(data.Leave_Opening_Balance);
                             $('#Leave_Entitled').val(data.Leave_Entitled);
@@ -435,7 +383,7 @@
                                     bootbox.alert(data.Message);
                                 } else {
                                     $("#ReturnDate").val(data.ReturnDate);
-                                    $("#LeaveDaysApplied").val(data.Quantity);
+                                    $("#LeaveDaysApplied").val(data.LeaveDaysApplied);
                                 }
                             }
                         }
@@ -488,36 +436,37 @@
                                         bootbox.alert(data.Message);
                                     } else {
                                         $("#ReturnDate").val(data.ReturnDate);
-                                        $("#LeaveEndDay").val(data.EndDate);
+                                        $("#LeaveEndDay").val(data.LeaveEndDay);
                                     }
                                 }
                             }
                         });
                     }
-
-        });
+       });
         //save button
-        jQuery_3_3_1("#Save").click(function (event) {
-
+    });
+    $(function () {
+          jQuery_3_3_1("#Save").click(function (event) {
+            event.preventDefault();
             // Fetch form to apply custom Bootstrap validation
-
-            var form = $("#LeaveApplicationForm")
-
-            if (form[0].checkValidity() === false) {
+              var form = $("#LeaveApplicationForm")
+              
+            if (form[0].checkValidity() === true) {
                 event.preventDefault()
                 event.stopPropagation()
                 form.addClass('was-validated');
-            } else if (form[0].checkValidity() === true) {
+            } else if (form[0].checkValidity() === false) {
                 // Perform ajax submit here...
-
-                event.preventDefault();
-
                 showToast('Saving application');
-
+                 //function for checkig fileupload
+                var dataform = new FormData($('#LeaveApplicationForm')[0]);
+                console.log(dataform);
+               
                 $.ajax({
+
                     url:"@Url.Action("FileUploadHandler", "LeaveForOther")",
                     type: 'POST',
-                    data: new FormData($('#LeaveApplicationForm')[0]),
+                    data: dataform,
                     cache: false,
                     contentType: false,
                     processData: false,
@@ -530,6 +479,8 @@
                         var lapllieddy = $('#LeaveDaysApplied').val();
                         var employeenm = $('#Employee').val();
                         var selected = $("#Employee option:selected").text();
+
+                        console.log(selected, employeenm, lapllieddy);
 
                         jQuery.ajax({
                             url:"@Url.Action("Save", "LeaveForOther")",
@@ -548,9 +499,9 @@
                                     //reset fields
                                     $("#LeaveApplicationForm")[0].reset();
 
-                                    $("select").each(function () {
-                                        $(this).select2('val', '')
-                                    });
+                                    //$("select").each(function () {
+                                    //    $(this).select2('val', '')
+                                    //});
                                 }
                             }
                         });
@@ -580,21 +531,22 @@
 
             var form = $("#LeaveApplicationForm")
             console.log(form);
-            if (form[0].checkValidity() === false) {
+            if (form[0].checkValidity() === true) {
                 event.preventDefault()
                 event.stopPropagation()
                 form.addClass('was-validated');
-            } else if (form[0].checkValidity() === true) {
+            } else if (form[0].checkValidity() === false) {
                 // Perform ajax submit here...
 
                 event.preventDefault();
+                var formdata = new FormData($('#LeaveApplicationForm')[0]);
 
                 showToast('Submitting application');
 
                 $.ajax({
                     url:"@Url.Action("FileUploadHandler", "LeaveForOther")",
                     type: 'POST',
-                    data: new FormData($('#LeaveApplicationForm')[0]),
+                    data: formdata ,
                     cache: false,
                     contentType: false,
                     processData: false,
@@ -629,9 +581,9 @@
                                     //reset fields
                                     $("#LeaveApplicationForm")[0].reset();
 
-                                    $("select").each(function () {
-                                        $(this).select2('val', '')
-                                    });
+                                    //$("select").each(function () {
+                                    //    $(this).select2('val', '')
+                                    //});
                                 }
                             }
                         });
@@ -655,8 +607,6 @@
             }
             event.preventDefault();
         });
-
-
     });
     //dateConverter
     function convertDate(date, symbol, new_symbol) {
@@ -687,5 +637,4 @@
         $.Toast.hideToast();
     }
 </script>
-
 

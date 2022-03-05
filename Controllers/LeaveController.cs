@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -11,14 +12,12 @@ namespace LMS.Controllers
 {
     public class LeaveController : Controller
     {
-        private string tableview;
         public HtmlString str { get; private set; }
         // GET: Leave
         public ActionResult Index()
         {
             return View();
         }
-
         public ActionResult Leave()
         {
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
@@ -50,36 +49,82 @@ namespace LMS.Controllers
                 {
                     string status = Request.QueryString["status"];
                     string owner = Request.QueryString["owner"];
+                    string endpoint = Url.Action("ViewLeave", "ViewLeave", new {id= "" });
                     if (status == "" || owner == "")
                     {
                         Response.Redirect(Request.UrlReferrer.ToString());
                     }
                     else
                     {
-                        tableview = LoadTable(status, owner);
+                        LoadTable(status, owner, endpoint);
                     }
                 }
             }
-            return View(tableview);
+            return View();
         }
 
-        private string LoadTable(string status, string owner)
+        private void LoadTable(string status, string owner,string endpoint)
         {
             DataTable dt;
 
             if (owner == "self")
             {
-                dt = LeavesXMLRequests.GetSelfPageData(status, owner);
+                dt = LeavesXMLRequests.GetSelfPageData(status, owner ,endpoint);
             }
             else if (owner == "others")
             {
-                dt = LeavesXMLRequests.GetOthersPageData(status, owner);
+                dt = LeavesXMLRequests.GetOthersPageData(status, owner, endpoint);
             }
             else
             {
-                dt = LeavesXMLRequests.GetSelfPageData(status, owner);
+                dt = LeavesXMLRequests.GetSelfPageData(status, owner, endpoint);
             }
-            return dt.ToString();
+            //Building an HTML string.
+            StringBuilder html = new StringBuilder();
+            //Table start.
+            html.Append("<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>");
+            //Building the Header row.
+            html.Append("<thead>");
+            html.Append("<tr>");
+            foreach (DataColumn column in dt.Columns)
+            {
+                html.Append("<th>");
+                html.Append(column.ColumnName);
+                html.Append("</th>");
+            }
+            html.Append("</tr>");
+            html.Append("</thead>");
+
+            html.Append("<tfoot>");
+            html.Append("<tr>");
+            foreach (DataColumn column in dt.Columns)
+            {
+                html.Append("<th>");
+                html.Append(column.ColumnName);
+                html.Append("</th>");
+            }
+            html.Append("</tr>");
+            html.Append("</tfoot>");
+
+            //Building the Data rows.
+            html.Append("<tbody>");
+            foreach (DataRow row in dt.Rows)
+            {
+                html.Append("<tr>");
+                foreach (DataColumn column in dt.Columns)
+                {
+                    html.Append("<td>");
+                    html.Append(row[column.ColumnName]);
+                    html.Append("</td>");
+                }
+                html.Append("</tr>");
+            }
+            html.Append("</tbody>");
+            //Table end.
+            html.Append("</table>");
+            string strText = html.ToString();
+
+            ViewBag.Table = strText;
         }
 
         public JsonResult SubmitOpenLeave(string param1, string param2)

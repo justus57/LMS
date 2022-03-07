@@ -386,7 +386,6 @@
     <Compile Include="CustomsClasses\Config.cs" />
     <Compile Include="CustomsClasses\WebService.cs" />
     <Compile Include="CustomsClasses\XMLRequests.cs" />
-    <Compile Include="Enums\enums.cs" />
     <Compile Include="FileUploadHandler.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

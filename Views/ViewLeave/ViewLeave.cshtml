@@ -16,7 +16,7 @@
                     <a href="#">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item">Leaves</li>
-                <li class="breadcrumb-item active">@{Response.Write(LMS.CustomsClasses.AppFunctions.Base64Decode(Request["id"])); }</li>
+                <li class="breadcrumb-item active">@Html.Raw(ViewBag.WordHtml)</li>
             </ol>
 
             <!-- Leave-->
@@ -172,9 +172,9 @@
                                             <div class="form-group">
                                                 <label class="form-control-label">Attachment</label>
                                                 @Html.TextBoxFor(model => model.DownloadAttachment, new { @class = "form-control", id = "DownloadAttachment" })
-                                                <LinkButton runat="server" OnClick="View_Click" ID="btn_view_attachment">View</LinkButton>
-                                                <LinkButton runat="server" onclick="btn_download_Click" ID="btn_download_attachment">Download</LinkButton>
-                                                <LinkButton runat="server" ID="btn_delete_attachment">Delete </LinkButton>
+                                                <button class="btn" onclick="btn_download_Click" ID="btn_download_attachment"><i class="fa fa-download"></i> Download</button>
+                                                <button class="btn" OnClick="View_Click" ID="btn_view_attachment"><i class="fa fa-download"></i> View</button>
+                                                <button class="btn" OnClick="View_Click"  ID="btn_delete_attachment"><i class=""></i> Delete</button>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The attachment must be specified</div>
                                             </div>

@@ -49,7 +49,6 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="Leave_Type" class="form-control-label">Leave Type</label>
-                                                    <asp:TextBox runat="server" id="LeaveType" class="form-control" readonly="true"></asp:TextBox>
                                                     @Html.TextBoxFor(model => model.LeaveType, new { @class = "form-control", @readonly = "readonly", id = "LeaveType" })
                                                     @Html.ValidationMessageFor(model => model.LeaveType, "", new { @class = "" })
                                                     <div class="valid-feedback">Looks good!</div>
@@ -73,9 +72,9 @@
                                                     @Html.TextBoxFor(model => model.Leave_Entitled, new { @class = "form-control", @readonly = "readonly", id = "Leave_Entitled" })
                                                     @Html.ValidationMessageFor(model => model.Leave_Entitled, "", new { @class = "" })
                                                 </div>
-                                                </div>
                                             </div>
                                         </div>
+
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -172,9 +171,10 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="form-control-label">Attachment</label>
-                                                    <asp:TextBox class="form-control-plaintext" id="DownloadAttachment" runat="server"></asp:TextBox>
-                                                    <asp:LinkButton runat="server" OnClick="View_Click" ID="btn_view_attachment">View</asp:LinkButton>
-                                                    <asp:LinkButton runat="server" onclick="btn_download_Click" ID="btn_download_attachment">Download</asp:LinkButton>
+                                                    @*<asp:TextBox class="form-control-plaintext" id="DownloadAttachment" runat="server"></asp:TextBox>*@
+                                                    @Html.TextBoxFor(model => model.DownloadAttachment, new { @class = "form-control-plaintext", id = "DownloadAttachment" })
+                                                    <button class="btn" onclick="btn_download_Click" ID="btn_download_attachment"><i class="fa fa-download"></i> Download</button>
+                                                    <button class="btn" OnClick="View_Click" ID="btn_view_attachment"><i class="fa fa-street-view"></i> View</button>
                                                     <div class="valid-feedback">Looks good!</div>
                                                     <div class="invalid-feedback">The attachment must be specified</div>
 
@@ -185,8 +185,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="form-control-label">Leave Comments</label>
-                                                    <asp:TextBox TextMode="multiline" ReadOnly="true" Columns="50" Rows="3" runat="server" ID="Leave_comments" class="form-control"></asp:TextBox>
-                                                    @Html.TextAreaFor(model => model.Reject_Comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3" })
+                                                    @Html.TextAreaFor(model => model.Reject_Comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3", @readonly = "readonly" })
                                                     @Html.ValidationMessageFor(model => model.Reject_Comments, "", new { @class = "" })
                                                 </div>
                                             </div>
@@ -198,8 +197,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="RejectionComment">Rejection comments</label>
-                                                    <asp:TextBox TextMode="multiline" Columns="50" Rows="3" runat="server" ID="RejectionComment" class="form-control" required="true"></asp:TextBox>
-                                                    @Html.TextAreaFor(model => model.Reject_Comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3" })
+                                                    @Html.TextAreaFor(model => model.Reject_Comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3", @readonly = "readonly" })
                                                     @Html.ValidationMessageFor(model => model.Reject_Comments, "", new { @class = "" })
                                                     <div class="valid-feedback">Looks good!</div>
                                                     <div class="invalid-feedback">A rejection comment must be provided</div>
@@ -213,8 +211,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="form-control-label">Rejection comments</label>
-                                                    <asp:TextBox TextMode="multiline" ReadOnly="true" Columns="50" Rows="3" runat="server" ID="Rejection_Comment" class="form-control MultiLineLimit" required="true"></asp:TextBox>
-                                                    @Html.TextAreaFor(model => model.Reject_Comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3" })
+                                                    @Html.TextAreaFor(model => model.Reject_Comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3", @readonly = "readonly" })
                                                     @Html.ValidationMessageFor(model => model.Reject_Comments, "", new { @class = "" })
                                                     <p class="pull-right text-muted small" id="count_message"></p>
                                                 </div>
@@ -239,12 +236,13 @@
                                 <button id="approve_leaverecall" class="btn btn-success">Approve Recall Application</button>
                             </div>
                         }
+
                     </form>
 
                     <div class="card-footer small text-muted">Updated today at @DateTime.Now.ToShortTimeString()</div>
                 </div>
             </div>
-         
+
             <!-- Sticky Footer -->
         </div>
         <!-- /.content-wrapper -->
@@ -257,16 +255,16 @@
     <!-- Core plugin JavaScript-->
     <script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- Bootstrap core CSS-->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
     <!-- Page level plugin CSS-->
-    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin.css" rel="stylesheet">
+    <link href="~/Assest/css/sb-admin.css" rel="stylesheet">
     <!--jQUERY date picker--->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
@@ -274,6 +272,7 @@
     <script src="~/Assest/js/sb-admin.min.js"></script>
     <script src="~/Assest/js/bootbox.min.js"></script>
     <script src="~/Assest/js/bootbox.all.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="~/Assest/js/bootboxError.js"></script>
     <!-- JQUERY DATEPICKER-->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>

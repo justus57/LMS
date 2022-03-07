@@ -23,5 +23,6 @@ namespace LMS.Models
         public string LeaveCode { get; internal set; }
         public string DownloadAttachment { get; set; }
         public string LeaveType { get; set; }
+        public string LeaveID { get; set; }
     }
 }

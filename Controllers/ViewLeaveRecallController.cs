@@ -22,6 +22,10 @@ namespace LMS.Controllers
         static string _EndDate = null;
         static string _LeaveDays = null;
         static string _LeaveType = null;
+        private readonly string ID;
+
+
+
         // GET: ViewLeaveRecall
         public ActionResult Index()
         {
@@ -69,6 +73,9 @@ namespace LMS.Controllers
                         view.LeaveCodeTxt = LeaveID;
 
                         GetLeaveData(LeaveID);
+                        ViewLeaveRecall viewLeave = new ViewLeaveRecall();
+                       ViewBag.LeaveID = LeaveID;
+
                     }
                 }
             }

@@ -17,7 +17,9 @@
                         <a href="#">Dashboard</a>
                     </li>
                     <li class="breadcrumb-item">Leave Recalls</li>
-                    <li class="breadcrumb-item active">@{Response.Write(LMS.CustomsClasses.AppFunctions.Base64Decode(Request["id"])); }</li>
+                    <li class="breadcrumb-item active">
+                        @Html.Raw(ViewBag.LeaveID)
+                                    </li>
                 </ol>
                 <!-- Leave-->
                 <div class="card mb-3">

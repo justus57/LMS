@@ -72,7 +72,7 @@ namespace LMS.Controllers
                         string LeaveID = AppFunctions.Base64Decode(s);
 
                         documentNo = LeaveID;
-
+                        ViewBag.WordHtml = LeaveID;
                         //GetLeaveData(LeaveID);
                         //ViewLeaveRecall view = new ViewLeaveRecall();
                         documentNo = LeaveID;

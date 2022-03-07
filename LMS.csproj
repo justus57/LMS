@@ -378,6 +378,7 @@
     <Compile Include="Controllers\LeaveRecallForOtherController.cs" />
     <Compile Include="Controllers\LeaveRecallsController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\ViewApprovalEntryController.cs" />
     <Compile Include="Controllers\ViewLeaveController.cs" />
     <Compile Include="Controllers\ViewLeaveRecallController.cs" />
     <Compile Include="CustomsClasses\AppClasses.cs" />
@@ -404,6 +405,7 @@
     <Compile Include="Models\OneTimePassword.cs" />
     <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\Register.cs" />
+    <Compile Include="Models\ViewApprovalEntry.cs" />
     <Compile Include="Models\ViewLeave.cs" />
     <Compile Include="Models\ViewLeaveRecall.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -4201,6 +4203,7 @@
     <Content Include="Views\ViewLeave\ViewLeave.cshtml" />
     <Content Include="Views\ViewLeaveRecall\ViewLeaveRecall.cshtml" />
     <Content Include="Views\ApprovalEntries\ApprovalEntries.cshtml" />
+    <Content Include="Views\ViewApprovalEntry\ViewApprovalEntry.cshtml" />
     <None Include="Web References\WebRef\HRWebPortal.wsdl" />
     <Content Include="Web References\WebRef\LeaveDetail.datasource">
       <DependentUpon>Reference.map</DependentUpon>

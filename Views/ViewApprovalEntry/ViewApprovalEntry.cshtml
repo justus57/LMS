@@ -1,0 +1,532 @@
+﻿@model LMS.Models.ViewApprovalEntry
+
+@{
+    ViewBag.Title = "ViewApprovalEntry";
+}
+
+<main id="main" class="main">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <!-- #Include virtual="includes/Sidebar.aspx" -->
+        <div id="content-wrapper">
+            <div class="container-fluid">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#">Approval Entries</a>
+                    </li>
+                    <li class="breadcrumb-item active">@{Response.Write(LMS.CustomsClasses.AppFunctions.Base64Decode(Request["id"])); }</li>
+                </ol>
+                <!-- Leave-->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-paper-plane"></i>
+                        Approval Entries
+                    </div>
+
+                    <form runat="server" novalidate="" action="" method="POST" id="LeaveApplicationForm" autocomplete="off">
+                        <div class="card-body">
+                            <div class="row mb-5">
+                                <div class="col-md-4 mb-4">
+                                    <div>Leave Information</div>
+                                    <div class="text-muted small">Shows information for specific leaves</div>
+                                </div>
+
+                                <div class="col-md-8">
+                                    <fieldset disabled>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlSelect1" class="form-control-label">Leave Code</label>
+                                                    @Html.TextBoxFor(model => model.LeaveCodeTxt, new { @class = "form-control", @readonly = "readonly", id = "LeaveCodeTxt" })
+                                                    @Html.ValidationMessageFor(model => model.LeaveCodeTxt, "", new { @class = "" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="Leave_Type" class="form-control-label">Leave Type</label>
+                                                    <asp:TextBox runat="server" id="LeaveType" class="form-control" readonly="true"></asp:TextBox>
+                                                    @Html.TextBoxFor(model => model.LeaveType, new { @class = "form-control", @readonly = "readonly", id = "LeaveType" })
+                                                    @Html.ValidationMessageFor(model => model.LeaveType, "", new { @class = "" })
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">The leave type must be selected</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Leave Opening Balance</label>
+                                                    @Html.TextBoxFor(model => model.Leave_Opening_Balance, new { @class = "form-control", @readonly = "readonly", id = "Leave_Opening_Balance" })
+                                                    @Html.ValidationMessageFor(model => model.Leave_Opening_Balance, "", new { @class = "" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Leave Entitled</label>
+                                                    @Html.TextBoxFor(model => model.Leave_Entitled, new { @class = "form-control", @readonly = "readonly", id = "Leave_Entitled" })
+                                                    @Html.ValidationMessageFor(model => model.Leave_Entitled, "", new { @class = "" })
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Leave Accrued Days </label>
+                                                    @Html.TextBoxFor(model => model.Leave_Accrued_Days, new { @class = "form-control", @readonly = "readonly", id = "Leave_Accrued_Days" })
+                                                    @Html.ValidationMessageFor(model => model.Leave_Accrued_Days, "", new { @class = "" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Leave Days Taken</label>
+                                                    @Html.TextBoxFor(model => model.Leave_Days_Taken, new { @class = "form-control", @readonly = "readonly", id = "Leave_Days_Taken" })
+                                                    @Html.ValidationMessageFor(model => model.Leave_Days_Taken, "", new { @class = "" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Leave Balance</label>
+                                                    @Html.TextBoxFor(model => model.Leave_Balance, new { @class = "form-control", @readonly = "readonly", id = "Leave_Balance" })
+                                                    @Html.ValidationMessageFor(model => model.Leave_Balance, "", new { @class = "" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <!--Work information-->
+                            <hr>
+                            <div class="row mb-5">
+                                <div class="col-md-4 mb-4">
+                                    <div>Leave Selection</div>
+                                    <div class="text-muted small">Select the leave start and end dates here.</div>
+                                </div>
+
+                                <div class="col-md-8">
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="LeaveStartDay">Leave Start Date</label>
+                                                    @Html.TextBoxFor(model => model.LeaveStartDay, new { @class = "form-control", @readonly = "readonly", id = "LeaveStartDay" })
+                                                    @Html.ValidationMessageFor(model => model.LeaveStartDay, "", new { @class = "" })
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">The leave start date must be selected</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="LeaveEndDay">Leave End Date</label>
+                                                    @Html.TextBoxFor(model => model.LeaveEndDay, new { @class = "form-control", @readonly = "readonly", id = "LeaveEndDay" })
+                                                    @Html.ValidationMessageFor(model => model.LeaveEndDay, "", new { @class = "" })
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">The leave end date must be selected</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="LeaveDaysApplied">Leave Days Applied</label>
+                                                    @Html.TextBoxFor(model => model.LeaveDaysApplied, new { @class = "form-control", @readonly = "readonly", id = "LeaveDaysApplied" })
+                                                    @Html.ValidationMessageFor(model => model.LeaveDaysApplied, "", new { @class = "" })
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">The leave days applied must be specified</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Return Date</label>
+                                                    @Html.TextBoxFor(model => model.ReturnDate, new { @class = "form-control", @readonly = "readonly", id = "ReturnDate" })
+                                                    @Html.ValidationMessageFor(model => model.ReturnDate, "", new { @class = "" })
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">The leave return date must be specified</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Approver</label>
+                                                    @Html.TextBoxFor(model => model.LeaveApprover, new { @class = "form-control", @readonly = "readonly", id = "LeaveApprover" })
+                                                    @Html.ValidationMessageFor(model => model.LeaveApprover, "", new { @class = "" })
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">The leave return date must be specified</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" id="Attacho" runat="server">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Attachment</label>
+                                                    <asp:TextBox class="form-control-plaintext" id="DownloadAttachment" runat="server"></asp:TextBox>
+                                                    <asp:LinkButton runat="server" OnClick="View_Click" ID="btn_view_attachment">View</asp:LinkButton>
+                                                    <asp:LinkButton runat="server" onclick="btn_download_Click" ID="btn_download_attachment">Download</asp:LinkButton>
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">The attachment must be specified</div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Leave Comments</label>
+                                                    <asp:TextBox TextMode="multiline" ReadOnly="true" Columns="50" Rows="3" runat="server" ID="Leave_comments" class="form-control"></asp:TextBox>
+                                                    @Html.TextAreaFor(model => model.Reject_Comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3" })
+                                                    @Html.ValidationMessageFor(model => model.Reject_Comments, "", new { @class = "" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    @if (!String.IsNullOrEmpty(Request["status"]) && Request["status"] == "Pending")
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="RejectionComment">Rejection comments</label>
+                                                    <asp:TextBox TextMode="multiline" Columns="50" Rows="3" runat="server" ID="RejectionComment" class="form-control" required="true"></asp:TextBox>
+                                                    @Html.TextAreaFor(model => model.Reject_Comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3" })
+                                                    @Html.ValidationMessageFor(model => model.Reject_Comments, "", new { @class = "" })
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">A rejection comment must be provided</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (!String.IsNullOrEmpty(Request["status"]) && Request["status"] == "Rejected")
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Rejection comments</label>
+                                                    <asp:TextBox TextMode="multiline" ReadOnly="true" Columns="50" Rows="3" runat="server" ID="Rejection_Comment" class="form-control MultiLineLimit" required="true"></asp:TextBox>
+                                                    @Html.TextAreaFor(model => model.Reject_Comments, new { @class = "form-control MultiLineLimit", TextMode = "multiline", Columns = "50", maxlength = "50", Rows = "3" })
+                                                    @Html.ValidationMessageFor(model => model.Reject_Comments, "", new { @class = "" })
+                                                    <p class="pull-right text-muted small" id="count_message"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <!--Chack Conditions here-->
+                        @if (!String.IsNullOrEmpty(Request["status"]) && Request["status"] == "Pending" && !String.IsNullOrEmpty(Request["parent"]) && Request["parent"] == "Leaves")
+                        {
+                            <div class="card-footer bg-light text-right">
+                                <button id="reject_leave" class="btn btn-danger">Reject Leave Application</button>
+                                <button id="approve_leave" class="btn btn-success">Approve Leave Application</button>
+                            </div>
+                        }
+                        @if (!String.IsNullOrEmpty(Request["status"]) && Request["status"] == "Pending" && !String.IsNullOrEmpty(Request["parent"]) && Request["parent"] == "LeaveRecalls")
+                        {
+                            <div class="card-footer bg-light text-right">
+                                <button id="reject_leaverecall" class="btn btn-danger">Reject Recall Application</button>
+                                <button id="approve_leaverecall" class="btn btn-success">Approve Recall Application</button>
+                            </div>
+                        }
+                    </form>
+
+                    <div class="card-footer small text-muted">Updated today at @DateTime.Now.ToShortTimeString()</div>
+                </div>
+            </div>
+         
+            <!-- Sticky Footer -->
+        </div>
+        <!-- /.content-wrapper -->
+
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Bootstrap core CSS-->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin.css" rel="stylesheet">
+    <!--jQUERY date picker--->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+    <!-- Custom scripts for all pages-->
+    <script src="~/Assest/js/sb-admin.min.js"></script>
+    <script src="~/Assest/js/bootbox.min.js"></script>
+    <script src="~/Assest/js/bootbox.all.min.js"></script>
+    <script src="~/Assest/js/bootboxError.js"></script>
+    <!-- JQUERY DATEPICKER-->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        var jQuery_3_3_1 = $.noConflict(true);
+    </script>
+    <script src="~/Assest/js/jquery.toast.js"></script>
+    <script>
+        $(function () {
+            $(".MultiLineLimit").on('change keydown paste input', function () {
+                this.value = (this.value.length <= 50 ? this.value : this.value.substring(0, 50));
+            });
+            var text_max = 50;
+            $('#count_message').html(text_max + ' remaining');
+
+            $('#Comment').keyup(function () {
+                var text_length = $('#Comment').val().length;
+                var text_remaining = text_max - text_length;
+
+                $('#count_message').html(text_remaining + ' remaining');
+            });
+            jQuery_3_3_1('#reject_leaverecall').click(function (e) {
+
+                e.preventDefault();
+
+                var pid = $('#LeaveCodeTxt').val();
+
+                bootbox.confirm({
+                    title: "<i class='fa fa-times'></i> Reject application?",
+                    message: "Do you wish to reject this Leave Recall application?",
+                    buttons: {
+                        confirm: {
+                            label: 'Yes',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'No',
+                            className: 'btn-danger'
+                        }
+                    },
+                    callback: function (result) {
+
+                        if (result == true) {
+
+                            showToast('Rejecting application');
+
+                            jQuery.ajax({
+                                url: 'ApprovalEntries.aspx/RejectApprovalRequest',
+                                type: "POST",
+                                data: '{param1:"' + pid + '", param2:"' + $('#RejectionComment').val() + '"}',
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8",
+                                success: function (response) {
+
+                                    if (response != null && response.d != null) {
+                                        var data = response.d;
+                                        // alert(typeof (data)); //it comes out to be string
+                                        //we need to parse it to JSON
+                                        data = $.parseJSON(data);
+
+                                        hideLoading();
+
+                                        bootbox.alert(data.Message);
+                                    }
+                                },
+                                error: function () {
+                                    bootbox.error({ title: "System error", message: "An error occured." });
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+            jQuery_3_3_1('#approve_leaverecall').click(function (e) {
+
+                e.preventDefault();
+                var pid = $(this).attr('data-id');
+                var parent = $(this).parent("td").parent("tr");
+
+                bootbox.confirm({
+                    title: "<i class='fa fa-paper-plane'></i> Submit?",
+                    message: "Do you wish to submit this Leave Recall application?",
+                    buttons: {
+                        confirm: {
+                            label: 'Yes',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'No',
+                            className: 'btn-danger'
+                        }
+                    },
+                    callback: function (result) {
+
+                        if (result == true) {
+
+                            showToast('Approving application');
+
+                            jQuery.ajax({
+                                url: 'ApprovalEntries.aspx/ApproveApprovalRequest',
+                                type: "POST",
+                                data: '{param1:"' + pid + '"}',
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8",
+                                success: function (response) {
+
+                                    if (response != null && response.d != null) {
+                                        var data = response.d;
+                                        // alert(typeof (data)); //it comes out to be string
+                                        //we need to parse it to JSON
+                                        data = $.parseJSON(data);
+
+                                        hideLoading();
+
+                                        if (data.Status == "000") {
+                                            bootbox.alert(data.Message);
+                                        } else {
+                                            //error dialog
+                                            bootbox.error({ title: "Authorization error", message: data.Message });
+                                        }
+                                    }
+                                },
+                                error: function () {
+                                    bootbox.error({ title: "System error", message: "An error occured." });
+                                }
+                            });
+                        }
+                    }
+                });
+
+            });
+            jQuery_3_3_1('#reject_leave').click(function (e) {
+
+                e.preventDefault();
+
+                var pid = $('#LeaveCodeTxt').val();
+
+                bootbox.confirm({
+                    title: "<i class='fa fa-times'></i> Reject application?",
+                    message: "Do you wish to reject this Leave application?",
+                    buttons: {
+                        confirm: {
+                            label: 'Yes',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'No',
+                            className: 'btn-danger'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result == true) {
+
+                            showToast('Rejecting application');
+
+                            jQuery.ajax({
+                                url: 'ViewApprovalEntry.aspx/RejectApprovalRequest',
+                                type: "POST",
+                                data: '{param1:"' + pid + '", param2:"' + $('#RejectionComment').val() + '"}',
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8",
+                                success: function (response) {
+
+                                    if (response != null && response.d != null) {
+                                        var data = response.d;
+                                        // alert(typeof (data)); //it comes out to be string
+                                        //we need to parse it to JSON
+                                        data = $.parseJSON(data);
+
+                                        hideLoading();
+
+                                        bootbox.alert(data.Message);
+                                    }
+                                },
+                                error: function () {
+                                    bootbox.error({ title: "System error", message: "An error occured." });
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+            jQuery_3_3_1('#approve_leave').click(function (e) {
+
+                e.preventDefault();
+                var pid = $(this).attr('data-id');
+                var parent = $(this).parent("td").parent("tr");
+
+                bootbox.confirm({
+                    title: "<i class='fa fa-check'></i> Approve?",
+                    message: "Do you wish to Approve this Leave application?",
+                    buttons: {
+                        confirm: {
+                            label: 'Yes',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'No',
+                            className: 'btn-danger'
+                        }
+                    },
+                    callback: function (result) {
+
+                        if (result == true) {
+
+                            showToast('Approving application');
+
+                            jQuery.ajax({
+                                url: 'ViewApprovalEntry.aspx/ApproveApprovalRequest',
+                                type: "POST",
+                                data: '{param1:"' + pid + '"}',
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8",
+                                success: function (response) {
+
+                                    if (response != null && response.d != null) {
+                                        var data = response.d;
+                                        // alert(typeof (data)); //it comes out to be string
+                                        //we need to parse it to JSON
+                                        data = $.parseJSON(data);
+
+                                        hideLoading();
+
+                                        if (data.Status == "000") {
+                                            bootbox.alert(data.Message);
+                                        } else {
+                                            //error dialog
+                                            bootbox.error({ title: "Application error", message: data.Message });
+                                        }
+                                    }
+                                },
+                                error: function () {
+                                    bootbox.error({ title: "System error", message: "An error occured." });
+                                }
+                            });
+                        }
+                    }
+                });
+
+            });
+        });
+        function showToast(modaltittle) {
+            var title = modaltittle;
+            var icon = 'loading';
+            var duration = 50000 * 1;
+            $.Toast.showToast({ title: title, duration: duration, icon: icon, image: '' });
+        }
+        function hideLoading() {
+            $.Toast.hideToast();
+        }
+    </script>
+    </body>
+
+</main>

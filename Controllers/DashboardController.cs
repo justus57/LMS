@@ -25,6 +25,19 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
             System.Web.HttpContext.Current.Session["username"] = "";
+            System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
+            System.Web.HttpContext.Current.Session["IsDashboardActive"] = "";
+            System.Web.HttpContext.Current.Session["IsClaimActive"] = "";
+            System.Web.HttpContext.Current.Session["IsSurrenderActive"] = "";
+            System.Web.HttpContext.Current.Session["IsAppriasalActive"] = "";
+            System.Web.HttpContext.Current.Session["IsApprovalEntriesActive"] = "active";
+            System.Web.HttpContext.Current.Session["IsLeavesActive"] = "";
+            System.Web.HttpContext.Current.Session["IsRecallActive"] = "";
+            System.Web.HttpContext.Current.Session["IsReportsActive"] = "";
+            System.Web.HttpContext.Current.Session["IsTrainingActive"] = "";
+            System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
+            System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
+
 
             var profileData = this.Session["UserProfile"] as Login;
             try

@@ -41,54 +41,57 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
 
-            if (Session["Logged"].Equals("No"))
+            var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
+            var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
+            if (log == "No")
             {
-                Response.Redirect("Login.aspx");
+                Response.Redirect("/Account/login");
             }
-            else if (Session["Logged"].Equals("Yes"))
+            else if (log == "yes")
             {
-                if (Session["RequirePasswordChange"].Equals("TRUE"))
+                if (passRequired == "true")
                 {
-                    Response.Redirect("OneTimePass.aspx");
+                    Response.Redirect("/Account/OneTimePassword");
                 }
                 else
                 {
-                    //make sure only approver can see records
-                    if (System.Web.HttpContext.Current.Session["IsStaffAdvanceApprover"].ToString() == "TRUE" || HttpContext.Current.Session["IsLeaveApprover"].ToString() == "TRUE" || HttpContext.Current.Session["IsTrainingSupervisor"].ToString() == "TRUE" || HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE" || HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE")
-                    {
+                    ////make sure only approver can see records
+                    //if (System.Web.HttpContext.Current.Session["IsStaffAdvanceApprover"].ToString() == "TRUE" || System.Web.HttpContext.Current.Session["IsLeaveApprover"].ToString() == "TRUE" || System.Web.HttpContext.Current.Session["IsTrainingSupervisor"].ToString() == "TRUE" || System.Web.HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE" || System.Web.HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE")
+                    //{
                         string status = Request.QueryString["status"].Trim();
 
                         parent = Request.QueryString["parent"].Trim();
+                    string endpoint = Url.Action("ViewApprovalEntry", "ViewApprovalEntry", new { id = "" });
 
-                        if (status == "" || parent == "")
+                    if (status == "" || parent == "")
                         {
                             Response.Redirect(Request.UrlReferrer.ToString());
                         }
                         else
                         {
-                            LoadTable(status, parent);
+                            LoadTable(status, parent, endpoint);
                         }
-                    }
+                    //}
                 }
             }
             return View();
         }
 
-        private void LoadTable(string status, string parent)
+        private void LoadTable(string status, string parent,string endpoint)
         {
             DataTable dt = null;
 
             if (parent == "Leaves")
             {
-                dt = ApprovalEntiesXMLRequests.GetLeavePageData(status);
+                dt = ApprovalEntiesXMLRequests.GetLeavePageData(status, endpoint);
             }
             else if (parent == "LeaveRecalls")
             {
-                dt = ApprovalEntiesXMLRequests.GetLeaveRecallPageData(status);
+                dt = ApprovalEntiesXMLRequests.GetLeaveRecallPageData(status, endpoint);
             }
             else if (parent == "Trainings")
             {
-                dt = ApprovalEntiesXMLRequests.GetTrainingPageData(status);
+                dt = ApprovalEntiesXMLRequests.GetTrainingPageData(status, endpoint);
             }
             else if (parent == "Appraisals")
             {
@@ -97,7 +100,7 @@ namespace LMS.Controllers
                 string statusparm = "";
                 string requestAs = "";
                 string owner = Request.QueryString["owner"].Trim();
-                string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+                string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
 
                 if (owner == "Approver")
                 {
@@ -199,7 +202,7 @@ namespace LMS.Controllers
         public static string ApproveApplication(string param1)
         {
             string LeaveHeaderNo = AppFunctions.Base64Decode(param1);
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
             string response = null;
             string status = null;
 
@@ -232,7 +235,7 @@ namespace LMS.Controllers
         public static string RejectApplication(string param1, string param2)
         {
             string ApprovalEntryNo = AppFunctions.Base64Decode(param1);
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
             string response = "";
             string status = "";
 

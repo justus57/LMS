@@ -211,8 +211,10 @@ namespace LMS.Controllers
         }
         public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
+            int position = param7.IndexOf(',');
+            var param = param7.Substring(0, position);
             string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
-            string EmployeeID = param7.Trim();
+            string EmployeeID = param.Trim();
             string EmployeeName = param8.Trim();
             string DocumentNo = GetDocumentNumber(EmployeeID);
             string RequestDate = DateTime.Now.ToString("dd/MM/yyyy");//d/m/Y
@@ -231,12 +233,53 @@ namespace LMS.Controllers
 
             try
             {
+                   string request = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                            <Body>
+                                <SaveLeaveStepOneDetails xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+                                    <hRDocumentType>1</hRDocumentType>
+                                    <documentNo>" + DocumentNo + @"</documentNo>
+                                    <leaveSubType>1</leaveSubType>
+                                    <employeeID>" + EmployeeID + @"</employeeID>
+                                    <requestDate>" + RequestDate + @"</requestDate>
+                                    <dateCreated>" + DateCreated + @"</dateCreated>
+                                    <accountId>" + AccountId + @"</accountId>
+                                    <leaveCode>" + LeaveCode + @"</leaveCode>
+                                </SaveLeaveStepOneDetails>
+                            </Body>
+                        </Envelope>";
+                string str = Assest.Utility.CallWebService(request);
+                string requeststep2 = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                                        <Body>
+                                            <SaveLeaveStepTwoDetails xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+                                                <documentNo>" + DocumentNo + @"</documentNo>
+                                                <employeeID>" + EmployeeID + @"</employeeID>
+                                                <requestDate>" + RequestDate + @"</requestDate>
+                                                <dateCreated>" + DateCreated + @"</dateCreated>
+                                                <accountId>" + AccountId + @"</accountId>
+                                                <startDate>" + StartDate + @"</startDate>
+                                                <endDate> " + EndDate + @" </endDate>
+                                                <leaveDays>" + LeaveDays + @"</leaveDays>
+                                                <returnDate>" + ReturnDate + @"</returnDate>
+                                            </SaveLeaveStepTwoDetails>
+                                        </Body>
+                                    </Envelope>";
+                var str2 = Assest.Utility.CallWebService(requeststep2);
+                string resp = string.Empty;
+                if (!string.IsNullOrEmpty(str2) && str2.TrimStart().StartsWith("<"))
+                {
+                    resp = "success";
+                    UploadAttachment(documentpath, DocumentNo);
+                    Message = "Leave application for " + EmployeeName + " has been saved successfully";
+                }
+                else
+                {
+                    resp = str2;
+                    Message = "Leave application for " + EmployeeName + " has not saved ";
+                }
 
-                string x = LeaveForOtherXMLRequests.SaveLeaveApplicationForOther(DocumentNo, EmployeeID, EmployeeName, RequestDate, DateCreated, username, LeaveCode, Description, StartDate, EndDate, LeaveDays, ReturnDate);
+               
 
-                UploadAttachment(documentpath, DocumentNo);
-
-                Message = "Leave application for " + EmployeeName + " has been saved successfully";
+                
             }
             catch (Exception e)
             {
@@ -272,7 +315,9 @@ namespace LMS.Controllers
                 }
                 else
                 {
-                    string EmployeeID = param7.Trim();
+                    int position = param7.IndexOf(',');
+                    var param = param7.Substring(0, position);
+                    string EmployeeID = param.Trim();
                     string EmployeeName = param8.Trim();
                     string DocumentNo = GetDocumentNumber(EmployeeID);
 
@@ -290,17 +335,64 @@ namespace LMS.Controllers
                     string folderPath = System.Web.HttpContext.Current.Server.MapPath("~/Uploads/");
                     string documentpath = folderPath + param9;
 
-                    LeaveForOtherXMLRequests.SaveLeaveApplicationForOther(DocumentNo, EmployeeID, EmployeeName, RequestDate, DateCreated, username, LeaveCode, Description, StartDate, EndDate, LeaveDays, ReturnDate);
+                    //LeaveForOtherXMLRequests.SaveLeaveApplicationForOther(DocumentNo, EmployeeID, EmployeeName, RequestDate, DateCreated, username, LeaveCode, Description, StartDate, EndDate, LeaveDays, ReturnDate);
+                    try
+                    {
+                        //string mMessage = LeaveApplicationXMLRequests.SaveLeaveApplication(DocumentNo, EmployeeID, EmployeeName, RequestDate, DateCreated, AccountId, LeaveCode, Description, StartDate, EndDate, LeaveDays, ReturnDate);
+                        string request = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                            <Body>
+                                <SaveLeaveStepOneDetails xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+                                    <hRDocumentType>1</hRDocumentType>
+                                    <documentNo>" + DocumentNo + @"</documentNo>
+                                    <leaveSubType>1</leaveSubType>
+                                    <employeeID>" + EmployeeID + @"</employeeID>
+                                    <requestDate>" + RequestDate + @"</requestDate>
+                                    <dateCreated>" + DateCreated + @"</dateCreated>
+                                    <accountId>" + AccountId + @"</accountId>
+                                    <leaveCode>" + LeaveCode + @"</leaveCode>
+                                </SaveLeaveStepOneDetails>
+                            </Body>
+                        </Envelope>";
+                        string str = Assest.Utility.CallWebService(request);
+                        string requeststep2 = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                                        <Body>
+                                            <SaveLeaveStepTwoDetails xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+                                                <documentNo>" + DocumentNo + @"</documentNo>
+                                                <employeeID>" + EmployeeID + @"</employeeID>
+                                                <requestDate>" + RequestDate + @"</requestDate>
+                                                <dateCreated>" + DateCreated + @"</dateCreated>
+                                                <accountId>" + AccountId + @"</accountId>
+                                                <startDate>" + StartDate + @"</startDate>
+                                                <endDate> " + EndDate + @" </endDate>
+                                                <leaveDays>" + LeaveDays + @"</leaveDays>
+                                                <returnDate>" + ReturnDate + @"</returnDate>
+                                            </SaveLeaveStepTwoDetails>
+                                        </Body>
+                                    </Envelope>";
+                        var str2 = Assest.Utility.CallWebService(requeststep2);
+                        string resp = string.Empty;
+                        if (!string.IsNullOrEmpty(str2) && str2.TrimStart().StartsWith("<"))
+                        {
+                            resp = "success";
+                        }
+                        else
+                        {
+                            resp = str2;
+                        }
+                        UploadAttachment(documentpath, DocumentNo);
 
-                    UploadAttachment(documentpath, DocumentNo);
+                        ///send approval request here
+                        string ApprovalRequestResponseString = LeaveForOtherXMLRequests.SendApprovalRequest(DocumentNo);
 
-                    ///send approval request here
-                    string ApprovalRequestResponseString = LeaveForOtherXMLRequests.SendApprovalRequest(DocumentNo);
+                        dynamic json = JObject.Parse(ApprovalRequestResponseString);
 
-                    dynamic json = JObject.Parse(ApprovalRequestResponseString);
-
-                    response = json.Msg;
-                    status = json.Status;
+                        response = json.Msg;
+                        status = json.Status;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.Write(e);
+                    }
                 }
             }
             catch (Exception e)

@@ -82,7 +82,6 @@ namespace LMS.Controllers
                 if (status == "000")
                 {
                     Msg = status + "You have been successfully authenticated";
-
                     string UserFullName = json.EmployeeName;
                     string CanApplyBackdatedLeave = json.CanApplyBackdatedLeave;
                     string IsLeaveApprover = json.IsLeaveApprover;

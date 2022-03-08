@@ -551,7 +551,7 @@
                     contentType: false,
                     processData: false,
                     success: function (file) {
-                        console.log(data);
+                        console.log(formdata);
                         var rdate = $('#ReturnDate').val();
                         var ltypes = $('#Leave_Type').val();
                         var leavec = $('#Leave_comments').val();
@@ -570,11 +570,8 @@
                             success: function (response) {
 
                                 if (response != null ) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-                                    data = $.parseJSON(data);
-
+                                    var data = $.parseJSON(response);
+                                    console.log(data);
                                     hideLoading();
 
                                     bootbox.alert(data.Message);

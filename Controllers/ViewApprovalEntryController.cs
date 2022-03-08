@@ -74,7 +74,7 @@ namespace LMS.Controllers
                         string LeaveID = AppFunctions.Base64Decode(s);
 
                         entry.LeaveCodeTxt = LeaveID;
-
+                        ViewBag.WordHtml = LeaveID;
                         //GetLeaveData(LeaveID, Emp);
                         string Parent = null;
                         string status = Request.QueryString["status"].Trim();
@@ -133,7 +133,7 @@ namespace LMS.Controllers
                                 entry.ReturnDate = AppFunctions.ConvertTime(Return_Date);
                                 entry.LeaveApprover = ApproverName;
                                 entry.Leave_comments = Description;
-                                entry.Rejection_Comment = RejectionComment;
+                                entry.Reject_Comments = RejectionComment;
                                 //
 
                                 _LeaveType = LeaveCode;

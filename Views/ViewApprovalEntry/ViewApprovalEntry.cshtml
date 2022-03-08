@@ -17,7 +17,7 @@
                     <li class="breadcrumb-item">
                         <a href="#">Approval Entries</a>
                     </li>
-                    <li class="breadcrumb-item active">@{Response.Write(LMS.CustomsClasses.AppFunctions.Base64Decode(Request["id"])); }</li>
+                    <li class="breadcrumb-item active">@Html.Raw(ViewBag.WordHtml)</li>
                 </ol>
                 <!-- Leave-->
                 <div class="card mb-3">
@@ -322,18 +322,15 @@
                             showToast('Rejecting application');
 
                             jQuery.ajax({
-                                url: 'ApprovalEntries.aspx/RejectApprovalRequest',
+                                url: "@Url.Action("RejectApprovalRequest", "ViewApprovalEntry")",
                                 type: "POST",
                                 data: '{param1:"' + pid + '", param2:"' + $('#RejectionComment').val() + '"}',
                                 dataType: "json",
                                 contentType: "application/json; charset=utf-8",
                                 success: function (response) {
 
-                                    if (response != null && response.d != null) {
-                                        var data = response.d;
-                                        // alert(typeof (data)); //it comes out to be string
-                                        //we need to parse it to JSON
-                                        data = $.parseJSON(data);
+                                    if (response != null) {
+                                        var data = $.parseJSON(response);
 
                                         hideLoading();
 
@@ -374,18 +371,15 @@
                             showToast('Approving application');
 
                             jQuery.ajax({
-                                url: 'ApprovalEntries.aspx/ApproveApprovalRequest',
+                                url:"@Url.Action("ApproveApprovalRequest", "ViewApprovalEntry")",
                                 type: "POST",
                                 data: '{param1:"' + pid + '"}',
                                 dataType: "json",
                                 contentType: "application/json; charset=utf-8",
                                 success: function (response) {
 
-                                    if (response != null && response.d != null) {
-                                        var data = response.d;
-                                        // alert(typeof (data)); //it comes out to be string
-                                        //we need to parse it to JSON
-                                        data = $.parseJSON(data);
+                                    if (response != null) {
+                                        var data = $.parseJSON(response);
 
                                         hideLoading();
 
@@ -431,18 +425,15 @@
                             showToast('Rejecting application');
 
                             jQuery.ajax({
-                                url: 'ViewApprovalEntry.aspx/RejectApprovalRequest',
+                                url:"@Url.Action("RejectApprovalRequest", "ViewApprovalEntry")",
                                 type: "POST",
                                 data: '{param1:"' + pid + '", param2:"' + $('#RejectionComment').val() + '"}',
                                 dataType: "json",
                                 contentType: "application/json; charset=utf-8",
                                 success: function (response) {
 
-                                    if (response != null && response.d != null) {
-                                        var data = response.d;
-                                        // alert(typeof (data)); //it comes out to be string
-                                        //we need to parse it to JSON
-                                        data = $.parseJSON(data);
+                                    if (response != null) {
+                                        var data = $.parseJSON(response);
 
                                         hideLoading();
 
@@ -483,18 +474,15 @@
                             showToast('Approving application');
 
                             jQuery.ajax({
-                                url: 'ViewApprovalEntry.aspx/ApproveApprovalRequest',
+                                url:"@Url.Action("ApproveApprovalRequest", "ViewApprovalEntry")",
                                 type: "POST",
                                 data: '{param1:"' + pid + '"}',
                                 dataType: "json",
                                 contentType: "application/json; charset=utf-8",
                                 success: function (response) {
 
-                                    if (response != null && response.d != null) {
-                                        var data = response.d;
-                                        // alert(typeof (data)); //it comes out to be string
-                                        //we need to parse it to JSON
-                                        data = $.parseJSON(data);
+                                    if (response != null) {
+                                        var data = $.parseJSON(response);
 
                                         hideLoading();
 
@@ -526,6 +514,6 @@
             $.Toast.hideToast();
         }
     </script>
-    </body>
+ 
 
 </main>

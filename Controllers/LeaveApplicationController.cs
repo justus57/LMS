@@ -266,8 +266,6 @@ namespace LMS.Controllers
 
                 try
                 {
-                    //  string mMessage = LeaveApplicationXMLRequests.SaveLeaveApplication(DocumentNo, EmployeeID, EmployeeName, RequestDate, DateCreated, AccountId, LeaveCode, Description, StartDate, EndDate, LeaveDays, ReturnDate);
-                    //string mMessage = LeaveApplicationXMLRequests.SaveLeaveApplication(DocumentNo, EmployeeID, EmployeeName, RequestDate, DateCreated, AccountId, LeaveCode, Description, StartDate, EndDate, LeaveDays, ReturnDate);
                     string request = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                             <Body>
                                 <SaveLeaveStepOneDetails xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">

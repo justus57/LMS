@@ -40,6 +40,7 @@ namespace LMS.Controllers
             GetEmployeeList();
             return View();
         }
+
         public JsonResult GetUserLeaves(string param1)
         {
             int position = param1.IndexOf(',');
@@ -54,12 +55,15 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(leavetype), JsonRequestBehavior.AllowGet); ;
         }
+
         public JsonResult LoadApprovedLeaves(string param1, string param2)
         {
             List<AprrovedLeave> respmsg = new List<AprrovedLeave>();
             try
             {
-                string ApprovedLeavesResponse = LeaveRecallForOtherXMLRequests.GetApprovedLeaves(param2, param1);
+                int position = param2.IndexOf(',');
+                var param = param2.Substring(0, position);
+                string ApprovedLeavesResponse = LeaveRecallForOtherXMLRequests.GetApprovedLeaves(param, param1);
 
                 JavaScriptSerializer ser = new JavaScriptSerializer();
                 if (ApprovedLeavesResponse != "")
@@ -71,6 +75,7 @@ namespace LMS.Controllers
                         respmsg.Add(new AprrovedLeave { LeaveNo = LeaveDetail.LeaveNo, StartDate = AppFunctions.ConvertTime(LeaveDetail.StartDate), EndDate = AppFunctions.ConvertTime(LeaveDetail.EndDate), Qty = LeaveDetail.Qty });
                     }
                 }
+               
             }
             catch (Exception es)
             {
@@ -269,7 +274,9 @@ namespace LMS.Controllers
         {
             //LeaveRecall
             string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
-            string EmployeeID = param7.Trim();
+            int position = param7.IndexOf(',');
+            var param = param7.Substring(0, position);
+            string EmployeeID = param.Trim();
             string EmployeeName = param8.Trim();
             string DocumentNo = GetDocumentNumber(EmployeeID);
             string RequestDate = DateTime.Now.ToString("dd/MM/yyyy");//d/m/Y
@@ -295,7 +302,9 @@ namespace LMS.Controllers
         public JsonResult Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8)
         {
             string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
-            string EmployeeID = param7.Trim();
+            int position = param7.IndexOf(',');
+            var param = param7.Substring(0, position);
+            string EmployeeID = param.Trim();
             string EmployeeName = param8.Trim();
             string DocumentNo = GetDocumentNumber(EmployeeID);
             string RequestDate = DateTime.Now.ToString("dd/MM/yyyy");
@@ -330,6 +339,7 @@ namespace LMS.Controllers
 
         private static string GetDocumentNumber(string username)
         {
+            
             string DocumentNumberResponse = LeaveRecallForOtherXMLRequests.GetDocumentNumber(username);
             dynamic json = JObject.Parse(DocumentNumberResponse);
             return json.DocumentNo;

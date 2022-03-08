@@ -1002,14 +1002,14 @@ namespace LMS.CustomsClasses
         public static string GetDocumentNumber(string EmployeeNumber)
         {
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
-                            <Body>
-                                <GetLeaveNewNo xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                    <documentNo></documentNo>
-                                    <employeeNo>" + EmployeeNumber + @"</employeeNo>
-                                    <leaveSubType>Leave</leaveSubType>
-                                </GetLeaveNewNo>
-                            </Body>
-                        </Envelope>";
+                                <Body>
+                                    <GetNewDocumentNo xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+                                        <hRDocumentType>Absence</hRDocumentType>
+                                        <employeeNo>" + EmployeeNumber + @"</employeeNo>
+                                        <subType>Leave</subType>
+                                    </GetNewDocumentNo>
+                                </Body>
+                            </Envelope>";
 
             string str = Assest.Utility.CallWebService(req);
             return Assest.Utility.GetJSONResponse(str);

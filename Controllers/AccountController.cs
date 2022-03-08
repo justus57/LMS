@@ -34,14 +34,12 @@ namespace LMS.Controllers
                         var profileData = new Login
                         {
                             EmployeeNumber = EmployeeData.EmployeeNumber,
-
                         };
                         this.Session["UserProfile"] = profileData;
                         ModelState.AddModelError("", "Successful!" + Msg);
                         ViewBag.Message = Msg;
                         return RedirectToAction("Dashboard", "Dashboard");
                     }
-
                 }
                 else
                 {
@@ -159,7 +157,6 @@ namespace LMS.Controllers
             catch (Exception es)
             {
                 status = "999";
-
                 Msg = "Authentication failed. Wrong username or password. Kindly contact the administrator";
                 Msg = es.ToString();
                
@@ -231,6 +228,7 @@ namespace LMS.Controllers
             return this.View();
         }
         public ActionResult OneTimePassword() { return View(); }
+        [HttpPost]
         public ActionResult OneTimePassword(OneTimePassword password)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();

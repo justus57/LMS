@@ -59,8 +59,9 @@ namespace LMS.Controllers
                     //if (System.Web.HttpContext.Current.Session["IsStaffAdvanceApprover"].ToString() == "TRUE" || System.Web.HttpContext.Current.Session["IsLeaveApprover"].ToString() == "TRUE" || System.Web.HttpContext.Current.Session["IsTrainingSupervisor"].ToString() == "TRUE" || System.Web.HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE" || System.Web.HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE")
                     //{
                         string status = Request.QueryString["status"].Trim();
-
+                    ViewBag.status = status; 
                         parent = Request.QueryString["parent"].Trim();
+                    ViewBag.parent = parent;
                     string endpoint = Url.Action("ViewApprovalEntry", "ViewApprovalEntry", new { id = "" });
 
                     if (status == "" || parent == "")
@@ -76,7 +77,6 @@ namespace LMS.Controllers
             }
             return View();
         }
-
         private void LoadTable(string status, string parent,string endpoint)
         {
             DataTable dt = null;
@@ -199,7 +199,7 @@ namespace LMS.Controllers
             ////Append the HTML string to Placeholder.
             ViewBag.Table = strText;
         }
-        public static string ApproveApplication(string param1)
+        public JsonResult ApproveApplication(string param1)
         {
             string LeaveHeaderNo = AppFunctions.Base64Decode(param1);
             string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
@@ -229,10 +229,10 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
      
-        public static string RejectApplication(string param1, string param2)
+        public JsonResult RejectApplication(string param1, string param2)
         {
             string ApprovalEntryNo = AppFunctions.Base64Decode(param1);
             string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
@@ -358,7 +358,7 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
 
     }

@@ -7,7 +7,7 @@
     <div id="wrapper">
         <div id="content-wrapper">
             <div class="container-fluid">
-                    @*Breadcrumbs*@
+                @*Breadcrumbs*@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a href="#">Dashboard</a>
@@ -16,37 +16,38 @@
                         <a href="#">Approval Entries</a>
                     </li>
                     <li class="breadcrumb-item active">
-                       @{Response.Write(Request["status"]); Response.Write(" ");   Response.Write(Request["parent"]);}
+                        @Html.Raw(ViewBag.status)  @Html.Raw(ViewBag.parent)
                     </li>
                 </ol>
 
-                    @*DataTables Example*@ 
+                @*DataTables Example*@
                 <div class="card mb-3">
                     <div class="card-header">
                         <i class="fas fa-paper-plane"></i>
-                        @*Approval Entries*@
+                        Approval Entries
                     </div>
                     <div class="card-body">
-                        @if (HttpContext.Current.Session["ErrorMessage"].ToString() != "") {
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>An error occured!</strong>  @{Response.Write(HttpContext.Current.Session["ErrorMessage"].ToString()); }.
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                        @if (HttpContext.Current.Session["ErrorMessage"].ToString() != "")
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>An error occured!</strong>  @{Response.Write(HttpContext.Current.Session["ErrorMessage"].ToString()); }.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        }
+                        <div class="table-responsive">
+                            @Html.Raw(ViewBag.Table)
                         </div>
-                         } 
-                    <div class="table-responsive">
-                        @Html.Raw(ViewBag.Table)
-                    </div>
                     </div>
                     <div class="card-footer small text-muted">Updated today at  @DateTime.Now.ToShortTimeString() </div>
                 </div>
 
             </div>
-            </div>
+        </div>
 
-</div>           
-   
+    </div>
+
     @*Leave rejection comment modal*@
     <div class="modal fade" id="ApplicationRejectionComment" tabindex="-1" role="dialog" aria-labelledby="RejectionCommentTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -77,24 +78,36 @@
             </div>
         </div>
     </div>
- 
 
-        @*Bootstrap core JavaScript*@
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap core CSS-->
+    <link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-        @*Core plugin JavaScript*@
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Custom fonts for this template-->
+    <link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
-        @*Page level plugin JavaScript*@
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Page level plugin CSS-->
+    <link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="~/Assest/css/sb-admin.css" rel="stylesheet">
 
-        @*Custom scripts for all pages*@
-    <script src="js/sb-admin.min.js"></script>
+    <link href="css/custom.css" rel="stylesheet">
+    @*Bootstrap core JavaScript*@
+    <script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <script src="js/bootbox.all.min.js"></script>
-    <script src="js/bootboxError.js"></script>
+    @*Core plugin JavaScript*@
+    <script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    @*Page level plugin JavaScript*@
+    <script src="~/Assest/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="~/Assest/vendor/datatables/dataTables.bootstrap4.js"></script>
+
+    @*Custom scripts for all pages*@
+    <script src="~/Assest/js/sb-admin.min.js"></script>
+
+    <script src="~/Assest/js/bootbox.all.min.js"></script>
+    <script src="~/Assest/js/bootboxError.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
@@ -107,11 +120,11 @@
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
     <script type="text/javascript">
-    var jQuery_3_3_1 = $.noConflict(true);
+        var jQuery_3_3_1 = $.noConflict(true);
     </script>
-    <script src="js/jquery.toast.js"></script>
+    <script src="~/Assest/js/jquery.toast.js"></script>
     <script>
-    $(document).ready(function () {
+    $(function () {
         $('[data-toggle="tooltip"]').tooltip();
         $(".MultiLineLimit").on('change keydown paste input', function () {
             this.value = (this.value.length <= 50 ? this.value : this.value.substring(0, 50));
@@ -126,7 +139,7 @@
             $('#count_message').html(text_remaining + ' remaining');
         });
     });
-    $(document).ready(function () {
+    $(function () {
         var table = $('#dataTable').DataTable({
             lengthChange: false,
             buttons: ['copy', 'excel', 'pdf', 'colvis']
@@ -188,7 +201,7 @@
                         showToast('Approving application');
 
                         jQuery.ajax({
-                            url: 'ApprovalEntries.aspx/ApproveApplication',
+                            url:"@Url.Action("ApproveApplication", "ApprovalEntries")",
                             type: "POST",
                             data: '{param1:"' + pid + '"}',
                             dataType: "json",
@@ -279,19 +292,15 @@
                         showToast('Approving application');
 
                         jQuery.ajax({
-                            url: 'ApprovalEntries.aspx/ApproveApplication',
+                            url:"@Url.Action("ApproveApplication", "ApprovalEntries")",
                             type: "POST",
                             data: '{param1:"' + pid + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
 
-                                if (response != null && response.d != null) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-
-                                    data = $.parseJSON(data);
+                                if (response != null ) {
+                                    var data = $.parseJSON(response);
 
                                     hideLoading();
 
@@ -372,19 +381,15 @@
                         showToast('Approving request');
 
                         jQuery.ajax({
-                            url: 'ApprovalEntries.aspx/ApproveTraining',
+                            url:"@Url.Action("ApproveTraining", "ApprovalEntries")",
                             type: "POST",
                             data: '{param1:"' + pid + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
 
-                                if (response != null && response.d != null) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-
-                                    data = $.parseJSON(data);
+                                if (response != null) {
+                                    var data = $.parseJSON(response);
 
                                     hideLoading();
 
@@ -434,7 +439,7 @@
                         showToast('Approving request');
 
                         jQuery.ajax({
-                            url: 'ApprovalEntries.aspx/ApproveStaffAdvance',
+                            url:"@Url.Action("ApproveStaffAdvance", "ApprovalEntries")",
                             type: "POST",
                             data: '{param1:"' + pid + '"}',
                             dataType: "json",
@@ -975,6 +980,6 @@
         $.Toast.hideToast();
     }
     </script>
-   
+
 </main>
 

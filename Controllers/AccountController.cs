@@ -10,11 +10,15 @@ namespace LMS.Controllers
 {
     public class AccountController : Controller
     {
+        private static string hashpassword;
+
+        [AllowAnonymous]
         public ActionResult Login()
         {
             return View();
         }
         [HttpPost]
+       
         public ActionResult Login(Login EmployeeData)
         {
             var param1 = EmployeeData.EmployeeNumber;
@@ -64,13 +68,14 @@ namespace LMS.Controllers
             string Msg = null;
             string response = null;
             string status = null;
+            hashpassword = AppFunctions.ComputeSha256Hash(password);
             try
             {
                 string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                                 <Body>
                                                     <ConfirmEmployeePassword xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
                                                         <empNo>" + param1 + @"</empNo>
-                                                        <prPassword>" + password + @"</prPassword>
+                                                        <prPassword>" + hashpassword + @"</prPassword>
                                                     </ConfirmEmployeePassword>
                                                 </Body>
                                             </Envelope>";
@@ -172,6 +177,8 @@ namespace LMS.Controllers
         {
             return View();
         }
+        [HttpPost]
+        [AllowAnonymous]
         public ActionResult Register(Register register)
         {
             object v = System.Web.HttpContext.Current.Session["Logged"] = "Yes";

@@ -307,7 +307,7 @@ namespace LMS.Controllers
         //    }
         //}
    
-        public static string ApproveApprovalRequest(string param1)
+        public JsonResult ApproveApprovalRequest(string param1)
         {
             string LeaveHeaderNo = AppFunctions.Base64Decode(param1);
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -337,10 +337,10 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string RejectApprovalRequest(string param1, string param2)
+        public JsonResult RejectApprovalRequest(string param1, string param2)
         {
             string LeaveHeaderNo = AppFunctions.Base64Decode(param1);
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -389,7 +389,7 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return  Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -48,6 +48,7 @@ namespace LMS.Controllers
                 else
                 {
                     string status = Request.QueryString["status"];
+                    ViewBag.WordHtml = status;
                     string owner = Request.QueryString["owner"];
                     string endpoint = Url.Action("ViewLeave", "ViewLeave", new {id= "" });
                     if (status == "" || owner == "")

@@ -22,6 +22,7 @@ namespace LMS.Controllers
         static string _EndDate = null;
         static string _LeaveDays = null;
         static string _LeaveType = null;
+        private object viewLeave;
         private readonly string ID;
 
 
@@ -68,18 +69,79 @@ namespace LMS.Controllers
                     }
                     else
                     {
-                        string LeaveID = AppFunctions.Base64Decode(s);
-                        ViewLeaveRecall view = new ViewLeaveRecall();
-                        view.LeaveCodeTxt = LeaveID;
-
-                        GetLeaveData(LeaveID);
                         ViewLeaveRecall viewLeave = new ViewLeaveRecall();
-                       ViewBag.LeaveID = LeaveID;
+                        try
+                        {
+                            string LeaveID = AppFunctions.Base64Decode(s);
+
+                            viewLeave.LeaveCodeTxt = LeaveID;
+
+                            //GetLeaveData(LeaveID);
+
+                            ViewBag.LeaveID = LeaveID;
+                            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
+
+                            string LoadLeaveRecallresponse = ViewLeaveRecallXMLRequests.LoadLeaveRecallData(LeaveID, username);
+                            string datax = Assest.Utility.GetJSONResponse(LoadLeaveRecallresponse);
+                            dynamic json = JObject.Parse(datax);
+
+                            string StartDate = json.StartDate;
+                            string EndDate = json.EndDate;
+                            string LeaveDays = json.LeaveDaysApplied;
+                            string Return_Date = json.ReturnDate;
+                            string ApproverName = json.ApproverName;
+                            string Description = json.Description;
+                            string RejectionComment = json.RejectionComment;
+                            string AttachmentName = json.AttachmentName;
+                            string LeaveCode = json.LeaveType;
+
+                            if (LeaveID != "")
+                            {
+
+                                //LoadLeaveDetails(LeaveCode);
+                                string username1 = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();// get session variable
+                                string LoadLeaveDetailsresponseString = ViewLeaveRecallXMLRequests.LoadLeaveDetails(username1, LeaveCode);
+                                //{"Code":"ANNUAL","Description":"Annual Leave","Entitled":"23","OpeningBalance":"0","LeaveTaken":"14","Accrued":"40","Remaining":"26"}
+                                dynamic json1 = JObject.Parse(LoadLeaveDetailsresponseString);
+
+                                viewLeave.Leave_Opening_Balance = json1.OpeningBalance;
+                                viewLeave.Leave_Entitled = json1.Entitled;
+                                viewLeave.Leave_Accrued_Days = json1.Accrued;
+                                viewLeave.Leave_Days_Taken = json1.LeaveTaken;
+                                viewLeave.Leave_Balance = json1.Remaining;
+
+                                viewLeave.LeaveType = LeaveCode;
+                                viewLeave.LeaveStartDay = AppFunctions.ConvertTime(StartDate);
+                                viewLeave.LeaveEndDay = AppFunctions.ConvertTime(EndDate);
+                                viewLeave.LeaveDaysApplied = Convert.ToInt16(decimal.Parse(LeaveDays)).ToString();
+                                viewLeave.ReturnDate = AppFunctions.ConvertTime(Return_Date);
+                                viewLeave.LeaveApprover = ApproverName;
+                                viewLeave.Leave_comments = Description;
+
+                                _LeaveType = LeaveCode;
+                                _LeaveStartDay = AppFunctions.GetDateTime(StartDate);
+                                _ReturnDate = AppFunctions.ConvertTime(Return_Date);
+                                _Description = Description;
+                                _StartDate = AppFunctions.ConvertTime(StartDate); ;
+                                _EndDate = AppFunctions.ConvertTime(EndDate);
+                                _LeaveDays = Convert.ToInt16(decimal.Parse(LeaveDays)).ToString();
+                            }
+                            else
+                            {
+                                Response.Redirect(Request.UrlReferrer.ToString());
+                            }
+
+                            ////
+                        }
+                        catch (Exception es)
+                        {
+                            Console.Write(es);
+                        }
 
                     }
                 }
             }
-            return View();
+            return View(viewLeave);
         }
         private void GetLeaveData(string LeaveID)
         {
@@ -139,17 +201,7 @@ namespace LMS.Controllers
         {
             try
             {
-                string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();// get session variable
-                string LoadLeaveDetailsresponseString = ViewLeaveRecallXMLRequests.LoadLeaveDetails(username, LeaveCode);
-                //{"Code":"ANNUAL","Description":"Annual Leave","Entitled":"23","OpeningBalance":"0","LeaveTaken":"14","Accrued":"40","Remaining":"26"}
-                dynamic json = JObject.Parse(LoadLeaveDetailsresponseString);
-                ViewLeaveRecall viewLeave = new ViewLeaveRecall();
-
-                viewLeave.Leave_Opening_Balance = json.OpeningBalance;
-                viewLeave.Leave_Entitled = json.Entitled;
-                viewLeave.Leave_Accrued_Days = json.Accrued;
-                viewLeave. Leave_Days_Taken = json.LeaveTaken;
-                viewLeave.Leave_Balance = json.Remaining;
+              
             }
             catch (Exception es)
             {

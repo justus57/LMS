@@ -18,13 +18,13 @@
                         <a href="#">Dashboard</a>
                     </li>
                     <li class="breadcrumb-item">Leave Recalls</li>
-                    <li class="breadcrumb-item active"> @{Response.Write(Request["status"]); } applications</li>
+                    <li class="breadcrumb-item active">@Html.Raw(ViewBag.WordHtml1) applications</li>
                 </ol>
                 <!-- DataTables Example -->
                 <div class="card mb-3">
                     <div class="card-header">
                         <i class="fas fa-folder"></i>
-                        @{Response.Write(Request["status"]); } Leave Recall Applications
+                        @Html.Raw(ViewBag.WordHtml1) Leave Recall Applications
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -63,20 +63,20 @@
         </div>
     </div>
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Page level plugin JavaScript-->
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="~/Assest/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="~/Assest/vendor/datatables/dataTables.bootstrap4.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin.min.js"></script>
-    <script src="js/bootbox.all.min.js"></script>
-    <script src="js/bootboxError.js"></script>
+    <script src="~/Assest/js/sb-admin.min.js"></script>
+    <script src="~/Assest/js/bootbox.all.min.js"></script>
+    <script src="~/Assest/js/bootboxError.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
@@ -91,7 +91,7 @@
     <script type="text/javascript">
         var jQuery_3_3_1 = $.noConflict(true);
     </script>
-    <script src="js/jquery.toast.js"></script>
+    <script src="~/Assest/js/jquery.toast.js"></script>
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
@@ -109,6 +109,7 @@
             jQuery_3_3_1("#dataTable").on("click", ".delete_record", function (e) {
                 e.preventDefault();
                 var pid = $(this).attr('data-id');
+                console.log(pid);
                 bootbox.confirm({
                     title: "<i class='fa fa-trash'></i> Delete record?",
                     message: "Do you wish to delete this Leave Recall application?",
@@ -187,7 +188,8 @@
                                 success: function (response) {
 
                                     if (response != null) {
-                                        var data = $.parseJSON(response);;
+                                        var data = $.parseJSON(response);
+                                        console.log(data);
                                         // alert(typeof (data)); //it comes out to be string
                                         //we need to parse it to JSON
 

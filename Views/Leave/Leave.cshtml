@@ -13,13 +13,13 @@
                         <a href="#">Dashboard</a>
                     </li>
                     <li class="breadcrumb-item">Leaves</li>
-                    <li class="breadcrumb-item active">@{Response.Write(Request["status"]);} applications</li>
+                    <li class="breadcrumb-item active">@Html.Raw(ViewBag.WordHtml) applications</li>
                 </ol>
                 <!-- DataTables Example -->
                 <div class="card mb-3">
                     <div class="card-header">
                         <i class="fas fa-suitcase"></i>
-                        @{Response.Write(Request["status"]);}Leave applications
+                        @Html.Raw(ViewBag.WordHtml) Leave applications
                         <div class="card-body">
                             <div class="table-responsive">
                                 @Html.Raw(ViewBag.Table)
@@ -33,24 +33,7 @@
         <!-- /.content-wrapper -->
     </div>
   </div>
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="#">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+ 
 </main>
  @*Bootstrap core JavaScript*@
 <script type="text/javascript">
@@ -90,10 +73,10 @@
                 callback: function (result) {
 
                     if (result == true) {
-
+                        console.log(pid);
                         showToast('Deleting application');
                         jQuery.ajax({
-                            url: "@Url.Action("leave", "Leave")",
+                            url: "@Url.Action("DeleteOpenLeave", "Leave")",
                             type: "POST",
                             data: '{param1:"' + pid + '"}',
                             dataType: "json",

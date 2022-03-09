@@ -1547,7 +1547,15 @@ namespace LMS.CustomsClasses
         }
         public static string SubmitOpenLeaveRecall(string DocumentNo)
         {
-            return WebserviceConfig.ObjNav.SendApprovalRequest("Absence", DocumentNo);
+            string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                            <Body>
+                                <SendApprovalRequest xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+                                    <documentArea>Absence</documentArea>
+                                    <documentNo>" + DocumentNo + @"</documentNo>
+                                </SendApprovalRequest>
+                            </Body>
+                        </Envelope>";
+            return Assest.Utility.CallWebService(req);
         }
         public static string DeleteOpenLeaveRecall(string documentNo)
         {

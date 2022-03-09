@@ -70,11 +70,8 @@ namespace LMS.Controllers
                     else
                     {
                         string LeaveID = AppFunctions.Base64Decode(s);
-
                         documentNo = LeaveID;
                         ViewBag.WordHtml = LeaveID;
-                        //GetLeaveData(LeaveID);
-                        //ViewLeaveRecall view = new ViewLeaveRecall();
                         documentNo = LeaveID;
                         ViewLeave view = new ViewLeave();
                         try
@@ -95,12 +92,10 @@ namespace LMS.Controllers
 
                             if (LeaveCode != "")
                             {
-                                //LoadLeaveDetails(LeaveCode);
                                 try
                                 {
                                     string username1 = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();// get session variable
                                     string GetLeaveDetailsresponseString = ViewLeaveXMLRequest.GetLeaveDetails(username1, LeaveCode);
-
                                     dynamic json1 = JObject.Parse(GetLeaveDetailsresponseString);
                                     view.Leave_Opening_Balance = json1.OpeningBalance;
                                     view.Leave_Entitled = json1.Entitled;
@@ -115,7 +110,7 @@ namespace LMS.Controllers
                                     view.Leave_comments = Description;
                                     view.Reject_Comments = RejectionComment;
                                     view.LeaveCodeTxt = LeaveID;
-                                    //         _LeaveStartDay = AppFunctions.GetDateTime(StartDate);
+                                    //_LeaveStartDay = AppFunctions.GetDateTime(StartDate);
                                     fileforDownload = folderPath + AttachmentName;
                                     attachmentName = AttachmentName;
                                 }
@@ -123,14 +118,7 @@ namespace LMS.Controllers
                                 {
                                     Console.Write(es);
                                 }
-                                // LeaveType.Text = LeaveCode;
-                                //set to DropDownList
-                                
-
-
                                 GetLeaves();
-                                //making sure the previous selection has been cleared
-
                             }
                             else
                             {
@@ -148,10 +136,7 @@ namespace LMS.Controllers
         
             return View(data);
         }
-        private void GetLeaveData(string LeaveID)
-        {
-           
-        }
+
         public void GetLeaves()
         {
             string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();

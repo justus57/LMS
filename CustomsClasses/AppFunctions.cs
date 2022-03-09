@@ -253,7 +253,7 @@ namespace LMS.CustomsClasses
 
             try
             {
-                DateTime oDate = DateTime.ParseExact(DateString, "ddMMyyyy", System.Globalization.CultureInfo.InvariantCulture);
+                DateTime oDate = DateTime.ParseExact(DateString, "M/d/yyyy hh:mm", new System.Globalization.CultureInfo("pt-BR"));
                 date = oDate.ToString();
 
             }

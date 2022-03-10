@@ -33,7 +33,6 @@ namespace LMS.Controllers
         }
         public ActionResult ViewApprovalEntry()
         {
-
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
             System.Web.HttpContext.Current.Session["IsDashboardActive"] = "";
             System.Web.HttpContext.Current.Session["IsClaimActive"] = "";
@@ -147,8 +146,6 @@ namespace LMS.Controllers
                                 fileforDownload = folderPath + AttachmentName;
                                 attachmentName = AttachmentName;
 
-
-
                                 //if (HasAttachment == "Yes")
                                 //{
                                 //    if (File.Exists(fileforDownload))
@@ -197,116 +194,10 @@ namespace LMS.Controllers
             Response.AddHeader("content-length", buffer.Length.ToString());
             Response.BinaryWrite(buffer);
         }
-        //private void GetLeaveData(string LeaveID, string username)
-        //{
-        //    string Parent = null;
-        //    string status = Request.QueryString["status"].Trim();
-        //    string owner = Request.QueryString["parent"].Trim();
-
-        //    if (owner == "Leaves")
-        //    {
-        //        Parent = "Leave";
-        //    }
-        //    else if (owner == "LeaveRecalls")
-        //    {
-        //        Parent = "LeaveRecall";
-        //    }
-        //    try
-        //    {
-        //        string username = System.Web.HttpContext.Current.Session["Username"].ToString();
-        //        string LeaveData = ViewApprovalEntryXMLRequests.GetLeaveData(LeaveID, username, Parent);
-        //        string datax = Assest.Utility.GetJSONResponse(LeaveData);
-        //        dynamic json = JObject.Parse(datax);
-
-        //        string StartDate = json.StartDate;
-        //        string EndDate = json.EndDate;
-        //        string LeaveDays = json.LeaveDaysApplied;
-        //        string Return_Date = json.ReturnDate;
-        //        string ApproverName = json.ApproverName;
-        //        string Description = json.Description;
-        //        string RejectionComment = json.RejectionComment;
-        //        string AttachmentName = json.AttachmentName;
-        //        string LeaveCode = json.LeaveType;
-
-        //        if (LeaveID != "")
-        //        {
-        //            LoadLeaveDetails(LeaveCode);
-        //            LeaveType = LeaveCode;
-        //            LeaveStartDay = AppFunctions.ConvertTime(StartDate);
-        //            LeaveEndDay = AppFunctions.ConvertTime(EndDate);
-        //            LeaveDaysApplied = Convert.ToInt16(decimal.Parse(LeaveDays)).ToString();
-        //            ReturnDate = AppFunctions.ConvertTime(Return_Date);
-        //            LeaveApprover = ApproverName;
-        //            Leave_comments = Description;
-        //            Rejection_Comment = RejectionComment;
-        //            //
-
-        //            _LeaveType = LeaveCode;
-        //            _LeaveStartDay = AppFunctions.GetDateTime(StartDate);
-        //            _ReturnDate = AppFunctions.ConvertTime(Return_Date);
-        //            _Description = Description;
-        //            _StartDate = AppFunctions.ConvertTime(StartDate); ;
-        //            _EndDate = AppFunctions.ConvertTime(EndDate);
-        //            _LeaveDays = Convert.ToInt16(decimal.Parse(LeaveDays)).ToString();
-
-        //            fileforDownload = folderPath + AttachmentName;
-        //            attachmentName = AttachmentName;
-
-
-
-        //            //if (HasAttachment == "Yes")
-        //            //{
-        //            //    if (File.Exists(fileforDownload))
-        //            //    {
-        //            //        File.Delete(fileforDownload);
-        //            //    }
-        //            //    DownloadAttachment = AttachmentName;
-
-        //            //    GetAttachment(HeaderNo);
-        //            //}
-        //            //else if (HasAttachment == "No")
-        //            //{
-        //            //    DownloadAttachment = "";
-        //            //  //  Attacho.Visible = false;
-        //            //}
-        //            //HasAttachment = "No";
-        //        }
-        //        else
-        //        {
-        //            Response.Redirect(Request.UrlReferrer.ToString());
-        //        }
-        //    }
-        //    catch (Exception es)
-        //    {
-        //        Console.Write(es);
-        //    }
-        //}
         private void GetAttachment(string DocumentNo)
         {
             WebserviceConfig.ObjNav.ExportAttachmentToFile("Absence", DocumentNo, folderPath);
         }
-        //private void LoadLeaveDetails(string LeaveCode)
-        //{
-        //    try
-        //    {
-        //        string username = System.Web.HttpContext.Current.Session["Username"].ToString();// get session variable
-        //        string GetLeaveDetailsresponseString = ViewApprovalEntryXMLRequests.GetLeaveDetails(username, LeaveCode);
-
-        //        //json 
-        //        dynamic json = JObject.Parse(GetLeaveDetailsresponseString);
-
-        //        Leave_Opening_Balance= json.OpeningBalance;
-        //        Leave_Entitled = json.Entitled;
-        //        Leave_Accrued_Days = json.Accrued;
-        //        Leave_Days_Taken = json.LeaveTaken;
-        //        Leave_Balance= json.Remaining;
-        //    }
-        //    catch (Exception es)
-        //    {
-        //        Console.Write(es);
-        //    }
-        //}
-   
         public JsonResult ApproveApprovalRequest(string param1)
         {
             string LeaveHeaderNo = AppFunctions.Base64Decode(param1);
@@ -339,7 +230,6 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-        
         public JsonResult RejectApprovalRequest(string param1, string param2)
         {
             string LeaveHeaderNo = AppFunctions.Base64Decode(param1);

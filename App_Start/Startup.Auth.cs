@@ -20,7 +20,7 @@ namespace LMS
                 LogoutPath = new PathString("/Account/LogOff"),
                 ExpireTimeSpan = System.TimeSpan.FromMinutes(5.0),
                 SlidingExpiration = true,
-                ReturnUrlParameter = "/Home/Index"
+                ReturnUrlParameter = "/Account/Login"
             });  
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 

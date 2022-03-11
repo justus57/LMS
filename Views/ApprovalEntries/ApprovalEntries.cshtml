@@ -135,7 +135,6 @@
         $('#Comment').keyup(function () {
             var text_length = $('#Comment').val().length;
             var text_remaining = text_max - text_length;
-
             $('#count_message').html(text_remaining + ' remaining');
         });
     });
@@ -208,11 +207,8 @@
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
 
-                                if (response != null && response.d != null) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-                                    data = $.parseJSON(data);
+                                if (response != null ) {
+                                    var data = $.parseJSON(response);
 
                                     hideLoading();
 
@@ -542,7 +538,6 @@
                 }
             });
         });
-        //
         jQuery_3_3_1("#dataTable").on("click", ".approve_staffsurrender", function (e) {
             e.preventDefault();
             var pid = $(this).attr('data-id');
@@ -670,7 +665,6 @@
                 }
             });
         });
-        //
         jQuery_3_3_1("#dataTable").on("click", ".approve_staffclaim", function (e) {
             e.preventDefault();
             var pid = $(this).attr('data-id');
@@ -939,19 +933,18 @@
                 form.addClass('was-validated');
             } else if (form[0].checkValidity() === true) {
                 showToast('Rejecting application');
+                var DocumentNo = $('#DocumentNo').val();
+                var Comment = $('#Comment').val();
                 jQuery.ajax({
-                    url: 'ApprovalEntries.aspx/RejectApplication',
+                    url:"@Url.Action("RejectApplication", "ApprovalEntries")",
                     type: "POST",
-                    data: '{param1:"' + $('#DocumentNo').val() + '", param2:"' + $('#Comment').val() + '"}',
+                    data: '{param1:"' + DocumentNo + '", param2:"' + Comment + '"}',
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function (response) {
 
-                        if (response != null && response.d != null) {
-                            var data = response.d;
-                            // alert(typeof (data)); //it comes out to be string
-                            //we need to parse it to JSON
-                            data = $.parseJSON(data);
+                        if (response != null) {
+                            var data = $.parseJSON(response);
 
                             hideLoading();
 

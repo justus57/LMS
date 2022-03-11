@@ -237,7 +237,7 @@ namespace LMS.Controllers
         [HttpPost]
         public ActionResult OneTimePassword(OneTimePassword password)
         {
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
             string oldpass = password.OldPassword;
             string newpass = password.Password;
             string Status = "0";
@@ -250,9 +250,7 @@ namespace LMS.Controllers
                 OldPasswordHash = AppFunctions.ComputeSha256Hash(oldpass);
                 string ChangePasswordresponseString = OneTimePassXMLRequests.ChangePassword(username, OldPasswordHash, Hashdstring);
 
-
                 dynamic json = JObject.Parse(ChangePasswordresponseString);
-
                 Status = json.Status;
                 Msg = json.Msg;
 

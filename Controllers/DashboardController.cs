@@ -8,7 +8,6 @@ namespace LMS.Controllers
     public class DashboardController : Controller
     {
         public string PayrollCutoffDateLabel { get; private set; }
-
         public ActionResult Dashboard(Dashboard dashboard)
         {
             string Password = null;

@@ -211,9 +211,7 @@ namespace LMS.Controllers
             try
             {
                 string xmlresponse = ApprovalEntiesXMLRequests.SendApprovalRequest(LeaveHeaderNo, username);
-
                 dynamic json = JObject.Parse(xmlresponse);
-
                 response = json.Msg;
                 status = json.Status;
             }

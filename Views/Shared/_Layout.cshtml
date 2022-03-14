@@ -114,126 +114,127 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-          
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#charts-nav" role="button" data-bs-toggle="collapse" href="#">
-                <i class="fas fa-fw fa-paper-plane"></i><span>Approvals</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                @*@if (HttpContext.Current.Session["IsLeaveApprover"].ToString() == "TRUE")
-                {*@
-                    @*if (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE" ||
-                    HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE")
-                    {*@
-                        <div class="dropdown-divider"></div>
-                    @*}*@
-                    <h6 class="dropdown-header">Leaves:</h6>
-                    <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries" ,new {status="Pending" ,parent="Leaves" })">Pending</a>
-                    <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries" ,new {status="Approved" ,parent="Leaves" })">Approved</a>
-                    <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries" ,new {status="Rejected" ,parent="Leaves" })">Rejected</a>
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">Leave Recalls:</h6>
-                    <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries" ,new {status="Pending" ,parent="LeaveRecalls" })">Pending</a>
-                    <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries" ,new {status="Approved" ,parent="LeaveRecalls" })">Approved</a>
-                    <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries" ,new {status="Rejected" ,parent="LeaveRecalls" })">Rejected</a>
-                @*}*@
-                </ul>
-        </li>
-            
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#components-nav" role="button" data-bs-toggle="collapse" href="#">
-                    <i class="fas fa-fw fa-suitcase"></i><span>Leaves</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            @if (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE")
+            {
 
-                    <h6 class="dropdown-header">Leave Applications:</h6>
-                    <a class="dropdown-item" href="@Url.Action("LeaveApplication", "LeaveApplication" )">New Application</a>
-                    @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE")
-                    {
-                        <a class="dropdown-item" href="@Url.Action("LeaveForOther", "LeaveForOther" )">Apply for other</a>
-                    }
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">My Summaries:</h6>
-                    <a class="dropdown-item" href="@Url.Action("Leave", "Leave" ,new {status="Open" ,owner="self" })">Open</a>
-                    <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Pending" ,owner="self" })">Pending</a>
-                    <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Approved" ,owner="self"
-            })">Approved</a>
-                    <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Rejected" ,owner="self"
-            })">Rejected</a>
-                    @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE")
-                    {
-                        <div class="dropdown-divider"></div>
-                        <h6 class="dropdown-header">Summaries for others:</h6>
-                        <a class="dropdown-item" href="@Url.Action("Leave", "Leave" ,new {status="Open" ,owner="others"
-            })">Open</a>
-                        <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Pending"
-            ,owner="others" })">Pending</a>
-                        <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Approved"
-            ,owner="others" })">Approved</a>
-                        <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Rejected"
-            ,owner="others" })">Rejected</a>
-                    }
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#forms-nav" role="button" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-journal-text"></i><span>LeavesRecall</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <h6 class="dropdown-header">Leave Recall Applications:</h6>
-                    <a class="dropdown-item" href="@Url.Action("LeaveRecallApplication","LeaveRecallApplication")">
-                        New Application
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#charts-nav" role="button" data-bs-toggle="collapse" href="#">
+                        <i class="fas fa-fw fa-paper-plane"></i><span>Approvals</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
-                    @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE")
-                    {
-                        <a class="dropdown-item" href="@Url.Action("LeaveRecallForOther","LeaveRecallForOther")">Apply for other</a>
-                    }
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">My Summaries:</h6>
-                    <a class="dropdown-item" href="@Url.Action("LeaveRecalls", "LeaveRecalls" ,new {status="Open" ,owner="self"
-            })">Open</a>
-                    <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Pending" ,owner="self"
-            })">Pending</a>
-                    <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Approved" ,owner="self"
+                    <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
+                        @if (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE" ||
+                        HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE")
+                        {
+                        <div class="dropdown-divider"></div>
+                        }
+                        <h6 class="dropdown-header">Leaves:</h6>
+                        <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Pending", parent = "Leaves" })">Pending</a>
+                        <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Approved", parent = "Leaves" })">Approved</a>
+                        <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Rejected", parent = "Leaves" })">Rejected</a>
+                        <div class="dropdown-divider"></div>
+                        <h6 class="dropdown-header">Leave Recalls:</h6>
+                        <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Pending", parent = "LeaveRecalls" })">Pending</a>
+                        <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Approved", parent = "LeaveRecalls" })">Approved</a>
+                        <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Rejected", parent = "LeaveRecalls" })">Rejected</a>
+                        
+                    </ul>
+                </li>
+            }
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#components-nav" role="button" data-bs-toggle="collapse" href="#">
+                        <i class="fas fa-fw fa-suitcase"></i><span>Leaves</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
+                        <h6 class="dropdown-header">Leave Applications:</h6>
+                        <a class="dropdown-item" href="@Url.Action("LeaveApplication", "LeaveApplication" )">New Application</a>
+                        @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE")
+                        {
+                            <a class="dropdown-item" href="@Url.Action("LeaveForOther", "LeaveForOther" )">Apply for other</a>
+                        }
+                        <div class="dropdown-divider"></div>
+                        <h6 class="dropdown-header">My Summaries:</h6>
+                        <a class="dropdown-item" href="@Url.Action("Leave", "Leave" ,new {status="Open" ,owner="self" })">Open</a>
+                        <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Pending" ,owner="self" })">Pending</a>
+                        <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Approved" ,owner="self"
             })">Approved</a>
-                    <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Rejected" ,owner="self"
+                        <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Rejected" ,owner="self"
             })">Rejected</a>
-                    @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE")
-                    {
-                        <div class="dropdown-divider"></div>
-                        <h6 class="dropdown-header"> Summaries for others:</h6>
-                        <a class="dropdown-item" href="@Url.Action("LeaveRecalls", "LeaveRecalls" ,new {status="Open"
-            ,owner="others" })">Open</a>
-                        <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Pending"
+                        @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE")
+                        {
+                            <div class="dropdown-divider"></div>
+                            <h6 class="dropdown-header">Summaries for others:</h6>
+                            <a class="dropdown-item" href="@Url.Action("Leave", "Leave" ,new {status="Open" ,owner="others"
+            })">Open</a>
+                            <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Pending"
             ,owner="others" })">Pending</a>
-                        <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Approved"
+                            <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Approved"
             ,owner="others" })">Approved</a>
-                        <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Rejected"
+                            <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Rejected"
             ,owner="others" })">Rejected</a>
-                    }
-
-                </ul>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-                    <i class="fas fa-fw fa-user"></i><span>User Profile</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <h6 class="dropdown-header">User Information:</h6>
-                    <a class="dropdown-item" href="@Url.Action("Profile","Profile")">View Profile</a>
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">User Login:</h6>
-                    <a class="dropdown-item" href="@Url.Action("OneTimePassword","Account")">Change Password</a>
-                    @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE")
-                    {
+                        }
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#forms-nav" role="button" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-journal-text"></i><span>LeavesRecall</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <h6 class="dropdown-header">Leave Recall Applications:</h6>
+                        <a class="dropdown-item" href="@Url.Action("LeaveRecallApplication","LeaveRecallApplication")">
+                            New Application
+                        </a>
+                        @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE")
+                        {
+                            <a class="dropdown-item" href="@Url.Action("LeaveRecallForOther","LeaveRecallForOther")">Apply for other</a>
+                        }
                         <div class="dropdown-divider"></div>
-                        <h6 class="dropdown-header">Register User</h6>
-                        <a class="dropdown-item" href="@Url.Action("Register","Account")">Register User</a>
+                        <h6 class="dropdown-header">My Summaries:</h6>
+                        <a class="dropdown-item" href="@Url.Action("LeaveRecalls", "LeaveRecalls" ,new {status="Open" ,owner="self"
+            })">Open</a>
+                        <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Pending" ,owner="self"
+            })">Pending</a>
+                        <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Approved" ,owner="self"
+            })">Approved</a>
+                        <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Rejected" ,owner="self"
+            })">Rejected</a>
+                        @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE")
+                        {
+                            <div class="dropdown-divider"></div>
+                            <h6 class="dropdown-header"> Summaries for others:</h6>
+                            <a class="dropdown-item" href="@Url.Action("LeaveRecalls", "LeaveRecalls" ,new {status="Open"
+            ,owner="others" })">Open</a>
+                            <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Pending"
+            ,owner="others" })">Pending</a>
+                            <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Approved"
+            ,owner="others" })">Approved</a>
+                            <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Rejected"
+            ,owner="others" })">Rejected</a>
+                        }
+
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                        <i class="fas fa-fw fa-user"></i><span>User Profile</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <h6 class="dropdown-header">User Information:</h6>
+                        <a class="dropdown-item" href="@Url.Action("Profile","Profile")">View Profile</a>
                         <div class="dropdown-divider"></div>
-                    }
-                </ul>
-            </li>
+                        <h6 class="dropdown-header">User Login:</h6>
+                        <a class="dropdown-item" href="@Url.Action("OneTimePassword","Account")">Change Password</a>
+                        @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE")
+                        {
+                            <div class="dropdown-divider"></div>
+                            <h6 class="dropdown-header">Register User</h6>
+                            <a class="dropdown-item" href="@Url.Action("Register","Account")">Register User</a>
+                            <div class="dropdown-divider"></div>
+                        }
+                    </ul>
+                </li>
 
 
 

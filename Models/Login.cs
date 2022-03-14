@@ -16,6 +16,7 @@ namespace LMS.Models
     {
         public string Status { get; set; }
         public string Msg { get; set; }
+        public string Message { get; set; }
         public string EmployeeName { get; set; }
         public string IsMedicalApprover { get; set; }
         public string IsLeaveApprover { get; set; }

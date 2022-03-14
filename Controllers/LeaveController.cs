@@ -156,6 +156,8 @@ namespace LMS.Controllers
                 }
                 catch (Exception es)
                 {
+                    response = es.Message;
+                    status = "999";
                     Console.Write(es);
                 }
             }

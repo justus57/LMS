@@ -1780,7 +1780,18 @@ namespace LMS.CustomsClasses
         }
         public static string SubmitOpenLeave(string DocumentNo)
         {
-            return WebserviceConfig.ObjNav.SendApprovalRequest("Absence", DocumentNo);
+           // return WebserviceConfig.ObjNav.SendApprovalRequest("Absence", DocumentNo);
+           string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                    <Body>
+                        <SendApprovalRequest xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+                            <documentArea>Absence</documentArea>
+                            <documentNo>"+ DocumentNo + @"</documentNo>
+                        </SendApprovalRequest>
+                    </Body>
+                </Envelope>";
+            string str = Assest.Utility.CallWebService(req);
+            return Assest.Utility.GetJSONResponse(str);
+
         }
         public static string DeleteOpenLeave(string documentNo)
         {
@@ -2050,7 +2061,7 @@ namespace LMS.CustomsClasses
                                     </DeleteAttachmentFromRecord>
                                 </Body>
                             </Envelope>";
-            AppFunctions.CallWebService(delete);
+            Assest.Utility.CallWebService(delete);
         }
         public static string GetLeaveData(string LeaveID, string username)
         {

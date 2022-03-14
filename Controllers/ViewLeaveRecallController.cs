@@ -24,9 +24,6 @@ namespace LMS.Controllers
         static string _LeaveType = null;
         private object viewLeave;
         private readonly string ID;
-
-
-
         // GET: ViewLeaveRecall
         public ActionResult Index()
         {

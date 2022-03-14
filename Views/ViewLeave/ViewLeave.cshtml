@@ -172,8 +172,8 @@
                                             <div class="form-group">
                                                 <label class="form-control-label">Attachment</label>
                                                 @Html.TextBoxFor(model => model.DownloadAttachment, new { @class = "form-control", id = "DownloadAttachment" })
-                                                <button class="btn" onclick="btn_download_Click" ID="btn_download_attachment"><i class="fa fa-download"></i> Download</button>
-                                                <button class="btn" OnClick="View_Click" ID="btn_view_attachment"><i class="fa fa-download"></i> View</button>
+                                                <button class="btn"  ID="btn_download_attachment"><i class="fa fa-download"></i> Download</button>
+                                                <button class="btn" ID="btn_view_attachment"><i class="fa fa-download"></i> View</button>
                                                 <button class="btn" OnClick="View_Click"  ID="btn_delete_attachment"><i class=""></i> Delete</button>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The attachment must be specified</div>
@@ -258,7 +258,7 @@
 <!-- JQUERY DATEPICKER-->
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="~/Assest/js/select2.min.js"></script>
+
 <script src="~/Assest/js/jquery.pleaseWait.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
 <script type="text/javascript">
@@ -324,14 +324,54 @@
 
         $("#LeaveStartDay").datepicker({ dateFormat: 'dd/mm/yy' }).val();
         $("#LeaveEndDay").datepicker({ dateFormat: 'dd/mm/yy' }).val();
-        $('#Leave_Type').select2({
-            sorter: function (data) {
-                return data.sort(function (a, b) {
-                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
-                });
-            }
+        //$('#Leave_Type').select2({
+        //    sorter: function (data) {
+        //        return data.sort(function (a, b) {
+        //            return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+        //        });
+        //    }
+        //});
+        $("#btn_download_attachment").click(function () {
+            $.ajax({
+                url: "@Url.Action("btn_download_Click", "ViewLeave")",
+                type: "POST",
+                data: '{param1:"' + $('#LeaveCodeTxt').val() + '"}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    if (response != null) {
+                        var data = $.parseJSON(data);
+
+                        if (data.Validity == false) {
+                            bootbox.alert(data.Message);
+                        } else {
+                            bootbox.alert(data.Message);
+                        }
+                        
+                    }
+                }
+            });
         });
-        //$('#UploadDiv').hide();
+        $("#btn_view_attachment").click(function () {
+            $.ajax({
+                url: "@Url.Action("View_Click", "ViewLeave")",
+                type: "POST",
+                data: '{param1:"' + $('#LeaveCodeTxt').val() + '"}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    if (response != null) {
+                        var data = $.parseJSON(data);
+                        if (data.Validity == false) {
+                            bootbox.alert(data.Message);
+                        } else {
+                            bootbox.alert(data.Message);
+                        }
+                    }
+                }
+            });
+        });
+        $('#UploadDiv').hide();
 
         $("#Leave_Type").change(function () {
             //selection fields
@@ -487,11 +527,17 @@
                     contentType: false,
                     processData: false,
                     success: function (file) {
-
+                        var ReturnDate = $('#ReturnDate').val();
+                        var Leave_Type = $('#Leave_Type').val();
+                        var Leave_comments = $('#Leave_comments').val();
+                        var LeaveStartDay = $('#LeaveStartDay').val();
+                        var LeaveEndDay = $('#LeaveEndDay').val();
+                        var LeaveDaysApplied = $('#LeaveDaysApplied').val();
+                        var LeaveCodeTxt = $('#LeaveCodeTxt').val();
                         jQuery.ajax({
                             url: "@Url.Action("Save", "ViewLeave")",
                             type: "POST",
-                            data: '{param1:"' + $('#ReturnDate').val() + '", param2:"' + $('#Leave_Type').val() + '", param3:"' + $('#Leave_comments').val() + '", param4:"' + $('#LeaveStartDay').val() + '", param5:"' + $('#LeaveEndDay').val() + '", param6:"' + $('#LeaveDaysApplied').val() + '" , param7:"' + file.name + '", param8:"' + $('#LeaveCodeTxt').val() + '"}',
+                            data: '{param1:"' + ReturnDate + '", param2:"' + Leave_Type + '", param3:"' + Leave_comments + '", param4:"' + LeaveStartDay + '", param5:"' + LeaveEndDay + '", param6:"' + LeaveDaysApplied + '" , param7:"' + file.name + '", param8:"' + LeaveCodeTxt + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {

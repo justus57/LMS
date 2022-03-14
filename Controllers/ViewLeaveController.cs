@@ -24,6 +24,8 @@ namespace LMS.Controllers
         static string documentNo = "";
         private object Leave_Type;
         private object data;
+        private string Msg;
+        private string Status;
 
         public bool LeaveCode { get; private set; }
 
@@ -194,38 +196,68 @@ namespace LMS.Controllers
         {
             WebserviceConfig.ObjNav.ExportAttachmentToFile("Absence", DocumentNo, folderPath);
         }
-        protected void btn_download_Click(object sender, EventArgs e)
+        public ActionResult btn_download_Click(string param1)
         {
-            Response.ContentType = "Application/pdf";
-            Response.AppendHeader("Content-Disposition", "attachment; filename=" + attachmentName + "");
-            // Response.TransmitFile(Server.MapPath("~/doc/help.pdf"));
-            Response.TransmitFile(fileforDownload);
-            Response.End();
+            attachmentName = param1;
+            try
+            {
+                Response.ContentType = "Application/pdf";
+                Response.AppendHeader("Content-Disposition", "attachment; filename=" + attachmentName + "");
+                // Response.TransmitFile(Server.MapPath("~/doc/help.pdf"));
+                Response.TransmitFile(fileforDownload);
+                Response.End();
+            }
+            catch(Exception es)
+            {
+                Msg = es.Message;
+                Status = "999";
+            }
+            var _LeaveCodeDetails = new CustomsClasses.LoginResponse
+            {
+                Msg = Msg,
+                Status = Status
+            };
+             return Json(JsonConvert.SerializeObject(_LeaveCodeDetails), JsonRequestBehavior.AllowGet);
         }
-        protected void View_Click(object sender, EventArgs e)
+        public ActionResult View_Click()
         {
-            string pdfPath = fileforDownload;
-            WebClient client = new WebClient();
-            Byte[] buffer = client.DownloadData(pdfPath);
-            Response.ContentType = "application/pdf";
-            Response.AddHeader("content-length", buffer.Length.ToString());
-            Response.BinaryWrite(buffer);
+            try
+            {
+                string pdfPath = fileforDownload;
+                WebClient client = new WebClient();
+                Byte[] buffer = client.DownloadData(pdfPath);
+                Response.ContentType = "application/pdf";
+                Response.AddHeader("content-length", buffer.Length.ToString());
+                Response.BinaryWrite(buffer);
+            }
+            catch(Exception es)
+            {
+                Msg = es.Message;
+                Status = "999";
+            }
+            var _LeaveCodeDetails = new CustomsClasses.LoginResponse
+            {
+
+                Msg = Msg,
+                Status = Status
+            };
+            return Json(JsonConvert.SerializeObject(_LeaveCodeDetails), JsonRequestBehavior.AllowGet);
         }
        
-        public static string DeleteAttachment(string param1)
+        public JsonResult DeleteAttachment(string param1)
         {
             ViewLeaveXMLRequest.DeleteAttachment(param1);
 
             var _RequestResponse = new RequestResponse
             {
-                Message = "Deleted son",
+                Message = "Deleted soon",
                 Status = "000"
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
       
-        public static string GetLeaveDetails(string param1)
+        public JsonResult GetLeaveDetails(string param1)
         {
             string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();// get session variable
             string OpeningBalance = null;
@@ -271,10 +303,10 @@ namespace LMS.Controllers
                 RequiresAttachment = RequiresAttachment,
                 AttachmentMandatory = AttachmentMandatory
             };
-            return JsonConvert.SerializeObject(_LeaveCodeDetails);
+            return Json(JsonConvert.SerializeObject(_LeaveCodeDetails), JsonRequestBehavior.AllowGet);
         }
         
-        public static string GetLeaveState(string param1, string param2, string param3)
+        public ActionResult GetLeaveState(string param1, string param2, string param3)
         {
             string employeeNo = System.Web.HttpContext.Current.Session["PayrollNo"].ToString(); ;
             string causeofAbsenceCode = param1;
@@ -313,10 +345,10 @@ namespace LMS.Controllers
                 Message = Msg,
                 Validity = validity
             };
-            return JsonConvert.SerializeObject(_LeaveQuantityAndReturnDate);
+            return Json(JsonConvert.SerializeObject(_LeaveQuantityAndReturnDate), JsonRequestBehavior.AllowGet);
         }
         
-        public static string GetLeaveEndDateAndReturnDate(string param1, string param2, string param3)
+        public JsonResult GetLeaveEndDateAndReturnDate(string param1, string param2, string param3)
         {
             string employeeNo = System.Web.HttpContext.Current.Session["PayrollNo"].ToString(); ;
             string causeofAbsenceCode = param1;
@@ -360,10 +392,10 @@ namespace LMS.Controllers
                 Message = Msg,
                 Validity = validity
             };
-            return JsonConvert.SerializeObject(_LeaveEndDateAndReturnDate);
+            return Json(JsonConvert.SerializeObject(_LeaveEndDateAndReturnDate), JsonRequestBehavior.AllowGet);
         }
         
-        public static string SubmitLeave(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8)
+        public JsonResult SubmitLeave(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8)
         {
             string response = null;
             string status = null;
@@ -426,10 +458,10 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
      
-        public static string DeleteLeave(string param1)
+        public JsonResult DeleteLeave(string param1)
         {
             //decode          
 
@@ -457,10 +489,10 @@ namespace LMS.Controllers
                 Message = Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
        
-        public static string CancelLeave(string param1)
+        public JsonResult CancelLeave(string param1)
         {
             string documentNo = param1;
             string status = null;
@@ -486,10 +518,10 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string DelegatePendingLeave(string param1)
+        public JsonResult DelegatePendingLeave(string param1)
         {
             string LeaveHeaderNo = AppFunctions.Base64Decode(param1);
             string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
@@ -519,10 +551,10 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
        
-        public static string Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8)
+        public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8)
         {
             string response = null;
             string status = "000";
@@ -568,7 +600,7 @@ namespace LMS.Controllers
 
                 Status = status
             };
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         public static void UploadAttachment(string param1, string param2)
         {
@@ -580,5 +612,7 @@ namespace LMS.Controllers
             //save attachment if sick leave
             LeaveApplicationXMLRequests.UploadFile(DocumentNo, UploadPath);
         }
+
+      
     }
 }

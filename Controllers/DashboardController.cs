@@ -131,11 +131,11 @@ namespace LMS.Controllers
                         string ContractEndDate = json.ContractEndDate;
                         dashboard.txt_ContractEndDate = ContractEndDate;
 
-                        if (ContractEndDate != "")
-                        {
-                            DateTime oDate = DateTime.ParseExact(ContractEndDate, "MM/dd/yy", System.Globalization.CultureInfo.InvariantCulture);
-                            dashboard.ContractEndDateLabel = oDate.ToString("MMMM dd yyyy");
-                        }
+                        //if (ContractEndDate != "")
+                        //{
+                        //    DateTime oDate = DateTime.ParseExact(ContractEndDate, "MM/dd/yy", System.Globalization.CultureInfo.InvariantCulture);
+                        //    dashboard.ContractEndDateLabel = oDate.ToString("MMMM dd yyyy");
+                        //}
 
                         string AsAt = json.AsAt;
                         dashboard.txt_payroll_cut = AsAt;

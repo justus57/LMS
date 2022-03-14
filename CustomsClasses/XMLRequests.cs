@@ -1371,7 +1371,7 @@ namespace LMS.CustomsClasses
                 LeaveStatus = "Rejected";
             }
 
-            string username = HttpContext.Current.Session["Username"].ToString();
+            string username = HttpContext.Current.Session["PayrollNo"].ToString();
 
             string tabledata = WebService.GetLeaveList("0", "10", username, AppliedAs, LeaveStatus, "LeaveRecall", "500");
 

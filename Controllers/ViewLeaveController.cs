@@ -26,6 +26,8 @@ namespace LMS.Controllers
         private object data;
         private string Msg;
         private string Status;
+        private string HasAttachment;
+        private string DownloadAttachment;
 
         public bool LeaveCode { get; private set; }
 
@@ -92,6 +94,15 @@ namespace LMS.Controllers
                             string AttachmentName = json.AttachmentName;
                             string LeaveCode = json.LeaveType;
 
+                            XmlDocument xmlSoapRequest = new XmlDocument();
+                            xmlSoapRequest.LoadXml(x);
+                            //get elements
+                            XmlNode HeaderDocumentTypeNode = xmlSoapRequest.GetElementsByTagName("Soap:Envelope")[0];
+                            string HeaderDocumentType = HeaderDocumentTypeNode.InnerText;
+                            //
+                            XmlNode NodeHeaderNo = xmlSoapRequest.GetElementsByTagName("Soap:Body")[0];
+                            string HeaderNo = NodeHeaderNo.InnerText;
+
                             if (LeaveCode != "")
                             {
                                 try
@@ -115,6 +126,22 @@ namespace LMS.Controllers
                                     //_LeaveStartDay = AppFunctions.GetDateTime(StartDate);
                                     fileforDownload = folderPath + AttachmentName;
                                     attachmentName = AttachmentName;
+                                    if (HasAttachment == "Yes")
+                                    {
+                                        if (System.IO.File.Exists(fileforDownload))
+                                        {
+                                            System.IO.File.Delete(fileforDownload);
+                                        }
+                                        DownloadAttachment = AttachmentName;
+
+                                        GetAttachment(HeaderNo);
+                                    }
+                                    else if (HasAttachment == "No")
+                                    {
+                                        DownloadAttachment = "";
+                                        //  Attacho.Visible = false;
+                                    }
+                                    HasAttachment = "No";
                                 }
                                 catch (Exception es)
                                 {

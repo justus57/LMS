@@ -26,6 +26,11 @@ namespace LMS.Controllers
         string folderPath = System.Web.HttpContext.Current.Server.MapPath("~/Uploads/");
         string fileforDownload = "";
         string attachmentName = "";
+        private string HasAttachment;
+        private string DownloadAttachment;
+
+
+
         // GET: ViewApprovalEntry
         public ActionResult Index()
         {
@@ -93,7 +98,6 @@ namespace LMS.Controllers
                             string LeaveData = ViewApprovalEntryXMLRequests.GetLeaveData(LeaveID, username, Parent);
                             string datax = Assest.Utility.GetJSONResponse(LeaveData);
                             dynamic json = JObject.Parse(datax);
-
                             string StartDate = json.StartDate;
                             string EndDate = json.EndDate;
                             string LeaveDays = json.LeaveDaysApplied;
@@ -104,6 +108,15 @@ namespace LMS.Controllers
                             string AttachmentName = json.AttachmentName;
                             string LeaveCode = json.LeaveType;
 
+                            XmlDocument xmlSoapRequest = new XmlDocument();
+                            xmlSoapRequest.LoadXml(LeaveData);
+                            //get elements
+                            XmlNode HeaderDocumentTypeNode = xmlSoapRequest.GetElementsByTagName("HeaderDocumentType")[0];
+                            string HeaderDocumentType = HeaderDocumentTypeNode.InnerText;
+                            //
+                            XmlNode NodeHeaderNo = xmlSoapRequest.GetElementsByTagName("HeaderNo")[0];
+                            string HeaderNo = NodeHeaderNo.InnerText;
+                            //
                             if (LeaveID != "")
                             {
                                 //LoadLeaveDetails(LeaveCode);
@@ -111,10 +124,8 @@ namespace LMS.Controllers
                                 {
                                     string username1 = System.Web.HttpContext.Current.Session["Username"].ToString();// get session variable
                                     string GetLeaveDetailsresponseString = ViewApprovalEntryXMLRequests.GetLeaveDetails(username1, LeaveCode);
-
                                     //json 
                                     dynamic json1 = JObject.Parse(GetLeaveDetailsresponseString);
-
                                     entry.Leave_Opening_Balance = json1.OpeningBalance;
                                     entry.Leave_Entitled = json1.Entitled;
                                     entry.Leave_Accrued_Days = json1.Accrued;
@@ -134,7 +145,6 @@ namespace LMS.Controllers
                                 entry.Leave_comments = Description;
                                 entry.Reject_Comments = RejectionComment;
                                 //
-
                                 _LeaveType = LeaveCode;
                                 _LeaveStartDay = AppFunctions.GetDateTime(StartDate);
                                 _ReturnDate = AppFunctions.ConvertTime(Return_Date);
@@ -146,22 +156,22 @@ namespace LMS.Controllers
                                 fileforDownload = folderPath + AttachmentName;
                                 attachmentName = AttachmentName;
 
-                                //if (HasAttachment == "Yes")
-                                //{
-                                //    if (File.Exists(fileforDownload))
-                                //    {
-                                //        File.Delete(fileforDownload);
-                                //    }
-                                //    DownloadAttachment = AttachmentName;
+                                if (HasAttachment == "Yes")
+                                {
+                                    if (System.IO.File.Exists(fileforDownload))
+                                    {
+                                        System.IO.File.Delete(fileforDownload);
+                                    }
+                                    DownloadAttachment = AttachmentName;
 
-                                //    GetAttachment(HeaderNo);
-                                //}
-                                //else if (HasAttachment == "No")
-                                //{
-                                //    DownloadAttachment = "";
-                                //  //  Attacho.Visible = false;
-                                //}
-                                //HasAttachment = "No";
+                                    GetAttachment(HeaderNo);
+                                }
+                                else if (HasAttachment == "No")
+                                {
+                                    DownloadAttachment = "";
+                                    //  Attacho.Visible = false;
+                                }
+                                HasAttachment = "No";
                             }
                             else
                             {

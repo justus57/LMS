@@ -130,16 +130,8 @@ namespace LMS.Controllers
                         dashboard.txt_sesa = SESANo;
                         string ContractEndDate = json.ContractEndDate;
                         dashboard.txt_ContractEndDate = ContractEndDate;
-
-                        //if (ContractEndDate != "")
-                        //{
-                        //    DateTime oDate = DateTime.ParseExact(ContractEndDate, "MM/dd/yy", System.Globalization.CultureInfo.InvariantCulture);
-                        //    dashboard.ContractEndDateLabel = oDate.ToString("MMMM dd yyyy");
-                        //}
-
                         string AsAt = json.AsAt;
                         dashboard.txt_payroll_cut = AsAt;
-
                         if (AsAt != "")
                         {
                             DateTime oDate = DateTime.ParseExact(AsAt, "MM/dd/yy", System.Globalization.CultureInfo.InvariantCulture);

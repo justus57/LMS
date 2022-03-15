@@ -24,6 +24,7 @@ namespace LMS.Models
         public string DownloadAttachment { get; set; }
         public string Reject_Comments { get; set; }
         public string LeaveType { get; set; }
-       
+     
+
     }
 }

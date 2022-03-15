@@ -58,7 +58,7 @@ namespace LMS.Controllers
             }
             catch (Exception ex)
             {
-                ex.Message.ToString();
+               AppFunctions.WriteLog(ex.Message.ToString()+"Login Error");
             }
 
             return View();
@@ -72,14 +72,14 @@ namespace LMS.Controllers
             string Msg = null;
             string response = null;
             string status = null;
-            hashpassword = AppFunctions.ComputeSha256Hash(password);
+            //hashpassword = AppFunctions.ComputeSha256Hash(password);
             try
             {
                 string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                                 <Body>
                                                     <ConfirmEmployeePassword xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
                                                         <empNo>" + param1 + @"</empNo>
-                                                        <prPassword>" + hashpassword + @"</prPassword>
+                                                        <prPassword>" + password + @"</prPassword>
                                                     </ConfirmEmployeePassword>
                                                 </Body>
                                             </Envelope>";

@@ -19,7 +19,7 @@ namespace LMS.CustomsClasses
             try
             {
                 //set up a filestream
-                string strPath = @"C:\Logs\HRWebPortal";
+                string strPath = @"C:\Logs\LMS";
                 string fileName = DateTime.Now.ToString("MMddyyyy") + "_logs.txt";
                 string filenamePath = strPath + '\\' + fileName;
                 Directory.CreateDirectory(strPath);
@@ -161,8 +161,6 @@ namespace LMS.CustomsClasses
                 return builder.ToString();
             }
         }
-        //variables
-
 
         //functions
         public static string Convert_AppraisalDetails(string ValidFrom, string ValidTo)

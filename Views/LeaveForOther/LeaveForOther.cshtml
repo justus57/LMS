@@ -198,37 +198,42 @@
     </div>
     <!-- /#wrapper -->
     <!-- Logout Modal-->
-    
 </main>
-<link href="~/Assest/css/select2.min.css" rel="stylesheet" />
+<!-- Bootstrap core CSS-->
+<link href="~/Asset/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template-->
+<link href="~/Asset/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+<!-- Page level plugin CSS-->
+<link href="~/Asset/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="~/Asset/css/sb-admin.css" rel="stylesheet">
+<link href="~/Asset/css/select2.min.css" rel="stylesheet" />
 <!--jQUERY date picker--->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- Bootstrap core JavaScript-->
-<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
-<script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/Asset/vendor/jquery/jquery.min.js"></script>
+<script src="~/Asset/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 <!-- Core plugin JavaScript-->
-<script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
-<!-- Bootstrap core CSS-->
-<link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-<!-- Custom fonts for this template-->
-<link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-<!-- Page level plugin CSS-->
-<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+<script src="~/Asset/vendor/jquery-easing/jquery.easing.min.js"></script>
+
 <!-- Custom scripts for all pages-->
-<script src="~/Assest/js/sb-admin.min.js"></script>
-<script src="~/Assest/js/bootbox.min.js"></script>
-<script src="~/Assest/js/bootboxError.js"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="~/Asset/js/sb-admin.min.js"></script>
+<script src="~/Asset/js/bootbox.min.js"></script>
+<script src="~/Asset/js/bootboxError.js"></script>
 <!-- JQUERY DATEPICKER-->
-<link rel="manifest" href="manifest.json">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="~/Asset/js/select2.min.js"></script>
+<script src="~/Asset/js/jquery.pleaseWait.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
 <script type="text/javascript">
     var jQuery_3_3_1 = $.noConflict(true);
 </script>
-<script src="~/Assest/js/jquery.toast.js"></script>
+<script src="~/Asset/js/jquery.toast.js"></script>
 <script>
 
     $(function () {
@@ -248,13 +253,13 @@
         $('#UploadDiv').hide();
         $('#Leave_Type').append('<option value=""> </option>');
         $("#LeaveStartDay").datepicker({ dateFormat: 'dd/mm/yy' }).val();
-        $("#LeaveEndDay").datepicker({ dateFormat: 'dd/mm/yy' }).val();
+        $("#LeaveEndDay").datepicker({dateFormat: 'dd/mm/yy'}).val();
 
         $("#Employee").change(function () {
             //selection fields
             $("#Leave_Type").children('option:not(:first)').remove();
             var employee = $('#Employee').val();
-            
+            console.log(employee);
             if ($('#Employee').val() != '') {
                 $.ajax({
                     url: "@Url.Action("GetUserLeaves", "LeaveForOther")",
@@ -287,7 +292,7 @@
 
                 var leavetype = $('#Leave_Type').val();
                 var Employee = $('#Employee').val();
-                
+
                 jQuery.ajax({
                     url: "@Url.Action("GetLeaveDetails", "LeaveForOther")",
                     type: "POST",
@@ -450,7 +455,7 @@
             event.preventDefault();
             // Fetch form to apply custom Bootstrap validation
               var form = $("#LeaveApplicationForm")
-              
+
             if (form[0].checkValidity() === true) {
                 event.preventDefault()
                 event.stopPropagation()
@@ -461,7 +466,7 @@
                  //function for checkig fileupload
                 var dataform = new FormData($('#LeaveApplicationForm')[0]);
                 console.log(dataform);
-               
+
                 $.ajax({
 
                     url:"@Url.Action("FileUploadHandler", "LeaveForOther")",

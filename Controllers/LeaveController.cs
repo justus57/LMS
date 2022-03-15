@@ -20,6 +20,7 @@ namespace LMS.Controllers
         }
         public ActionResult Leave()
         {
+            //get all sessions
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
             System.Web.HttpContext.Current.Session["IsDashboardActive"] = "";
             System.Web.HttpContext.Current.Session["IsClaimActive"] = "";
@@ -32,9 +33,9 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsTrainingActive"] = "";
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
-
             var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
             var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
+            //check if user is logged
             if (log == "No")
             {
                 Response.Redirect("/Account/login");
@@ -57,6 +58,7 @@ namespace LMS.Controllers
                     }
                     else
                     {
+                        //load table data
                         LoadTable(status, owner, endpoint);
                     }
                 }
@@ -255,13 +257,6 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-
-        [ValidateInput(false)]
-        public ActionResult DataViewPartial()
-        {
-
-            var model = str;
-            return PartialView("~/Views/Leave/_DataViewPartial.cshtml", model);
-        }
+      
     }
 }

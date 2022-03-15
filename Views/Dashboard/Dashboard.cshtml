@@ -6,7 +6,6 @@
 
 <main id="main" class="main">
     <div id="wrapper">
-        <!-- Sidebar -->
         <!-- #Include virtual="includes/Sidebar.aspx" -->
         <div id="content-wrapper">
             <div class="container-fluid">
@@ -17,12 +16,14 @@
                     </li>
                     <li class="breadcrumb-item active">User Profile</li>
                 </ol>
+                <!--Alert-->
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <strong> @Html.Label("Message", Model.lblGreeting) </strong> @Html.Label("", Model.LabelHRMessage)
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <!--/Alert-->
                 <div class="row">
                     <div class="col-xl-3 col-md-6">
                         <div class="card bg-secondary text-white mb-4">
@@ -293,19 +294,7 @@
                     </div>
                 }
             </div>
-            <!-- /.container-fluid -->
-            <!-- Sticky Footer -->
-            <footer id="footer" class="footer">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright © @DateTime.Now.Year Brightsoft Technologies Limited</span>
-                    </div>
-                </div>
-            </footer>
-
         </div>
-        <!-- /.content-wrapper -->
-
     </div>
     <!-- /#wrapper -->
     <!-- Scroll to Top Button-->

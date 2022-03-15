@@ -12,22 +12,25 @@ namespace LMS.Controllers
     {
         private static string hashpassword;
 
-        [AllowAnonymous]
+        [AllowAnonymous]//allow for anonymous inorder to use multiple view in one controller
         public ActionResult Login()
         {
             return View();
         }
         [HttpPost]
-       
         public ActionResult Login(Login EmployeeData)
         {
             var param1 = EmployeeData.EmployeeNumber;
             var param2 = EmployeeData.Password;
             string Msg = null;
+
+            //perform user validation form Nav
             var Result = UserLogin(param1, param2);
 
+            //Deserialize the result
             Models.LoginResponse json = JsonConvert.DeserializeObject<Models.LoginResponse>(Result);
             var Login = json.Status;
+
             try
             {
                 Msg = Login + "You have been successfully authenticated";
@@ -57,6 +60,7 @@ namespace LMS.Controllers
             {
                 ex.Message.ToString();
             }
+
             return View();
         }
         //function for login

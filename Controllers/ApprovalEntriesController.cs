@@ -40,7 +40,9 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsTrainingActive"] = "";
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
-
+            System.Web.HttpContext.Current.Session["IsStaffAdvanceApprover"] = "";
+            System.Web.HttpContext.Current.Session["IsLeaveApprover"] = "";
+            System.Web.HttpContext.Current.Session["IsAppraisalSupervisor"] = "";
             var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
             var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
             if (log == "No")
@@ -56,8 +58,8 @@ namespace LMS.Controllers
                 else
                 {
                     ////make sure only approver can see records
-                    //if (System.Web.HttpContext.Current.Session["IsStaffAdvanceApprover"].ToString() == "TRUE" || System.Web.HttpContext.Current.Session["IsLeaveApprover"].ToString() == "TRUE" || System.Web.HttpContext.Current.Session["IsTrainingSupervisor"].ToString() == "TRUE" || System.Web.HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE" || System.Web.HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE")
-                    //{
+                    if (System.Web.HttpContext.Current.Session["IsStaffAdvanceApprover"].ToString() == "TRUE" || System.Web.HttpContext.Current.Session["IsLeaveApprover"].ToString() == "TRUE"|| System.Web.HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE" || System.Web.HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE")
+                    {
                         string status = Request.QueryString["status"].Trim();
                     ViewBag.status = status; 
                         parent = Request.QueryString["parent"].Trim();
@@ -72,7 +74,7 @@ namespace LMS.Controllers
                         {
                             LoadTable(status, parent, endpoint);
                         }
-                    //}
+                    }
                 }
             }
             return View();

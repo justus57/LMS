@@ -86,7 +86,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .back-to-top.active {
   visibility: visible;
-  opacity: 0;
+  opacity: 1;
 }
 
 /*--------------------------------------------------------------
@@ -531,10 +531,10 @@ h1, h2, h3, h4, h5, h6 {
   top: 60px;
   left: 0;
   bottom: 0;
-  width: 5px;
-  /*z-index: 996;*/
+  width: 30px;
+  z-index: 996;
   transition: all 0.3s;
-  padding: 10px;
+  padding: 20px;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #aab7cf transparent;
@@ -543,7 +543,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 @media (max-width: 1199px) {
   .sidebar {
-    left: -300px;
+    left: -30px;
   }
 }
 .sidebar::-webkit-scrollbar {
@@ -557,7 +557,7 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (min-width: 1200px) {
   #main, #footer {
-    margin-left: 250px;
+    margin-left: 350px;
   }
 }
 @media (max-width: 1199px) {
@@ -570,7 +570,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-left: 0;
   }
   .toggle-sidebar .sidebar {
-    left: -30px;
+    left: -300px;
   }
 }
 
@@ -600,7 +600,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 15px;
   font-weight: 600;
   color: #eee;/*items changes*/
-  transition: 0.3s;
+  transition: 0.3;
   background: #f6f9ff;
   padding: 10px 15px;
   border-radius: 4px;
@@ -636,16 +636,16 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
   list-style: none;
 }
-.sidebar-nav .nav-content a {
- display: flex;
-  align-items: center;
-  font-size: 14px;
-  font-weight: 600;
-  color: #fff;
-  transition: 0.3;
-  padding: 10px 0 10px 40px;
-  transition: 0.3s;
-}
+    .sidebar-nav .nav-content a {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 600;
+        color: #fff;
+        transition: 0.3;
+        padding: 10px 0 10px 40px;
+        transition: 0.3s;
+    }
 .sidebar-nav .nav-content a i {
   font-size: 6px;
   margin-right: 8px;
@@ -1061,19 +1061,19 @@ h1, h2, h3, h4, h5, h6 {
 --------------------------------------------------------------*/
 .footer {
   padding: 20px 0;
-  font-size: 14px;
+  font-size: 15px;
   transition: all 0.3s;
-  border-top: 1px solid #cddfff;
+  border-top: 4px solid #ffecdf;
 }
 .footer .copyright {
   text-align: center;
-  color: #012970;
+  color: #f6f9ff;
 }
 .footer .credits {
-  padding-top: 5px;
+  padding-top: 1px;
   text-align: center;
-  font-size: 13px;
-  color: #012970;
+  font-size: 16px;
+  color: #eee;
 }
 /*-----------------------------------------------------
 #sidebar

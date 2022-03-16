@@ -37,7 +37,6 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
 
-
             var profileData = this.Session["UserProfile"] as Login;
             try
             {
@@ -69,7 +68,6 @@ namespace LMS.Controllers
                                             </Body>
                                         </Envelope>";
 
-                        /*string GetUserInformationresponseString = WebserviceConfig.ObjNav.GetEmployeeHomeData(username);*///ProfileXMLRequests.GetUserInformation(username);
                         response = Assest.Utility.CallWebService(req);
 
                         GetUserInformationresponseString = Assest.Utility.GetJSONResponse(response);

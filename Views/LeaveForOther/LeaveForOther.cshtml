@@ -199,7 +199,11 @@
     <!-- /#wrapper -->
     <!-- Logout Modal-->
 </main>
-<!-- Bootstrap core CSS-->
+
+<script src="~/Asset/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="~/Asset/vendor/jquery-easing/jquery.easing.min.js"></script>
 <link href="~/Asset/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom fonts for this template-->
@@ -215,11 +219,6 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- Bootstrap core JavaScript-->
 <script src="~/Asset/vendor/jquery/jquery.min.js"></script>
-<script src="~/Asset/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="~/Asset/vendor/jquery-easing/jquery.easing.min.js"></script>
-
 <!-- Custom scripts for all pages-->
 <script src="~/Asset/js/sb-admin.min.js"></script>
 <script src="~/Asset/js/bootbox.min.js"></script>
@@ -227,15 +226,14 @@
 <!-- JQUERY DATEPICKER-->
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="~/Asset/js/select2.min.js"></script>
 <script src="~/Asset/js/jquery.pleaseWait.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+
 <script type="text/javascript">
     var jQuery_3_3_1 = $.noConflict(true);
 </script>
 <script src="~/Asset/js/jquery.toast.js"></script>
 <script>
-
     $(function () {
 
         $(".MultiLineLimit").on('change keydown paste input', function () {
@@ -462,7 +460,7 @@
                 form.addClass('was-validated');
             } else if (form[0].checkValidity() === false) {
                 // Perform ajax submit here...
-                showToast('Saving application');
+              //  showToast('Saving application');
                  //function for checkig fileupload
                 var dataform = new FormData($('#LeaveApplicationForm')[0]);
                 console.log(dataform);

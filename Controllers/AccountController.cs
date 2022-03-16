@@ -87,7 +87,6 @@ namespace LMS.Controllers
                 UserLoginresponseString = Assest.Utility.GetJSONResponse(response);
             
                 Models.LoginResponse json = JsonConvert.DeserializeObject<Models.LoginResponse>(UserLoginresponseString);
-                //dynamic json = JObject.Parse(UserLoginresponseString);
                 status = json.Status;
                 if (status == "000")
                 {
@@ -209,7 +208,6 @@ namespace LMS.Controllers
             string status = null;
             try
             {
-                //string ResetPassresponseString = WebserviceConfig.ObjNav.RecoverLostPassword("Employee", EmployeeNo);
                 string ResetPassresponseString = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                                         <Body>
                                                             <RecoverLostPassword xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
@@ -221,7 +219,6 @@ namespace LMS.Controllers
                                                     </Envelope>";
                 string response = Assest.Utility.CallWebService(ResetPassresponseString);
                 dynamic json = Assest.Utility.GetJSONResponse(response);
-                //dynamic json = JObject.Parse(response);
                 status = json.Status;
                 Msg = json.Msg;
 

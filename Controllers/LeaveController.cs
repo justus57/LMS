@@ -126,7 +126,6 @@ namespace LMS.Controllers
             //Table end.
             html.Append("</table>");
             string strText = html.ToString();
-
             ViewBag.Table = strText;
         }
 

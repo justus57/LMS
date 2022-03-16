@@ -74,7 +74,6 @@ namespace LMS.Controllers
 
                         dynamic json = JObject.Parse(GetUserInformationresponseString);
 
-
                         string Status = json.Status;
                         dashboard.txt_name = json.EmployeeName;
 
@@ -143,7 +142,6 @@ namespace LMS.Controllers
                         string SuperVisorName = json.SuperVisorName;
                         dashboard.txt_SuperVisorName = SuperVisorName;
                         dashboard.txt_hrmsg = HRMessage;
-
                         //format name
                         string[] words = EmployeeName.Split(' ');
                         EmployeeName = words[0];

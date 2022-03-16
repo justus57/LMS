@@ -102,9 +102,7 @@ namespace LMS.Controllers
             string RequiresAttachment = "";
             string AttachmentMandatory = "";
             string SelectedLeaveDetails = LeaveApplicationXMLRequests.GetSelectedLeaveDetails(username, param1);
-
             dynamic json = JObject.Parse(SelectedLeaveDetails);
-
             OpeningBalance = json.OpeningBalance;
             Entitled = json.Entitled;
             Accrued = json.Accrued;
@@ -127,7 +125,6 @@ namespace LMS.Controllers
                 AttachmentMandatory = AttachmentMandatory
 
             };
-            // return JsonConvert.SerializeObject(Leave);
             return Json(JsonConvert.SerializeObject(Leave), JsonRequestBehavior.AllowGet);
         }
 

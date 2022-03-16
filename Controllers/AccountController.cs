@@ -85,7 +85,7 @@ namespace LMS.Controllers
                                             </Envelope>";
                 response = Assest.Utility.CallWebService(req);
                 UserLoginresponseString = Assest.Utility.GetJSONResponse(response);
-                AppFunctions.WriteLog(UserLoginresponseString);
+            
                 Models.LoginResponse json = JsonConvert.DeserializeObject<Models.LoginResponse>(UserLoginresponseString);
                 //dynamic json = JObject.Parse(UserLoginresponseString);
                 status = json.Status;
@@ -220,7 +220,6 @@ namespace LMS.Controllers
                                                         </Body>
                                                     </Envelope>";
                 string response = Assest.Utility.CallWebService(ResetPassresponseString);
-
                 dynamic json = Assest.Utility.GetJSONResponse(response);
                 //dynamic json = JObject.Parse(response);
                 status = json.Status;
@@ -251,7 +250,6 @@ namespace LMS.Controllers
             {
                 Status = status,
                 Message = Msg,
-
             };
 
             return this.View();

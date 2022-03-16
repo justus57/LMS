@@ -449,9 +449,18 @@ namespace LMS.Controllers
                         UploadAttachment(documentpath, DocumentNo);
 
                         //SendApprovalRequest
-                        string responseString = WebserviceConfig.ObjNav.SendApprovalRequest("Absence", DocumentNo);
-
-                        dynamic jsonSendSubmitRequest = JObject.Parse(responseString);
+                        //string responseString = WebserviceConfig.ObjNav.SendApprovalRequest("Absence", DocumentNo);
+                        string responseString = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                                        <Body>
+                                            <SendApprovalRequest xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+                                                <documentArea>Absence</documentArea>
+                                                <documentNo>" + DocumentNo + @"</documentNo>
+                                            </SendApprovalRequest>
+                                        </Body>
+                                    </Envelope>";
+                        var Sendapproval = Assest.Utility.CallWebService(responseString);
+                        string array = Assest.Utility.GetJSONResponse(Sendapproval);
+                        dynamic jsonSendSubmitRequest = JObject.Parse(array);
                         response = jsonSendSubmitRequest.Msg;
 
                         status = jsonSendSubmitRequest.Status;

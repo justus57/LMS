@@ -307,6 +307,7 @@
 
                  var startDate = new Date(start_date);
                  var endDate = new Date(end_date);
+                 console.log(endDate);
                  //post to controller function
                  if (startDate <= endDate) {
                      var Leave_Type = $('#Leave_Type').val();
@@ -513,7 +514,7 @@
                                      bootbox.alert(data.Message);
                                      //reset fields
                                      $("#LeaveApplicationForm")[0].reset();
-                                     $("#Leave_Type").select2("val", "");
+                                   //  $("#Leave_Type").select2("val", "");
                                  }
                              }
                          });

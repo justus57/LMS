@@ -17,7 +17,7 @@ namespace LMS
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
                 var creds = new NetworkCredential(username, Password, "");
-                //myCache.Add(new Uri(URL_status), "NTLM", );
+                //myCache.Add(new Uri(URL_status), "NTLM");
                 WebRef.HRWebPortal HR = new WebRef.HRWebPortal();
                 HR.Url = URL_status;
                 HR.Credentials = creds;

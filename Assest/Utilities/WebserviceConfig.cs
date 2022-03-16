@@ -11,8 +11,8 @@ namespace LMS
             get
             {
                 string URL_status = "http://btl-svr-01.btl.local:7047/BC180/WS/CRONUS%20International%20Ltd./Codeunit/HRWebPortal";
-                var username = "BTL/Kasyoki.justus";
-                var Password = "$BTL?@2021/2022/S#.&\\$";
+                var username = @"BTL\Kasyoki.justus";
+                var Password = "$BTL@2022&*";
                 ServicePointManager.Expect100Continue = true;
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };

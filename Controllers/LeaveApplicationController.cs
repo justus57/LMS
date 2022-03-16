@@ -249,8 +249,8 @@ namespace LMS.Controllers
                 DocumentNo = json.DocumentNo;
                 string EmployeeID = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
                 string EmployeeName = System.Web.HttpContext.Current.Session["Username"].ToString();
-                string RequestDate = DateTime.Now.ToString("dd/MM/yyyy");//d/m/Y
-                string DateCreated = DateTime.Now.ToString("dd/MM/yyyy");
+                string RequestDate = DateTime.Now.ToString("dd-MM-yyyy");//d/m/Y
+                string DateCreated = DateTime.Now.ToString("dd-MM-yyyy");
                 string AccountId = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
                 string ReturnDate = param1;
                 string LeaveCode = param2;
@@ -454,7 +454,7 @@ namespace LMS.Controllers
                         dynamic jsonSendSubmitRequest = JObject.Parse(responseString);
                         response = jsonSendSubmitRequest.Msg;
 
-                        status = json.Status;
+                        status = jsonSendSubmitRequest.Status;
 
                         if (status == "000")
                         {
@@ -462,7 +462,7 @@ namespace LMS.Controllers
                         }
                         else
                         {
-                            response = json.Msg;
+                            response = jsonSendSubmitRequest.Msg;
 
                         }
                     }

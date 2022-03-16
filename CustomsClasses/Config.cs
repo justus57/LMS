@@ -14,11 +14,12 @@ namespace LMS
         }
         public static string User()
         {
-            return @"BTL/Kasyoki.justus";
+            return @"BTL\Kasyoki.justus";
         }
         public static string Password()
         {
-            return "$BTL?@2021/2022/S#.&\\$";
+            //return "$BTL?@2021/2022/S#.&\\$";
+            return "$BTL@2022&*";
         }
 
     }

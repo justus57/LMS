@@ -308,7 +308,7 @@ namespace LMS.CustomsClasses
         public static string CallWebService(string req)
         {
             string action = "";
-            var _url = Config.WebserviceURL();
+            var _url = "http://btl-svr-01.btl.local:7047/BC180/WS/CRONUS%20International%20Ltd./Codeunit/HRWebPortal";
             var _action = action;
 
             XmlDocument soapEnvelopeXml = CreateSoapEnvelope(req);
@@ -393,7 +393,7 @@ namespace LMS.CustomsClasses
             webRequest.Method = "POST";
             /////////////////webRequest.Credentials = CredentialCache.DefaultCredentials;
             webRequest.Timeout = 10000; //time-out value in milliseconds
-            NetworkCredential creds = new System.Net.NetworkCredential(Config.User(), Config.Password());
+            NetworkCredential creds = new System.Net.NetworkCredential(@"BTL\Kasyoki.justus", "$BTL@2022&*");
             webRequest.Credentials = creds;
             return webRequest;
         }

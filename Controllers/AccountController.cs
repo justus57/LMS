@@ -72,19 +72,20 @@ namespace LMS.Controllers
             string Msg = null;
             string response = null;
             string status = null;
-            //hashpassword = AppFunctions.ComputeSha256Hash(password);
+            hashpassword = AppFunctions.ComputeSha256Hash(password);
             try
             {
                 string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                                 <Body>
                                                     <ConfirmEmployeePassword xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
                                                         <empNo>" + param1 + @"</empNo>
-                                                        <prPassword>" + password + @"</prPassword>
+                                                        <prPassword>" + hashpassword + @"</prPassword>
                                                     </ConfirmEmployeePassword>
                                                 </Body>
                                             </Envelope>";
                 response = Assest.Utility.CallWebService(req);
                 UserLoginresponseString = Assest.Utility.GetJSONResponse(response);
+                AppFunctions.WriteLog(UserLoginresponseString);
                 Models.LoginResponse json = JsonConvert.DeserializeObject<Models.LoginResponse>(UserLoginresponseString);
                 //dynamic json = JObject.Parse(UserLoginresponseString);
                 status = json.Status;
@@ -160,7 +161,9 @@ namespace LMS.Controllers
                 else
                 {
                     Msg = json.Msg;
+                    
                 }
+                
             }
             catch (Exception es)
             {
@@ -173,6 +176,7 @@ namespace LMS.Controllers
             var _RequestResponse = new RequestResponse
             {
                 Status = status,
+
                 Message = Msg,
             };
             return JsonConvert.SerializeObject(_RequestResponse);
@@ -196,17 +200,29 @@ namespace LMS.Controllers
         //allow view for forgotpassword
         public ActionResult ForgotPassword() { return View(); }
         //function for getting password
+        [HttpPost]
+        [AllowAnonymous]
         public ActionResult ForgotPassword(ForgotPassword forgot)
         {
-
             string EmployeeNo = forgot.EmployeeNumber;
             string Msg = null;
             string status = null;
-
             try
             {
-                string ResetPassresponseString = WebserviceConfig.ObjNav.RecoverLostPassword("Employee", EmployeeNo);
-                dynamic json = JObject.Parse(ResetPassresponseString);
+                //string ResetPassresponseString = WebserviceConfig.ObjNav.RecoverLostPassword("Employee", EmployeeNo);
+                string ResetPassresponseString = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                                                        <Body>
+                                                            <RecoverLostPassword xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+                                                                <employeeNo>"+ EmployeeNo + @"</employeeNo>
+                                                                <resetPasswordCode>Employee</resetPasswordCode>
+                                                                <resetPasswordLink>Employee</resetPasswordLink>
+                                                            </RecoverLostPassword>
+                                                        </Body>
+                                                    </Envelope>";
+                string response = Assest.Utility.CallWebService(ResetPassresponseString);
+
+                dynamic json = Assest.Utility.GetJSONResponse(response);
+                //dynamic json = JObject.Parse(response);
                 status = json.Status;
                 Msg = json.Msg;
 
@@ -220,12 +236,14 @@ namespace LMS.Controllers
                     status = json.Status;
                     Msg = json.Msg;
                 }
+                ViewBag.Message = Msg;
             }
             catch (Exception es)
             {
                 status = "999";
-
+                ViewBag.Message = es.Message;
                 Msg = "An error occured. Kindly contact the administrator";
+                ViewBag.Message= Msg;
                 AppFunctions.WriteLog(es.Message);
             }
 
@@ -233,6 +251,7 @@ namespace LMS.Controllers
             {
                 Status = status,
                 Message = Msg,
+
             };
 
             return this.View();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LMS.CustomsClasses;
+using System;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -100,7 +101,7 @@ namespace LMS.Assest
             webRequest.Method = "POST";
             /////////////////webRequest.Credentials = CredentialCache.DefaultCredentials;
             webRequest.Timeout = 10000; //time-out value in milliseconds
-            NetworkCredential creds = new System.Net.NetworkCredential("BTL/Kasyoki.justus", @"$BTL?@2021/2022/S#.&\$");
+            NetworkCredential creds = new System.Net.NetworkCredential("BTL\\Kasyoki.justus", @"$BTL@2022&*");
             webRequest.Credentials = creds;
             webRequest.PreAuthenticate = true;
             webRequest.UseDefaultCredentials = true;
@@ -124,6 +125,7 @@ namespace LMS.Assest
             catch (Exception e)
             {
                 responseString = e.ToString();
+                AppFunctions.WriteLog(e.ToString());
             }
         }
         public static string GetJSONResponse(string str)

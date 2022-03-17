@@ -22,8 +22,7 @@ namespace LMS.Controllers
         static string _EndDate = null;
         static string _LeaveDays = null;
         static string _LeaveType = null;
-        private object viewLeave;
-        private readonly string ID;
+        public object viewLeave { get; private set; }
         // GET: ViewLeaveRecall
         public ActionResult Index()
         {
@@ -59,7 +58,6 @@ namespace LMS.Controllers
                 else
                 {
                     string s = Request.QueryString["id"].Trim();
-
                     if (s == "")
                     {
                         Response.Redirect(Request.UrlReferrer.ToString());

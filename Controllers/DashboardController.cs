@@ -11,7 +11,6 @@ namespace LMS.Controllers
         public string PayrollCutoffDateLabel { get; private set; }
         public ActionResult Dashboard(Dashboard dashboard)
         {
-            
             var log1 = System.Web.HttpContext.Current.Session["logged"] = "yes";
             System.Web.HttpContext.Current.Session["IsDashboardActive"] = "active";
             System.Web.HttpContext.Current.Session["IsClaimActive"] = "";

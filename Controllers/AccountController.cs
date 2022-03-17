@@ -70,22 +70,11 @@ namespace LMS.Controllers
             string password = param2;
             string UserLoginresponseString = "";
             string Msg = null;
-            string response = null;
             string status = null;
             hashpassword = AppFunctions.ComputeSha256Hash(password);
             try
             {
-                string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
-                                                <Body>
-                                                    <ConfirmEmployeePassword xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                                        <empNo>" + param1 + @"</empNo>
-                                                        <prPassword>" + hashpassword + @"</prPassword>
-                                                    </ConfirmEmployeePassword>
-                                                </Body>
-                                            </Envelope>";
-                response = Assest.Utility.CallWebService(req);
-                UserLoginresponseString = Assest.Utility.GetJSONResponse(response);
-            
+                UserLoginresponseString = LoginXMLRequests.UserLogin(username,hashpassword);
                 Models.LoginResponse json = JsonConvert.DeserializeObject<Models.LoginResponse>(UserLoginresponseString);
                 status = json.Status;
                 if (status == "000")
@@ -160,9 +149,7 @@ namespace LMS.Controllers
                 else
                 {
                     Msg = json.Msg;
-                    
                 }
-                
             }
             catch (Exception es)
             {
@@ -208,17 +195,7 @@ namespace LMS.Controllers
             string status = null;
             try
             {
-                string ResetPassresponseString = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
-                                                        <Body>
-                                                            <RecoverLostPassword xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                                                <employeeNo>"+ EmployeeNo + @"</employeeNo>
-                                                                <resetPasswordCode>Employee</resetPasswordCode>
-                                                                <resetPasswordLink>Employee</resetPasswordLink>
-                                                            </RecoverLostPassword>
-                                                        </Body>
-                                                    </Envelope>";
-                string response = Assest.Utility.CallWebService(ResetPassresponseString);
-                dynamic json = Assest.Utility.GetJSONResponse(response);
+                dynamic json = ForgotPasswordXmlRequest.ForgotPassword(EmployeeNo, "", "");
                 status = json.Status;
                 Msg = json.Msg;
 

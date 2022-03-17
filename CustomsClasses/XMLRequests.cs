@@ -1843,7 +1843,16 @@ namespace LMS.CustomsClasses
     {
         public static string UserLogin(string username, string password)
         {
-            return WebService.ConfirmEmployeePassword(username, password);
+            string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                                <Body>
+                                    <ConfirmEmployeePassword xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+                                        <empNo>" + username + @"</empNo>
+                                        <prPassword>" + password + @"</prPassword>
+                                    </ConfirmEmployeePassword>
+                                </Body>
+                            </Envelope>";
+          string response = Assest.Utility.CallWebService(req);
+          return  Assest.Utility.GetJSONResponse(response);
         }
     }
     public class OneTimePassXMLRequests
@@ -1863,7 +1872,24 @@ namespace LMS.CustomsClasses
             return Assest.Utility.GetJSONResponse(str);
         }
     }
-    public class ProfileXMLRequests
+    public class ForgotPasswordXmlRequest
+    {
+        public static string ForgotPassword(string username, string Passcode, string Passrest)
+        {
+            string ResetPassresponseString = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                                                        <Body>
+                                                            <RecoverLostPassword xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+                                                                <employeeNo>" + username + @"</employeeNo>
+                                                                <resetPasswordCode>"+ Passcode + @"</resetPasswordCode>
+                                                                <resetPasswordLink>"+Passrest+@"</resetPasswordLink>
+                                                            </RecoverLostPassword>
+                                                        </Body>
+                                                    </Envelope>";
+            string response = Assest.Utility.CallWebService(ResetPassresponseString);
+            return Assest.Utility.GetJSONResponse(response);
+        }
+    }
+        public class ProfileXMLRequests
     {
         public static string GetUserInformation(string username)
         {
@@ -1875,8 +1901,8 @@ namespace LMS.CustomsClasses
                              </Body>
                          </Envelope>";
 
-            string str = AppFunctions.CallWebService(req);
-            return AppFunctions.GetJSONResponse(str);
+            string str = Assest.Utility.CallWebService(req);
+            return Assest.Utility.GetJSONResponse(str);
         }
     }
     public class ViewLeaveRecallXMLRequests
@@ -3725,28 +3751,27 @@ namespace LMS.CustomsClasses
 
             string str = AppFunctions.CallWebService(WebService.ExportAttachments(AdvanceRequestHdrNo, "StaffAdvance"));
 
-            XmlDocument xmlSoapRequest = new XmlDocument();
 
-            if (!string.IsNullOrEmpty(str) && str.TrimStart().StartsWith("<"))
-            {
-                xmlSoapRequest.LoadXml(str);
+            //if (!string.IsNullOrEmpty(str) && str.TrimStart().StartsWith("<"))
+            //{
+            //    xmlSoapRequest.LoadXml(str);
 
-                foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("Attachment"))
-                {
-                    XmlNode NodeNo = xmlSoapRequest.GetElementsByTagName("EntryNo")[count];
-                    string No = NodeNo.InnerText;
+            //    foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("Attachment"))
+            //    {
+            //        XmlNode NodeNo = xmlSoapRequest.GetElementsByTagName("EntryNo")[count];
+            //        string No = NodeNo.InnerText;
 
-                    if (No != "0")
-                    {
-                        count = count + 1;
-                    }
-                }
+            //        if (No != "0")
+            //        {
+            //            count = count + 1;
+            //        }
+            //    }
 
-            }
-            else
-            {
-                HttpContext.Current.Session["ErrorMessage"] = str;
-            }
+            //}
+            //else
+            //{
+            //    HttpContext.Current.Session["ErrorMessage"] = str;
+            //}
 
             return count;
         }

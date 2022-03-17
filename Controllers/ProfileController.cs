@@ -1,4 +1,5 @@
-﻿using LMS.Models;
+﻿using LMS.CustomsClasses;
+using LMS.Models;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace LMS.Controllers
     {
         public ActionResult Profile(Profile profile)
         {
-           string response = null;
+          
             string GetUserInformationresponseString = null;
           
             var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
@@ -36,20 +37,8 @@ namespace LMS.Controllers
             {
                 try
                 {
-                    // get session variable                                                                                
-
-                    string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
-                                            <Body>
-                                                <GetEmployeeHomeData xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                                    <employeeNo>" + username + @"</employeeNo>
-                                                </GetEmployeeHomeData>
-                                            </Body>
-                                        </Envelope>";
-
-                    response = Assest.Utility.CallWebService(req);
-
-                    GetUserInformationresponseString = Assest.Utility.GetJSONResponse(response);
-
+                    // get employees information                                                                               
+                    GetUserInformationresponseString = ProfileXMLRequests.GetUserInformation(username);
                     dynamic json = JObject.Parse(GetUserInformationresponseString);
 
                     string Status = json.Status;

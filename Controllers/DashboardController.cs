@@ -1,4 +1,5 @@
-﻿using LMS.Models;
+﻿using LMS.CustomsClasses;
+using LMS.Models;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Web.Mvc;
@@ -41,8 +42,6 @@ namespace LMS.Controllers
             try
             {
                 string GetUserInformationresponseString = null;
-                string response = null;
-               
                 if ((string)log1 == "No")
                 {
                     Response.Redirect("/Account/Login");
@@ -52,7 +51,7 @@ namespace LMS.Controllers
                     var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
                     Session["IsAdvanceActive"] = "";
 
-                    if ((string)passRequired == "true")
+                    if ((object)passRequired == "true")
                     {
                         Response.Redirect("/Account/OneTimePassword");
                     }
@@ -60,18 +59,9 @@ namespace LMS.Controllers
                     {
                         var UserFullName = System.Web.HttpContext.Current.User.Identity.Name;
                         var PayrollNm = System.Web.HttpContext.Current.Session["PayrollNo"];
-                        string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
-                                            <Body>
-                                                <GetEmployeeHomeData xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-                                                    <employeeNo>" + PayrollNm + @"</employeeNo>
-                                                </GetEmployeeHomeData>
-                                            </Body>
-                                        </Envelope>";
+                        //get user information
 
-                        response = Assest.Utility.CallWebService(req);
-
-                        GetUserInformationresponseString = Assest.Utility.GetJSONResponse(response);
-
+                        GetUserInformationresponseString = ProfileXMLRequests.GetUserInformation(PayrollNm.ToString());
                         dynamic json = JObject.Parse(GetUserInformationresponseString);
 
                         string Status = json.Status;

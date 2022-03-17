@@ -12,7 +12,7 @@ namespace LMS.Controllers
 {
     public class LeaveRecallsController : Controller
     {
-        private HtmlString str;
+   
         // GET: LeaveRecalls
         public ActionResult Index()
         {

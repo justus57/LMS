@@ -30,20 +30,8 @@ namespace LMS.Controllers
             if (Session["Username"] != null)
             {
                 string username = Convert.ToString(username1);
-
-                string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
-                            <Body>
-                                <ReturnLeaveLookups xmlns = ""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal""> 
-                                     <lookupType>CauseOfAbsenceCode</lookupType> 
-                                     <employeeNo>" + username + @"</employeeNo> 
-                                 </ReturnLeaveLookups> 
-                             </Body>
-                         </Envelope>";
-
-                string response = Assest.Utility.CallWebService(req);
-
-                string array = Assest.Utility.GetJSONResponse(response);
-
+                string array = LeaveApplicationXMLRequests.GetUserLeaves(username);
+                
                 dynamic json = JObject.Parse(array);
 
                 Dictionary<string, string> dictionary = new Dictionary<string, string>();

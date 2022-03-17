@@ -51,7 +51,7 @@ namespace LMS.Controllers
             }
             else if ((string)log == "yes")
             {
-                if ((string)passRequired == "true")
+                if (passRequired == "true")
                 {
                     Response.Redirect("/Account/OneTimePassword");
                 }

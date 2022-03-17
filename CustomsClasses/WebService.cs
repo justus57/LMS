@@ -9,7 +9,7 @@ namespace LMS.CustomsClasses
         * Approval request functions
         * Functions return JSON response
         */
-        /********************************************************** APPROVAL REQUESTS ***********************************************************/
+         /********************************************************** APPROVAL REQUESTS ***********************************************************/
 
         public static string ApproveApprovalRequest(string DocumentNo, string Username, string DocumentArea)
         {
@@ -36,42 +36,7 @@ namespace LMS.CustomsClasses
 
         public static string GetLeaveList(string startRecord, string noOfRecords, string employeeNo, string requestAs, string approvalStatus, string leaveSubType, string totalRecords)
         {
-            //@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
-            //            <Body>
-            //                <GetLeaveList xmlns = ""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
-            //                     <leaveList>
-            //                         <LeaveHeader xmlns = ""urn:microsoft-dynamics-nav/xmlports/GetLeaveList"">
-            //                              <HeaderDocumentType></HeaderDocumentType>
-            //                              <HeaderNo></HeaderNo>
-            //                              <EmployeeID></EmployeeID>
-            //                              <EmployeeName></EmployeeName>
-            //                              <RequestDate></RequestDate>
-            //                              <ApprovalStatus></ApprovalStatus>
-            //                              <DateCreated></DateCreated>
-            //                              <LeaveCode></LeaveCode>
-            //                              <Description></Description>
-            //                              <UnitOfMeasure></UnitOfMeasure>
-            //                              <StartDate></StartDate>
-            //                              <EndDate></EndDate>
-            //                              <LeaveDays></LeaveDays>
-            //                              <ReturnDate></ReturnDate>
-            //                              <ApprovedStartDate></ApprovedStartDate>
-            //                              <ApprovedEndDate></ApprovedEndDate>
-            //                              <ApprovedQty></ApprovedQty>
-            //                              <ApprovedReturnDate></ApprovedReturnDate>
-            //                              <LeaveSubType></LeaveSubType>
-            //                          </LeaveHeader>
-            //                      </leaveList>
-            //                      <startRecord>" + startRecord + @"</startRecord>
-            //                      <noOfRecords>" + noOfRecords + @"</noOfRecords>
-            //                      <employeeNo>" + employeeNo + @"</employeeNo>
-            //                      <requestAs>" + requestAs + @"</requestAs>
-            //                      <approvalStatus>" + approvalStatus + @"</approvalStatus>
-            //                      <leaveSubType>" + leaveSubType + @"</leaveSubType>
-            //                      <totalRecords>" + totalRecords + @"</totalRecords>
-            //                  </GetLeaveList>
-            //              </Body>
-            //          </Envelope>";
+           
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                     <Body>
                                         <GetLeaveList xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
@@ -724,7 +689,6 @@ namespace LMS.CustomsClasses
             string str = AppFunctions.CallWebService(req);
             return AppFunctions.GetJSONResponse(str);
         }
-
         public static string ValidateDimensionValueCode(string code)
         {
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">

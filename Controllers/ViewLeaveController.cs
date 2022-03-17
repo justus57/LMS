@@ -64,7 +64,6 @@ namespace LMS.Controllers
                 else
                 {
                     string s = Request.QueryString["id"].Trim();
-
                     if (s == "")
                     {
                         Response.Redirect(Request.UrlReferrer.ToString());

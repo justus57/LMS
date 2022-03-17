@@ -181,17 +181,14 @@ namespace LMS.Controllers
             try
             {
                 string DeleteOpenLeaveresponseString = LeavesXMLRequests.DeleteOpenLeave(documentNo);
-
                 dynamic json = JObject.Parse(DeleteOpenLeaveresponseString);
                 status = json.Status;
                 Message = json.Message;
-
             }
             catch (Exception es)
             {
                 Console.Write(es);
             }
-
             var _RequestResponse = new RequestResponse
             {
                 Message = Message,
@@ -200,7 +197,6 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-
         public JsonResult CancelOpenLeave(string param1)
         {
             string status = null;
@@ -256,6 +252,5 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-      
     }
 }

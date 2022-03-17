@@ -28,8 +28,7 @@ namespace LMS.Controllers
         string attachmentName = "";
         private string HasAttachment;
         private string DownloadAttachment;
-
-
+        static string Parent = null;
 
         // GET: ViewApprovalEntry
         public ActionResult Index()
@@ -53,13 +52,13 @@ namespace LMS.Controllers
 
             var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
             var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
-            if (log == "No")
+            if ((string)log == "No")
             {
                 Response.Redirect("/Account/login");
             }
-            else if (log == "yes")
+            else if ((string)log == "yes")
             {
-                if (passRequired == "true")
+                if ((string)passRequired == "true")
                 {
                     Response.Redirect("/Account/OneTimePassword");
                 }
@@ -76,11 +75,9 @@ namespace LMS.Controllers
                     {
                         ViewApprovalEntry entry = new ViewApprovalEntry();
                         string LeaveID = AppFunctions.Base64Decode(s);
-
                         entry.LeaveCodeTxt = LeaveID;
                         ViewBag.WordHtml = LeaveID;
-                        //GetLeaveData(LeaveID, Emp);
-                        string Parent = null;
+                        
                         string status = Request.QueryString["status"].Trim();
                         string owner = Request.QueryString["parent"].Trim();
 

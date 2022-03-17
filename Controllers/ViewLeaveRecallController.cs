@@ -46,13 +46,13 @@ namespace LMS.Controllers
 
             var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
             var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
-            if (log == "No")
+            if ((string)log == "No")
             {
                 Response.Redirect("/Account/login");
             }
-            else if (log == "yes")
+            else if ((string)log == "yes")
             {
-                if (passRequired == "true")
+                if ((string)passRequired == "true")
                 {
                     Response.Redirect("/Account/OneTimePassword");
                 }
@@ -91,8 +91,6 @@ namespace LMS.Controllers
 
                             if (LeaveID != "")
                             {
-
-                                //LoadLeaveDetails(LeaveCode);
                                 string username1 = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();// get session variable
                                 string LoadLeaveDetailsresponseString = ViewLeaveRecallXMLRequests.LoadLeaveDetails(username1, LeaveCode);
                                 //{"Code":"ANNUAL","Description":"Annual Leave","Entitled":"23","OpeningBalance":"0","LeaveTaken":"14","Accrued":"40","Remaining":"26"}
@@ -103,7 +101,7 @@ namespace LMS.Controllers
                                 viewLeave.Leave_Accrued_Days = json1.Accrued;
                                 viewLeave.Leave_Days_Taken = json1.LeaveTaken;
                                 viewLeave.Leave_Balance = json1.Remaining;
-
+                                //
                                 viewLeave.LeaveType = LeaveCode;
                                 viewLeave.LeaveStartDay = AppFunctions.ConvertTime(StartDate);
                                 viewLeave.LeaveEndDay = AppFunctions.ConvertTime(EndDate);
@@ -111,7 +109,7 @@ namespace LMS.Controllers
                                 viewLeave.ReturnDate = AppFunctions.ConvertTime(Return_Date);
                                 viewLeave.LeaveApprover = ApproverName;
                                 viewLeave.Leave_comments = Description;
-
+                                //
                                 _LeaveType = LeaveCode;
                                 _LeaveStartDay = AppFunctions.GetDateTime(StartDate);
                                 _ReturnDate = AppFunctions.ConvertTime(Return_Date);

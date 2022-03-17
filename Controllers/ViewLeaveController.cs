@@ -28,9 +28,7 @@ namespace LMS.Controllers
         private string Status;
         private string HasAttachment;
         private string DownloadAttachment;
-
         public bool LeaveCode { get; private set; }
-
         // GET: ViewLeave
         public ActionResult Index()
         {
@@ -53,13 +51,13 @@ namespace LMS.Controllers
 
             var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
             var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
-            if (log == "No")
+            if ((string)log == "No")
             {
                 Response.Redirect("/Account/login");
             }
-            else if (log == "yes")
+            else if ((string)log == "yes")
             {
-                if (passRequired == "true")
+                if ((string)passRequired == "true")
                 {
                     Response.Redirect("/Account/OneTimePassword");
                 }
@@ -195,9 +193,7 @@ namespace LMS.Controllers
             catch (Exception es)
             {
                 Console.Write(es);
-            }
-
-            
+            }            
         }
         private void LoadLeaveDetails(string LeaveCode)
         {

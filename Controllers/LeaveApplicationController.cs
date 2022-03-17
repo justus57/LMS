@@ -513,7 +513,7 @@ namespace LMS.Controllers
 
         public ActionResult FileUploadHandler()
         {
-            object Message = null;
+            
             if (Request.Files.Count > 1)
             {
                 //Fetch the Uploaded File.

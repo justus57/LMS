@@ -10,7 +10,7 @@ namespace LMS.Controllers
         public string PayrollCutoffDateLabel { get; private set; }
         public ActionResult Dashboard(Dashboard dashboard)
         {
-            string Password = null;
+            
             var log1 = System.Web.HttpContext.Current.Session["logged"] = "yes";
             System.Web.HttpContext.Current.Session["IsDashboardActive"] = "active";
             System.Web.HttpContext.Current.Session["IsClaimActive"] = "";
@@ -42,8 +42,8 @@ namespace LMS.Controllers
             {
                 string GetUserInformationresponseString = null;
                 string response = null;
-                string EmployeeNm = null;
-                if (log1 == "No")
+               
+                if ((string)log1 == "No")
                 {
                     Response.Redirect("/Account/Login");
                 }
@@ -52,7 +52,7 @@ namespace LMS.Controllers
                     var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
                     Session["IsAdvanceActive"] = "";
 
-                    if (passRequired == "true")
+                    if ((string)passRequired == "true")
                     {
                         Response.Redirect("/Account/OneTimePassword");
                     }

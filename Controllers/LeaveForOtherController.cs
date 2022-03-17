@@ -165,7 +165,6 @@ namespace LMS.Controllers
             };
             return Json(JsonConvert.SerializeObject(_LeaveQuantityAndReturnDate), JsonRequestBehavior.AllowGet); ;
         }
-
         public JsonResult GetLeaveEndDateAndReturnDate(string param1, string param2, string param3)
         {
             string employeeNo = System.Web.HttpContext.Current.Session["PayrollNo"].ToString(); ;
@@ -230,7 +229,6 @@ namespace LMS.Controllers
             string Message = "";
             string folderPath = System.Web.HttpContext.Current.Server.MapPath("~/Uploads/");
             string documentpath = folderPath + param9;
-
             try
             {
                    string request = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
@@ -276,10 +274,7 @@ namespace LMS.Controllers
                     resp = str2;
                     Message = "Leave application for " + EmployeeName + " has not saved ";
                 }
-
                
-
-                
             }
             catch (Exception e)
             {
@@ -445,7 +440,7 @@ namespace LMS.Controllers
 
         public ActionResult FileUploadHandler()
         {
-            object Message = null;
+           
             if (Request.Files.Count > 1)
             {
                 //Fetch the Uploaded File.

@@ -10,10 +10,9 @@ namespace LMS.Controllers
     {
         public ActionResult Profile(Profile profile)
         {
-            string user = null;
-            string response = null;
+           string response = null;
             string GetUserInformationresponseString = null;
-            string user1 = null;
+          
             var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
             var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
             Session["IsAdvanceActive"] = "";

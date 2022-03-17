@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>@ViewData["Title"]</title>
+    <title>@ViewData["Title"]-LMS</title>
     <!-- Bootstrap core CSS-->
     <!-- Favicons -->
     <link href="~/Content/assets/img/favicon.png" rel="icon">
@@ -104,7 +104,6 @@
 
             </ul>
         </nav><!-- End Icons Navigation -->
-
     </header><!-- End Header -->
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
@@ -117,7 +116,6 @@
             </li>
             @if (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE")
             {
-
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#charts-nav" role="button" data-bs-toggle="collapse" href="#">
                         <i class="fas fa-fw fa-paper-plane"></i><span>Approvals</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -138,7 +136,6 @@
                         <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Pending", parent = "LeaveRecalls" })">Pending</a>
                         <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Approved", parent = "LeaveRecalls" })">Approved</a>
                         <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Rejected", parent = "LeaveRecalls" })">Rejected</a>
-
                     </ul>
                 </li>
             }
@@ -213,7 +210,6 @@
                         <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Rejected"
             ,owner="others" })">Rejected</a>
                     }
-
                 </ul>
             </li>
 
@@ -236,15 +232,10 @@
                     }
                 </ul>
             </li>
-
-
-
     </aside><!-- End Sidebar-->
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
         <i class="bi bi-arrow-up-short"></i>
     </a>
-
-
     <!-- Logout Modal-->
     <!-- Vendor JS Files -->
     <script src="~/Content/assets/vendor/apexcharts/apexcharts.min.js"></script>
@@ -296,24 +287,7 @@
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="@Url.Action("Account","LogOut")">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+
     @*@RenderSection("Scripts", false/*required*/) *@
 
     @*@Html.Partial("_PartialSidebar");*@

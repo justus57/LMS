@@ -20,6 +20,7 @@ namespace LMS.Controllers
         static string CreatedAdvanceRequestsHeader = "";
         string _CreatedAdvanceRequestsHeader = "";
         public static string LineDimension = "";
+        CreateAdvanceRequest cr = new CreateAdvanceRequest();
         // GET: CreateAdvanceRequest
         public ActionResult Index()
         {
@@ -107,12 +108,12 @@ namespace LMS.Controllers
                 LineDimension = "INTERVENTION";
 
                 // DimCode8Label.Text = "Region to be Paid From";
-                LoadDimCodeValues(DimCode1, GlobalDimCode1);
-                LoadDimCodeValues(DimCode2, GlobalDimCode2);
+                LoadDimCodeValues(cr.DimCode1, GlobalDimCode1);
+                LoadDimCodeValues(cr.DimCode2, GlobalDimCode2);
                 // LoadDimCodeValues(DimCode3, ShortcutDimCode3);
                 // LoadDimCodeValues(DimCode8, ShortcutDimCode8);
-                DimCode1Label.Text = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
-                DimCode2Label.Text = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
+                DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
+                DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
                 // DimCode3Label.Text = SetFirstLetterToUpper(ShortcutDimCode3.ToLower());
             }
             else
@@ -124,9 +125,9 @@ namespace LMS.Controllers
                 LoadDimCodeValues(DimCode2, GlobalDimCode2);
                 LoadDimCodeValues(DimCode4, ShortcutDimCode4);
                 // LoadDimCodeValues(DimCode8, ShortcutDimCode8);
-                DimCode1Label.Text = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
-                DimCode2Label.Text = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
-                DimCode4Label.Text = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
+                DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
+                DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
+                DimCode4Label = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
             }
 
             System.Web.HttpContext.Current.Session["LCY"] = json.LCY;
@@ -167,7 +168,7 @@ namespace LMS.Controllers
         {
             List<AdvanceRequestTypes> AdvanceRequestTypesList = new List<AdvanceRequestTypes>();
 
-            HRWE.WebRef.DimCodeValues _DimCodeValues = new Portal.WebRef.DimCodeValues();
+            WebRef.DimCodeValues _DimCodeValues = new WebRef.DimCodeValues();
             WebserviceConfig.ObjNav.ExportDimensionCodeValues(LineDimension, ref _DimCodeValues);
 
             foreach (var kvp in _DimCodeValues.DimCodeValue)
@@ -191,7 +192,6 @@ namespace LMS.Controllers
         {
             string strText = AdvanceRequestsXMLRequests.GetAdvanceRequestsLinesTable(AdvanceRequestHdrNo, "Open");
             ViewBag.Table = strText;
-         
         }
         private void LoadPrefferedMethodOfPayment()
         {

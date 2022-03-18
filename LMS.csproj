@@ -371,6 +371,7 @@
     <Compile Include="Assest\Utility.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApprovalEntriesController.cs" />
+    <Compile Include="Controllers\CreateAdvanceRequestController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaveApplicationController.cs" />
@@ -391,6 +392,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CreateAdvanceRequest.cs" />
     <Compile Include="Models\Dashboard.cs" />
     <Compile Include="Models\ForgotPassword.cs" />
     <Compile Include="Models\LeaveApplication.cs" />
@@ -4148,6 +4150,7 @@
     <Content Include="Views\ViewLeaveRecall\ViewLeaveRecall.cshtml" />
     <Content Include="Views\ApprovalEntries\ApprovalEntries.cshtml" />
     <Content Include="Views\ViewApprovalEntry\ViewApprovalEntry.cshtml" />
+    <Content Include="Views\CreateAdvanceRequest\CreateAdvanceRequest.cshtml" />
     <None Include="Web References\WebRef\HRWebPortal.wsdl" />
     <Content Include="Web References\WebRef\LeaveDetail.datasource">
       <DependentUpon>Reference.map</DependentUpon>

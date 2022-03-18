@@ -69,7 +69,6 @@ namespace LMS.Controllers
                         {
                             string LeaveID = AppFunctions.Base64Decode(s);
                             viewLeave.LeaveCodeTxt = LeaveID;
-                            //GetLeaveData(LeaveID);
                             ViewBag.LeaveID = LeaveID;
                             string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
 

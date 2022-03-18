@@ -3871,7 +3871,7 @@ namespace LMS.CustomsClasses
             string username = HttpContext.Current.Session["Username"].ToString();
             int count = 0;
             int countInnerNodes = 0;
-            string str = AppFunctions.CallWebService(WebService.GetAdvanceRequests(DocumentType, "ExportSingle", _AdvanceRequestHdrNo, username));
+            string str = Assest.Utility.CallWebService(WebService.GetAdvanceRequests(DocumentType, "ExportSingle", _AdvanceRequestHdrNo, username));
 
             XmlDocument xmlSoapRequest = new XmlDocument();
 

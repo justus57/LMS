@@ -62,15 +62,12 @@ namespace LMS.Controllers
                     }
                 }
             }
-        
-    
             return View();
         }
 
         private void LoadTable(string status, string owner ,string endpoint)
         {
             DataTable dt;
-
             if (owner == "self")
             {
                 dt = LeaverecallsXMLRequests.GetSelfPageData(status, owner, endpoint);
@@ -141,9 +138,7 @@ namespace LMS.Controllers
             try
             {
                 string SubmitOpenLeaveRecallresponseString = LeaverecallsXMLRequests.SubmitOpenLeaveRecall(LeaveHeaderNo);
-
                 dynamic json = JObject.Parse(SubmitOpenLeaveRecallresponseString);
-
                 response = json.Msg;
                 status = json.Status;
             }
@@ -156,7 +151,6 @@ namespace LMS.Controllers
                 Message = response,
                 Status = status
             };
-
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
 
@@ -185,7 +179,6 @@ namespace LMS.Controllers
         {
             string status = null;
             string Message = null;
-
             try
             {
                 string documentNo = AppFunctions.Base64Decode(param1);
@@ -201,7 +194,6 @@ namespace LMS.Controllers
             {
                 Console.Write(es);
             }
-
             var _RequestResponse = new RequestResponse
             {
                 Message = "Action sent successfully"

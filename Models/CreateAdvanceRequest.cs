@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.UI.WebControls;
 
 namespace LMS.Models
 {
@@ -21,18 +22,23 @@ namespace LMS.Models
         public string ItemDescription { get; set; }
         public string ClaimedAmount { get; set; }
         public string ClaimedAmountLCY { get; set; }
-        public string SurrenderedAmount { get; set; }
-        public string SurrenderedAmountLCY { get; set; }
-        public string GlobalDimCode1 { get; set; }
-        public string GlobalDimCode2 { get; set; }
-        public string DimCode1 { get; set; }
-        public string DimCode2 { get; set; }
-        public string DimCode3 { get; set; }
-        public string DimCode4 { get; set; }
-        public string DimCode5 { get; set; }
-        public string DimCode6 { get; set; }
-        public string DimCode7 { get; set; }
-        public string DimCode8 { get; set; }
-        public string Remarks { get; set; }
+        public string DimCode2Label { get; set; }
+        public string DimCode3Label { get; set; }
+        public string DimCode4Label { get; set; }
+        public string DimCode5Label { get; set; }
+        public DropDownList DimCode1 { get; set; }
+        public DropDownList DimCode2 { get; set; }
+        public DropDownList DimCode3 { get; set; }
+        public DropDownList DimCode4 { get; set; }
+        public DropDownList DimCode5 { get; set; }
+        public DropDownList DimCode6 { get; set; }
+        public DropDownList DimCode7 { get; set; }
+        public DropDownList DimCode8 { get; set; }
+        public string DimCode1Label { get; set; }
+    }
+    public class PreferredPaymentMethod
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

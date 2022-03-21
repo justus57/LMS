@@ -57,6 +57,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <asp:label id="DimCode1Label" runat="server" />
+                                        @Html.LabelFor(m => m.DimCode1Label)
                                         <asp:DropDownList CssClass="form-control" ID="DimCode1" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The Dimension Code 1 must be selected</div>
@@ -120,8 +121,12 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="PreferredPaymentMethod">Preferred Payment Method</label>
-                                        <asp:DropDownList CssClass="form-control" ID="PreferredPaymentMethod" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
-
+                                        @foreach (var item in ViewBag.PreferredPaymentMethod)
+                                        {
+                                            <option value="@item" customAttribute="item.SomethingSpecial">
+                                                @item
+                                            </option>
+                                        }
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The Dimension Code 4 must be selected</div>
                                     </div>
@@ -177,7 +182,7 @@
                 </div>
             </form>
 
-            <div class="card-footer small text-muted">Updated today at  <%: DateTime.Now.ToShortTimeString() %></div>
+            <div class="card-footer small text-muted">Updated today at  @DateTime.Now.ToShortTimeString() </div>
         </div>
 
     </div>
@@ -186,7 +191,7 @@
     <footer class="sticky-footer">
         <div class="container my-auto">
             <div class="copyright text-center my-auto">
-                <span>Copyright © <%: DateTime.Now.Year.ToString() %>  Brightsoft Technologies Limited</span>
+                <span>Copyright © @DateTime.Now.Year.ToString()  Brightsoft Technologies Limited</span>
             </div>
         </div>
     </footer>

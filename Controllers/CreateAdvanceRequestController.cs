@@ -20,7 +20,9 @@ namespace LMS.Controllers
         static string CreatedAdvanceRequestsHeader = "";
         string _CreatedAdvanceRequestsHeader = "";
         public static string LineDimension = "";
+
         CreateAdvanceRequest cr = new CreateAdvanceRequest();
+
         // GET: CreateAdvanceRequest
         public ActionResult CreateAdvanceRequest()
         {
@@ -28,133 +30,132 @@ namespace LMS.Controllers
         }
         [AllowAnonymous]
         [HttpPost]
-        //public ActionResult CreateAdvanceRequest(CreateAdvanceRequest create)
-        //{
-        //    System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "active";
-        //    System.Web.HttpContext.Current.Session["IsDashboardActive"] = "";
-        //    System.Web.HttpContext.Current.Session["IsClaimActive"] = "";
-        //    System.Web.HttpContext.Current.Session["IsSurrenderActive"] = "";
-        //    System.Web.HttpContext.Current.Session["IsAppriasalActive"] = "";
-        //    System.Web.HttpContext.Current.Session["IsApprovalEntriesActive"] = "";
-        //    System.Web.HttpContext.Current.Session["IsLeavesActive"] = "";
-        //    System.Web.HttpContext.Current.Session["IsRecallActive"] = "";
-        //    System.Web.HttpContext.Current.Session["IsReportsActive"] = "";
-        //    System.Web.HttpContext.Current.Session["IsTrainingActive"] = "";
-        //    System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
-        //    System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
+        public ActionResult CreateAdvanceRequest(CreateAdvanceRequest create)
+        {
+            System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "active";
+            System.Web.HttpContext.Current.Session["IsDashboardActive"] = "";
+            System.Web.HttpContext.Current.Session["IsClaimActive"] = "";
+            System.Web.HttpContext.Current.Session["IsSurrenderActive"] = "";
+            System.Web.HttpContext.Current.Session["IsAppriasalActive"] = "";
+            System.Web.HttpContext.Current.Session["IsApprovalEntriesActive"] = "";
+            System.Web.HttpContext.Current.Session["IsLeavesActive"] = "";
+            System.Web.HttpContext.Current.Session["IsRecallActive"] = "";
+            System.Web.HttpContext.Current.Session["IsReportsActive"] = "";
+            System.Web.HttpContext.Current.Session["IsTrainingActive"] = "";
+            System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
+            System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
 
-        //    if (Session["Logged"].Equals("No"))
-        //    {
-        //        Response.Redirect("Login.aspx");
-        //    }
-        //    else if (Session["Logged"].Equals("Yes"))
-        //    {
-        //        if (Session["RequirePasswordChange"].Equals("TRUE"))
-        //        {
-        //            Response.Redirect("OneTimePass.aspx");
-        //        }
-        //        else
-        //        {
-        //            bool IsPostBack = false || true;
-        //            if (!IsPostBack)
-        //            {
-        //                LoadPrefferedMethodOfPayment();
-        //                GetDimensionCodes();
-        //            }
+            if (Session["Logged"].Equals("No"))
+            {
+                Response.Redirect("Login.aspx");
+            }
+            else if (Session["Logged"].Equals("Yes"))
+            {
+                if (Session["RequirePasswordChange"].Equals("TRUE"))
+                {
+                    Response.Redirect("OneTimePass.aspx");
+                }
+                else
+                {
+                    bool IsPostBack = false || true;
+                    if (!IsPostBack)
+                    {
+                        LoadPrefferedMethodOfPayment();
+                        GetDimensionCodes();
+                    }
 
-        //            if (Request.QueryString["No"] != null)
-        //            {
-        //                _CreatedAdvanceRequestsHeader = Request.QueryString["No"].Trim();
-        //            }
-
-
-        //            if (_CreatedAdvanceRequestsHeader == "")
-        //            {
-        //                CreatedAdvanceRequestsHeader = _CreatedAdvanceRequestsHeader;
-
-        //                string DocumentNo = GenerateDocumentNo("");
-
-        //                Session["AdvanceRequestNo"] = DocumentNo;
-
-        //                Response.Redirect("CreateAdvanceRequest.aspx?No=" + DocumentNo + "");
-        //            }
-        //            else
-        //            {
-        //                CreatedAdvanceRequestsHeader = _CreatedAdvanceRequestsHeader;
-
-        //                LoadTable(Session["AdvanceRequestNo"].ToString());
-        //                LoadTableAttachments(Session["AdvanceRequestNo"].ToString());
-        //            }
-
-        //        }
-        //    }
-        //    return View();
-        //}
-
-        ////private void GetDimensionCodes()
-        ////{
-        ////    string GetDimensionCodesresponseString = CreateAdvanceRequestXMLRequests.GetDimensionCodes();
-
-        ////    dynamic json = JObject.Parse(GetDimensionCodesresponseString);
-        ////    string Status = json.Status;
-
-        ////    string GlobalDimCode1 = json.GlobalDimension1Code;
-        ////    string GlobalDimCode2 = json.GlobalDimension2Code;
-        ////    string ShortcutDimCode3 = json.ShortcutDimension3Code;
-        ////    string ShortcutDimCode4 = json.ShortcutDimension4Code;
-        ////    string ShortcutDimCode8 = json.ShortcutDimension8Code;
+                    if (Request.QueryString["No"] != null)
+                    {
+                        _CreatedAdvanceRequestsHeader = Request.QueryString["No"].Trim();
+                    }
 
 
-        ////    if (System.Web.HttpContext.Current.Session["Company"].ToString() == "KRCS GF Management Unit")
-        ////    {
-        ////        LineDimension = "INTERVENTION";
+                    if (_CreatedAdvanceRequestsHeader == "")
+                    {
+                        CreatedAdvanceRequestsHeader = _CreatedAdvanceRequestsHeader;
 
-        ////        // DimCode8Label.Text = "Region to be Paid From";
-        ////        LoadDimCodeValues(cr.DimCode1, GlobalDimCode1);
-        ////        LoadDimCodeValues(cr.DimCode2, GlobalDimCode2);
-        ////        // LoadDimCodeValues(DimCode3, ShortcutDimCode3);
-        ////        // LoadDimCodeValues(DimCode8, ShortcutDimCode8);
-        ////        DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
-        ////        DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
-        ////        // DimCode3Label.Text = SetFirstLetterToUpper(ShortcutDimCode3.ToLower());
-        ////    }
-        ////    else
-        ////    {
-        ////        LineDimension = ShortcutDimCode3;
+                        string DocumentNo = GenerateDocumentNo("");
 
-        ////        // DimCode8Label.Text = SetFirstLetterToUpper(ShortcutDimCode8.ToLower());
-        ////        LoadDimCodeValues(DimCode1, GlobalDimCode1);
-        ////        LoadDimCodeValues(DimCode2, GlobalDimCode2);
-        ////        LoadDimCodeValues(DimCode4, ShortcutDimCode4);
-        ////        // LoadDimCodeValues(DimCode8, ShortcutDimCode8);
-        ////        DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
-        ////        DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
-        ////        DimCode4Label = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
-        ////    }
+                        Session["AdvanceRequestNo"] = DocumentNo;
 
-        ////    System.Web.HttpContext.Current.Session["LCY"] = json.LCY;
-        ////    //load dynamic list
+                        Response.Redirect("CreateAdvanceRequest.aspx?No=" + DocumentNo + "");
+                    }
+                    else
+                    {
+                        CreatedAdvanceRequestsHeader = _CreatedAdvanceRequestsHeader;
 
-        ////}
-        ////public string SetFirstLetterToUpper(string inString)
-        ////{
-        ////    TextInfo cultInfo = new CultureInfo("en-US", false).TextInfo;
-        ////    return cultInfo.ToTitleCase(inString);
-        ////}
-        ////private void LoadDimCodeValues(DropDownList _DropDownList, string Code)
-        ////{
-        ////    _DropDownList.Items.Clear();
+                        LoadTable(Session["AdvanceRequestNo"].ToString());
+                        LoadTableAttachments(Session["AdvanceRequestNo"].ToString());
+                    }
 
-        ////    WebRef.DimCodeValues _DimCodeValues = new WebRef.DimCodeValues();
-        ////    WebserviceConfig.ObjNav.ExportDimensionCodeValues(Code, ref _DimCodeValues);
+                }
+            }
+            return View();
+        }
 
-        ////    foreach (var kvp in _DimCodeValues.DimCodeValue)
-        ////    {
-        ////        _DropDownList.Items.Insert(0, new ListItem(kvp.Code + " - " + kvp.Name, kvp.Code));
-        ////    }
-        ////    _DropDownList.Items.Insert(0, new ListItem(" ", ""));
-        ////}
+        private void GetDimensionCodes()
+        {
+            string GetDimensionCodesresponseString = CreateAdvanceRequestXMLRequests.GetDimensionCodes();
 
+            dynamic json = JObject.Parse(GetDimensionCodesresponseString);
+            string Status = json.Status;
+
+            string GlobalDimCode1 = json.GlobalDimension1Code;
+            string GlobalDimCode2 = json.GlobalDimension2Code;
+            string ShortcutDimCode3 = json.ShortcutDimension3Code;
+            string ShortcutDimCode4 = json.ShortcutDimension4Code;
+            string ShortcutDimCode8 = json.ShortcutDimension8Code;
+
+
+            if (System.Web.HttpContext.Current.Session["Company"].ToString() == "Management Unit")
+            {
+                LineDimension = "INTERVENTION";
+
+                // DimCode8Label.Text = "Region to be Paid From";
+                LoadDimCodeValues(cr.DimCode1, GlobalDimCode1);
+                LoadDimCodeValues(cr.DimCode2, GlobalDimCode2);
+                // LoadDimCodeValues(DimCode3, ShortcutDimCode3);
+                // LoadDimCodeValues(DimCode8, ShortcutDimCode8);
+                cr.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
+                cr.DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
+                // DimCode3Label.Text = SetFirstLetterToUpper(ShortcutDimCode3.ToLower());
+            }
+            else
+            {
+                LineDimension = ShortcutDimCode3;
+
+                // DimCode8Label.Text = SetFirstLetterToUpper(ShortcutDimCode8.ToLower());
+                LoadDimCodeValues(cr.DimCode1, GlobalDimCode1);
+                LoadDimCodeValues(cr.DimCode2, GlobalDimCode2);
+                LoadDimCodeValues(cr.DimCode4, ShortcutDimCode4);
+                // LoadDimCodeValues(DimCode8, ShortcutDimCode8);
+                cr.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
+                cr.DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
+                cr.DimCode4Label = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
+            }
+
+            System.Web.HttpContext.Current.Session["LCY"] = json.LCY;
+            //load dynamic list
+
+        }
+        public string SetFirstLetterToUpper(string inString)
+        {
+            TextInfo cultInfo = new CultureInfo("en-US", false).TextInfo;
+            return cultInfo.ToTitleCase(inString);
+        }
+        private void LoadDimCodeValues(DropDownList _DropDownList, string Code)
+        {
+            _DropDownList.Items.Clear();
+
+            WebRef.DimCodeValues _DimCodeValues = new WebRef.DimCodeValues();
+            WebserviceConfig.ObjNav.ExportDimensionCodeValues(Code, ref _DimCodeValues);
+
+            foreach (var kvp in _DimCodeValues.DimCodeValue)
+            {
+                _DropDownList.Items.Insert(0, new ListItem(kvp.Code + " - " + kvp.Name, kvp.Code));
+            }
+            _DropDownList.Items.Insert(0, new ListItem(" ", ""));
+        }
 
         public static string LoadAdvanceRequest()
         {
@@ -190,18 +191,25 @@ namespace LMS.Controllers
         {
             return CreateAdvanceRequestXMLRequests.GetUnitOfMeasure();
         }
-        //private void LoadTable(string AdvanceRequestHdrNo)
-        //{
-        //    string strText = AdvanceRequestsXMLRequests.GetAdvanceRequestsLinesTable(AdvanceRequestHdrNo, "Open");
-        //    ViewBag.Table = strText;
-        //}
-        //private void LoadPrefferedMethodOfPayment()
-        //{
-        //    PreferredPaymentMethod.Items.Clear();
-        //    PreferredPaymentMethod.Items.Insert(0, new ListItem("Mpesa", "2"));
-        //    PreferredPaymentMethod.Items.Insert(0, new ListItem("Cheque ", "1"));
-        //    PreferredPaymentMethod.Items.Insert(0, new ListItem(" ", "0"));
-        //}
+        private void LoadTable(string AdvanceRequestHdrNo)
+        {
+            string strText = AdvanceRequestsXMLRequests.GetAdvanceRequestsLinesTable(AdvanceRequestHdrNo, "Open");
+            ViewBag.Table = strText;
+        }
+        private void LoadPrefferedMethodOfPayment()
+        {
+            List<PreferredPaymentMethod> list = new List<PreferredPaymentMethod>()
+            {
+                new PreferredPaymentMethod() {Id = 0, Name="" },
+                new PreferredPaymentMethod() {Id = 1, Name="Mpesa" },
+                new PreferredPaymentMethod() {Id = 2, Name="Cheque" },
+            };
+            ViewBag.PreferredPaymentMethod = list;
+            //PreferredPaymentMethod.Items.Clear();
+            //PreferredPaymentMethod.Items.Insert(0, new ListItem("Mpesa", "2"));
+            //PreferredPaymentMethod.Items.Insert(0, new ListItem("Cheque ", "1"));
+            //PreferredPaymentMethod.Items.Insert(0, new ListItem(" ", "0"));
+        }
         private void LoadTableAttachments(string AdvanceRequestHdrNo)
         {
 
@@ -258,7 +266,7 @@ namespace LMS.Controllers
             html.Append("</table>");
             string strText = html.ToString();
             ////Append the HTML string to Placeholder.
-
+            ViewBag.Table = strText;
             // placeholder1.Controls.Add(new Literal { Text = html.ToString() });
         }
 
@@ -300,225 +308,224 @@ namespace LMS.Controllers
             return JsonConvert.SerializeObject(_AdvanceRequestLines);
         }
 
-        //public static string CreateStaffImprestLines(string param1, string param2, string param3, string param4, string param5, string param6,
-        //    string param7, string param8, string param9, string param10, string param11, string param12, string param13, string param14,
-        //    string param15, string param16, string param17)
-        //{
-        //    string username = System.Web.HttpContext.Current.Session["Username"].ToString();
-        //    string _Status = "000";
-        //    string _Message = "hh";
-        //    string DocumentNo = "";
+        public static string CreateStaffImprestLines(string param1, string param2, string param3, string param4, string param5, string param6,
+            string param7, string param8, string param9, string param10, string param11, string param12, string param13, string param14,
+            string param15, string param16, string param17)
+        {
+            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string _Status = "000";
+            string _Message = "hh";
+            string DocumentNo = "";
 
-        //    string Item = "";
-        //    string ItemDescription = "";
-        //    string NoOfUnits = "";
-        //    string UnitOfMeasure = "";
-        //    string UnitCost = "";
-        //    string Amount = "";
-        //    string DateOfRequest = "";
-        //    string DateDue = "";
-        //    string RequestToCompany = "";
-        //    string DimCode1 = "";
-        //    string DimCode2 = "";
-        //    string DimCode3 = "";
-        //    string DimCode4 = "";
-        //    string DimCode5 = "";
-        //    string DimCode8 = "";
-        //    string preferredPaymentMethod = "";
-        //    string MissionSummary = "";
-        //    string Purpose = "";
-        //    string Currency = "";
-        //    Item = param1;
-        //    ItemDescription = param2;
-        //    NoOfUnits = param5;
-        //    UnitOfMeasure = param3;
-        //    UnitCost = param4;
-        //    Amount = param6;
-        //    DateOfRequest = param7;
-        //    DateDue = param8;
-        //    RequestToCompany = "";
-        //    preferredPaymentMethod = param15;
-        //    MissionSummary = param16;
-        //    Purpose = param17;
-        //    Currency = "";
+            string Item = "";
+            string ItemDescription = "";
+            string NoOfUnits = "";
+            string UnitOfMeasure = "";
+            string UnitCost = "";
+            string Amount = "";
+            string DateOfRequest = "";
+            string DateDue = "";
+            string RequestToCompany = "";
+            string DimCode1 = "";
+            string DimCode2 = "";
+            string DimCode3 = "";
+            string DimCode4 = "";
+            string DimCode5 = "";
+            string DimCode8 = "";
+            string preferredPaymentMethod = "";
+            string MissionSummary = "";
+            string Purpose = "";
+            string Currency = "";
+            Item = param1;
+            ItemDescription = param2;
+            NoOfUnits = param5;
+            UnitOfMeasure = param3;
+            UnitCost = param4;
+            Amount = param6;
+            DateOfRequest = param7;
+            DateDue = param8;
+            RequestToCompany = "";
+            preferredPaymentMethod = param15;
+            MissionSummary = param16;
+            Purpose = param17;
+            Currency = "";
 
-        //    //KRCS  uses DimCode1, DimCode2, DimCode4 and DimCode3 on the lines
-        //    if (System.Web.HttpContext.Current.Session["Company"].ToString() == "KRCS GF Management Unit")
-        //    {
-        //        DimCode1 = param10;
-        //        DimCode2 = param11;
-        //        DimCode3 = param13;
-        //        DimCode4 = "";
-        //        DimCode5 = param12;
-        //        DimCode8 = param14;
+            //KRCS  uses DimCode1, DimCode2, DimCode4 and DimCode3 on the lines
+            if (System.Web.HttpContext.Current.Session["Company"].ToString() == "KRCS GF Management Unit")
+            {
+                DimCode1 = param10;
+                DimCode2 = param11;
+                DimCode3 = param13;
+                DimCode4 = "";
+                DimCode5 = param12;
+                DimCode8 = param14;
 
-        //        if (System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString() != "")
-        //        {
-        //            DocumentNo = System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString();
+                if (System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString() != "")
+                {
+                    DocumentNo = System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString();
 
-        //            string UpdateAdvanceRequestResponse = CreateAdvanceRequestXMLRequests.UpdateAdvanceRequest(DocumentNo, "StaffAdvance", DateOfRequest, DateDue, username, username, RequestToCompany, DimCode1, DimCode2, DimCode1, DimCode2, DimCode3, DimCode4, "", "", "", DimCode8, Currency, DocumentNo, preferredPaymentMethod, MissionSummary);
+                    string UpdateAdvanceRequestResponse = CreateAdvanceRequestXMLRequests.UpdateAdvanceRequest(DocumentNo, "StaffAdvance", DateOfRequest, DateDue, username, username, RequestToCompany, DimCode1, DimCode2, DimCode1, DimCode2, DimCode3, DimCode4, "", "", "", DimCode8, Currency, DocumentNo, preferredPaymentMethod, MissionSummary);
 
-        //            string CreateAdvanceRequestXMLRequestsRssponse = CreateAdvanceRequestXMLRequests.CreateAdvanceRequestLine(DocumentNo, Item, ItemDescription, UnitOfMeasure, NoOfUnits, UnitCost, Amount, Purpose, DimCode1, DimCode2, DimCode1, DimCode2, DimCode3, DimCode4, DimCode5, "", "", DimCode8);
-        //            dynamic jsonCreateAdvanceRequestXMLRequestsRssponse = JObject.Parse(CreateAdvanceRequestXMLRequestsRssponse);
-        //            _Message = jsonCreateAdvanceRequestXMLRequestsRssponse.Msg;
-
-
-        //            _Status = System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString();
-        //        }
-        //        else
-        //        {
-        //            CreateAdvanceRequest cr = new CreateAdvanceRequest();
-        //            DocumentNo = GenerateDocumentNo(cr.DimCode8);
-
-        //            //CreatedAdvanceRequestsHeader = DocumentNo;
-
-        //            if (System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString() != "")
-        //            {
-        //                string UpdateAdvanceRequestResponse = CreateAdvanceRequestXMLRequests.UpdateAdvanceRequest(DocumentNo, "StaffAdvance", DateOfRequest, DateDue, username, username, RequestToCompany, DimCode1, DimCode2, DimCode1, DimCode2, DimCode3, DimCode4, "", "", "", DimCode8, Currency, DocumentNo, preferredPaymentMethod, MissionSummary);
-
-        //                string CreateAdvanceRequestXMLRequestsRssponse = CreateAdvanceRequestXMLRequests.CreateAdvanceRequestLine(DocumentNo, Item, ItemDescription, UnitOfMeasure, NoOfUnits, UnitCost, Amount, Purpose, DimCode1, DimCode2, DimCode1, DimCode2, DimCode3, DimCode4, DimCode5, "", "", DimCode8);
-        //                dynamic jsonCreateAdvanceRequestXMLRequestsRssponse = JObject.Parse(CreateAdvanceRequestXMLRequestsRssponse);
-        //                _Status = System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString();
-        //                _Message = jsonCreateAdvanceRequestXMLRequestsRssponse.Msg;
-        //            }
-        //            else
-        //            {
-        //                _Status = "999";
-        //                _Message = "The staff advance header number could not be created";
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        //KRCS  uses DimCode1, DimCode2, DimCode4 and DimCode3 on the lines
-
-        //        DimCode1 = param10;
-        //        DimCode2 = param11;
-        //        DimCode3 = param12;
-        //        DimCode4 = param9;
-        //        DimCode5 = "";
-        //        DimCode8 = "";
-
-        //        if (System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString() != "")
-        //        {
-        //            DocumentNo = System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString();
-
-        //            string UpdateAdvanceRequestResponse =
-        //               CreateAdvanceRequestXMLRequests.UpdateAdvanceRequest(DocumentNo, "StaffAdvance", DateOfRequest, DateDue, username, username, RequestToCompany, DimCode1, DimCode2, DimCode1, DimCode2, "", DimCode4, "", "", "", "", Currency, DocumentNo, preferredPaymentMethod, MissionSummary);
-
-        //            string CreateAdvanceRequestXMLRequestsRssponse = CreateAdvanceRequestXMLRequests.CreateAdvanceRequestLine(DocumentNo, Item, ItemDescription, UnitOfMeasure, NoOfUnits, UnitCost, Amount, Purpose, DimCode1, DimCode2, DimCode1, DimCode2, DimCode3, DimCode4, "", "", "", "");
-        //            dynamic jsonCreateAdvanceRequestXMLRequestsRssponse = JObject.Parse(CreateAdvanceRequestXMLRequestsRssponse);
-        //            _Message = jsonCreateAdvanceRequestXMLRequestsRssponse.Msg;
+                    string CreateAdvanceRequestXMLRequestsRssponse = CreateAdvanceRequestXMLRequests.CreateAdvanceRequestLine(DocumentNo, Item, ItemDescription, UnitOfMeasure, NoOfUnits, UnitCost, Amount, Purpose, DimCode1, DimCode2, DimCode1, DimCode2, DimCode3, DimCode4, DimCode5, "", "", DimCode8);
+                    dynamic jsonCreateAdvanceRequestXMLRequestsRssponse = JObject.Parse(CreateAdvanceRequestXMLRequestsRssponse);
+                    _Message = jsonCreateAdvanceRequestXMLRequestsRssponse.Msg;
 
 
-        //            _Status = System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString();
+                    _Status = System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString();
+                }
+                else
+                {
+                    CreateAdvanceRequest cr = new CreateAdvanceRequest();
+                    DocumentNo = GenerateDocumentNo(DimCode8);
 
-        //        }
-        //        else
-        //        {
-        //            CreateAdvanceRequest cr = new CreateAdvanceRequest();
-        //            //DocumentNo = cr.GenerateDocumentNo(DimCode8);
-        //            DocumentNo = GenerateDocumentNo(cr.DimCode8);
+                    //CreatedAdvanceRequestsHeader = DocumentNo;
 
-        //            //CreatedAdvanceRequestsHeader = DocumentNo;
+                    if (System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString() != "")
+                    {
+                        string UpdateAdvanceRequestResponse = CreateAdvanceRequestXMLRequests.UpdateAdvanceRequest(DocumentNo, "StaffAdvance", DateOfRequest, DateDue, username, username, RequestToCompany, DimCode1, DimCode2, DimCode1, DimCode2, DimCode3, DimCode4, "", "", "", DimCode8, Currency, DocumentNo, preferredPaymentMethod, MissionSummary);
 
-        //            if (System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString() != "")
-        //            {
-        //                string UpdateAdvanceRequestResponse = CreateAdvanceRequestXMLRequests.UpdateAdvanceRequest(DocumentNo, "StaffAdvance", DateOfRequest, DateDue, username, username, RequestToCompany, DimCode1, DimCode2, DimCode1, DimCode2, "", DimCode4, "", "", "", "", Currency, DocumentNo, preferredPaymentMethod, MissionSummary);
+                        string CreateAdvanceRequestXMLRequestsRssponse = CreateAdvanceRequestXMLRequests.CreateAdvanceRequestLine(DocumentNo, Item, ItemDescription, UnitOfMeasure, NoOfUnits, UnitCost, Amount, Purpose, DimCode1, DimCode2, DimCode1, DimCode2, DimCode3, DimCode4, DimCode5, "", "", DimCode8);
+                        dynamic jsonCreateAdvanceRequestXMLRequestsRssponse = JObject.Parse(CreateAdvanceRequestXMLRequestsRssponse);
+                        _Status = System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString();
+                        _Message = jsonCreateAdvanceRequestXMLRequestsRssponse.Msg;
+                    }
+                    else
+                    {
+                        _Status = "999";
+                        _Message = "The staff advance header number could not be created";
+                    }
+                }
+            }
+            else
+            {
+                //KRCS  uses DimCode1, DimCode2, DimCode4 and DimCode3 on the lines
 
-        //                string CreateAdvanceRequestXMLRequestsRssponse = CreateAdvanceRequestXMLRequests.CreateAdvanceRequestLine(DocumentNo, Item, ItemDescription, UnitOfMeasure, NoOfUnits, UnitCost, Amount, Purpose, DimCode1, DimCode2, DimCode1, DimCode2, DimCode3, DimCode4, "", "", "", "");
-        //                dynamic jsonCreateAdvanceRequestXMLRequestsRssponse = JObject.Parse(CreateAdvanceRequestXMLRequestsRssponse);
-        //                _Status = System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString();
-        //                _Message = jsonCreateAdvanceRequestXMLRequestsRssponse.Msg;
-        //            }
-        //            else
-        //            {
-        //                _Status = "999";
-        //                _Message = "The staff advance header number could not be created";
-        //            }
-        //        }
+                DimCode1 = param10;
+                DimCode2 = param11;
+                DimCode3 = param12;
+                DimCode4 = param9;
+                DimCode5 = "";
+                DimCode8 = "";
 
-        //    }
+                if (System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString() != "")
+                {
+                    DocumentNo = System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString();
 
-        //    var _RequestResponse = new RequestResponse
-        //    {
-        //        Status = _Status,
-        //        Message = _Message
-        //    };
+                    string UpdateAdvanceRequestResponse =
+                       CreateAdvanceRequestXMLRequests.UpdateAdvanceRequest(DocumentNo, "StaffAdvance", DateOfRequest, DateDue, username, username, RequestToCompany, DimCode1, DimCode2, DimCode1, DimCode2, "", DimCode4, "", "", "", "", Currency, DocumentNo, preferredPaymentMethod, MissionSummary);
 
-        //    return JsonConvert.SerializeObject(_RequestResponse);
-        //}
+                    string CreateAdvanceRequestXMLRequestsRssponse = CreateAdvanceRequestXMLRequests.CreateAdvanceRequestLine(DocumentNo, Item, ItemDescription, UnitOfMeasure, NoOfUnits, UnitCost, Amount, Purpose, DimCode1, DimCode2, DimCode1, DimCode2, DimCode3, DimCode4, "", "", "", "");
+                    dynamic jsonCreateAdvanceRequestXMLRequestsRssponse = JObject.Parse(CreateAdvanceRequestXMLRequestsRssponse);
+                    _Message = jsonCreateAdvanceRequestXMLRequestsRssponse.Msg;
 
-        //private string GenerateDocumentNo(string RegionCode)
-        //{
-        //    string DocumentNo = "";
-        //    string DocumentNoXMLResponse = CreateAdvanceRequestXMLRequests.GetAdvanceRequestNewNo("StaffAdvance", RegionCode);
-        //    dynamic jsonDocumentNo = JObject.Parse(DocumentNoXMLResponse);
 
-        //    string _Status = jsonDocumentNo.Status;
+                    _Status = System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString();
 
-        //    if (_Status == "000")
-        //    {
-        //        DocumentNo = jsonDocumentNo.DocumentNo;
+                }
+                else
+                {
+                    CreateAdvanceRequest cr = new CreateAdvanceRequest();
+                    //DocumentNo = cr.GenerateDocumentNo(DimCode8);
+                    DocumentNo = GenerateDocumentNo(DimCode8);
 
-        //        // _CreatedAdvanceRequestsHeader = DocumentNo;
+                    //CreatedAdvanceRequestsHeader = DocumentNo;
 
-        //    }
-        //    return DocumentNo;
-        //}
+                    if (System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString() != "")
+                    {
+                        string UpdateAdvanceRequestResponse = CreateAdvanceRequestXMLRequests.UpdateAdvanceRequest(DocumentNo, "StaffAdvance", DateOfRequest, DateDue, username, username, RequestToCompany, DimCode1, DimCode2, DimCode1, DimCode2, "", DimCode4, "", "", "", "", Currency, DocumentNo, preferredPaymentMethod, MissionSummary);
 
-        //public static string UpdateStaffImprestLines(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
-        //{
-        //    string _Status = "";
-        //    string _Message = "";
+                        string CreateAdvanceRequestXMLRequestsRssponse = CreateAdvanceRequestXMLRequests.CreateAdvanceRequestLine(DocumentNo, Item, ItemDescription, UnitOfMeasure, NoOfUnits, UnitCost, Amount, Purpose, DimCode1, DimCode2, DimCode1, DimCode2, DimCode3, DimCode4, "", "", "", "");
+                        dynamic jsonCreateAdvanceRequestXMLRequestsRssponse = JObject.Parse(CreateAdvanceRequestXMLRequestsRssponse);
+                        _Status = System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString();
+                        _Message = jsonCreateAdvanceRequestXMLRequestsRssponse.Msg;
+                    }
+                    else
+                    {
+                        _Status = "999";
+                        _Message = "The staff advance header number could not be created";
+                    }
+                }
 
-        //    string DocumentNo = System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString();
-        //    string Item = param1;
-        //    string ItemDescription = param2;
-        //    string NoOfUnits = param5;
-        //    string UnitOfMeasure = param3;
-        //    string UnitCost = param4;
-        //    string Amount = param6;
-        //    string LineNo = param7;
-        //    string DimCode5 = param8;
-        //    string Purpose = param9;
+            }
 
-        //    //get Dims
-        //    string AdvanceRequestFields = AdvanceRequestsXMLRequests.GetAdvanceRequests("StaffAdvance", DocumentNo);
-        //    dynamic jsonAdvanceRequestFields = JObject.Parse(AdvanceRequestFields);
+            var _RequestResponse = new RequestResponse
+            {
+                Status = _Status,
+                Message = _Message
+            };
 
-        //    string DimCode1 = jsonAdvanceRequestFields.GlobalDimCode1;
-        //    string DimCode2 = jsonAdvanceRequestFields.GlobalDimCode2;
-        //    string DimCode3 = jsonAdvanceRequestFields.ShortcutDimCode3;
-        //    string DimCode4 = jsonAdvanceRequestFields.ShortcutDimCode4;
-        //    string DimCode8 = jsonAdvanceRequestFields.ShortcutDimCode8;
+            return JsonConvert.SerializeObject(_RequestResponse);
+        }
 
-        //    //update staff imprest line
+        public static string GenerateDocumentNo(string RegionCode)
+        {
+            string DocumentNo = "";
+            string DocumentNoXMLResponse = CreateAdvanceRequestXMLRequests.GetAdvanceRequestNewNo("StaffAdvance", RegionCode);
+            dynamic jsonDocumentNo = JObject.Parse(DocumentNoXMLResponse);
 
-        //    if (System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString() != "")
-        //    {
-        //        string UpdateAdvanceRequestLineXMLRequestsRssponse = CreateAdvanceRequestXMLRequests.UpdateAdvanceRequestLine(DocumentNo, Item, ItemDescription, UnitOfMeasure, NoOfUnits, UnitCost, Amount, LineNo, "", Purpose, DimCode1, DimCode2, DimCode1, DimCode2, DimCode3, DimCode4, DimCode5, "", "", DimCode8);
-        //        dynamic jsonUpdateAdvanceRequestLineXMLRequestsRssponse = JObject.Parse(UpdateAdvanceRequestLineXMLRequestsRssponse);
+            string _Status = jsonDocumentNo.Status;
 
-        //        _Status = jsonUpdateAdvanceRequestLineXMLRequestsRssponse.Status;
-        //        _Message = jsonUpdateAdvanceRequestLineXMLRequestsRssponse.Msg;
+            if (_Status == "000")
+            {
+                DocumentNo = jsonDocumentNo.DocumentNo;
 
-        //    }
-        //    else
-        //    {
-        //        _Status = "999";
-        //        _Message = "The staff advance header number was not found";
-        //    }
+                // _CreatedAdvanceRequestsHeader = DocumentNo;
 
-        //    var _RequestResponse = new RequestResponse
-        //    {
-        //        Status = _Status,
-        //        Message = _Message
-        //    };
+            }
+            return DocumentNo;
+        }
 
-        //    return JsonConvert.SerializeObject(_RequestResponse);
-        //}
+        public static string UpdateStaffImprestLines(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
+        {
+            string _Status = "";
+            string _Message = "";
 
+            string DocumentNo = System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString();
+            string Item = param1;
+            string ItemDescription = param2;
+            string NoOfUnits = param5;
+            string UnitOfMeasure = param3;
+            string UnitCost = param4;
+            string Amount = param6;
+            string LineNo = param7;
+            string DimCode5 = param8;
+            string Purpose = param9;
+
+            //get Dims
+            string AdvanceRequestFields = AdvanceRequestsXMLRequests.GetAdvanceRequests("StaffAdvance", DocumentNo);
+            dynamic jsonAdvanceRequestFields = JObject.Parse(AdvanceRequestFields);
+
+            string DimCode1 = jsonAdvanceRequestFields.GlobalDimCode1;
+            string DimCode2 = jsonAdvanceRequestFields.GlobalDimCode2;
+            string DimCode3 = jsonAdvanceRequestFields.ShortcutDimCode3;
+            string DimCode4 = jsonAdvanceRequestFields.ShortcutDimCode4;
+            string DimCode8 = jsonAdvanceRequestFields.ShortcutDimCode8;
+
+            //update staff imprest line
+
+            if (System.Web.HttpContext.Current.Session["AdvanceRequestNo"].ToString() != "")
+            {
+                string UpdateAdvanceRequestLineXMLRequestsRssponse = CreateAdvanceRequestXMLRequests.UpdateAdvanceRequestLine(DocumentNo, Item, ItemDescription, UnitOfMeasure, NoOfUnits, UnitCost, Amount, LineNo, "", Purpose, DimCode1, DimCode2, DimCode1, DimCode2, DimCode3, DimCode4, DimCode5, "", "", DimCode8);
+                dynamic jsonUpdateAdvanceRequestLineXMLRequestsRssponse = JObject.Parse(UpdateAdvanceRequestLineXMLRequestsRssponse);
+
+                _Status = jsonUpdateAdvanceRequestLineXMLRequestsRssponse.Status;
+                _Message = jsonUpdateAdvanceRequestLineXMLRequestsRssponse.Msg;
+
+            }
+            else
+            {
+                _Status = "999";
+                _Message = "The staff advance header number was not found";
+            }
+
+            var _RequestResponse = new RequestResponse
+            {
+                Status = _Status,
+                Message = _Message
+            };
+
+            return JsonConvert.SerializeObject(_RequestResponse);
+        }
 
         public static string DeleteAdvanceRequestLines(string param1)
         {

@@ -7,11 +7,8 @@
 
 <main>
     <div id="wrapper">
-
     <div id="content-wrapper">
-
     <div class="container-fluid">
-
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -21,7 +18,6 @@
             <li class="breadcrumb-item">Staff Advance</li>
             <li class="breadcrumb-item active">Create Staff Advance</li>
         </ol>
-
         <!-- DataTables Example -->
         <div class="card mb-3">
             <div class="card-header">
@@ -36,12 +32,12 @@
                             <div class="text-muted small">Shows information for advance request</div>
                         </div>
                         <div class="col-md-8">
-
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-control-label" for="DateOfRequest">Expected mission start date</label>
                                         <asp:TextBox class="form-control" id="DateOfRequest" runat="server" required="true"></asp:TextBox>
+                                        @Html.TextBoxFor(model => model.DateOfRequest, new { @class = "form-control" })
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The date of request must be selected</div>
                                     </div>
@@ -51,6 +47,7 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="DateDue">Expected mission end date</label>
                                         <asp:TextBox class="form-control" id="DateDue" runat="server" required="true"></asp:TextBox>
+                                        @Html.TextBoxFor(model => model.DateDue, new { @class = "form-control" })
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The date due must be selected</div>
                                     </div>
@@ -101,6 +98,7 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="Balance">Balance</label>
                                         <asp:TextBox CssClass="form-control" ID="Balance" runat="server" required="true" disabled="false"> </asp:TextBox>
+                                        @Html.TextBoxFor(model => model.Balance, new { @class = "form-control" })
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The currency must be selected</div>
                                     </div>
@@ -111,6 +109,7 @@
                                     <div class="form-group">
                                         <label class="form-control-label">Mission Summary (Type activity name and county visited)</label>
                                         <asp:TextBox TextMode="multiline" Columns="50" maxlength="50" Rows="3" runat="server" ID="MissionSummary" class="form-control MultiLineLimit" required="true"></asp:TextBox>
+                                        @Html.TextBoxFor(model => model.MissionSummary, new { @class = "form-control" })
                                         <p class="pull-right text-muted small" id="count_message"></p>
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The preffered method of payment must be provided</div>
@@ -231,6 +230,7 @@
                         <div class="form-group">
                             <label class="form-control-label" for="ItemDescription">Description</label>
                             <input type="text" class="form-control" id="ItemDescription" required>
+                            @Html.TextBoxFor(model => model.ItemDescription, new { @class = "form-control" })
                             <div class="valid-feedback">Looks good!</div>
                             <div class="invalid-feedback">The description must be supplied</div>
                         </div>
@@ -254,6 +254,7 @@
                         <div class="form-group">
                             <label class="form-control-label" for="UnitCost">Unit cost</label>
                             <input type="text" class="form-control" id="UnitCost" required>
+                            @Html.TextBoxFor(model => model.UnitCost, new { @class = "form-control" })
                             <div class="valid-feedback">Looks good!</div>
                             <div class="invalid-feedback">The Unit cost must be supplied</div>
                         </div>
@@ -268,22 +269,24 @@
                     </div>
                 </div>
                 <!--<div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="form-control-label" for="BudgetLineCode">Intervention</label>
-                            <select class="form-control" id="BudgetLineCode" style="width:100%" required>
-                                <option></option>
-                            </select>
-                            <div class="valid-feedback">Looks good!</div>
-                            <div class="invalid-feedback">The intervention must be specified</div>
-                        </div>
-                    </div>
-                </div>--> <!--<%--GF--%>-->
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="form-control-label" for="BudgetLineCode">Intervention</label>
+                <select class="form-control" id="BudgetLineCode" style="width:100%" required>
+                    <option></option>
+                </select>
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">The intervention must be specified</div>
+            </div>
+        </div>
+    </div>-->
+                <!--<%--GF--%>-->
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="form-control-label" for="BudgetLineCode">Budget Line</label>
                             <input type="text" class="form-control" id="BudgetLineCode" required>
+                            @Html.TextBoxFor(model => model.BudgetLineCode, new { @class = "form-control" })
                             <div class="valid-feedback">Looks good!</div>
                             <div class="invalid-feedback">The intervention must be specified</div>
                         </div>
@@ -295,6 +298,7 @@
                         <div class="form-group">
                             <label class="form-control-label" for="Purpose">Purpose</label>
                             <textarea class="form-control" rows="2" id="Purpose" required></textarea>
+                            @Html.TextBoxFor(model => model.Purpose, new { @class = "form-control" })
                             <div class="valid-feedback">Looks good!</div>
                             <div class="invalid-feedback">The purpose must be supplied</div>
                         </div>
@@ -305,13 +309,16 @@
                         <div class="form-group">
                             <label class="form-control-label" for="Amount">Amount(LCY)</label>
                             <input type="text" class="form-control" id="Amount" required>
+                            @Html.TextBoxFor(model => model.Amount, new { @class = "form-control" })
                             <div class="valid-feedback">Looks good!</div>
                             <div class="invalid-feedback">The Amount must be supplied</div>
                         </div>
                     </div>
                 </div>
                 <input type="hidden" id="ExchangeRate" name="ExchangeRate" value="">
+                @Html.TextBoxFor(model => model.ExchangeRate, new { @class = "form-control" })
                 <input type="hidden" id="AdvanceRequestLineNo" name="AdvanceRequestLineNo" value="">
+                @Html.TextBoxFor(model => model.AdvanceRequestLineNo, new { @class = "form-control" })
             </form>
         </div>
 
@@ -356,6 +363,7 @@
                         <div class="form-group">
                             <label class="form-control-label" for="AttachmentDescription">Attachment description</label>
                             <textarea class="form-control" rows="2" id="AttachmentDescription" required></textarea>
+
                             <div class="valid-feedback">Looks good!</div>
                             <div class="invalid-feedback">The attachment description must be supplied</div>
                         </div>

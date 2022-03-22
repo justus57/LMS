@@ -13,5 +13,9 @@ namespace LMS.Controllers
         {
             return View();
         }
+        public ActionResult AppraisalApplication()
+        {
+            return View();
+        }
     }
 }

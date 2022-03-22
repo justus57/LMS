@@ -374,6 +374,7 @@
     <Compile Include="Controllers\AdvanceRequestsController.cs" />
     <Compile Include="Controllers\AdvanceSurrendersController.cs" />
     <Compile Include="Controllers\AppraisalApplicationController.cs" />
+    <Compile Include="Controllers\AppraisalsController.cs" />
     <Compile Include="Controllers\ApprovalEntriesController.cs" />
     <Compile Include="Controllers\CreateAdvanceRequestController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -4159,6 +4160,7 @@
     <Content Include="Views\AdvanceRequests\AdvanceRequests.cshtml" />
     <Content Include="Views\AdvanceSurrenders\AdvanceSurrenders.cshtml" />
     <Content Include="Views\AppraisalApplication\AppraisalApplication.cshtml" />
+    <Content Include="Views\Appraisals\Appraisals.cshtml" />
     <None Include="Web References\WebRef\HRWebPortal.wsdl" />
     <Content Include="Web References\WebRef\LeaveDetail.datasource">
       <DependentUpon>Reference.map</DependentUpon>

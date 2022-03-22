@@ -1,5 +1,4 @@
-﻿@model LMS.WebRef.AdvanceRequests
-
+﻿
 @{
     ViewBag.Title = "AppraisalApplication";
 }
@@ -143,8 +142,8 @@
                         var data = result.d;
                         // alert(typeof (data)); //it comes out to be string
                         //we need to parse it to JSON
-                        data = $.parseJSON(data);
-                        hideLoading();
+                        data = $.parseJSON(result);
+                        hideLoading();      
                         bootbox.alert({
                             message: data.Message,
                             callback: function () {

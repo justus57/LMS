@@ -396,7 +396,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AppraisalApplication.cs" />
     <Compile Include="Models\CreateAdvanceRequest.cs" />
     <Compile Include="Models\Dashboard.cs" />
     <Compile Include="Models\ForgotPassword.cs" />

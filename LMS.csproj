@@ -373,6 +373,7 @@
     <Compile Include="Controllers\AdvanceRequestController.cs" />
     <Compile Include="Controllers\AdvanceRequestsController.cs" />
     <Compile Include="Controllers\AdvanceSurrendersController.cs" />
+    <Compile Include="Controllers\AppraisalApplicationController.cs" />
     <Compile Include="Controllers\ApprovalEntriesController.cs" />
     <Compile Include="Controllers\CreateAdvanceRequestController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -4193,6 +4194,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Assest\scss\Uploads\" />
+    <Folder Include="Views\AppraisalApplication\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

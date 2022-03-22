@@ -61,7 +61,7 @@ namespace LMS.Controllers
             }
             return View();
         }
-        private void LoadTable(string status)
+        public void LoadTable(string status)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
 

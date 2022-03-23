@@ -15,12 +15,9 @@ namespace LMS.Controllers
     {
         static string DocumentNo = "";
         static string _VehicleClassRequested = "";
-
         public DropDownList AssignedDriver { get; private set; }
         public DropDownList AssignedVehicleClass { get; private set; }
         public DropDownList VehicleClassRequested { get; private set; }
-
-
 
         // GET: AssignTransportRequest
         public ActionResult Index()
@@ -29,8 +26,6 @@ namespace LMS.Controllers
         }
         public ActionResult AssignTransportRequest()
         {
-            
-        
             Session["ErrorMessage"] = "";
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
             System.Web.HttpContext.Current.Session["IsDashboardActive"] = "";
@@ -81,8 +76,6 @@ namespace LMS.Controllers
             return View();
         }
         //
-
-       
         public static string LoadTransportRequest()
         {
             double TripCost = 0;

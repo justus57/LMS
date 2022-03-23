@@ -190,18 +190,18 @@ namespace LMS.Controllers
             string ShortcutDimCode4 = json.ShortcutDimension4Code;
             System.Web.HttpContext.Current.Session["LCY"] = json.LCY;
 
-            LoadDimCodeValues(DimCode1, GlobalDimCode1);
-            LoadDimCodeValues(DimCode2, GlobalDimCode2);
-            LoadDimCodeValues(DimCode3, ShortcutDimCode3);
-            LoadDimCodeValues(DimCode4, ShortcutDimCode4);
-            LoadDimCodeValues(DimCode6, ShortcutDimCode6);
+            //LoadDimCodeValues(DimCode1, GlobalDimCode1);
+            //LoadDimCodeValues(DimCode2, GlobalDimCode2);
+            //LoadDimCodeValues(DimCode3, ShortcutDimCode3);
+            //LoadDimCodeValues(DimCode4, ShortcutDimCode4);
+            //LoadDimCodeValues(DimCode6, ShortcutDimCode6);
 
-            DimCode1Label.Text = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
-            DimCode2Label.Text = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
-            DimCode3Label.Text = SetFirstLetterToUpper(ShortcutDimCode3.ToLower());
-            DimCode4Label.Text = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
-            DimCode6Label.Text = "Your Department";
-            //load dynamic list
+            //DimCode1Label.Text = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
+            //DimCode2Label.Text = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
+            //DimCode3Label.Text = SetFirstLetterToUpper(ShortcutDimCode3.ToLower());
+            //DimCode4Label.Text = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
+            //DimCode6Label.Text = "Your Department";
+            ////load dynamic list
 
         }
         public void LoadDimCodeValues(DropDownList _DropDownList, string Code)

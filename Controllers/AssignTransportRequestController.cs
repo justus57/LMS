@@ -165,7 +165,7 @@ namespace LMS.Controllers
             }
             _DropDownList.Items.Insert(0, new ListItem(" ", ""));
         }
-        private void LoadVehicleClass(DropDownList _DropDownList)
+        public void LoadVehicleClass(DropDownList _DropDownList)
         {
             _DropDownList.Items.Clear();
 
@@ -178,7 +178,7 @@ namespace LMS.Controllers
             }
             _DropDownList.Items.Insert(0, new ListItem(" ", ""));
         }
-        private void GetDimensionCodes()
+        public void GetDimensionCodes()
         {
             string GetDimensionCodesresponseString = CreateAdvanceRequestXMLRequests.GetDimensionCodes();
 
@@ -204,7 +204,7 @@ namespace LMS.Controllers
             //load dynamic list
 
         }
-        private void LoadDimCodeValues(DropDownList _DropDownList, string Code)
+        public void LoadDimCodeValues(DropDownList _DropDownList, string Code)
         {
             _DropDownList.Items.Clear();
 
@@ -215,7 +215,7 @@ namespace LMS.Controllers
             _DropDownList.Items.Insert(0, new ListItem(" ", ""));
         }
 
-        private void LoadEmployees(DropDownList _DropDownList)
+        public void LoadEmployees(DropDownList _DropDownList)
         {
             _DropDownList.Items.Clear();
 

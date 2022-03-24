@@ -1,0 +1,1397 @@
+﻿@model LMS.Models.CreateAdvanceSurrender
+
+@{
+    ViewBag.Title = "CreateAdvanceSurrender";
+}
+
+
+<main>
+    <div id="wrapper">
+        <div id="content-wrapper">
+            <div class="container-fluid">
+
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">Advance Requests</li>
+                    <li class="breadcrumb-item"> Advance Surrender</li>
+                    <li class="breadcrumb-item active">Create Staff Surrender</li>
+                </ol>
+                <!-- DataTables Example -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-share-square"></i>
+                        Create Advance Surrender Request
+                    </div>
+                    <form runat="server" novalidate="" action="#" method="POST" id="LeaveApplicationForm" autocomplete="off">
+                        <div class="card-body">
+                            <div class="row mb-5">
+                                <div class="col-md-4 mb-4">
+                                    <div>Staff Advance Surrender Information</div>
+                                    <div class="text-muted small">Shows information for advance surrender request</div>
+                                </div>
+                                <div class="col-md-8">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="AdvanceRequestList">Advance Request Selection</label>
+                                                <asp:DropDownList CssClass="form-control" ID="AdvanceRequestList" runat="server" AutoPostBack="false" style="width:100%"> </asp:DropDownList>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The Advance Request must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="DateDue">Advance Request Selected</label>
+                                                <asp:TextBox class="form-control" id="SelectedAdvanceRequest" runat="server" required="true" disabled="true"></asp:TextBox>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The advance request must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="DateOfRequest">Expected mission start date</label>
+                                                <asp:TextBox class="form-control" id="DateOfRequest" runat="server" required="true" disabled="true"></asp:TextBox>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The date of request must be selected</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="DateDue">Expected mission end date</label>
+                                                <asp:TextBox class="form-control" id="DateDue" runat="server" required="true" disabled="true"></asp:TextBox>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The date due must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <asp:label id="DimCode1Label" runat="server" />
+                                                <asp:DropDownList CssClass="form-control" ID="DimCode1" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The Dimension Code 1 must be selected</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <asp:label id="DimCode2Label" runat="server" />
+                                                <asp:DropDownList CssClass="form-control" ID="DimCode2" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The Dimension Code 2 must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <asp:label id="DimCode4Label" runat="server" />
+                                                <asp:DropDownList CssClass="form-control" ID="DimCode4" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The Dimension Code 4 must be selected</div>
+                                            </div>
+                                        </div>
+                                        <!--<div class="col-md-6">
+                                            <div class="form-group">
+                                                <asp:label id="DimCode8Label" runat="server" />
+                                                <asp:DropDownList CssClass="form-control" ID="DimCode8" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The Dimension Code 8 must be selected</div>
+                                            </div>
+                                        </div>--> <!--GF-->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="Balance">Balance</label>
+                                                <asp:TextBox CssClass="form-control" ID="Balance" runat="server" required="true" disabled="false"> </asp:TextBox>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The balance must be provided</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Mission Summary (Type activity name and county visited)</label>
+                                                <asp:TextBox TextMode="multiline" Columns="50" maxlength="50" Rows="3" runat="server" ID="MissionSummary" class="form-control MultiLineLimit" required="true" disabled="true"></asp:TextBox>
+                                                <p class="pull-right text-muted small" id="count_message"></p>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The mission summary must be provided</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="PreferredPaymentMethod">Preferred Payment Method</label>
+                                                <asp:DropDownList CssClass="form-control" ID="PreferredPaymentMethod" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The preffered method of payment must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row mb-5">
+                                <div class="col-md-12">
+                                    <div class="col-md-4 mb-4">
+                                        <div>Staff surrender Lines</div>
+                                        <div class="text-muted small">Add your staff surrender lines here</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="text-right">
+                                                <a id="AddAppraisal" class="btn btn-success" href="#" data-toggle="modal" data-target="#AddAdvanceRequestLine" data-title="Create new staff surrender line" title="Add staff surrender line">Add staff surrender line</a>
+                                            </div>
+
+                                            <br>
+
+                                            <div class="table-responsive">
+                                                <asp:PlaceHolder ID="placeholder" runat="server" />
+                                                <div class="text-right">
+                                                    <asp:PlaceHolder ID="placeholder3" runat="server" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+                            <div class="row mb-5">
+                                <div class="col-md-12">
+                                    <div class="col-md-4 mb-4">
+                                        <div>Staff surrender attachments</div>
+                                        <div class="text-muted small">Add your staff advance attachments here</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <br>
+                                            <div class="table-responsive">
+                                                <asp:PlaceHolder ID="placeholder2" runat="server" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="text-right">
+                                                <a id="AddAttAppraisal" class="btn btn-success" href="#" data-toggle="modal" data-target="#AddAttachment" data-title="Create new appraisal target" title="Add Attachments">Add Attachments </a>
+                                            </div>
+
+                                            <br>
+                                            <div class="table-responsive">
+                                                <asp:PlaceHolder ID="placeholder1" runat="server" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer bg-light text-right">
+                            <button id="SubmitAdvance" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+
+                    <div class="card-footer small text-muted">Updated today at  @DateTime.Now.ToShortTimeString()</div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © @DateTime.Now.Year.ToString()  Brightsoft Technologies Limited</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <div class="modal fade" id="AddAdvanceRequestLine">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add advance surrender line</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form novalidate="" action="#" method="POST" id="CreateStaffImprestLines" autocomplete="off">
+
+                        <!--<div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="AdvanceRequestLineItem"> Advance Request Item</label>
+                                    <select class="form-control" id="AdvanceRequestLineItem" style="width:100%" required>
+                                        <option></option>
+                                        <option value="OTHERS">Add Item</option>
+                                    </select>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The item must be selected</div>
+                                </div>
+                            </div>
+                        </div>-->
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="Item"> Item</label>
+                                        <select class="form-control" id="Item" style="width:100%" required>
+                                            <option></option>
+                                        </select>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">The item must be selected</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="ItemDescription">Item Description</label>
+                                        <input type="text" class="form-control" id="ItemDescription" required>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">The description must be supplied</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="UnitofMeasure">Unit of measure</label>
+                                        <input type="text" class="form-control" id="UnitofMeasure" required>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">The Unit of measure must be supplied</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="UnitCost">Unit cost</label>
+                                        <input type="text" class="form-control" id="UnitCost" required>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">The Unit cost must be supplied</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="NoOfUnits">No Of Units</label>
+                                        <input type="text" class="form-control" id="NoOfUnits" required>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">The No Of Units must be supplied</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="BudgetLineCode">Budget Line Code</label>
+                                        <input type="text" class="form-control" id="BudgetLineCode" required>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">The budget line code must be specified</div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!--<div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="BudgetLineCode">Intervention</label>
+                                        <select class="form-control" id="BudgetLineCode" style="width:100%" required>
+                                            <option></option>
+                                        </select>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">The intervention must be selected</div>
+                                    </div>
+                                </div>
+                            </div>--> <!--GF-->
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="Purpose">Purpose</label>
+                                        <textarea class="form-control" rows="2" id="Purpose" required></textarea>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">The purpose must be supplied</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="Amount">Amount</label>
+                                        <input type="text" class="form-control" id="Amount" required>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">The Amount must be supplied</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="ActualAmount">Actual Amount</label>
+                                    <input type="text" class="form-control" id="ActualAmount" required>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The actual amount must be supplied</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="Remarks">Remarks</label>
+                                    <textarea class="form-control" rows="2" id="Remarks"></textarea>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The remarks must be supplied</div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="AdvanceRequestLineNo" name="AdvanceRequestLineNo" value="">
+                        <input type="hidden" id="ExchangeRate" name="ExchangeRate" value="">
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <div id="DivSubmit">
+                        <button class="btn btn-primary" type="button" id="CreateStaffSurrenderLine">Save</button>
+                    </div>
+                    <div id="DivUpdate">
+                        <button class="btn btn-success" type="button" id="UpdateStaffImprestLines">Update</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="AddAttachment">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add staff surrender attachment</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form novalidate="" action="#" method="POST" id="AddAttachmentForm" autocomplete="off">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="postedFile" class="form-control-label">Attachment File</label>
+                                    <input type="file" id="postedFile" name="postedFile" class="form-control-file" required accept=".pdf" />
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">A file to upload must be chosen</div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="AttachmentDescription">Attachment description</label>
+                                    <textarea class="form-control" rows="2" id="AttachmentDescription" required></textarea>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The attachment description must be supplied</div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-success" type="button" id="SaveAttachment">Save</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    var jQuery_1_12_4 = $.noConflict( true );
+</script>
+<script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="~/Assest/js/sb-admin.min.js"></script>
+<!-- Page level plugin JavaScript-->
+<script src="~/Assest/vendor/datatables/jquery.dataTables.js"></script>
+<script src="~/Assest/vendor/datatables/dataTables.bootstrap4.js"></script>
+<script src="~/Assest/js/bootbox.all.min.js"></script>
+<script src="~/Assest/js/bootboxError.js"></script>
+<!-- Demo scripts for this page-->
+<script src="~/Assest/js/jquery.toast.js"></script>
+<script src="~/Assest/js/jquery.alphanum.js"></script>
+<!-- Bootstrap core CSS-->
+<link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template-->
+<link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+<!-- Page level plugin CSS-->
+<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="css/sb-admin.css" rel="stylesheet">
+<link href="css/select2.min.css" rel="stylesheet" />
+<!--jQUERY date picker--->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
+
+<script type="text/javascript">
+
+    $( ".MultiLineLimit" ).on( 'change keydown paste input', function () {
+        this.value = ( this.value.length <= 50 ? this.value : this.value.substring( 0, 50 ) );
+    } );
+    var text_max = 50;
+    $( '#count_message' ).html( text_max + ' remaining' );
+
+    $( '#MissionSummary' ).keyup( function () {
+        var text_length = $( '#MissionSummary' ).val().length;
+        var text_remaining = text_max - text_length;
+
+        $( '#count_message' ).html( text_remaining + ' remaining' );
+    } );
+
+    var jQuery_3_3_1 = $.noConflict( true );
+
+    jQuery_3_3_1( '#Amount' ).numeric( {
+        maxPreDecimalPlaces: 10,
+        maxDecimalPlaces: 2
+    } );
+    jQuery_3_3_1( '#NoOfUnits' ).numeric( {
+        maxPreDecimalPlaces: 10,
+        maxDecimalPlaces: 2
+    } );
+    jQuery_3_3_1( '#UnitCost' ).numeric( {
+        maxPreDecimalPlaces: 10,
+        maxDecimalPlaces: 2
+    } );
+    jQuery_3_3_1( '#ActualAmount' ).numeric( {
+        maxPreDecimalPlaces: 10,
+        maxDecimalPlaces: 2
+    } );
+
+    //jQuery_3_3_1.ajax({
+    //    url: 'CreateAdvanceSurrender.aspx/LoadInterventions',
+    //    type: "POST",
+    //    dataType: "json",
+    //    contentType: "application/json; charset=utf-8",
+    //    success: function (response) {
+
+    //        if (response != null && response.d != null) {
+    //            var data = response.d;
+    //            // alert(typeof (data)); //it comes out to be string
+    //            //we need to parse it to JSON
+    //            data = $.parseJSON(data);
+
+    //            $.each(data, function (i, item) {
+    //                $("#BudgetLineCode").append($('<option></option>').attr("value", item.Code).text(item.Description));
+    //            });
+    //        }
+    //    }
+    //});
+    jQuery_3_3_1( '#SubmitAdvance' ).on( 'click', function ( event ) {
+        event.preventDefault();
+
+        var title = 'Submitting Advance Request';
+        var icon = 'loading';
+        var duration = 50000 * 1;
+
+        //validate
+        var form = $( "#LeaveApplicationForm" )
+
+        if ( form[ 0 ].checkValidity() === false ) {
+            event.preventDefault()
+            event.stopPropagation()
+            form.addClass( 'was-validated' );
+        } else if ( form[ 0 ].checkValidity() === true ) {
+            // Perform ajax submit here...
+            jQuery_3_3_1.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+
+            jQuery.ajax( {
+                url: 'CreateAdvanceSurrender.aspx/Save',
+                type: "POST",
+                data: '{param1:"' + $( '#DateOfRequest' ).val() + '", param2:"' + $( '#DateDue' ).val() + '", param3:"' + $( '#DateDue' ).val() + '", param4:"' + $( '#DimCode1' ).val() + '", param5:"' + $( '#DimCode2' ).val() + '", param6:"' + $( '#DimCode4' ).val() + '", param7:"' + $( '#DimCode8' ).val() + '", param8:"' + $( '#DimCode4' ).val() + '", param9:"' + $( '#PreferredPaymentMethod' ).val() + '", param10:"' + $( '#MissionSummary' ).val() + '" }',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function ( response ) {
+
+                    if ( response != null ) {
+                        var data = $.parseJSON( response );
+
+                        jQuery_3_3_1.Toast.hideToast();
+
+                        if ( data.Status != "000" ) {
+
+                            bootbox.error( { title: "Approval error", message: data.Message } );
+                        } else {
+
+                            bootbox.alert( {
+                                message: data.Message,
+                                callback: function () {
+                                    window.location.href = 'AdvanceSurrenders.aspx?status=Pending';
+                                }
+                            } )
+                        }
+                    }
+                },
+                error: function () {
+                    // bootbox.error({ title: "System error", message: "An error occured." });
+                    jQuery_3_3_1.Toast.hideToast();
+
+                    bootbox.alert( {
+                        message: "The advance request was successfully sent for approval",
+                        callback: function () {
+                            window.setTimeout( function () {
+                                //alert('redirecting');
+                                window.location.href = 'AdvanceSurrenders.aspx?status=Pending';
+                            }, 1000 );//
+                        }
+                    } )
+                },
+                timeout: 10000
+            } );
+        }
+    } );
+    jQuery_3_3_1( "#dataTable" ).on( "click", ".delete_advanceSurrenderLine", function ( e ) {
+        e.preventDefault();
+
+        var pid = $( this ).attr( 'data-id' );
+
+        bootbox.confirm( {
+            title: "<i class='fa fa-trash-alt'></i> Delete advance surrender line?",
+            message: "Do you wish to delete this record?",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function ( result ) {
+
+                if ( result == true ) {
+
+                    //showToast('Deleting advance request line');
+                    // showToast(pid);
+
+                    jQuery.ajax( {
+                        url: 'CreateAdvanceSurrender.aspx/DeleteAdvanceRequestLines',
+                        type: "POST",
+                        data: '{param1:"' + pid + '"}',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function ( response ) {
+
+                            if ( response != null ) {
+                                var data = $.parseJSON( data );
+
+                                // hideLoading();
+
+                                bootbox.alert( {
+                                    message: data.Message,
+                                    callback: function () {
+                                        location.reload();
+                                    }
+                                } )
+                            }
+                        },
+                        error: function () {
+                            bootbox.error( { title: "System error", message: "An error occured." } );
+                        }
+                    } );
+                }
+            }
+        } );
+    } );
+    jQuery_3_3_1( "#dataTable" ).on( "click", ".EditAdvanceSurrenderLine", function ( e ) {
+        e.preventDefault();
+
+        $( '#DivUpdate' ).show();
+        $( '#DivSubmit' ).hide();
+
+        var pid = $( this ).attr( 'data-id' );
+
+        $( "#AdvanceRequestLineNo" ).val( pid );
+
+        $.ajax( {
+            url: 'CreateAdvanceSurrender.aspx/GetSurrenderLineDetails',
+            type: "POST",
+            data: '{param1:"' + pid + '" }',
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function ( response ) {
+
+                if ( response != null && response.d != null ) {
+                    var data = $.parseJSON( response );
+                    jQuery_3_3_1( '#AddAdvanceRequestLine' ).modal( 'show' );
+                    // document.getElementById('AdvanceRequestLineItem').disabled = true;
+                    document.getElementById( 'ItemDescription' ).disabled = true;
+                    //document.getElementById('Purpose').disabled = true;
+                    document.getElementById( 'UnitofMeasure' ).disabled = true;
+                    document.getElementById( 'UnitCost' ).disabled = true;
+                    document.getElementById( 'NoOfUnits' ).disabled = true;
+                    document.getElementById( 'Amount' ).disabled = true;
+                    document.getElementById( 'Purpose' ).disabled = true;
+                    document.getElementById( 'Item' ).disabled = true;
+                    document.getElementById( 'BudgetLineCode' ).disabled = true;
+                    // document.getElementById('AdvanceRequestLineItem').required = false;
+                    $( "#AdvanceRequestLineItem" ).val( data.Item ).change();
+                    $( "#Item" ).val( data.Item ).change();
+                    $( '#ItemDescription' ).val( data.ItemDescription );
+                    $( '#Purpose' ).val( data.Purpose );
+                    $( '#UnitofMeasure' ).val( data.UnitOfMeasure );
+                    $( '#UnitCost' ).val( data.UnitCost );
+                    $( '#NoOfUnits' ).val( data.NoOfUnits );
+                    // $('#BudgetLineCode').val(data.ShortcutDimCode5).change();
+                    $( '#BudgetLineCode' ).val( data.ShortcutDimCode3 );
+                    $( '#Amount' ).val( data.AdvancedAmountLCY );
+                    $( '#ActualAmount' ).val( data.SurrenderedAmountLCY );
+                    $( '#Remarks' ).val( data.Remarks );
+                }
+            }
+        } );
+    } );
+
+    jQuery_3_3_1( "#dataTableAttachment2" ).on( "click", ".delete_attachment2", function ( e ) {
+        e.preventDefault();
+
+        var pid = $( this ).attr( 'data-id' );
+
+        bootbox.confirm( {
+            title: "<i class='fa fa-trash-alt'></i> Delete attachment?",
+            message: "Do you wish to delete this record?",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function ( result ) {
+
+                if ( result == true ) {
+
+                    //showToast('Deleting attachment');
+                    // showToast(pid);
+
+                    jQuery.ajax( {
+                        url: 'CreateAdvanceSurrender.aspx/DeleteAdvanceRequestAttachment',
+                        type: "POST",
+                        data: '{param1:"' + pid + '"}',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function ( response ) {
+
+                            if ( response != null) {
+                                var data = response.d;
+                                // alert(typeof (data)); //it comes out to be string
+                                //we need to parse it to JSON
+                                data = $.parseJSON( data );
+
+                                //hideLoading();
+
+                                bootbox.alert( {
+                                    message: data.Message,
+                                    callback: function () {
+                                        location.reload();
+                                    }
+                                } )
+                            }
+                        },
+                        error: function () {
+                            bootbox.error( { title: "System error", message: "An error occured." } );
+                        }
+                    } );
+                }
+            }
+        } );
+    } );
+
+    jQuery_3_3_1( "#dataTableAttachment" ).on( "click", ".downloadfile", function ( e ) {
+        e.preventDefault();
+
+        var pid = $( this ).attr( 'data-id' );
+        window.location.href = "uploads/" + pid + "";
+
+    } );
+    jQuery_3_3_1( "#dataTableAttachment2" ).on( "click", ".downloadfile2", function ( e ) {
+        e.preventDefault();
+
+        var pid = $( this ).attr( 'data-id' );
+        window.location.href = "uploads/" + pid + "";
+
+    } );
+    jQuery_3_3_1( '#SaveAttachment' ).on( 'click', function ( event ) {
+        event.preventDefault();
+
+        var title = 'Uploading Attachment';
+        var icon = 'loading';
+        var duration = 50000 * 1;
+
+        //validate
+        var form = $( "#AddAttachmentForm" )
+
+        if ( form[ 0 ].checkValidity() === false ) {
+            event.preventDefault()
+            event.stopPropagation()
+            form.addClass( 'was-validated' );
+        } else if ( form[ 0 ].checkValidity() === true ) {
+            // Perform ajax submit here...
+            jQuery_3_3_1.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+
+            $.ajax( {
+                url: 'FileUploadHandler.ashx',
+                type: 'POST',
+                data: new FormData( $( '#AddAttachmentForm' )[ 0 ] ),
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function ( file ) {
+
+                    //alert(file.name);
+
+                    jQuery.ajax( {
+                        url: 'CreateAdvanceSurrender.aspx/SaveAttachment',
+                        type: "POST",
+                        data: '{ param1:"' + file.name + '", param2:"' + $( '#AttachmentDescription' ).val() + '"  }',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function ( response ) {
+
+                            if ( response != null && response.d != null ) {
+                                var data = response.d;
+                                // alert(typeof (data)); //it comes out to be string
+                                //we need to parse it to JSON
+                                data = $.parseJSON( data );
+
+                                jQuery_3_3_1.Toast.hideToast();
+
+                                bootbox.alert( {
+                                    message: data.Message,
+                                    callback: function () {
+                                        location.reload();
+                                    }
+                                } )
+                            }
+                        }
+                    } );
+                },
+                xhr: function () {
+                    var fileXhr = $.ajaxSettings.xhr();
+                    if ( fileXhr.upload ) {
+                        $( "progress" ).show();
+                        fileXhr.upload.addEventListener( "progress", function ( e ) {
+                            if ( e.lengthComputable ) {
+                                $( "#fileProgress" ).attr( {
+                                    value: e.loaded,
+                                    max: e.total
+                                } );
+                            }
+                        }, false );
+                    }
+                    return fileXhr;
+                }
+            } );
+        }
+    } );
+    jQuery_3_3_1( '#UpdateStaffImprestLines' ).on( 'click', function ( event ) {
+        event.preventDefault();
+
+        var title = 'Updating line details';
+        var icon = 'loading';
+        var duration = 50000 * 1;
+
+        //validate
+        var form = $( "#CreateStaffImprestLines" )
+
+        if ( form[ 0 ].checkValidity() === false ) {
+            event.stopPropagation()
+            form.addClass( 'was-validated' );
+        } else if ( form[ 0 ].checkValidity() === true ) {
+            // Perform ajax submit here...
+            jQuery_3_3_1.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+
+            jQuery.ajax( {
+                url: 'CreateAdvanceSurrender.aspx/UpdateSurrender',
+                type: "POST",
+                data: '{ param1:"' + $( '#BudgetLineCode' ).val() + '", param2:"' + $( '#ActualAmount' ).val() + '", param3:"' + $( '#Item' ).val() + '", param4:"' + $( '#ItemDescription' ).val() + '", param5:"' + $( '#UnitofMeasure' ).val() + '", param6:"' + $( '#UnitCost' ).val() + '", param7:"' + $( '#NoOfUnits' ).val() + '", param8:"' + $( '#Amount' ).val() + '", param9:"' + $( '#DateOfRequest' ).val() + '", param10:"' + $( '#DateDue' ).val() + '", param11:"' + $( "#RequestToCompany option:selected" ).html() + '", param12:"' + $( '#DimCode1' ).val() + '", param13:"' + $( '#DimCode2' ).val() + '", param14:"' + $( '#BudgetLineCode' ).val() + '", param15:"' + $( '#DimCode4' ).val() + '", param16:"' + $( '#Currency' ).val() + '",param17:"' + $( "#AdvanceRequestLineNo" ).val() + '", param18:"' + $( "#PreferredPaymentMethod" ).val() + '", param19:"' + $( "#Remarks" ).val() + '", param20:"' + $( "#MissionSummary" ).val() + '", param21:"' + $( "#Purpose" ).val() + '" }',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function ( response ) {
+
+                    if ( response != null && response.d != null ) {
+                        var data = response.d;
+                        // alert(typeof (data)); //it comes out to be string
+                        //we need to parse it to JSON
+                        data = $.parseJSON( data );
+
+                        jQuery_3_3_1.Toast.hideToast();
+
+                        bootbox.alert( {
+                            message: data.Message,
+                            callback: function () {
+                                location.reload();
+                                //$('#TableDIV').load(document.URL + ' #TableDIV');
+                            }
+                        } )
+                    }
+                }
+            } );
+        }
+    } );
+    jQuery_3_3_1( '#CreateStaffSurrenderLine' ).on( 'click', function ( event ) {
+        event.preventDefault();
+
+        var title = 'Creating surrender line';
+        var icon = 'loading';
+        var duration = 50000 * 1;
+
+        //validate
+        var form = $( "#CreateStaffImprestLines" )
+
+        if ( form[ 0 ].checkValidity() === false ) {
+            event.preventDefault()
+            event.stopPropagation()
+            form.addClass( 'was-validated' );
+        } else if ( form[ 0 ].checkValidity() === true ) {
+            // Perform ajax submit here...
+            jQuery_3_3_1.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+
+            jQuery.ajax( {
+                url: 'CreateAdvanceSurrender.aspx/SaveSurrender',
+                type: "POST",
+                data: '{ param1:"' + $( '#BudgetLineCode' ).val() + '", param2:"' + $( '#ActualAmount' ).val() + '", param3:"' + $( '#Item' ).val() + '", param4:"' + $( '#ItemDescription' ).val() + '", param5:"' + $( '#UnitofMeasure' ).val() + '", param6:"' + $( '#UnitCost' ).val() + '", param7:"' + $( '#NoOfUnits' ).val() + '", param8:"' + $( '#Amount' ).val() + '", param9:"' + $( '#DateOfRequest' ).val() + '", param10:"' + $( '#DateDue' ).val() + '", param11:"' + $( "#RequestToCompany option:selected" ).html() + '", param12:"' + $( '#DimCode1' ).val() + '", param13:"' + $( '#DimCode2' ).val() + '", param14:"' + $( '#BudgetLineCode' ).val() + '", param15:"' + $( '#DimCode4' ).val() + '", param16:"' + $( '#Currency' ).val() + '",param17:"' + $( "#AdvanceRequestLineNo" ).val() + '", param18:"' + $( "#PreferredPaymentMethod" ).val() + '",param19:"' + $( "#Remarks" ).val() + '", param20:"' + $( "#MissionSummary" ).val() + '", param21:"' + $( "#Purpose" ).val() + '" }',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function ( response ) {
+
+                    if ( response != null && response.d != null ) {
+                        var data = response.d;
+                        // alert(typeof (data)); //it comes out to be string
+                        //we need to parse it to JSON
+                        data = $.parseJSON( data );
+
+                        jQuery_3_3_1.Toast.hideToast();
+
+                        bootbox.alert( {
+                            message: data.Message,
+                            callback: function () {
+                                //window.location.href = 'CreateAdvanceSurrender.aspx?No=' + data.Status + '';
+                                location.reload();
+                            }
+                        } )
+                    }
+                }
+            } );
+        }
+    } );
+</script>
+
+<script src="js/jquery.toast.js"></script>
+<!-- JQUERY DATEPICKER-->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="js/select2.min.js"></script>
+<script>
+    $( document ).ready( function () {
+        $( "#Attachment" ).hide();
+
+        $( DimCode1 ).prop( "disabled", true );
+        $( DimCode2 ).prop( "disabled", true );
+        $( DimCode4 ).prop( "disabled", true );
+        //$(DimCode8).prop("disabled", true);
+        $( MissionSummary ).prop( "disabled", true );
+        $( PreferredPaymentMethod ).prop( "disabled", true );
+
+        $( '#PreferredPaymentMethod' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#Item' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#AdvanceRequestList' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#DimCode1' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#DimCode2' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#DimCode4' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        //$('#DimCode8').select2({
+        //    sorter: function (data) {
+        //        return data.sort(function (a, b) {
+        //            return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+        //        });
+        //    }
+        //});
+        //$('#BudgetLineCode').select2({
+        //    sorter: function (data) {
+        //        return data.sort(function (a, b) {
+        //            return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+        //        });
+        //    }
+        //});
+        $( '#AdvanceRequestLineItem' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( "#DateOfRequest" ).datepicker( {
+            dateFormat: 'dd/mm/yy',
+
+            onSelect: function ( date ) {
+
+                $( "#DateDue" ).datepicker( "option", "minDate", date );
+                $( "#DateDue" ).datepicker( "option", "maxDate", '+2y' );
+            }
+
+        } ).val();
+        $( "#DateDue" ).datepicker( { dateFormat: 'dd/mm/yy' } ).val();
+        $( '#DivUpdate' ).hide();
+
+
+        //for KRCS
+
+        //$("#BudgetLineCode").blur(function () {
+
+        //    //validate here
+        //    jQuery_3_3_1.ajax({
+        //        url: 'CreateAdvanceSurrender.aspx/ValidateDim3Code',
+        //        type: "POST",
+        //        data: '{param1:"' + $("#BudgetLineCode").val() + '" }',
+        //        dataType: "json",
+        //        contentType: "application/json; charset=utf-8",
+        //        success: function (response) {
+
+        //            if (response != null && response.d != null) {
+        //                var data = response.d;
+        //                // alert(typeof (data)); //it comes out to be string
+        //                //we need to parse it to JSON
+        //                data = $.parseJSON(data);
+
+        //                if (data.Status != "000") {
+
+        //                    bootbox.error({ title: "Validation error", message: "The dimension code " + $("#BudgetLineCode").val() + " provided is invalid" });
+        //                    $("#BudgetLineCode").val('');
+        //                }
+        //            }
+        //        },
+        //        error: function () {
+        //            bootbox.error({ title: "System error", message: "An error occured." });
+        //        }
+        //    });
+        //});
+
+        //$.ajax({
+        //    url: 'CreateAdvanceRequest.aspx/LoadInterventions',
+        //    type: "POST",
+        //    dataType: "json",
+        //    contentType: "application/json; charset=utf-8",
+        //    success: function (response) {
+
+        //        if (response != null && response.d != null) {
+        //            var data = response.d;
+        //            // alert(typeof (data)); //it comes out to be string
+        //            //we need to parse it to JSON
+        //            data = $.parseJSON(data);
+        //            $("#BudgetLineCode").append($('<option></option>').attr("value", "OTHERS").text("Others"));
+        //            $.each(data, function (i, item) {
+        //                $("#BudgetLineCode").append($('<option></option>').attr("value", item.Code).text(item.Description));
+        //            });
+        //        }
+        //    }
+        //});
+        $( "#ActualAmount" ).keyup( function () {
+
+            var result = $( "#Amount" ).val().replace( /,/g, "" );
+
+            var Amount = parseFloat( result, 10 );
+
+            if ( $( "#ActualAmount" ).val() > Amount ) {
+                document.getElementById( 'Remarks' ).required = true;
+            } else {
+                document.getElementById( 'Remarks' ).required = false;
+            }
+        } );
+        $( '#DivUpdate' ).hide();
+
+        $( "#AdvanceRequestList" ).change( function () {
+            //selection fields
+
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams( queryString );
+            const DocumentNo = urlParams.get( 'No' )
+
+            if ( DocumentNo ) {
+
+                console.log( 'document selected' );
+
+            } else {
+                if ( $( "#AdvanceRequestList" ).val() != "" && $( "#SelectedAdvanceRequest" ).val() === "" ) {
+                    //confirm
+                    bootbox.confirm( {
+                        title: "<i class='fa fa-share-square'></i> Create Surrender?",
+                        message: "Clicking Yes will create a staff surrender with the selected staff advance's lines. Would you like to proceed?",
+                        buttons: {
+                            confirm: {
+                                label: 'Yes',
+                                className: 'btn-success'
+                            },
+                            cancel: {
+                                label: 'No',
+                                className: 'btn-danger'
+                            }
+                        },
+                        callback: function ( result ) {
+
+                            if ( result == true ) {
+
+                                //Create Surrender
+                                jQuery_3_3_1.ajax( {
+                                    url: 'CreateAdvanceSurrender.aspx/CreateStaffSurrender',
+                                    type: "POST",
+                                    data: '{param1:"' + $( "#AdvanceRequestList" ).val() + '" }',
+                                    dataType: "json",
+                                    contentType: "application/json; charset=utf-8",
+                                    success: function ( response ) {
+
+                                        if ( response != null && response.d != null ) {
+                                            var data = response.d;
+                                            // alert(typeof (data)); //it comes out to be string
+                                            //we need to parse it to JSON
+                                            data = $.parseJSON( data );
+
+                                            $( '#DateDue' ).val( data.DateDue );
+                                            $( '#DateOfRequest' ).val( data.DateOfRequest );
+                                            $( '#MissionSummary' ).val( data.MissionSummary );
+                                            $( "#DimCode1" ).val( data.GlobalDimCode1 ).change();
+                                            $( "#DimCode2" ).val( data.GlobalDimCode2 ).change();
+                                            $( "#DimCode4" ).val( data.ShortcutDimCode4 ).change();
+                                            $( "#DimCode8" ).val( data.ShortcutDimCode8 ).change();
+                                            $( "#Currency" ).val( data.Currency ).change();
+                                            //$("#RequestToCompany").val(data.RequestToCompany).change();
+                                            var company = data.RequestToCompany;
+                                            $( "#RequestToCompany" ).select2( "val", $( "#RequestToCompany option:contains('" + company + "')" ).val() );
+
+                                            window.location.href = 'CreateAdvanceSurrender.aspx?No=' + data.AdvanceRequestHdrNo + '&SA=' + data.No + ''; //No
+
+
+
+                                        }
+                                    }
+                                } );
+                            }
+                        }
+                    } );
+                }
+
+            }
+
+
+        } );
+        $( "#AdvanceRequestLineItem" ).change( function () {
+            //selection fields
+
+            $( "#NoOfUnits" ).val( '' );
+            $( '#ItemDescription' ).val( '' );
+            //$('#Purpose').val('');
+            $( "#UnitofMeasure" ).val( '' ).change();
+            $( '#UnitCost' ).val( '' );
+            $( '#ExchangeRate' ).val( '' );
+            $( "#Amount" ).val( '' );
+            $( "#ExchangeRate" ).val( '' );
+
+            $.ajax( {
+                url: 'CreateAdvanceSurrender.aspx/GetRequestLineDetails',
+                type: "POST",
+                data: '{param1:"' + $( "#AdvanceRequestLineItem" ).val() + '" }',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function ( response ) {
+
+                    if ( response != null && response.d != null ) {
+                        var data = response.d;
+                        // alert(typeof (data)); //it comes out to be string
+                        //we need to parse it to JSON
+                        data = $.parseJSON( data );
+
+
+                        document.getElementById( 'Amount' ).disabled = true;
+
+
+                        if ( $( "#AdvanceRequestLineItem" ).val() == "OTHERS" ) {
+                            document.getElementById( 'UnitCost' ).disabled = false;
+                            document.getElementById( 'UnitCost' ).required = true;
+                            document.getElementById( 'Item' ).disabled = false;
+                            document.getElementById( 'UnitCost' ).disabled = false;
+                            document.getElementById( 'ItemDescription' ).disabled = false;
+                            document.getElementById( 'Purpose' ).disabled = false;
+                            document.getElementById( 'UnitofMeasure' ).disabled = false;
+                            document.getElementById( 'Amount' ).disabled = true;
+                            document.getElementById( 'NoOfUnits' ).disabled = false;
+                            document.getElementById( 'UnitCost' ).disabled = false;
+                            document.getElementById( 'Remarks' ).required = true;
+                            $( "#Amount" ).val( '0' );
+                            document.getElementById( 'BudgetLineCode' ).disabled = false;
+
+                        } else {
+                            document.getElementById( 'UnitCost' ).disabled = true;
+                            document.getElementById( 'ItemDescription' ).disabled = true;
+                            //document.getElementById('Purpose').disabled = true;
+                            document.getElementById( 'UnitofMeasure' ).disabled = true;
+                            document.getElementById( 'Item' ).disabled = true;
+                            document.getElementById( 'NoOfUnits' ).disabled = true;
+                            document.getElementById( 'Remarks' ).required = false;
+                            document.getElementById( 'BudgetLineCode' ).disabled = true;
+
+                            $( "#Item" ).val( data.Item );
+                            $( '#ItemDescription' ).val( data.ItemDescription );
+                            $( '#Purpose' ).val( data.Purpose );
+                            $( '#UnitofMeasure' ).val( data.UnitOfMeasure );
+                            $( '#UnitCost' ).val( data.UnitCost );
+                            $( '#NoOfUnits' ).val( data.NoOfUnits );
+                            $( '#Amount' ).val( data.AdvancedAmountLCY );
+                            $( '#Remarks' ).val( data.Remarks );
+                            $( '#BudgetLineCode' ).val( data.BudgetLineCode ).change();
+                        }
+                    }
+                }
+            } );
+        } );
+        $( "#Item" ).change( function () {
+
+            if ( $( "#Item" ).val() != 'OTHERS' ) {
+
+                $( "#NoOfUnits" ).val( '' );
+                $( '#ItemDescription' ).val( '' );
+                //$('#Purpose').val('');
+                $( "#UnitofMeasure" ).val( '' ).change();
+                $( '#UnitCost' ).val( '' );
+                $( '#ExchangeRate' ).val( '' );
+                $( "#Amount" ).val( '0' );
+                $( "#ExchangeRate" ).val( '' );
+                //selection fields
+                jQuery_3_3_1.ajax( {
+                    url: 'CreateAdvanceRequest.aspx/LoadAdvanceRequestItem',
+                    type: "POST",
+                    data: '{Code:"' + $( "#Item" ).val() + '" }',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function ( response ) {
+
+                        if ( response != null && response.d != null ) {
+                            var data = response.d;
+                            // alert(typeof (data)); //it comes out to be string
+                            //we need to parse it to JSON
+                            data = $.parseJSON( data );
+
+
+                            document.getElementById( 'Amount' ).disabled = true;
+
+
+                            if ( data.UnitCost == "0" ) {
+                                document.getElementById( 'UnitCost' ).disabled = false;
+                                document.getElementById( 'UnitCost' ).required = true;
+
+                            } else {
+                                document.getElementById( 'UnitCost' ).disabled = true;
+                                document.getElementById( 'ItemDescription' ).disabled = true;
+                                document.getElementById( 'UnitofMeasure' ).disabled = true;
+                                //document.getElementById('Purpose').disabled = true;
+                            }
+                            $( '#ItemDescription' ).val( data.Description );
+                            // $('#Purpose').val(data.Purpose);
+                            $( "#UnitofMeasure" ).val( data.UnitOfMeasure ).change();
+                            $( '#UnitCost' ).val( data.UnitCost );
+                            $( '#ExchangeRate' ).val( data.ExchangeRate );
+
+                        }
+                    },
+                    error: function () {
+                        bootbox.error( { title: "System error", message: "An error occured." } );
+                    }
+                } );
+            } else {
+                document.getElementById( 'UnitCost' ).disabled = false;
+                document.getElementById( 'ItemDescription' ).disabled = false;
+                document.getElementById( 'UnitofMeasure' ).disabled = false;
+                document.getElementById( 'Purpose' ).disabled = false;
+            }
+
+        } );
+
+        $.ajax( {
+            url: 'CreateAdvanceSurrender.aspx/LoadAdvanceTypes',
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function ( response ) {
+
+                if ( response != null && response.d != null ) {
+                    var data = response.d;
+                    // alert(typeof (data)); //it comes out to be string
+                    //we need to parse it to JSON
+                    data = $.parseJSON( data );
+                    $( "#Item" ).append( $( '<option></option>' ).attr( "value", "OTHERS" ).text( "Others" ) );
+                    $.each( data, function ( i, item ) {
+                        $( "#Item" ).append( $( '<option></option>' ).attr( "value", item.Code ).text( item.Description ) );
+                    } );
+                }
+            }
+        } );
+        $.ajax( {
+            url: 'CreateAdvanceSurrender.aspx/LoadAdvanceRequestLines',
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function ( response ) {
+
+                if ( response != null && response.d != null ) {
+                    var data = response.d;
+                    // alert(typeof (data)); //it comes out to be string
+                    //we need to parse it to JSON
+                    data = $.parseJSON( data );
+
+                    $.each( data, function ( i, item ) {
+                        // $("#AdvanceRequestLineItem").append($('<option></option>').attr("value", item.No).text(item.ItemDescription));
+                    } );
+                }
+            }
+        } );
+
+        $.ajax( {
+            url: 'CreateAdvanceSurrender.aspx/LoadAdvanceSurrender',
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function ( response ) {
+
+                if ( response != null && response.d != null ) {
+                    var data = response.d;
+
+                    data = $.parseJSON( data );
+
+                    $( '#DateOfRequest' ).val( data.DateOfRequest );
+                    $( '#DateDue' ).val( data.DateDue );
+
+                    $( "#DimCode1" ).val( data.ShortcutDimCode1 ).change();
+                    $( "#DimCode2" ).val( data.ShortcutDimCode2 ).change();
+                    $( "#DimCode4" ).val( data.ShortcutDimCode4 ).change();
+                    $( "#DimCode8" ).val( data.ShortcutDimCode8 ).change();
+
+                    $( "#AdvanceRequestList" ).val( data.AdvanceRequestHdrNo ).change();
+                    $( "#MissionSummary" ).val( data.MissionSummary );
+
+                    $( "#Purpose" ).val( data.PurposeOfTrip );
+                    // $("#PreferredPaymentMethod").val(data.Destination);
+                    $( "#Balance" ).val( data.Balance );
+                    //
+
+                    $( "#PreferredPaymentMethod" ).val( data.PreferredPaymentMethod ).change();
+
+                    $( "#AssignedVehicleClass" ).val( data.VehicleClassAssigned ).change();
+                    $( "#AssignedDriver" ).val( data.DriverAssigned ).change();
+                    $( "#Comments" ).val( data.TransportManagerComment );
+                    $( "#SelectedAdvanceRequest" ).val( data.AdvanceRequestHdrNo );
+
+                }
+            }
+        } );
+    } );
+</script>
+

@@ -20,13 +20,7 @@ namespace LMS.Controllers
         }
         public ActionResult CreateAppraisal()
         {
-            return View();
-        }
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
             Session["ErrorMessage"] = "";
-
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
             System.Web.HttpContext.Current.Session["IsDashboardActive"] = "";
             System.Web.HttpContext.Current.Session["IsClaimActive"] = "";
@@ -62,7 +56,7 @@ namespace LMS.Controllers
                     //ApplicableTo.Items.Insert(0, new ListItem(" ", ""));
                 }
             }
-
+            return View();
         }
         private void LoadAppraisals(string status)
         {

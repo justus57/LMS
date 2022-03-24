@@ -380,6 +380,7 @@
     <Compile Include="Controllers\CreateAdvanceRequestController.cs" />
     <Compile Include="Controllers\CreateAdvanceSurrenderController.cs" />
     <Compile Include="Controllers\CreateAppraisalController.cs" />
+    <Compile Include="Controllers\CreateAppraisalQuestionsController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaveApplicationController.cs" />
@@ -404,6 +405,7 @@
     <Compile Include="Models\CreateAdvanceRequest.cs" />
     <Compile Include="Models\CreateAdvanceSurrender.cs" />
     <Compile Include="Models\CreateAppraisal.cs" />
+    <Compile Include="Models\CreateAppraisalQuestions.cs" />
     <Compile Include="Models\Dashboard.cs" />
     <Compile Include="Models\ForgotPassword.cs" />
     <Compile Include="Models\LeaveApplication.cs" />
@@ -4170,6 +4172,7 @@
     <Content Include="Views\AssignTransportRequest\AssignTransportRequest.cshtml" />
     <Content Include="Views\CreateAdvanceSurrender\CreateAdvanceSurrender.cshtml" />
     <Content Include="Views\CreateAppraisal\CreateAppraisal.cshtml" />
+    <Content Include="Views\CreateAppraisalQuestions\CreateAppraisalQuestions.cshtml" />
     <None Include="Web References\WebRef\HRWebPortal.wsdl" />
     <Content Include="Web References\WebRef\LeaveDetail.datasource">
       <DependentUpon>Reference.map</DependentUpon>

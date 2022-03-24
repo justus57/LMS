@@ -381,6 +381,7 @@
     <Compile Include="Controllers\CreateAdvanceSurrenderController.cs" />
     <Compile Include="Controllers\CreateAppraisalController.cs" />
     <Compile Include="Controllers\CreateAppraisalQuestionsController.cs" />
+    <Compile Include="Controllers\CreatePMLController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaveApplicationController.cs" />
@@ -4209,6 +4210,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Assest\scss\Uploads\" />
+    <Folder Include="Views\CreatePML\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

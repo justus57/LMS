@@ -1,0 +1,652 @@
+﻿@model LMS.Models.CreatePML
+
+@{
+    ViewBag.Title = "CreatePML";
+}
+
+<main id="main" class="main">
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+
+        <ul class="sidebar navbar-nav toggled">
+
+            <li class="nav-item @Html.Raw(HttpContext.Current.Session[" IsDashboardActive"].ToString());
+                ">
+                <a class="nav-link" href="Dashboard.aspx">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            @if (HttpContext.Current.Session["AdvanceClaim"].ToString() == "TRUE") {
+            <li class="nav-item dropdown @{Response.Write(HttpContext.Current.Session[" IsClaimActive"].ToString()); }
+                    ">
+                    <a class="nav-link dropdown-toggle" href="#" id="StaffClaimsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa-money-check-alt"></i>
+                    <span>Staff Claims</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="StaffClaimsDropdown">
+                    <h6 class="dropdown-header">Staff Claims</h6>
+                    <a class="dropdown-item" href="CreateStaffClaims.aspx">New Request</a>
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header">My Summaries:</h6>
+                    <a class="dropdown-item" href="StaffClaims.aspx?status=Open">Open</a>
+                    <a class="dropdown-item" href="StaffClaims.aspx?status=Pending">Pending</a>
+                    <a class="dropdown-item" href="StaffClaims.aspx?status=Approved">Approved</a>
+
+                </div>
+            </li>
+            } 
+            @if (HttpContext.Current.Session["AdvanceRequests"].ToString() == "TRUE") {
+            <li class="nav-item dropdown @Html.Raw(HttpContext.Current.Session[" IsAdvanceActive"].ToString());
+                ">
+                <a class="nav-link dropdown-toggle" href="#" id="AdvanceRequestsDropdow" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa-wallet"></i>
+                    <span>Advance Requests</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="AdvanceRequestsDropdow">
+                    <h6 class="dropdown-header">Staff Advance</h6>
+                    <a class="dropdown-item" href="CreateAdvanceRequest.aspx">New Request</a>
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header">My Summaries:</h6>
+                    <a class="dropdown-item" href="AdvanceRequests.aspx?status=Open">Open</a>
+                    <a class="dropdown-item" href="AdvanceRequests.aspx?status=Pending">Pending</a>
+                    <a class="dropdown-item" href="AdvanceRequests.aspx?status=Approved">Approved</a>
+
+                </div>
+            </li>
+            } 
+            @if (HttpContext.Current.Session["AdvanceSurrender"].ToString() == "TRUE") {
+            <li class="nav-item dropdown @Html.Raw(HttpContext.Current.Session[" IsSurrenderActive"].ToString());
+                ">
+                <a class="nav-link dropdown-toggle" href="#" id="AdvanceSurrenderDropdow" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa-share-square"></i>
+                    <span>Advance Surrenders</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="AdvanceSurrenderDropdow">
+                    <h6 class="dropdown-header">Advance Surrender</h6>
+                    <a class="dropdown-item" href="CreateAdvanceSurrender.aspx">New Request</a>
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header">My Summaries:</h6>
+                    <a class="dropdown-item" href="AdvanceSurrenders.aspx?status=Open">Open</a>
+                    <a class="dropdown-item" href="AdvanceSurrenders.aspx?status=Pending">Pending</a>
+                    <a class="dropdown-item" href="AdvanceSurrenders.aspx?status=Approved">Approved</a>
+
+                </div>
+            </li>
+            } 
+
+            @if (HttpContext.Current.Session["IsGF"].ToString() == "FALSE") {
+
+                if (HttpContext.Current.Session["Appraisal"].ToString() == "TRUE") {
+            <li class="nav-item dropdown @Html.Raw(HttpContext.Current.Session[" IsAppriasalActive"].ToString());
+                ">
+                <a class="nav-link dropdown-toggle" href="#" id="AppraisalsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa-question-circle"></i>
+                    <span>Appraisals</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="AppraisalsDropdown">
+                    <h6 class="dropdown-header">Appraisals</h6>
+                    @if (HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE") {
+                    <a class="dropdown-item" href="CreateAppraisal.aspx">Create Appraisal</a>
+                    } 
+                    <a class="dropdown-item" href="Appraisals.aspx?status=New">Fill Appraisal</a>
+                     @if (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE") {
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header"> Appraisal Sections:</h6>
+                    <a class="dropdown-item" href="DefineAppraisalSections.aspx">Define Sections</a>
+                    <a class="dropdown-item" href="CreatePML.aspx">Create PMLs</a>
+                     } 
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header">My Appraisals:</h6>
+                    <a class="dropdown-item" href="Appraisals.aspx?status=Open&owner=Employee">Open</a>
+                    <a class="dropdown-item" href="Appraisals.aspx?status=Submitted&owner=Employee">Pending</a>
+                    <a class="dropdown-item" href="Appraisals.aspx?status=HR&owner=Employee">Sent To HR</a>
+                    <a class="dropdown-item" href="Appraisals.aspx?status=Closed&owner=Employee">Closed</a>
+                </div>
+            </li>
+                }
+            } 
+
+            @if ((HttpContext.Current.Session["AdvanceRequests"].ToString() == "TRUE" && HttpContext.Current.Session["IsStaffAdvanceApprover"].ToString() == "TRUE") || HttpContext.Current.Session["IsLeaveApprover"].ToString() == "TRUE" || (HttpContext.Current.Session["IsTrainingSupervisor"].ToString() == "TRUE" && HttpContext.Current.Session["Training"].ToString() == "TRUE") || (HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE" && HttpContext.Current.Session["Appraisal"].ToString() == "TRUE") || (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE" && HttpContext.Current.Session["Appraisal"].ToString() == "TRUE")) {
+            <li class="nav-item dropdown @{Response.Write(HttpContext.Current.Session[" IsApprovalEntriesActive"].ToString()); }
+                ">
+                <a class="nav-link dropdown-toggle" href="#" id="ApprovalEntriesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa-paper-plane"></i>
+                    <span>Approval Entries</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="ApprovalEntriesDropdown">
+                    @if (HttpContext.Current.Session["IsStaffAdvanceApprover"].ToString() == "TRUE" && HttpContext.Current.Session["AdvanceRequests"].ToString() == "TRUE") {
+                    <h6 class="dropdown-header">Approval Entries:</h6>
+                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Pending&parent=AdvanceRequests">Pending</a>
+                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Approved&parent=AdvanceRequests">Approved</a>
+                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Rejected&parent=AdvanceRequests">Rejected</a>
+                    } 
+
+                    <!--//start GF-->
+                    @if (HttpContext.Current.Session["IsGF"].ToString() == "FALSE")
+
+                    {
+
+                    if ((HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE" || HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE") && HttpContext.Current.Session["Appraisal"].ToString() == "TRUE")
+                    {
+                    <h6 class="dropdown-header">Appraisals:</h6>
+                        if (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE") {
+                    <a class="dropdown-item" href="ApprovalEntries.aspx?parent=Appraisals&status=Open&owner=HR">Open</a>
+                    <a class="dropdown-item" href="ApprovalEntries.aspx?parent=Appraisals&status=Closed&owner=HR">Closed</a>
+                        }
+                    if (HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE") {
+                    <a class="dropdown-item" href="ApprovalEntries.aspx?parent=Appraisals&status=Open&owner=Approver">Pending</a>
+                    <a class="dropdown-item" href="ApprovalEntries.aspx?parent=Appraisals&status=Submitted&owner=Approver">Sent To HR</a>
+                    } 
+                    }   
+
+
+                    if (HttpContext.Current.Session["IsLeaveApprover"].ToString() == "TRUE")
+                    {
+                    if (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE" || HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE") {
+                    <div class="dropdown-divider"></div>
+                    }
+                    <h6 class="dropdown-header">Leaves:</h6>
+                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Pending&parent=Leaves">Pending</a>
+                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Approved&parent=Leaves">Approved</a>
+                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Rejected&parent=Leaves">Rejected</a>
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header">Leave Recalls:</h6>
+                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Pending&parent=LeaveRecalls">Pending</a>
+                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Approved&parent=LeaveRecalls">Approved</a>
+                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Rejected&parent=LeaveRecalls">Rejected</a>
+                    }
+
+                    if (HttpContext.Current.Session["IsTrainingSupervisor"].ToString() == "TRUE" && HttpContext.Current.Session["Appraisal"].ToString() == "TRUE")
+                    {
+                    if (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE" || HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE" && HttpContext.Current.Session["Appraisal"].ToString() == "TRUE")
+                    {
+                    <div class="dropdown-divider"></div>
+                    } 
+                    <h6 class="dropdown-header">Training Requests:</h6>
+                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Pending&parent=Trainings">Pending</a>
+                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Approved&parent=Trainings">Approved</a>
+                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Rejected&parent=Trainings">Rejected</a>
+                    } 
+
+                    if (HttpContext.Current.Session["IsTransportManager"].ToString() == "TRUE" && HttpContext.Current.Session["TransportRequests"].ToString() == "TRUE")
+                    {
+                    if (HttpContext.Current.Session["IsTransportManager"].ToString() == "TRUE" || HttpContext.Current.Session["IsTransportManager"].ToString() == "TRUE" && HttpContext.Current.Session["TransportRequests"].ToString() == "TRUE")
+                    {
+                    <div class="dropdown-divider"></div>
+                    }
+                    <h6 class="dropdown-header">Transport Requests:</h6>
+                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Pending&parent=TransportRequests">Pending</a>
+                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Approved&parent=TransportRequests">Approved</a>
+                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Rejected&parent=TransportRequests">Rejected</a>
+                    } 
+
+                    }
+
+                    <!--End GF-->
+
+                </div>
+            </li>
+            } 
+
+            @if (HttpContext.Current.Session["IsGF"].ToString() == "FALSE") {
+            <li class="nav-item dropdown @Html.Raw(HttpContext.Current.Session[" IsLeavesActive"].ToString());
+                ">
+                <a class="nav-link dropdown-toggle" href="#" id="LeavesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa-suitcase"></i>
+                    <span>Leaves</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="LeavesDropdown">
+                    <h6 class="dropdown-header">Leave Applications:</h6>
+                    <a class="dropdown-item" href="LeaveApplication.aspx">New Application</a>
+                    @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE") {
+                    <a class="dropdown-item" href="LeaveForOther.aspx">Apply for other</a>
+                    } 
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header">My Summaries:</h6>
+                    <a class="dropdown-item" href="Leaves.aspx?status=Open&owner=self">Open</a>
+                    <a class="dropdown-item" href="Leaves.aspx?status=Pending&owner=self">Pending</a>
+                    <a class="dropdown-item" href="Leaves.aspx?status=Approved&owner=self">Approved</a>
+                    <a class="dropdown-item" href="Leaves.aspx?status=Rejected&owner=self">Rejected</a>
+                    @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE") {
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header">Summaries for others:</h6>
+                    <a class="dropdown-item" href="Leaves.aspx?status=Open&owner=others">Open</a>
+                    <a class="dropdown-item" href="Leaves.aspx?status=Pending&owner=others">Pending</a>
+                    <a class="dropdown-item" href="Leaves.aspx?status=Approved&owner=others">Approved</a>
+                    <a class="dropdown-item" href="Leaves.aspx?status=Rejected&owner=others">Rejected</a>
+                    } 
+                </div>
+            </li>
+            <li class="nav-item dropdown @{Response.Write(HttpContext.Current.Session[" IsRecallActive"].ToString()); }
+                ">
+                <a class="nav-link dropdown-toggle" href="#" id="LeaveRecallDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Leave Recalls</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="LeaveRecallDropdown">
+                    <h6 class="dropdown-header">Leave Recall Applications:</h6>
+                    <a class="dropdown-item" href="LeaveRecallApplication.aspx">New Application</a>
+                   @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE") {
+                    <a class="dropdown-item" href="LeaveRecallForOther.aspx">Apply for other</a>
+                   } 
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header">My Summaries:</h6>
+                    <a class="dropdown-item" href="LeaveRecalls.aspx?status=Open&owner=self">Open</a>
+                    <a class="dropdown-item" href="LeaveRecalls.aspx?status=Pending&owner=self">Pending</a>
+                    <a class="dropdown-item" href="LeaveRecalls.aspx?status=Approved&owner=self">Approved</a>
+                    <a class="dropdown-item" href="LeaveRecalls.aspx?status=Rejected&owner=self">Rejected</a>
+                    @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE") {
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header"> Summaries for others:</h6>
+                    <a class="dropdown-item" href="LeaveRecalls.aspx?status=Open&owner=others">Open</a>
+                    <a class="dropdown-item" href="LeaveRecalls.aspx?status=Pending&owner=others">Pending</a>
+                    <a class="dropdown-item" href="LeaveRecalls.aspx?status=Approved&owner=others">Approved</a>
+                    <a class="dropdown-item" href="LeaveRecalls.aspx?status=Rejected&owner=others">Rejected</a>
+                    } 
+                </div>
+            </li>
+            if (HttpContext.Current.Session["Reports"].ToString() == "TRUE") {
+            <li class="nav-item dropdown @{Response.Write(HttpContext.Current.Session[" IsReportsActive"].ToString()); }
+                    ">
+                    <a class="nav-link dropdown-toggle" href="#" id="ReportsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa-file-pdf"></i>
+                    <span>Reports</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="ReportsDropdown">
+                    <h6 class="dropdown-header">Payslips</h6>
+                    <a class="dropdown-item" href="Payslips.aspx">Download</a>
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header"> P9 Forms:</h6>
+                    <a class="dropdown-item" href="P9Forms.aspx">Download</a>
+                    <h6 class="dropdown-header"> Staff Advance:</h6>
+                    <a class="dropdown-item" href="AdvanceRequest.aspx">Download</a>
+                </div>
+            </li>
+            } 
+            if (HttpContext.Current.Session["Training"].ToString() == "TRUE") {
+            <li class="nav-item dropdown @{Response.Write(HttpContext.Current.Session[" IsTrainingActive"].ToString());}
+                    ">
+                    <a class="nav-link dropdown-toggle" href="#" id="TrainingsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa-chalkboard-teacher"></i>
+                    <span>Trainings</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="TrainingsDropdown">
+                    <h6 class="dropdown-header">Create </h6>
+                    <a class="dropdown-item" href="CreateTrainingRequest.aspx">Create Training</a>
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header">My Trainings:</h6>
+                    <a class="dropdown-item" href="Trainings.aspx?status=Open">Open</a>
+                    <a class="dropdown-item" href="Trainings.aspx?status=Pending">Pending</a>
+                    <a class="dropdown-item" href="Trainings.aspx?status=Approved">Approved</a>
+                    <a class="dropdown-item" href="Trainings.aspx?status=Rejected">Rejected</a>
+                </div>
+            </li>
+                } 
+
+                } 
+
+            @if (HttpContext.Current.Session["TransportRequests"].ToString() == "TRUE") {
+            <li class="nav-item dropdown @{Response.Write(HttpContext.Current.Session[" IsTransportRequestActive"].ToString()); }
+                            ">
+                            <a class="nav-link dropdown-toggle" href="#" id="TransportRequestsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa-shuttle-van"></i>
+                    <span>Transport Requests</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="TransportRequestsDropdown">
+                    <h6 class="dropdown-header">Transport Requests</h6>
+                    <a class="dropdown-item" href="CreateTransportRequest.aspx">New Request</a>
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header">My Summaries:</h6>
+                    <a class="dropdown-item" href="TransportRequests.aspx?status=Open">Open</a>
+                    <a class="dropdown-item" href="TransportRequests.aspx?status=Pending">Pending</a>
+                    <a class="dropdown-item" href="TransportRequests.aspx?status=Approved">Approved</a>
+
+                    @if (HttpContext.Current.Session["IsTransportManager"].ToString() == "TRUE") {
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header">Transport Manager:</h6>
+                    <a class="dropdown-item" href="TransportRequests.aspx?status=Unassigned">Approved But Unassigned</a>
+                    <a class="dropdown-item" href="TransportRequests.aspx?status=Assigned">Assigned</a>
+                    } 
+                    @if (HttpContext.Current.Session["IsDriver"].ToString() == "TRUE")
+                    {
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header">Driver:</h6>
+                    <a class="dropdown-item" href="TransportRequests.aspx?status=Unclosed">Assigned But Unclosed</a>
+                    <a class="dropdown-item" href="TransportRequests.aspx?status=Closed">Closed</a>
+                    } 
+
+                </div>
+            </li>
+                } 
+
+
+            <li class="nav-item dropdown @{Response.Write(HttpContext.Current.Session[" IsProfileActive"].ToString()); }">
+                <a class="nav-link dropdown-toggle" href="#" id="ProfileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>User Profile</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="ProfileDropdown">
+                    <h6 class="dropdown-header">User Information:</h6>
+                    <a class="dropdown-item" href="Profile.aspx">View Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header">User Login:</h6>
+                    <a class="dropdown-item" href="ChangePassword.aspx">Change Password</a>
+                </div>
+            </li>
+        </ul>
+
+        <div id="content-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">Appraisals</li>
+                    <li class="breadcrumb-item active">Appraisal Performance Measurement Levels</li>
+                </ol>
+
+                <!-- DataTables Example -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-question-circle"></i>
+                        @Html.Raw(Request["status"]); Appraisals
+                    </div>
+                    <div class="card-body">
+                        @if (HttpContext.Current.Session["ErrorMessage"].ToString()!="") { 
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>An error occured!</strong> @Html.Raw(HttpContext.Current.Session["ErrorMessage"].ToString()); 
+                        </div>
+                        } 
+                        <div class="text-right">
+                            <a id="AddAppraisal" class="btn btn-success" href="#" data-toggle="modal" data-target="#AddAppraisalModal">Create PML</a>
+                        </div>
+                        <br>
+                        <div class="table-responsive">
+                            @Html.Raw(ViewBag.placeholder)
+                        </div>
+                    </div>
+                    <div class="card-footer small text-muted">Updated today at  @DateTime.Now.ToShortTimeString() </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © @DateTime.Now.Year.ToString() Brightsoft Technologies Limited</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Add Appraisal modal-->
+    <div class="modal fade" id="AddAppraisalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="AddAppraisalModalLabel">Create PML</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form runat="server" novalidate="" action="#" method="POST" id="CreateAppraisal" autocomplete="off">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label">Code</label>
+                                    <asp:TextBox runat="server" class="form-control" id="PMLCode"></asp:TextBox>
+                                    @Html.TextAreaFor(Model=>Model.PMLCode,new {@class="form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="SectionName" class="form-control-label"> Description</label>
+                                    <asp:TextBox TextMode="multiline" Columns="30" maxlength="50" Rows="3" runat="server" ID="Description" class="form-control MultiLineLimit" required="true"></asp:TextBox>
+                                    @Html.TextAreaFor(Model=>Model.Description,new { @class= "form-control MultiLineLimit", TextMode = "multiline" ,Columns = "30" ,maxlength = "50", Rows = "3", required = "true" })
+                                    <p class="pull-right text-muted small" id="count_message"></p>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The description must be supplied</div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="button" id="Submit">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Bootstrap core JavaScript-->
+<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+<script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Page level plugin JavaScript-->
+<script src="~/Assest/vendor/datatables/jquery.dataTables.js"></script>
+<script src="~/Assest/vendor/datatables/dataTables.bootstrap4.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="~/Assest/js/sb-admin.min.js"></script>
+<script src="~/Assest/js/bootbox.all.min.js"></script>
+<script src="~/Assest/js/bootboxError.js"></script>
+<script src="~/Assest/js/jquery.pleaseWait.js"></script>
+<!-- JQUERY DATEPICKER-->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="~/Assest/js/select2.min.js"></script>
+<!-- Demo scripts for this page-->
+<!-- Bootstrap core CSS-->
+<link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template-->
+<link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+
+<!-- Page level plugin CSS-->
+<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="css/sb-admin.css" rel="stylesheet">
+<link href="css/custom.css" rel="stylesheet">
+<link href="css/select2.min.css" rel="stylesheet" />
+<!--jQUERY date picker--->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+<script src="~/Assest/js/jquery.toast.js"></script>
+<script type="text/javascript">
+    var jQuery_3_3_1 = $.noConflict( true );
+</script>
+<script src="js/jquery.toast.js"></script>
+
+<script>
+    $( document ).ready( function () {
+        var table = $( '#dataTable' ).DataTable( {
+            lengthChange: false,
+            buttons: [ 'copy', 'excel', 'pdf', 'print', 'colvis' ]
+        } );
+        $( ".MultiLineLimit" ).on( 'change keydown paste input', function () {
+            this.value = ( this.value.length <= 250 ? this.value : this.value.substring( 0, 250 ) );
+        } );
+        var text_max = 250;
+        $( '#count_message' ).html( text_max + ' remaining' );
+        $( '#Description' ).keyup( function () {
+            var text_length = $( '#Description' ).val().length;
+            var text_remaining = text_max - text_length;
+
+            $( '#count_message' ).html( text_remaining + ' remaining' );
+        } );
+
+        jQuery_3_3_1( "#Submit" ).click( function ( e ) {
+            // Fetch form to apply custom Bootstrap validation
+            var form = $( "#CreateAppraisal" )
+
+            if ( form[ 0 ].checkValidity() === false ) {
+                event.preventDefault()
+                event.stopPropagation()
+                form.addClass( 'was-validated' );
+            } else if ( form[ 0 ].checkValidity() === true ) {
+
+                // Perform ajax submit here...
+                showToast( 'Submitting application' );
+                jQuery.ajax( {
+                    url: 'CreatePML.aspx/Submit',
+                    type: "POST",
+                    data: '{param1:"' + $( "#PMLCode" ).val() + '", param2:"' + $( "#Description" ).val() + '"}',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function ( response ) {
+
+                        if ( response != null && response.d != null ) {
+                            var data = response.d;
+                            // alert(typeof (data)); //it comes out to be string
+                            //we need to parse it to JSON
+                            data = $.parseJSON( data );
+
+                            hideLoading();
+
+                            if ( data.Status != "000" ) {
+                                hideLoading();
+                                bootbox.alert( data.Message );
+                            } else {
+
+                                $( '#CreateAppraisal' ).trigger( "reset" );
+
+                                bootbox.alert( {
+                                    message: data.Message,
+                                    callback: function () {
+                                        location.reload();
+                                    }
+                                } )
+                            }
+                        }
+                    }
+                } );
+            }
+            event.preventDefault();
+        } );
+        table.buttons().container()
+            .appendTo( '#dataTable_wrapper .col-md-6:eq(0)' );
+        jQuery_3_3_1( "#dataTable" ).on( "click", ".DeletePML", function ( e ) {
+            e.preventDefault();
+
+            var pid = $( this ).attr( 'data-id' );
+
+            bootbox.confirm( {
+                title: "<i class='fa fa-trash'></i> Delete performance measurement level?",
+                message: "Do you wish to delete this performance measurement level?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function ( result ) {
+
+                    if ( result == true ) {
+
+                        showToast( 'Deleting section' );
+                        // showToast(pid);
+
+                        jQuery.ajax( {
+                            url: 'CreatePML.aspx/DeletePML',
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function ( response ) {
+
+                                if ( response != null && response.d != null ) {
+                                    var data = response.d;
+                                    // alert(typeof (data)); //it comes out to be string
+                                    //we need to parse it to JSON
+                                    data = $.parseJSON( data );
+
+                                    hideLoading();
+
+                                    bootbox.alert( {
+                                        message: data.Message,
+                                        callback: function () {
+                                            location.reload();
+                                        }
+                                    } )
+                                }
+                            },
+                            error: function () {
+                                bootbox.error( { title: "System error", message: "An error occured." } );
+                            }
+                        } );
+                    }
+                }
+            } );
+        } );
+    } );
+    function showToast ( modaltittle ) {
+        var title = modaltittle;
+        var icon = 'loading';
+        var duration = 50000 * 1;
+        $.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+    }
+    function hideLoading () {
+        $.Toast.hideToast();
+    }
+</script>
+
+

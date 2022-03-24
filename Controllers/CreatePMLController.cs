@@ -104,6 +104,7 @@ namespace LMS.Controllers
             string strText = html.ToString();
             ////Append the HTML string to Placeholder.
             //placeholder.Controls.Add(new Literal { Text = html.ToString() });
+            ViewBag.placeholder = strText;
         }
        
         public static string Submit(string param1, string param2)

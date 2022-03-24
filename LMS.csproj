@@ -407,6 +407,7 @@
     <Compile Include="Models\CreateAdvanceSurrender.cs" />
     <Compile Include="Models\CreateAppraisal.cs" />
     <Compile Include="Models\CreateAppraisalQuestions.cs" />
+    <Compile Include="Models\CreatePML.cs" />
     <Compile Include="Models\Dashboard.cs" />
     <Compile Include="Models\ForgotPassword.cs" />
     <Compile Include="Models\LeaveApplication.cs" />
@@ -4174,6 +4175,7 @@
     <Content Include="Views\CreateAdvanceSurrender\CreateAdvanceSurrender.cshtml" />
     <Content Include="Views\CreateAppraisal\CreateAppraisal.cshtml" />
     <Content Include="Views\CreateAppraisalQuestions\CreateAppraisalQuestions.cshtml" />
+    <Content Include="Views\CreatePML\CreatePML.cshtml" />
     <None Include="Web References\WebRef\HRWebPortal.wsdl" />
     <Content Include="Web References\WebRef\LeaveDetail.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -4210,7 +4212,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Assest\scss\Uploads\" />
-    <Folder Include="Views\CreatePML\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

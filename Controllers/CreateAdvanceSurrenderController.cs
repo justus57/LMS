@@ -21,7 +21,7 @@ namespace LMS.Controllers
         static string AdvanceRequestsHeaderNumber = "";
         static string _ShortcutDimCode3 = "";
         private bool IsPostBack;
-
+        CreateAdvanceSurrender CreateAdvance =new CreateAdvanceSurrender();
         // GET: CreateAdvanceSurrender
         public ActionResult Index()
         {
@@ -418,24 +418,24 @@ namespace LMS.Controllers
             if (System.Web.HttpContext.Current.Session["Company"].ToString() == "KRCS GF Management Unit")
             {
                 //DimCode8Label.Text = "Region to be Paid From";
-                LoadDimCodeValues(DimCode1, GlobalDimCode1);
-                LoadDimCodeValues(DimCode2, GlobalDimCode2);
+                LoadDimCodeValues(CreateAdvance.DimCode1, GlobalDimCode1);
+                LoadDimCodeValues(CreateAdvance.DimCode2, GlobalDimCode2);
                 //LoadDimCodeValues(DimCode3, ShortcutDimCode3);
                 //LoadDimCodeValues(DimCode8, ShortcutDimCode8);
-                DimCode1Label.Text = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
-                DimCode2Label.Text = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
+                CreateAdvance.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
+                CreateAdvance.DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
                 //DimCode3Label.Text = SetFirstLetterToUpper(ShortcutDimCode3.ToLower());
             }
             else
             {
                 //DimCode8Label.Text = SetFirstLetterToUpper(ShortcutDimCode8.ToLower());
-                LoadDimCodeValues(DimCode1, GlobalDimCode1);
-                LoadDimCodeValues(DimCode2, GlobalDimCode2);
-                LoadDimCodeValues(DimCode4, ShortcutDimCode4);
+                LoadDimCodeValues(CreateAdvance.DimCode1, GlobalDimCode1);
+                LoadDimCodeValues(CreateAdvance.DimCode2, GlobalDimCode2);
+                LoadDimCodeValues(CreateAdvance.DimCode4, ShortcutDimCode4);
                 //LoadDimCodeValues(DimCode8, ShortcutDimCode8);
-                DimCode1Label.Text = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
-                DimCode2Label.Text = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
-                DimCode4Label.Text = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
+                CreateAdvance.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
+                CreateAdvance.DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
+                CreateAdvance.DimCode4Label = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
             }
         }
         private void LoadDimCodeValues(DropDownList _DropDownList, string Code)
@@ -713,7 +713,7 @@ namespace LMS.Controllers
             {
                 DocumentNo = AdvanceSurrenderRequestsHeader;
 
-                bool IsUploaded = CreateAdvanceRequestXMLRequests.UploadFile("2", DocumentNo, DocumentPath, AttachmentDescription);
+               bool IsUploaded = Convert.ToBoolean(CreateAdvanceRequestXMLRequests.UploadFile("2", DocumentNo, DocumentPath, AttachmentDescription));
 
                 if (IsUploaded)
                 {

@@ -3738,9 +3738,9 @@ namespace LMS.CustomsClasses
         {
             return WebService.UpdateAdvanceRequestLine(AdvanceRequestHdrNo, "0", Item, ItemDescription, UnitOfMeasure, NoOfUnits, UnitCost, Amount, LineNo, "0", Remarks, Purpose, globalDimCode1, globalDimCode2, shortCutDimCode1, shortCutDimCode2, shortCutDimCode3, shortCutDimCode4, shortCutDimCode5, shortCutDimCode6, shortCutDimCode7, shortCutDimCode8);
         }
-        public static void UploadFile(string documentType, string documentNo, string fromPath, string description)
+        public static string UploadFile(string documentType, string documentNo, string fromPath, string description)
         {
-            WebService.AttachAttachmentToRecord("AdvanceRequest", documentType, documentNo, fromPath, description, "0", "0", "0");
+           return WebService.AttachAttachmentToRecord("AdvanceRequest", documentType, documentNo, fromPath, description, "0", "0", "0");
         }
     }
     public class AdvanceRequestsXMLRequests
@@ -4839,9 +4839,9 @@ namespace LMS.CustomsClasses
         {
             return WebService.GetAdvanceRequestLine("2", AdvanceRequestLineNo);
         }
-        public static void UploadFile(string documentType, string documentNo, string fromPath, string description, string lineNo)
+        public static string UploadFile(string documentType, string documentNo, string fromPath, string description, string lineNo)
         {
-            WebService.AttachAttachmentToRecord("AdvanceRequestLines", documentType, documentNo, fromPath, description, "0", lineNo, "0");
+            return WebService.AttachAttachmentToRecord("AdvanceRequestLines", documentType, documentNo, fromPath, description, "0", lineNo, "0");
         }
     }
     public class StaffClaims

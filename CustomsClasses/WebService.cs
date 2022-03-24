@@ -528,7 +528,7 @@ namespace LMS.CustomsClasses
                         </Envelope>";
             return AppFunctions.CallWebService(req);
         }
-        public static void AttachAttachmentToRecord(string documentArea, string documentType, string documentNo, string fromPath, string description,
+        public static string AttachAttachmentToRecord(string documentArea, string documentType, string documentNo, string fromPath, string description,
             string tableId, string lineNo, string lineNo2)
         {
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
@@ -545,7 +545,7 @@ namespace LMS.CustomsClasses
                             </AttachAttachmentToRecord>
                         </Body>
                     </Envelope>";
-            AppFunctions.CallWebService(req);
+           return Assest.Utility.CallWebService(req);
         }
         public static void ExportAttachmentsToFile(string documentArea, string documentNo, string lineNo, string exportToPath)
         {

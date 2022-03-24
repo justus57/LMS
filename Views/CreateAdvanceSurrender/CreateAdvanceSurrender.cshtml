@@ -51,6 +51,7 @@
                                             <div class="form-group">
                                                 <label class="form-control-label" for="DateDue">Advance Request Selected</label>
                                                 <asp:TextBox class="form-control" id="SelectedAdvanceRequest" runat="server" required="true" disabled="true"></asp:TextBox>
+                                                @Html.TextBoxFor(model => model.SelectedAdvanceRequest, new { @class = "form-control", id = "SelectedAdvanceRequest" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The advance request must be selected</div>
                                             </div>
@@ -62,6 +63,7 @@
                                             <div class="form-group">
                                                 <label class="form-control-label" for="DateOfRequest">Expected mission start date</label>
                                                 <asp:TextBox class="form-control" id="DateOfRequest" runat="server" required="true" disabled="true"></asp:TextBox>
+                                                @Html.TextBoxFor(model => model.DateOfRequest, new { @class = "form-control", id = "DateOfRequest" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The date of request must be selected</div>
                                             </div>
@@ -71,6 +73,7 @@
                                             <div class="form-group">
                                                 <label class="form-control-label" for="DateDue">Expected mission end date</label>
                                                 <asp:TextBox class="form-control" id="DateDue" runat="server" required="true" disabled="true"></asp:TextBox>
+                                                @Html.TextBoxFor(model => model.DateDue, new { @class = "form-control", id = "DateDue" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The date due must be selected</div>
                                             </div>
@@ -90,7 +93,7 @@
                                             <div class="form-group">
                                                 <asp:label id="DimCode2Label" runat="server" />
                                                 <asp:DropDownList CssClass="form-control" ID="DimCode2" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
-
+                                                
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The Dimension Code 2 must be selected</div>
                                             </div>
@@ -121,6 +124,7 @@
                                             <div class="form-group">
                                                 <label class="form-control-label" for="Balance">Balance</label>
                                                 <asp:TextBox CssClass="form-control" ID="Balance" runat="server" required="true" disabled="false"> </asp:TextBox>
+                                                @Html.TextBoxFor(model => model.Balance, new { @class = "form-control", id = "Balance" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The balance must be provided</div>
                                             </div>
@@ -280,6 +284,7 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="ItemDescription">Item Description</label>
                                         <input type="text" class="form-control" id="ItemDescription" required>
+                                        @Html.TextBoxFor(model => model.ItemDescription, new { @class = "form-control", id = "UnitofMeasure" })
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The description must be supplied</div>
                                     </div>
@@ -291,6 +296,7 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="UnitofMeasure">Unit of measure</label>
                                         <input type="text" class="form-control" id="UnitofMeasure" required>
+                                        @Html.TextBoxFor(model => model.UnitofMeasure, new { @class = "form-control", id = "UnitofMeasure" })
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The Unit of measure must be supplied</div>
                                     </div>
@@ -301,6 +307,7 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="UnitCost">Unit cost</label>
                                         <input type="text" class="form-control" id="UnitCost" required>
+                                        @Html.TextBoxFor(model => model.UnitCost, new { @class = "form-control", id = "UnitCost" })
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The Unit cost must be supplied</div>
                                     </div>
@@ -309,6 +316,7 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="NoOfUnits">No Of Units</label>
                                         <input type="text" class="form-control" id="NoOfUnits" required>
+                                        @Html.TextBoxFor(model => model.NoOfUnits, new { @class = "form-control", id = "NoOfUnits" })
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The No Of Units must be supplied</div>
                                     </div>
@@ -318,7 +326,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="BudgetLineCode">Budget Line Code</label>
-                                        <input type="text" class="form-control" id="BudgetLineCode" required>
+                                        @Html.TextBoxFor(model => model.BudgetLineCode, new { @class = "form-control", id = "BudgetLineCode" })
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The budget line code must be specified</div>
                                     </div>
@@ -343,7 +351,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="Purpose">Purpose</label>
-                                        <textarea class="form-control" rows="2" id="Purpose" required></textarea>
+                                        @Html.TextBoxFor(model => model.Purpose, new { @class = "form-control", id = "Purpose" })
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The purpose must be supplied</div>
                                     </div>
@@ -353,7 +361,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="Amount">Amount</label>
-                                        <input type="text" class="form-control" id="Amount" required>
+                                        @Html.TextBoxFor(model => model.Amount, new { @class = "form-control", id = "Amount" })
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The Amount must be supplied</div>
                                     </div>
@@ -364,7 +372,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-control-label" for="ActualAmount">Actual Amount</label>
-                                    <input type="text" class="form-control" id="ActualAmount" required>
+                                    @Html.TextBoxFor(model => model.ActualAmount, new { @class = "form-control", id = "ActualAmount" })
                                     <div class="valid-feedback">Looks good!</div>
                                     <div class="invalid-feedback">The actual amount must be supplied</div>
                                 </div>
@@ -374,7 +382,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-control-label" for="Remarks">Remarks</label>
-                                    <textarea class="form-control" rows="2" id="Remarks"></textarea>
+                                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", id = "Remarks" })
                                     <div class="valid-feedback">Looks good!</div>
                                     <div class="invalid-feedback">The remarks must be supplied</div>
                                 </div>

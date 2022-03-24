@@ -7,10 +7,6 @@
 
 <div id="wrapper">
 
-    <!-- Sidebar -->
-    <!-- #Include virtual="includes/Sidebar.aspx" -->
-
-
     <div id="content-wrapper">
 
         <div class="container-fluid">
@@ -21,28 +17,29 @@
                     <a href="#">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item">Appraisals</li>
-                <li class="breadcrumb-item active"> @{Response.Write(Request["status"]);} Appraisals</li>
+                <li class="breadcrumb-item active"> @Html.Raw(Request["status"]); Appraisals</li>
             </ol>
 
             <!-- DataTables Example -->
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-question-circle"></i>
-                    @{Response.Write(Request["status"]);} Appraisals
+                    @Html.Raw(Request["status"]); Appraisals
                 </div>
                 <div class="card-body">
                     @if (HttpContext.Current.Session["ErrorMessage"].ToString() != "")
                     {
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>An error occured!</strong> @{Response.Write(HttpContext.Current.Session["ErrorMessage"].ToString()); }
+                            <strong>An error occured!</strong> @Html.Raw(HttpContext.Current.Session["ErrorMessage"].ToString()); 
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                     }
-                    <div class="table-responsive">
-                        <asp:PlaceHolder ID="placeholder" runat="server" />
-                    </div>
+                <div class="table-responsive">
+                    @*<asp:PlaceHolder ID="placeholder" runat="server" />*@
+                    @Html.Raw(ViewBag.Table)
+                </div>
                 </div>
                 <div class="card-footer small text-muted">Updated today at @DateTime.Now.ToShortTimeString()</div>
             </div>
@@ -65,30 +62,30 @@
 
 </main>
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Page level plugin JavaScript-->
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="~/Assest/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="~/Assest/vendor/datatables/dataTables.bootstrap4.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin.min.js"></script>
-    <script src="js/bootbox.all.min.js"></script>
-    <script src="js/bootboxError.js"></script>
-    <script src="js/jquery.pleaseWait.js"></script>
+    <script src="~/Assest/js/sb-admin.min.js"></script>
+    <script src="~/Assest/js/bootbox.all.min.js"></script>
+    <script src="~/Assest/js/bootboxError.js"></script>
+    <script src="~/Assest/js/jquery.pleaseWait.js"></script>
 
     <!-- Bootstrap core CSS-->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
     <!-- Page level plugin CSS-->
-    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
@@ -107,11 +104,11 @@
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
-    <script src="js/jquery.toast.js"></script>
+    <script src="~/Assest/js/jquery.toast.js"></script>
     <script type="text/javascript">
         var jQuery_3_3_1 = $.noConflict( true );
     </script>
-    <script src="js/jquery.toast.js"></script>
+    <script src="~/Assest/js/jquery.toast.js"></script>
 
     <script>
         $( document ).ready( function () {

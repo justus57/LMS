@@ -121,21 +121,73 @@
                         <i class="fas fa-fw fa-paper-plane"></i><span>Approvals</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        @if (HttpContext.Current.Session["IsStaffAdvanceApprover"].ToString()=="TRUE" && HttpContext.Current.Session["AdvanceRequests"].ToString()=="TRUE") 
+                            { 
+                                <h6 class="dropdown-header">Approval Entries:</h6>
+                                <a class="dropdown-item" href="ApprovalEntries.aspx?status=Pending&parent=AdvanceRequests">Pending</a>
+                                <a class="dropdown-item" href="ApprovalEntries.aspx?status=Approved&parent=AdvanceRequests">Approved</a>
+                                <a class="dropdown-item" href="ApprovalEntries.aspx?status=Rejected&parent=AdvanceRequests">Rejected</a>
+                            } 
+                        @if (HttpContext.Current.Session["IsTransportRequestApprover"].ToString()=="TRUE" && HttpContext.Current.Session["TransportRequests"].ToString()=="TRUE")
+                            { 
+                                if (HttpContext.Current.Session["IsTransportRequestApprover"].ToString()=="TRUE"  && HttpContext.Current.Session["TransportRequests"].ToString()=="TRUE")
+                                { 
+                                <div class="dropdown-divider"></div>
+                                } 
+
+                                <h6 class="dropdown-header">Transport Requests:</h6>
+                                <a class="dropdown-item" href="ApprovalEntries.aspx?status=Pending&parent=TransportRequests">Pending</a>
+                                <a class="dropdown-item" href="ApprovalEntries.aspx?status=Approved&parent=TransportRequests">Approved</a>
+                                <a class="dropdown-item" href="ApprovalEntries.aspx?status=Rejected&parent=TransportRequests">Rejected</a>
+                            }
+
+                        <!--//start GF-->
+                        @*@if (HttpContext.Current.Session["IsGF"].ToString() == "FALSE")
+
+                        {*@
+
+                            @if ((HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE" || HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE") && HttpContext.Current.Session["Appraisal"].ToString() == "TRUE")
+                            {
+                                <h6 class="dropdown-header">Appraisals:</h6>
+                                if (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE")
+                                    {
+                                    <a class="dropdown-item" href="ApprovalEntries.aspx?parent=Appraisals&status=Open&owner=HR">Open</a>
+                                    <a class="dropdown-item" href="ApprovalEntries.aspx?parent=Appraisals&status=Closed&owner=HR">Closed</a>
+                                    }
+                                 if (HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE")
+                                    {
+                                    <a class="dropdown-item" href="ApprovalEntries.aspx?parent=Appraisals&status=Open&owner=Approver">Pending</a>
+                                    <a class="dropdown-item" href="ApprovalEntries.aspx?parent=Appraisals&status=Submitted&owner=Approver">Sent To HR</a>
+                                    }
+                            }
+                         @*}*@
 
                         @if (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE" ||
                         HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE")
-                        {
+                            {
+                                <div class="dropdown-divider"></div>
+                            }
+                            <h6 class="dropdown-header">Leaves:</h6>
+                            <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Pending", parent = "Leaves" })">Pending</a>
+                            <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Approved", parent = "Leaves" })">Approved</a>
+                            <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Rejected", parent = "Leaves" })">Rejected</a>
                             <div class="dropdown-divider"></div>
-                        }
-                        <h6 class="dropdown-header">Leaves:</h6>
-                        <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Pending", parent = "Leaves" })">Pending</a>
-                        <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Approved", parent = "Leaves" })">Approved</a>
-                        <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Rejected", parent = "Leaves" })">Rejected</a>
-                        <div class="dropdown-divider"></div>
-                        <h6 class="dropdown-header">Leave Recalls:</h6>
-                        <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Pending", parent = "LeaveRecalls" })">Pending</a>
-                        <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Approved", parent = "LeaveRecalls" })">Approved</a>
-                        <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Rejected", parent = "LeaveRecalls" })">Rejected</a>
+                            <h6 class="dropdown-header">Leave Recalls:</h6>
+                            <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Pending", parent = "LeaveRecalls" })">Pending</a>
+                            <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Approved", parent = "LeaveRecalls" })">Approved</a>
+                            <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Rejected", parent = "LeaveRecalls" })">Rejected</a>
+
+                        @if (HttpContext.Current.Session["IsTrainingSupervisor"].ToString() == "TRUE" && HttpContext.Current.Session["Appraisal"].ToString() == "TRUE")
+                             { 
+                                if (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE" || HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE" && HttpContext.Current.Session["Appraisal"].ToString() == "TRUE")
+                                     {      
+                                        <div class="dropdown-divider"></div>
+                                     } 
+                                    <h6 class="dropdown-header">Training Requests:</h6>
+                                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Pending&parent=Trainings">Pending</a>
+                                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Approved&parent=Trainings">Approved</a>
+                                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Rejected&parent=Trainings">Rejected</a>
+                    }
                     </ul>
                 </li>
             }
@@ -148,30 +200,24 @@
                     <h6 class="dropdown-header">Leave Applications:</h6>
                     <a class="dropdown-item" href="@Url.Action("LeaveApplication", "LeaveApplication" )">New Application</a>
                     @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE")
-                    {
-                        <a class="dropdown-item" href="@Url.Action("LeaveForOther", "LeaveForOther" )">Apply for other</a>
-                    }
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">My Summaries:</h6>
-                    <a class="dropdown-item" href="@Url.Action("Leave", "Leave" ,new {status="Open" ,owner="self" })">Open</a>
-                    <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Pending" ,owner="self" })">Pending</a>
-                    <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Approved" ,owner="self"
-            })">Approved</a>
-                    <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Rejected" ,owner="self"
-            })">Rejected</a>
-                    @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE")
-                    {
+                        {
+                            <a class="dropdown-item" href="@Url.Action("LeaveForOther", "LeaveForOther" )">Apply for other</a>
+                        }
                         <div class="dropdown-divider"></div>
-                        <h6 class="dropdown-header">Summaries for others:</h6>
-                        <a class="dropdown-item" href="@Url.Action("Leave", "Leave" ,new {status="Open" ,owner="others"
-            })">Open</a>
-                        <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Pending"
-            ,owner="others" })">Pending</a>
-                        <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Approved"
-            ,owner="others" })">Approved</a>
-                        <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Rejected"
-            ,owner="others" })">Rejected</a>
-                    }
+                        <h6 class="dropdown-header">My Summaries:</h6>
+                        <a class="dropdown-item" href="@Url.Action("Leave", "Leave" ,new {status="Open" ,owner="self" })">Open</a>
+                        <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Pending" ,owner="self" })">Pending</a>
+                        <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Approved" ,owner="self"})">Approved</a>
+                        <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Rejected" ,owner="self"})">Rejected</a>
+                    @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE")
+                        {
+                            <div class="dropdown-divider"></div>
+                            <h6 class="dropdown-header">Summaries for others:</h6>
+                            <a class="dropdown-item" href="@Url.Action("Leave", "Leave" ,new {status="Open" ,owner="others"})">Open</a>
+                            <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Pending",owner="others" })">Pending</a>
+                            <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Approved",owner="others" })">Approved</a>
+                            <a class="dropdown-item" href="@Url.Action("Leave","Leave",new {status="Rejected",owner="others" })">Rejected</a>
+                        }
                 </ul>
             </li>
             <li class="nav-item">
@@ -189,26 +235,18 @@
                     }
                     <div class="dropdown-divider"></div>
                     <h6 class="dropdown-header">My Summaries:</h6>
-                    <a class="dropdown-item" href="@Url.Action("LeaveRecalls", "LeaveRecalls" ,new {status="Open" ,owner="self"
-            })">Open</a>
-                    <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Pending" ,owner="self"
-            })">Pending</a>
-                    <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Approved" ,owner="self"
-            })">Approved</a>
-                    <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Rejected" ,owner="self"
-            })">Rejected</a>
+                    <a class="dropdown-item" href="@Url.Action("LeaveRecalls", "LeaveRecalls" ,new {status="Open" ,owner="self"})">Open</a>
+                    <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Pending" ,owner="self"})">Pending</a>
+                    <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Approved" ,owner="self"})">Approved</a>
+                    <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Rejected" ,owner="self"})">Rejected</a>
                     @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE")
                     {
                         <div class="dropdown-divider"></div>
                         <h6 class="dropdown-header"> Summaries for others:</h6>
-                        <a class="dropdown-item" href="@Url.Action("LeaveRecalls", "LeaveRecalls" ,new {status="Open"
-            ,owner="others" })">Open</a>
-                        <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Pending"
-            ,owner="others" })">Pending</a>
-                        <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Approved"
-            ,owner="others" })">Approved</a>
-                        <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Rejected"
-            ,owner="others" })">Rejected</a>
+                        <a class="dropdown-item" href="@Url.Action("LeaveRecalls", "LeaveRecalls" ,new {status="Open",owner="others" })">Open</a>
+                        <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Pending",owner="others" })">Pending</a>
+                        <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Approved",owner="others" })">Approved</a>
+                        <a class="dropdown-item" href="@Url.Action("LeaveRecalls","LeaveRecalls",new {status="Rejected",owner="others" })">Rejected</a>
                     }
                 </ul>
             </li>

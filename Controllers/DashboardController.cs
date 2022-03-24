@@ -23,7 +23,11 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsTrainingActive"] = "";
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
+            System.Web.HttpContext.Current.Session["IsTransportRequestApprover"] = "";
+            System.Web.HttpContext.Current.Session["TransportRequests"] = "";
             System.Web.HttpContext.Current.Session["username"] = "";
+            System.Web.HttpContext.Current.Session["Appraisal"] = "";
+            System.Web.HttpContext.Current.Session["IsAppraisalSupervisor"] = "";
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
             System.Web.HttpContext.Current.Session["IsDashboardActive"] = "";
             System.Web.HttpContext.Current.Session["IsClaimActive"] = "";
@@ -34,8 +38,10 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsRecallActive"] = "";
             System.Web.HttpContext.Current.Session["IsReportsActive"] = "";
             System.Web.HttpContext.Current.Session["IsTrainingActive"] = "";
+            System.Web.HttpContext.Current.Session["IsTrainingSupervisor"] = "";
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
+            System.Web.HttpContext.Current.Session["IsStaffAdvanceApprover"] = "";
 
             var profileData = this.Session["UserProfile"] as Login;
             try

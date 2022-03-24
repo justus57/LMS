@@ -353,10 +353,10 @@ namespace LMS.Controllers
         
         public void LoadPrefferedMethodOfPayment()
         {
-            PreferredPaymentMethod.Items.Clear();
-            PreferredPaymentMethod.Items.Insert(0, new ListItem("Mpesa", "2"));
-            PreferredPaymentMethod.Items.Insert(0, new ListItem("Cheque ", "1"));
-            PreferredPaymentMethod.Items.Insert(0, new ListItem(" ", "0"));
+            //PreferredPaymentMethod.Items.Clear();
+            //PreferredPaymentMethod.Items.Insert(0, new ListItem("Mpesa", "2"));
+            //PreferredPaymentMethod.Items.Insert(0, new ListItem("Cheque ", "1"));
+            //PreferredPaymentMethod.Items.Insert(0, new ListItem(" ", "0"));
         }
         
         public static string GetSurrenderLineDetails(string param1)
@@ -455,13 +455,11 @@ namespace LMS.Controllers
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
 
-            AdvanceRequestList.Items.Clear();
-
-            foreach (var kvp in AdvanceSurrender.GetAdvanceRequestList("ToSurrender", username))//here change status
-            {
-                AdvanceRequestList.Items.Insert(0, new ListItem(kvp.Value, kvp.Key));
-            }
-            AdvanceRequestList.Items.Insert(0, new ListItem(" ", ""));
+            //foreach (var kvp in AdvanceSurrender.GetAdvanceRequestList("ToSurrender", username))//here change status
+            //{
+            //    AdvanceRequestList.Items.Insert(0, new ListItem(kvp.Value, kvp.Key));
+            //}
+            //AdvanceRequestList.Items.Insert(0, new ListItem(" ", ""));
         }
         public string SetFirstLetterToUpper(string inString)
         {

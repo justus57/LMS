@@ -1,0 +1,593 @@
+﻿@model LMS.Models.CreateAppraisal
+
+@{
+    ViewBag.Title = "CreateAppraisal";
+}
+
+<main>
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <!-- #Include virtual="includes/Sidebar.aspx" -->
+
+        <div id="content-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">Appraisals</li>
+                    <li class="breadcrumb-item active"> Create Appraisal</li>
+                </ol>
+
+                <!-- DataTables Example -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-question-circle"></i>
+                        @Html.Raw(Request["status"]); Appraisals
+                    </div>
+                    <div class="card-body">
+                        @if (HttpContext.Current.Session["ErrorMessage"].ToString()!="") { 
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>An error occured!</strong>  @Html.Raw(HttpContext.Current.Session["ErrorMessage"].ToString());} .
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        } 
+                        <div class="text-right">
+                            <a id="AddAppraisal" class="btn btn-success" href="#" data-toggle="modal" data-target="#AddAppraisalModal">Create Appraisal</a>
+                        </div>
+                        <br>
+                        <div class="table-responsive">
+                            @Html.Raw(ViewBag.table);
+                        </div>
+                    </div>
+                    <div class="card-footer small text-muted">Updated today at @DateTime.Now.ToShortTimeString()</div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © @DateTime.Now.Year.ToString() Brightsoft Technologies Limited</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Add Appraisal modal-->
+    <div class="modal fade" id="AddAppraisalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="AddAppraisalModalLabel">Add new Appraisal</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form runat="server" novalidate="" action="#" method="POST" id="CreateAppraisal" autocomplete="off">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="AppraisalName" class="form-control-label">Appraisal Name</label>
+                                    <asp:TextBox TextMode="multiline" Columns="30" maxlength="50" Rows="3" runat="server" ID="AppraisalName" class="form-control MultiLineLimit" required="true"></asp:TextBox>
+                                    @Html.TextAreaFor(Model =>Model.AppraisalName,new { @class= "form-control MultiLineLimit", TextMode="multiline",Columns="30",maxlength="50",Rows="3",required = true})
+                                    <p class="pull-right text-muted small" id="count_message"></p>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The appraisal name must be supplied</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="ApplicableTo" class="form-control-label">Applicable To</label>
+                                    <asp:DropDownList CssClass="form-control" ID="ApplicableTo" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The applicable to option must be selected</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" id="ApplicableToPersons">
+                                <div class="form-group">
+                                    <label for="ApplicableToEmployee" class="form-control-label">Applicable To person(s)</label>
+                                    <asp:DropDownList CssClass="form-control" ID="ApplicableToEmployee" runat="server" style="width:100%" multiple="multiple"> </asp:DropDownList>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The leave must be selected</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="AppraisalStartDay">Appraisal Start Date</label>
+                                    <asp:TextBox class="form-control" id="AppraisalStartDay" runat="server" required="true"></asp:TextBox>
+                                    @Html.TextAreaFor(Model=> Model.AppraisalStartDay,new { @class = "form-control",id = "AppraisalStartDay" })
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The appraisal start date must be selected</div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="AppraisalEndDay">Appraisal End Date</label>
+                                    <asp:TextBox class="form-control" id="AppraisalEndDay" runat="server" required="true"></asp:TextBox>
+                                    @Html.TextAreaFor(model=> Model.AppraisalEndDay,new { @class= "form-control",id="" })
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The appraisal end date must be selected</div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="button" id="Submit">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Bootstrap core JavaScript-->
+<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+<script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Page level plugin JavaScript-->
+<script src="~/Assest/vendor/datatables/jquery.dataTables.js"></script>
+<script src="~/Assest/vendor/datatables/dataTables.bootstrap4.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="~/Assest/js/sb-admin.min.js"></script>
+<script src="~/Assest/js/bootbox.all.min.js"></script>
+<script src="~/Assest/js/bootboxError.js"></script>
+<script src="~/Assest/js/jquery.pleaseWait.js"></script>
+<!-- JQUERY DATEPICKER-->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="~/Assest/js/select2.min.js"></script>
+<!-- Demo scripts for this page-->
+<!-- Bootstrap core CSS-->
+<link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template-->
+<link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+<!-- Page level plugin CSS-->
+<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="css/sb-admin.css" rel="stylesheet">
+<link href="css/custom.css" rel="stylesheet">
+<link href="css/select2.min.css" rel="stylesheet" />
+<!--jQUERY date picker--->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+<script src="~/Assest/js/jquery.toast.js"></script>
+<script type="text/javascript">
+    var jQuery_3_3_1 = $.noConflict( true );
+</script>
+<script src="js/jquery.toast.js"></script>
+
+<script>
+    $( document ).ready( function () {
+        var table = $( '#dataTable' ).DataTable( {
+            lengthChange: false,
+            buttons: [ 'copy', 'excel', 'pdf', 'print', 'colvis' ]
+        } );
+        $( ".MultiLineLimit" ).on( 'change keydown paste input', function () {
+            this.value = ( this.value.length <= 250 ? this.value : this.value.substring( 0, 250 ) );
+        } );
+        $( '#ApplicableTo' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#ApplicableToEmployee' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#ApplicableToPersons' ).hide();
+        var text_max = 250;
+        $( '#count_message' ).html( text_max + ' remaining' );
+        $( '#AppraisalName' ).keyup( function () {
+            var text_length = $( '#AppraisalName' ).val().length;
+            var text_remaining = text_max - text_length;
+
+            $( '#count_message' ).html( text_remaining + ' remaining' );
+        } );
+        $( "#AppraisalStartDay" ).datepicker( {
+            dateFormat: 'mm/dd/yy',
+
+            onSelect: function ( date ) {
+                $( "#AppraisalEndDay" ).datepicker( "option", "minDate", date );
+                $( "#AppraisalEndDay" ).datepicker( "option", "maxDate", '+2y' );
+            }
+
+        } ).val();
+        $( "#AppraisalEndDay" ).datepicker( { dateFormat: 'mm/dd/yy' } ).val();
+        $( "#ApplicableTo" ).change( function () {
+            //if Individual display drop downlist of employees
+            //if Org. Unit display dropdownlist of Organizational Units
+            $( '#ApplicableToEmployee' )
+                .find( 'option' )
+                .remove()
+                .end();
+
+            if ( $( '#ApplicableTo' ).val() == "IndividualEmployee" ) {
+                document.getElementById( "ApplicableToEmployee" ).required = true;
+                $( '#ApplicableToPersons' ).show();
+                jQuery.ajax( {
+                    url: 'CreateAppraisal.aspx/GetEmployeeList',
+                    type: "POST",
+                    data: '{param1:"' + $( '#ApplicableTo' ).val() + '" }',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function ( response ) {
+                        if ( response != null && response.d != null ) {
+                            var data = response.d;
+                            // alert(response); //it comes out to be string
+                            //we need to parse it to JSON
+                            data = $.parseJSON( data );
+                            $.each( data, function ( i, item ) {
+
+                                $( "#ApplicableToEmployee" ).append( $( '<option></option>' ).attr( "value", item.EmployeeCode ).text( item.EmployeeName + " - " + item.EmployeeCode ) );
+                            } );
+                        }
+                    },
+                    error: function ( xhr, ajaxOptions, thrownError ) {
+                        //alert("Error: " + thrownError);
+                    }
+                } );
+            } else if ( $( '#ApplicableTo' ).val() == "OrgUnit" ) {
+                document.getElementById( "ApplicableToEmployee" ).required = true;
+                $( '#ApplicableToPersons' ).show();
+                jQuery.ajax( {
+                    url: 'CreateAppraisal.aspx/GetOrgUnitList',
+                    type: "POST",
+                    data: '{param1:"' + $( '#ApplicableTo' ).val() + '" }',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function ( response ) {
+                        if ( response != null && response.d != null ) {
+                            var data = response.d;
+                            // alert(response); //it comes out to be string
+                            //we need to parse it to JSON
+                            data = $.parseJSON( data );
+                            $.each( data, function ( i, item ) {
+
+                                $( "#ApplicableToEmployee" ).append( $( '<option></option>' ).attr( "value", item.Code ).text( item.Name ) );
+                            } );
+                        }
+                    },
+                    error: function ( xhr, ajaxOptions, thrownError ) {
+                        //alert("Error: " + thrownError);
+                    }
+                } );
+            } else if ( $( '#ApplicableTo' ).val() == "Position" ) {
+                document.getElementById( "ApplicableToEmployee" ).required = true;
+                $( '#ApplicableToPersons' ).show();
+                jQuery.ajax( {
+                    url: 'CreateAppraisal.aspx/GetHRPositionList',
+                    type: "POST",
+                    data: '{param1:"' + $( '#ApplicableTo' ).val() + '" }',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function ( response ) {
+                        if ( response != null && response.d != null ) {
+                            var data = response.d;
+                            // alert(response); //it comes out to be string
+                            //we need to parse it to JSON
+                            data = $.parseJSON( data );
+                            $.each( data, function ( i, item ) {
+
+                                $( "#ApplicableToEmployee" ).append( $( '<option></option>' ).attr( "value", item.Code ).text( item.Description ) );
+                            } );
+                        }
+                    },
+                    error: function ( xhr, ajaxOptions, thrownError ) {
+                        //alert("Error: " + thrownError);
+                    }
+                } );
+            } else if ( $( '#ApplicableTo' ).val() == "AllEmployees" ) {
+                document.getElementById( "ApplicableToEmployee" ).required = false;
+                $( '#ApplicableToPersons' ).hide();
+            }
+        } );
+        jQuery_3_3_1( "#Submit" ).click( function ( e ) {
+            // Fetch form to apply custom Bootstrap validation
+            var form = $( "#CreateAppraisal" )
+
+            if ( form[ 0 ].checkValidity() === false ) {
+                event.preventDefault()
+                event.stopPropagation()
+                form.addClass( 'was-validated' );
+            } else if ( form[ 0 ].checkValidity() === true ) {
+                //bootbox.alert($('#ApplicableToPersons').val());
+                // Perform ajax submit here...
+                showToast( 'Submitting application' );
+                jQuery.ajax( {
+                    url: 'CreateAppraisal.aspx/Submit',
+                    type: "POST",
+                    data: '{param1:"' + $( "#ApplicableTo" ).select2( "val" ) + '", param2:"' + $( '#ApplicableToEmployee' ).val() + '", param3:"' + $( '#AppraisalStartDay' ).val() + '", param4:"' + $( '#AppraisalEndDay' ).val() + '", param5:"' + $( '#AppraisalName' ).val() + '"}',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function ( response ) {
+
+                        if ( response != null && response.d != null ) {
+                            var data = response.d;
+                            // alert(typeof (data)); //it comes out to be string
+                            //we need to parse it to JSON
+                            data = $.parseJSON( data );
+
+                            hideLoading();
+
+                            if ( data.Status != "000" ) {
+                                hideLoading();
+                                bootbox.alert( data.Message );
+                            } else {
+
+                                $( '#CreateAppraisal' ).trigger( "reset" );
+
+                                bootbox.alert( {
+                                    message: data.Message,
+                                    callback: function () {
+                                        location.reload();
+                                    }
+                                } )
+                            }
+                        }
+                    }
+                } );
+            }
+            event.preventDefault();
+        } );
+        table.buttons().container()
+            .appendTo( '#dataTable_wrapper .col-md-6:eq(0)' );
+        jQuery_3_3_1( "#dataTable" ).on( "click", ".DeleteAppraisal", function ( e ) {
+            e.preventDefault();
+
+            var pid = $( this ).attr( 'data-id' );
+
+            bootbox.confirm( {
+                title: "<i class='fa fa-trash'></i> Delete appraisal?",
+                message: "Do you wish to delete this appraisal?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function ( result ) {
+
+                    if ( result == true ) {
+
+                        showToast( 'Deleting appraisal' );
+                        // showToast(pid);
+
+                        jQuery.ajax( {
+                            url: 'CreateAppraisal.aspx/DeleteAppraisal',
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function ( response ) {
+
+                                if ( response != null && response.d != null ) {
+                                    var data = response.d;
+                                    // alert(typeof (data)); //it comes out to be string
+                                    //we need to parse it to JSON
+                                    data = $.parseJSON( data );
+
+                                    hideLoading();
+
+                                    bootbox.alert( {
+                                        message: data.Message,
+                                        callback: function () {
+                                            location.reload();
+                                        }
+                                    } )
+                                }
+                            },
+                            error: function () {
+                                bootbox.error( { title: "System error", message: "An error occured." } );
+                            }
+                        } );
+                    }
+                }
+            } );
+        } );
+        jQuery_3_3_1( "#dataTable" ).on( "click", ".EditAppraisal", function ( e ) {
+            e.preventDefault();
+
+            var pid = $( this ).attr( 'data-id' );
+
+            jQuery.ajax( {
+                url: 'CreateAppraisal.aspx/FetchAppraisalDetails',
+                type: "POST",
+                data: '{param1:"' + pid + '"}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function ( response ) {
+
+                    if ( response != null && response.d != null ) {
+                        var data = response.d;
+                        // alert(typeof (data)); //it comes out to be string
+                        //we need to parse it to JSON
+                        data = $.parseJSON( data );
+
+                        hideLoading();
+
+                        $( '#AppraisalName' ).val( data.AppraisalDescription );
+                        $( '#ApplicableTo' ).val( data.AppraisalType );
+                        $( '#ApplicableToEmployee' ).val( data.AppraisalApplicableTo );//persons
+                        $( '#AppraisalStartDay' ).val( data.AppraisalStartDate );
+                        $( '#AppraisalEndDay' ).val( data.AppraisalEndDate );
+
+
+                        jQuery_3_3_1( '#AddAppraisalModal' ).modal( 'show' );
+                    }
+                },
+                error: function () {
+                    bootbox.error( { title: "System error", message: "An error occured." } );
+                }
+            } );
+        } );
+        jQuery_3_3_1( "#dataTable" ).on( "click", ".ReleaseAppraisal", function ( e ) {
+            e.preventDefault();
+
+            var pid = $( this ).attr( 'data-id' );
+
+
+            bootbox.confirm( {
+                title: "<i class='fa fa-location-arrow'></i> Release appraisal?",
+                message: "Do you wish to release this appraisal?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function ( result ) {
+
+                    if ( result == true ) {
+
+                        bootbox.prompt( {
+                            title: "Release appraisal to appraisees?",
+                            message: '<p>Would you like to copy default appraisal sections defined by HR?</p>',
+                            inputType: 'radio',
+                            inputOptions: [
+                                {
+                                    text: 'Yes',
+                                    value: '1',
+                                },
+                                {
+                                    text: 'No',
+                                    value: '2',
+                                }
+                            ],
+                            callback: function ( choice ) {
+
+                                showToast( 'Releasing appraisal' );
+                                // showToast(pid);
+
+                                jQuery.ajax( {
+                                    url: 'CreateAppraisal.aspx/ReleaseAppraisal',
+                                    type: "POST",
+                                    data: '{param1:"' + pid + '", param2:"' + choice + '"}',
+                                    dataType: "json",
+                                    contentType: "application/json; charset=utf-8",
+                                    success: function ( response ) {
+
+                                        if ( response != null && response.d != null ) {
+                                            var data = response.d;
+                                            // alert(typeof (data)); //it comes out to be string
+                                            //we need to parse it to JSON
+                                            data = $.parseJSON( data );
+
+                                            hideLoading();
+
+                                            if ( data.Status != "000" ) {
+                                                hideLoading();
+                                                bootbox.alert( data.Message );
+                                            } else {
+
+                                                $( '#CreateAppraisalQuestion' ).trigger( "reset" );
+
+                                                bootbox.alert( {
+                                                    message: data.Message,
+                                                    callback: function () {
+                                                        location.reload();
+                                                    }
+                                                } )
+                                            }
+                                        }
+                                    },
+                                    error: function () {
+                                        bootbox.error( { title: "System error", message: "An error occured." } );
+                                    }
+                                } );
+                            }
+                        } );
+                    }
+                }
+            } );
+        } );
+    } );
+    function showToast ( modaltittle ) {
+        var title = modaltittle;
+        var icon = 'loading';
+        var duration = 50000 * 1;
+        $.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+    }
+    function hideLoading () {
+        $.Toast.hideToast();
+    }
+</script>
+

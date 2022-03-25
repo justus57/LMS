@@ -1,0 +1,468 @@
+﻿@model LMS.Models.CreateSectionTargets
+
+@{
+    ViewBag.Title = "CreateSectionTargets";
+}
+
+<main id="main" class="main">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <!-- #Include virtual="includes/Sidebar.aspx" -->
+        <div id="content-wrapper">
+            <div class="container-fluid">
+
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">Appraisals</li>
+                    <li class="breadcrumb-item"> Create Appraisal</li>
+                    <li class="breadcrumb-item active"> @{ Response.Write(LMS.CustomsClasses.AppFunctions.Base64Decode(Request["code"])); }</li>
+                </ol>
+
+                <!-- DataTables Example -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-question-circle"></i>
+                         @{Response.Write(LMS.CustomsClasses.AppFunctions.Base64Decode(Request["code"])); }
+                    </div>
+                    <div class="card-body">
+                        <div class="text-right">
+                            <a id="AddAppraisal" class="btn btn-success" href="#" data-toggle="modal" data-target="#AddAppraisalQuestionModal" title="Create new appraisal target">Add Target</a>
+
+                        </div>
+                        <br>
+                        <div id="AppraisalBody" class="table-responsive">
+                            @Html.Raw(ViewBag.AppraisalBody)
+                        </div>
+                    </div>
+                    <div class="card-footer small text-muted">Updated today at  @DateTime.Now.ToShortTimeString() </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © @DateTime.Now.Year.ToString() Brightsoft Technologies Limited</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+
+    <div class="modal fade" id="AddAppraisalQuestionModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">New appraisal target</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form runat="server" novalidate="" action="#" method="POST" id="CreateAppraisalQuestion" autocomplete="off">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="QuestionDescription">Target description</label>
+                                    <asp:TextBox class="form-control" id="QuestionDescription" name="QuestionDescription" runat="server" required="true"></asp:TextBox>
+                                    @Html.TextBoxFor(Model=>Model.QuestionDescription,new { @class="form-control",name="QuestionDescription",id= "QuestionDesccription"})
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The target description must be supplied</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 items" id="items">
+                                Appraisal target objectives
+                                <br>
+                                <br>
+                            </div>
+                            <br>
+                            <div class="col-md-12">
+                                <button id="AddQuestion_Objective" class="btn btn-light add_field_button" type="button">Add Objective</button>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="PerformanceMeasurementType" class="form-control-label">Performance measurement type</label>
+                                    <asp:DropDownList CssClass="form-control" ID="PerformanceMeasurementType" name="PerformanceMeasurementType" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The performance measurement type must be selected</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="AppraisalTargetNo" name="AppraisalTargetNo" value="">
+
+                        <div class="row" id="WeightedScoreValueDiv">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="WeightedScoreValue">Weighted Score Value</label>
+                                    <asp:TextBox class="form-control" id="WeightedScoreValue" name="WeightedScoreValue" runat="server"></asp:TextBox>
+                                    @Html.TextBoxFor(Model => Model.WeightedScoreValue, new {@class="form-control",name="WeightedScoreValue",Id="WeightedScoreValue"})
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The target description must be supplied</div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <div id="DivSubmit">
+                        <button class="btn btn-primary" type="button" id="Submit">Save</button>
+                    </div>
+                    <div id="DivUpdate">
+                        <button class="btn btn-success" type="button" id="Update">Update</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Bootstrap core JavaScript-->
+<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+<script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Page level plugin JavaScript-->
+<script src="~/Assest/js/select2.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="~/Assest/js/sb-admin.min.js"></script>
+
+<script src="~/Assest/js/bootbox.all.min.js"></script>
+<script src="~/Assest/js/bootboxError.js"></script>
+<!-- Bootstrap core CSS-->
+<link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template-->
+<link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+<!-- Page level plugin CSS-->
+<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="css/sb-admin.css" rel="stylesheet">
+<link href="css/custom.css" rel="stylesheet">
+<link href="css/select2.min.css" rel="stylesheet" />
+<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    var jQuery_3_3_1 = $.noConflict( true );
+</script>
+<script src="~/Assest/js/jquery.toast.js"></script>
+<script>
+
+    $(function () {
+        $( '#PerformanceMeasurementType' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#WeightedScoreValueDiv' ).hide();
+        $( '#DivUpdate' ).hide();
+        var max_fields = 20; //maximum input boxes allowed
+        var wrapper = $( "#items" ); //Fields wrapper
+        var add_button = $( ".add_field_button" ); //Add button ID
+
+        var x = 1; //initlal text box count
+
+        $( add_button ).click( function ( e ) { //on add input button click
+            e.preventDefault();
+
+            if ( x < max_fields ) { //max input box allowed
+                x++; //text box increment
+
+                $( wrapper ).append( '<div class="form-group">' +
+                    '<input class="form-control col-md-12 TargetObjective"  type="text" placeholder=""name="new_objective[]"/>' +
+                    '<a href="#" class="remove_field"><i class="fa fa-times"></a></div>' ); //add input box
+            }
+        } );
+
+        $( wrapper ).on( "click", ".remove_field", function ( e ) { //user click on remove field
+            e.preventDefault();
+            //var elem = document.getElementById("Sample")
+            //elem.remove();
+            $( this ).parent( 'div' ).remove();
+            x--;
+        } );
+
+        $( '#AddAppraisalQuestionModal' ).on( 'hidden.bs.modal', function () {
+            location.reload();
+        } );
+        $( "#PerformanceMeasurementType" ).change( function () {
+            if ( $( '#PerformanceMeasurementType' ).val() == "WeightedScore" ) {
+                document.getElementById( "WeightedScoreValue" ).required = true;
+                $( '#WeightedScoreValueDiv' ).show();
+
+            } else {
+                document.getElementById( "WeightedScoreValue" ).required = false;
+                $( '#WeightedScoreValueDiv' ).hide();
+            }
+        } );
+        jQuery_3_3_1( "#Submit" ).click( function ( e ) {
+            // Fetch form to apply custom Bootstrap validation
+            var form = $( "#CreateAppraisalQuestion" )
+
+            if ( form[ 0 ].checkValidity() === false ) {
+                event.preventDefault()
+                event.stopPropagation()
+                form.addClass( 'was-validated' );
+            } else if ( form[ 0 ].checkValidity() === true ) {
+
+
+                var arr = [];
+
+                $( 'input[name^="new_objective"]' ).each( function () {
+                    arr.push( $( this ).val() );
+                } );
+
+                // var myJSON = JSON.stringify(arr);
+
+                var arForm = $( "#CreateAppraisalQuestion" ).serializeArray();
+
+                jQuery.ajax( {
+                    url: "CreateSectionTargets.aspx/CreateNewAppraisalQuestion",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify( { formVars: arForm } ),
+                    dataType: "json",
+                    success: function ( result ) {
+                        var data = result.d;
+                        // alert(typeof (data)); //it comes out to be string
+                        //we need to parse it to JSON
+                        data = $.parseJSON( data );
+                        hideLoading();
+
+                        if ( data.Status != "000" ) {
+                            hideLoading();
+                            bootbox.alert( data.Message );
+                        } else {
+
+                            $( '#CreateAppraisalQuestion' ).trigger( "reset" );
+
+                            bootbox.alert( {
+                                message: data.Message,
+                                callback: function () {
+                                    location.reload();
+                                }
+                            } )
+                        }
+                    },
+                    error: function ( xhr, status ) {
+                        alert( "An error occurred: " + status );
+                    }
+                } );
+            }
+            event.preventDefault();
+        } );
+        jQuery_3_3_1( "#Update" ).click( function ( e ) {
+            // Fetch form to apply custom Bootstrap validation
+            var form = $( "#CreateAppraisalQuestion" )
+
+            if ( form[ 0 ].checkValidity() === false ) {
+                event.preventDefault()
+                event.stopPropagation()
+                form.addClass( 'was-validated' );
+            } else if ( form[ 0 ].checkValidity() === true ) {
+
+                var arForm = $( "#CreateAppraisalQuestion" ).serializeArray();
+
+                jQuery.ajax( {
+                    url: "CreateSectionTargets.aspx/Update",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify( { formVars: arForm } ),
+                    dataType: "json",
+                    success: function ( result ) {
+                        var data = result.d;
+                        // alert(typeof (data)); //it comes out to be string
+                        //we need to parse it to JSON
+                        data = $.parseJSON( data );
+                        hideLoading();
+
+                        if ( data.Status != "000" ) {
+                            hideLoading();
+                            bootbox.alert( data.Message );
+                        } else {
+
+                            $( '#CreateAppraisalQuestion' ).trigger( "reset" );
+
+                            bootbox.alert( {
+                                message: data.Message,
+                                callback: function () {
+                                    location.reload();
+                                }
+                            } )
+                        }
+                    },
+                    error: function ( xhr, status ) {
+                        alert( "An error occurred: " + status );
+                    }
+                } );
+            }
+            event.preventDefault();
+        } );
+        jQuery_3_3_1( '.EditQuestion' ).click( function ( e ) {
+            e.preventDefault();
+
+            $( '#DivUpdate' ).show();
+            $( '#DivSubmit' ).hide();
+
+            var pid = $( this ).attr( 'data-id' );
+
+            $( "#AppraisalTargetNo" ).val( pid );
+
+            $.ajax( {
+                url: 'CreateSectionTargets.aspx/GetQuestionDetails',
+                type: "POST",
+                data: '{param1:"' + pid + '" }',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function ( response ) {
+
+                    if ( response != null && response.d != null ) {
+                        var data = response.d;
+                        // alert(typeof (data)); //it comes out to be string
+                        //we need to parse it to JSON
+                        data = $.parseJSON( data );
+                        //alert(data.Message);
+                        $( '#QuestionDescription' ).val( data.Description );
+                        // alert(data.PerformanceMeasurementType);
+                        // $('#PerformanceMeasurementType').val(data.PerformanceMeasurementType);
+                        $( "#PerformanceMeasurementType" ).val( data.PerformanceMeasurementType ).change();
+
+                        if ( data.PerformanceMeasurementType === "WeightedScore" ) {
+                            $( '#WeightedScoreValue' ).val( data.WeightScoreValue );
+                        }
+
+                        $.each( data.Objectives, function ( i, item ) {
+                            // bootbox.alert(item.ObjectiveDescription);
+                            $( wrapper ).append( '<div class="form-group">' +
+                                '<input class="form-control col-md-12"  type="text" placeholder=""name="new_objective[]" value ="' + item.ObjectiveDescription + '"/>' +
+                                '<a href="#" class="remove_field"><i class="fa fa-times"></a></div>' );
+                        } );
+                        //alert($.fn.jquery);
+
+                        $( '#AddAppraisalQuestionModal' ).modal( 'show' );
+                    }
+                }
+            } );
+        } );
+        jQuery_3_3_1( '.DeleteQuestion' ).click( function ( e ) {
+            e.preventDefault();
+
+            var pid = $( this ).attr( 'data-id' );
+
+            bootbox.confirm( {
+                title: "<i class='fa fa-trash'></i> Delete question?",
+                message: "Do you wish to delete this appraisal question " + pid + "?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function ( result ) {
+
+                    if ( result == true ) {
+
+                        showToast( 'Deleting question' );
+
+                        $.ajax( {
+                            url: 'CreateSectionTargets.aspx/DeleteAppraisalTarget',
+                            type: "POST",
+                            data: '{param1:"' + pid + '" }',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function ( response ) {
+
+                                if ( response != null && response.d != null ) {
+                                    var data = response.d;
+                                    // alert(typeof (data)); //it comes out to be string
+                                    //we need to parse it to JSON
+                                    data = $.parseJSON( data );
+
+                                    hideLoading();
+
+                                    bootbox.alert( {
+                                        message: data.Message,
+                                        callback: function () {
+                                            location.reload();
+                                        }
+                                    } )
+
+                                }
+                            }
+                        } );
+                    }
+                }
+            } );
+        } );
+        jQuery_3_3_1( "#PreviewAppraisal" ).click( function ( e ) {
+            // Fetch form to apply custom Bootstrap validation
+
+            event.preventDefault();
+
+            printElem( 'AppraisalBody' );
+        } );
+    } );
+    function showToast ( modaltittle ) {
+        var title = modaltittle;
+        var icon = 'loading';
+        var duration = 50000 * 1;
+        $.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+    }
+    function hideLoading () {
+        $.Toast.hideToast();
+    }
+</script>

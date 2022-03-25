@@ -5263,9 +5263,9 @@ namespace LMS.CustomsClasses
         {
             return WebService.DelegateWorkflowApprovalRequest(AdvanceRequestHdrNo);
         }
-        public static void UploadFile(string documentType, string documentNo, string fromPath, string description, string lineNo, string lineNo2)
+        public static string UploadFile(string documentType, string documentNo, string fromPath, string description, string lineNo, string lineNo2)
         {
-            WebService.AttachAttachmentToRecord("AdvanceRequestLines", documentType, documentNo, fromPath, description, "0", lineNo, lineNo2);
+            return WebService.AttachAttachmentToRecord("AdvanceRequestLines", documentType, documentNo, fromPath, description, "0", lineNo, lineNo2);
         }
         public static string GetAdvanceRequestLine(string AdvanceRequestLineNo)
         {

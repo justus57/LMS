@@ -146,9 +146,9 @@ namespace LMS.Controllers
             string AdvanceRequestData = AdvanceRequestsXMLRequests.GetAdvanceRequests("StaffClaim", AdvanceClaimRequestsHeader);
             dynamic json = JObject.Parse(AdvanceRequestData);
 
-            DateDue.Text = json.DateDue;
-            DateOfRequest.Text = json.DateOfRequest;
-            MissionSummary.Text = json.MissionSummary;
+            DateDue = json.DateDue;
+            DateOfRequest = json.DateOfRequest;
+            MissionSummary = json.MissionSummary;
             string GlobalDimCode1 = json.GlobalDimCode1;
             string GlobalDimCode2 = json.GlobalDimCode2;
             string ShortcutDimCode3 = json.ShortcutDimCode3;

@@ -278,9 +278,9 @@ namespace LMS.Controllers
                 LoadDimCodeValues(DimCode2, GlobalDimCode2);
                 LoadDimCodeValues(DimCode4, ShortcutDimCode4);
                 // LoadDimCodeValues(DimCode8, ShortcutDimCode8);
-                DimCode1Label.Text = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
-                DimCode2Label.Text = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
-                DimCode4Label.Text = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
+                DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
+                DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
+                DimCode4Labeldd = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
             }
         }
         private void LoadDimCodeValues(DropDownList _DropDownList, string Code)

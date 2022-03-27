@@ -146,9 +146,9 @@ namespace LMS.Controllers
             string AdvanceRequestData = AdvanceRequestsXMLRequests.GetAdvanceRequests("StaffClaim", AdvanceClaimRequestsHeader);
             dynamic json = JObject.Parse(AdvanceRequestData);
 
-            DateDue = json.DateDue;
-            DateOfRequest = json.DateOfRequest;
-            MissionSummary = json.MissionSummary;
+            //DateDue = json.DateDue;
+            //DateOfRequest = json.DateOfRequest;
+            //MissionSummary = json.MissionSummary;
             string GlobalDimCode1 = json.GlobalDimCode1;
             string GlobalDimCode2 = json.GlobalDimCode2;
             string ShortcutDimCode3 = json.ShortcutDimCode3;
@@ -156,15 +156,15 @@ namespace LMS.Controllers
             string ShortcutDimCode8 = json.ShortcutDimCode8;
             string _PreferredPaymentMethod = json.PreferredPaymentMethod;
 
-            DimCode1.Items.FindByValue(GlobalDimCode1).Selected = true;
-            DimCode2.Items.FindByValue(GlobalDimCode2).Selected = true;
-            //DimCode3.Items.FindByValue(ShortcutDimCode3).Selected = true; //GF
-            DimCode4.Items.FindByValue(ShortcutDimCode4).Selected = true;
-            //DimCode8.Items.FindByValue(ShortcutDimCode8).Selected = true; //GF
-            if (!string.IsNullOrEmpty(_PreferredPaymentMethod))
-            {
-                PreferredPaymentMethod.Items.FindByValue(_PreferredPaymentMethod).Selected = true;
-            }
+            //DimCode1.Items.FindByValue(GlobalDimCode1).Selected = true;
+            //DimCode2.Items.FindByValue(GlobalDimCode2).Selected = true;
+            ////DimCode3.Items.FindByValue(ShortcutDimCode3).Selected = true; //GF
+            //DimCode4.Items.FindByValue(ShortcutDimCode4).Selected = true;
+            ////DimCode8.Items.FindByValue(ShortcutDimCode8).Selected = true; //GF
+            //if (!string.IsNullOrEmpty(_PreferredPaymentMethod))
+            //{
+            //    PreferredPaymentMethod.Items.FindByValue(_PreferredPaymentMethod).Selected = true;
+            //}
         }
         
         public static string LoadInterventions()

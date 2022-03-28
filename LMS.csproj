@@ -424,6 +424,7 @@
     <Compile Include="Models\DefineAppraisalSections.cs" />
     <Compile Include="Models\EditAppraisal.cs" />
     <Compile Include="Models\EditAppraisalSection.cs" />
+    <Compile Include="Models\EditPML.cs" />
     <Compile Include="Models\ForgotPassword.cs" />
     <Compile Include="Models\LeaveApplication.cs" />
     <Compile Include="Models\LeaveDetails.cs" />

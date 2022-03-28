@@ -1,0 +1,234 @@
+﻿
+@{
+    ViewBag.Title = "EditPML";
+}
+
+<main id="main" class="main">
+
+    <div ID="NavbarContent" runat="server">
+        <!-- #Include virtual="includes/Navbar.aspx" -->
+    </div>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <!-- #Include virtual="includes/Sidebar.aspx" -->
+
+        <div id="content-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">Appraisals</li>
+                    <li class="breadcrumb-item">Appraisal Sections</li>
+                    <li class="breadcrumb-item active"> Edit Appraisal Section</li>
+                </ol>
+
+                <!-- DataTables Example -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-question-circle"></i>
+                        <% Response.Write(Request["status"]);%> Appraisals
+                    </div>
+                    <form runat="server" novalidate="" action="#" method="POST" id="LeaveApplicationForm" autocomplete="off">
+                        <div class="card-body">
+                            <div class="row mb-5">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="SectionName" class="form-control-label">Code</label>
+                                                <asp:TextBox runat="server" class="form-control" id="PMLCode" required="true"></asp:TextBox>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The code must be supplied</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="SectionName" class="form-control-label">Description</label>
+                                                <asp:TextBox TextMode="multiline" Columns="30" maxlength="50" Rows="3" runat="server" ID="Description" class="form-control MultiLineLimit" required="true"></asp:TextBox>
+                                                <p class="pull-right text-muted small" id="count_message"></p>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The description must be supplied</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light text-right">
+                            <button id="Submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                    <div class="card-footer small text-muted">Updated today at  @DateTime.Now.ToShortTimeString() </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © @DateTime.Now.Year.ToString() Brightsoft Technologies Limited</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+
+</main>
+
+<!-- Bootstrap core JavaScript-->
+<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+<script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Page level plugin JavaScript-->
+<script src="~/Assest/vendor/datatables/jquery.dataTables.js"></script>
+<script src="~/Assest/vendor/datatables/dataTables.bootstrap4.js"></script>
+<!-- Bootstrap core CSS-->
+<link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template-->
+<link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+<!-- Page level plugin CSS-->
+<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="~/Assest/css/sb-admin.css" rel="stylesheet">
+<link href="~/Assest/css/custom.css" rel="stylesheet">
+<link href="~/Assest/css/select2.min.css" rel="stylesheet" />
+<!--jQUERY date picker--->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+<!-- Custom scripts for all pages-->
+<script src="~/Assest/js/sb-admin.min.js"></script>
+<script src="~/Assest/js/bootbox.all.min.js"></script>
+<script src="~/Assest/js/bootboxError.js"></script>
+<script src="~/Assest/js/jquery.pleaseWait.js"></script>
+<!-- JQUERY DATEPICKER-->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="~/Assest/js/select2.min.js"></script>
+<!-- Demo scripts for this page-->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+<script src="~/Assest/js/jquery.toast.js"></script>
+<script type="text/javascript">
+    var jQuery_3_3_1 = $.noConflict( true );
+</script>
+<script src="~/Assest/js/jquery.toast.js"></script>
+
+<script>
+    $( function () {
+
+        $( ".MultiLineLimit" ).on( 'change keydown paste input', function () {
+            this.value = ( this.value.length <= 250 ? this.value : this.value.substring( 0, 250 ) );
+        } );
+
+        var text_max = 250;
+        $( '#count_message' ).html( text_max + ' remaining' );
+        $( '#AppraisalName' ).keyup( function () {
+            var text_length = $( '#AppraisalName' ).val().length;
+            var text_remaining = text_max - text_length;
+
+            $( '#count_message' ).html( text_remaining + ' remaining' );
+        } );
+
+        jQuery.ajax( {
+            url: 'EditPML.aspx/LoadPML',
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function ( response ) {
+                if ( response != null && response.d != null ) {
+                    var data = response.d;
+                    // alert(response); //it comes out to be string
+                    //we need to parse it to JSON
+                    data = $.parseJSON( data );
+                    $( '#Description' ).val( data.Description );
+                    $( '#PMLCode' ).val( data.Code );
+
+                }
+            },
+            error: function ( xhr, ajaxOptions, thrownError ) {
+                //alert("Error: " + thrownError);
+            }
+        } );
+
+        jQuery_3_3_1( "#Submit" ).click( function ( e ) {
+            // Fetch form to apply custom Bootstrap validation
+            event.preventDefault();
+
+            var form = $( "#LeaveApplicationForm" );
+
+            if ( form[ 0 ].checkValidity() === false ) {
+                event.preventDefault()
+                event.stopPropagation()
+                form.addClass( 'was-validated' );
+            } else if ( form[ 0 ].checkValidity() === true ) {
+                //bootbox.alert($('#ApplicableToPersons').val());
+                // Perform ajax submit here...
+                showToast( 'Submitting application' );
+                jQuery.ajax( {
+                    url: 'EditPML.aspx/UpdatePML',
+                    type: "POST",
+                    data: '{param1:"' + $( "#PMLCode" ).val() + '", param2:"' + $( "#Description" ).val() + '"}',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function ( response ) {
+
+                        if ( response != null && response.d != null ) {
+                            var data = response.d;
+                            // alert(typeof (data)); //it comes out to be string
+                            //we need to parse it to JSON
+                            data = $.parseJSON( data );
+
+                            hideLoading();
+
+                            if ( data.Status != "000" ) {
+                                hideLoading();
+                                bootbox.alert( data.Message );
+                            } else {
+
+                                $( '#CreateAppraisal' ).trigger( "reset" );
+
+                                bootbox.alert( {
+                                    message: data.Message,
+                                    callback: function () {
+                                        location.reload();
+                                    }
+                                } )
+                            }
+                        }
+                    }
+                } );
+            }
+
+        } );
+    } );
+    function showToast ( modaltittle ) {
+        var title = modaltittle;
+        var icon = 'loading';
+        var duration = 50000 * 1;
+        $.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+    }
+    function hideLoading () {
+        $.Toast.hideToast();
+    }
+</script>

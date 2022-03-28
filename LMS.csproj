@@ -390,6 +390,7 @@
     <Compile Include="Controllers\DefineAppraisalSectionsController.cs" />
     <Compile Include="Controllers\EditAppraisalController.cs" />
     <Compile Include="Controllers\EditAppraisalSectionController.cs" />
+    <Compile Include="Controllers\EditPMLController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaveApplicationController.cs" />
     <Compile Include="Controllers\LeaveController.cs" />
@@ -4197,6 +4198,7 @@
     <Content Include="Views\DefineAppraisalSections\DefineAppraisalSections.cshtml" />
     <Content Include="Views\EditAppraisal\EditAppraisal.cshtml" />
     <Content Include="Views\EditAppraisalSection\EditAppraisalSection.cshtml" />
+    <Content Include="Views\EditPML\EditPML.cshtml" />
     <None Include="Web References\WebRef\HRWebPortal.wsdl" />
     <Content Include="Web References\WebRef\LeaveDetail.datasource">
       <DependentUpon>Reference.map</DependentUpon>

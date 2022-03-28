@@ -384,6 +384,7 @@
     <Compile Include="Controllers\CreatePMLController.cs" />
     <Compile Include="Controllers\CreateSectionTargetsController.cs" />
     <Compile Include="Controllers\CreateStaffClaimsController.cs" />
+    <Compile Include="Controllers\CreateTrainingRequestController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaveApplicationController.cs" />
@@ -412,6 +413,7 @@
     <Compile Include="Models\CreatePML.cs" />
     <Compile Include="Models\CreateSectionTargets.cs" />
     <Compile Include="Models\CreateStaffClaims.cs" />
+    <Compile Include="Models\CreateTrainingRequest.cs" />
     <Compile Include="Models\Dashboard.cs" />
     <Compile Include="Models\ForgotPassword.cs" />
     <Compile Include="Models\LeaveApplication.cs" />
@@ -4218,6 +4220,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Assest\scss\Uploads\" />
+    <Folder Include="Views\CreateTrainingRequest\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

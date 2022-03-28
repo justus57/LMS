@@ -20,10 +20,8 @@ namespace LMS.Controllers
         }
         public ActionResult DefineAppraisalSections()
         {
-            return View();
-        }
-        protected void Page_Load(object sender, EventArgs e)
-        {
+            
+       
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
             System.Web.HttpContext.Current.Session["IsDashboardActive"] = "";
             System.Web.HttpContext.Current.Session["IsClaimActive"] = "";
@@ -52,6 +50,7 @@ namespace LMS.Controllers
                     LoadTable();
                 }
             }
+            return View();
         }
         private void LoadTable()
         {

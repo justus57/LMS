@@ -1,0 +1,277 @@
+﻿@model LMS.Models.EditAppraisalSection
+
+@{
+    ViewBag.Title = "EditAppraisalSection";
+}
+
+<main id="main" class="main">
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <!-- #Include virtual="includes/Sidebar.aspx" -->
+
+        <div id="content-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">Appraisals</li>
+                    <li class="breadcrumb-item">Appraisal Sections</li>
+                    <li class="breadcrumb-item active"> Edit Appraisal Section</li>
+                </ol>
+
+                <!-- DataTables Example -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-question-circle"></i>
+                        @{Response.Write(Request["status"]); } Appraisals
+                          </div>
+                    <form runat="server" novalidate="" action="#" method="POST" id="LeaveApplicationForm" autocomplete="off">
+                        <div class="card-body">
+                            <div class="row mb-5">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="SectionName" class="form-control-label">Appraisal Name</label>
+                                                <asp:TextBox TextMode="multiline" Columns="30" maxlength="50" Rows="3" runat="server" ID="SectionName" class="form-control MultiLineLimit" required="true"></asp:TextBox>
+                                                @Html.TextBoxFor(Model=>Model.SectionName,new {@class="form-control MultiLineLimit",TextMode = "multiline" ,Columns = "30", maxlength = "50", Rows = "3",ID = "SectionName",required="true" })
+                                                <p class="pull-right text-muted small" id="count_message"></p>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The section name must be supplied</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleRadios1" class="form-control-label">Is HR Defined</label>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="IsHRDefined" id="IsHRDefined1" value="Yes" required="true">
+
+                                                    <label class="form-check-label" for="exampleRadios1">
+                                                        Yes
+                                                    </label>
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">The appraisal name must be supplied</div>
+                                                </div>
+
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="IsHRDefined" id="IsHRDefined2" value="No" required="true">
+                                                    <label class="form-check-label" for="exampleRadios2">
+                                                        No
+                                                    </label>
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">The appraisal name must be supplied</div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light text-right">
+                            <button id="Submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                    <div class="card-footer small text-muted">Updated today at  @DateTime.Now.ToShortTimeString()</div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © @DateTime.Now.Year.ToString() Brightsoft Technologies Limited</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Bootstrap core JavaScript-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap core CSS-->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template-->
+<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+
+<!-- Page level plugin CSS-->
+<link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="css/sb-admin.css" rel="stylesheet">
+<link href="css/custom.css" rel="stylesheet">
+<link href="css/select2.min.css" rel="stylesheet" />
+<!--jQUERY date picker--->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Page level plugin JavaScript-->
+<script src="vendor/datatables/jquery.dataTables.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin.min.js"></script>
+<script src="js/bootbox.all.min.js"></script>
+<script src="js/bootboxError.js"></script>
+<script src="js/jquery.pleaseWait.js"></script>
+<!-- JQUERY DATEPICKER-->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="js/select2.min.js"></script>
+<!-- Demo scripts for this page-->
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+<script src="js/jquery.toast.js"></script>
+<script type="text/javascript">
+    var jQuery_3_3_1 = $.noConflict( true );
+</script>
+<script src="js/jquery.toast.js"></script>
+
+<script>
+    $(function () {
+
+        $( ".MultiLineLimit" ).on( 'change keydown paste input', function () {
+            this.value = ( this.value.length <= 250 ? this.value : this.value.substring( 0, 250 ) );
+        } );
+
+        var text_max = 250;
+        $( '#count_message' ).html( text_max + ' remaining' );
+        $( '#AppraisalName' ).keyup( function () {
+            var text_length = $( '#AppraisalName' ).val().length;
+            var text_remaining = text_max - text_length;
+
+            $( '#count_message' ).html( text_remaining + ' remaining' );
+        } );
+
+        jQuery.ajax( {
+            url: 'EditAppraisalSection.aspx/LoadSectionDetails',
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function ( response ) {
+                if (response != null ) {
+                    var data = $.parseJSON(response);
+
+                    $( '#SectionName' ).val( data.Description );
+
+                    var $radios = $( 'input:radio[name=IsHRDefined]' );
+
+                    if ( $radios.is( ':checked' ) === false ) {
+
+                        if ( data.IsHRDefined === "true" ) {
+                            $radios.filter( '[value=Yes]' ).prop( 'checked', true );
+                        } else {
+                            $radios.filter( '[value=No]' ).prop( 'checked', true );
+                        }
+                    }
+                }
+            },
+            error: function ( xhr, ajaxOptions, thrownError ) {
+                //alert("Error: " + thrownError);
+            }
+        } );
+        jQuery_3_3_1( "#Submit" ).click( function ( e ) {
+            // Fetch form to apply custom Bootstrap validation
+            event.preventDefault();
+
+            var form = $( "#LeaveApplicationForm" );
+
+            if ( form[ 0 ].checkValidity() === false ) {
+                event.preventDefault()
+                event.stopPropagation()
+                form.addClass( 'was-validated' );
+            } else if ( form[ 0 ].checkValidity() === true ) {
+
+                // Perform ajax submit here...
+                showToast( 'Saving changes' );
+
+                jQuery.ajax( {
+                    url: 'EditAppraisalSection.aspx/UpdateAppraisalSection',
+                    type: "POST",
+                    data: '{param1:"' + $( '#SectionName' ).val() + '", param2:"' + $( "input[name='IsHRDefined']:checked" ).val() + '"}',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function ( response ) {
+
+                        if ( response != null ) {
+                            var data = $.parseJSON(response);
+
+                            hideLoading();
+
+                            if ( data.Status != "000" ) {
+                                hideLoading();
+                                bootbox.alert( data.Message );
+                            } else {
+
+                                $( '#CreateAppraisal' ).trigger( "reset" );
+
+                                bootbox.alert( {
+                                    message: data.Message,
+                                    callback: function () {
+                                        location.reload();
+                                    }
+                                } )
+                            }
+                        }
+                    }
+                } );
+            }
+
+        } );
+    } );
+    function showToast ( modaltittle ) {
+        var title = modaltittle;
+        var icon = 'loading';
+        var duration = 50000 * 1;
+        $.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+    }
+    function hideLoading () {
+        $.Toast.hideToast();
+    }
+</script>
+
+

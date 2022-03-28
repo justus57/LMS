@@ -62,7 +62,7 @@ namespace LMS.Controllers
             items.Add(new SelectListItem { Text = "Individual Employee", Value = "Individual Employee" });
             items.Add(new SelectListItem { Text = "All Employees", Value = "All Employees" });
             items.Add(new SelectListItem { Text = "", Value = "" });
-            ViewBag.Departments = items;
+            ViewBag.LoadApplicableTo = items;
             
         }
 
@@ -74,7 +74,7 @@ namespace LMS.Controllers
             items.Add(new SelectListItem { Text = "Identification on performance need", Value = "PERFORMANCENEED" });
             items.Add(new SelectListItem { Text = "Professional requirement", Value = "PROFESSIONALREQUIREMENT" });
             items.Add(new SelectListItem { Text = "", Value = "" });
-            ViewBag.Departments = items;
+            ViewBag.LoadRequirementOfTraining = items;
            
         }
         

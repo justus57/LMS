@@ -190,8 +190,9 @@ namespace LMS.Controllers
             html.Append("</form> ");
 
             string strText = html.ToString();
+            ViewBag.LoadTable = strText;
             ////Append the HTML string to Placeholder.
-           // placeholder.Controls.Add(new Literal { Text = html.ToString() });
+            // placeholder.Controls.Add(new Literal { Text = html.ToString() });
         }
        
         public static string Save(NameValue[] formVars)

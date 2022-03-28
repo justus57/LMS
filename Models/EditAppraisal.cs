@@ -10,6 +10,7 @@ namespace LMS.Models
         public string AppraisalEndDay { get; set; }
         public string AppraisalStartDay { get; set; }
         public string AppraisalName { get; set; }
-
+        public string ApplicableTo { get; set; }
+        
     }
 }

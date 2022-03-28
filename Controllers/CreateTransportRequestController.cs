@@ -1,5 +1,5 @@
 ﻿using LMS.CustomsClasses;
-using LMS.WebRef;
+using LMS.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -14,6 +14,7 @@ namespace LMS.Controllers
 {
     public class CreateTransportRequestController : Controller
     {
+        CreateTransportRequest createTransport = new CreateTransportRequest();
         // GET: CreateTransportRequest
         public ActionResult Index()
         {
@@ -66,19 +67,19 @@ namespace LMS.Controllers
             string ShortcutDimCode4 = json.ShortcutDimension4Code;
             System.Web.HttpContext.Current.Session["LCY"] = json.LCY;
 
-            LoadDimCodeValues(DimCode1, GlobalDimCode1);
-            LoadDimCodeValues(DimCode2, GlobalDimCode2);
-            LoadDimCodeValues(DimCode3, ShortcutDimCode3);
-            LoadDimCodeValues(DimCode4, ShortcutDimCode4);
-            LoadDimCodeValues(DimCode6, ShortcutDimCode6);
+            LoadDimCodeValues(createTransport.DimCode1, GlobalDimCode1);
+            LoadDimCodeValues(createTransport.DimCode2, GlobalDimCode2);
+            LoadDimCodeValues(createTransport.DimCode3, ShortcutDimCode3);
+            LoadDimCodeValues(createTransport.DimCode4, ShortcutDimCode4);
+            LoadDimCodeValues(createTransport.DimCode6, ShortcutDimCode6);
 
-            LoadVehicleClass(VehicleClass);
+            LoadVehicleClass(createTransport.VehicleClass);
 
-            DimCode1Label.Text = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
-            DimCode2Label.Text = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
-            DimCode3Label.Text = SetFirstLetterToUpper(ShortcutDimCode3.ToLower());
-            DimCode4Label.Text = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
-            DimCode6Label.Text = "Your Department";
+            createTransport.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
+            createTransport.DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
+            createTransport.DimCode3Label = SetFirstLetterToUpper(ShortcutDimCode3.ToLower());
+            createTransport.DimCode4Label = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
+            createTransport.DimCode6Label = "Your Department";
             //load dynamic list
 
         }

@@ -1,4 +1,5 @@
 ﻿using LMS.CustomsClasses;
+using LMS.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -12,17 +13,14 @@ namespace LMS.Controllers
 {
     public class EditAppraisalController : Controller
     {
+        static string _AppraisalHeader = null;
+        EditAppraisal editAppraisal = new EditAppraisal();
         // GET: EditAppraisal
         public ActionResult Index()
         {
             return View();
         }
         public ActionResult EditAppraisal()
-        {
-            return View();
-        }
-        static string _AppraisalHeader = null;
-        protected void Page_Load(object sender, EventArgs e)
         {
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
             System.Web.HttpContext.Current.Session["IsDashboardActive"] = "";
@@ -49,12 +47,13 @@ namespace LMS.Controllers
                 }
                 else
                 {
-                    ApplicableTo.Items.Clear();
-                    ApplicableTo.Items.Insert(0, new ListItem("Position", "POSITION"));
-                    ApplicableTo.Items.Insert(0, new ListItem("Org. Unit", "ORGUNIT"));
-                    ApplicableTo.Items.Insert(0, new ListItem("Individual Employee", "INDIVIDUALEMPLOYEE"));
-                    ApplicableTo.Items.Insert(0, new ListItem("All Employees", "ALLEMPLOYEES"));
-                    ApplicableTo.Items.Insert(0, new ListItem(" ", ""));
+                    List<SelectListItem> items = new List<SelectListItem>();
+                    items.Add(new SelectListItem { Text = "Position", Value = "Position" });
+                    items.Add(new SelectListItem { Text = "Org. Unit", Value = "Org. Unit" });
+                    items.Add(new SelectListItem { Text = "Individual Employee", Value = "Individual Employee" });
+                    items.Add(new SelectListItem { Text = "All Employees", Value = "All Employees" });
+                    items.Add(new SelectListItem { Text = "", Value = "" });
+                    ViewBag.ApplicableTo = items;
 
                     string s = Request.QueryString["id"].Trim();
 
@@ -80,6 +79,7 @@ namespace LMS.Controllers
                     }
                 }
             }
+            return View();
         }
         public void FetchAppraisalDetails(string param1)
         {
@@ -93,12 +93,12 @@ namespace LMS.Controllers
             string AppraisalEndDayText = json.AppraisalEndDate;
             string AppraisalApplicableTo = json.AppraisalApplicableTo;
 
-            AppraisalName.Text = AppraisalNameText;
-            AppraisalStartDay.Text = Convert.ToDateTime(AppraisalStartDayText).ToString("MM/dd/yyyy");
-            AppraisalEndDay.Text = Convert.ToDateTime(AppraisalEndDayText).ToString("MM/dd/yyyy");
+            editAppraisal.AppraisalName = AppraisalNameText;
+            editAppraisal.AppraisalStartDay = Convert.ToDateTime(AppraisalStartDayText).ToString("MM/dd/yyyy");
+            editAppraisal.AppraisalEndDay = Convert.ToDateTime(AppraisalEndDayText).ToString("MM/dd/yyyy");
 
             //applicable To
-            ApplicableTo.SelectedValue = AppraisalApplicableTo;
+            editAppraisal.ApplicableTo = AppraisalApplicableTo;
 
         }
         public static string GetAppraisalMemberList()

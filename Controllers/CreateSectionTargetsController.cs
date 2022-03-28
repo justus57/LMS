@@ -45,12 +45,12 @@ namespace LMS.Controllers
                 }
                 else
                 {
-                    //PerformanceMeasurementType.Items.Clear();
-
-                    //PerformanceMeasurementType.Items.Insert(0, new ListItem("Options", "Options"));
-                    //PerformanceMeasurementType.Items.Insert(0, new ListItem("Weighted Score", "WeightedScore"));
-                    //PerformanceMeasurementType.Items.Insert(0, new ListItem("Description", "Description"));
-                    //PerformanceMeasurementType.Items.Insert(0, new ListItem(" ", ""));
+                    List<SelectListItem> items = new List<SelectListItem>();
+                    items.Add(new SelectListItem { Text = "Options", Value = "Options" });
+                    items.Add(new SelectListItem { Text = "Weighted Score", Value = "Weighted Score" });
+                    items.Add(new SelectListItem { Text = "Description", Value = "Descriptions" });
+                    items.Add(new SelectListItem { Text = "", Value = "" });
+                    ViewBag.PerformanceMeasurementType = items;
 
                     string s = Request.QueryString["id"].Trim();
 
@@ -175,8 +175,9 @@ namespace LMS.Controllers
             return JsonConvert.SerializeObject(AppraisalSectionObject);
         }
         
-        public static string CreateNewAppraisalQuestion(NameValue formVars)
+        public static string CreateNewAppraisalQuestion()
         {
+            List<NameValue> formVars = new List<NameValue>();
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string Status = "000";
             string Msg = "";
@@ -277,8 +278,9 @@ namespace LMS.Controllers
             return JsonConvert.SerializeObject(_RequestResponse);
         }
         
-        public static string Update(NameValue formVars)
+        public static string Update()
         {
+            List<NameValue> formVars = new List<NameValue>();
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string Status = "000";
             string Msg = "";

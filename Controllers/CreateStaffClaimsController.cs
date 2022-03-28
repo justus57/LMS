@@ -20,6 +20,7 @@ namespace LMS.Controllers
         static string _ShortcutDimCode3 = "";
 
         public bool IsPostBack { get; private set; }
+        CreateStaffClaims createStaff = new CreateStaffClaims();
 
         // GET: CreateStaffClaims
         public ActionResult Index()
@@ -263,24 +264,25 @@ namespace LMS.Controllers
             if (System.Web.HttpContext.Current.Session["Company"].ToString() == "KRCS GF Management Unit")
             {
                 //DimCode8Label.Text = "Region to be Paid From";
-                LoadDimCodeValues(DimCode1, GlobalDimCode1);
-                LoadDimCodeValues(DimCode2, GlobalDimCode2);
+                LoadDimCodeValues(createStaff.DimCode1, GlobalDimCode1);
+                LoadDimCodeValues(createStaff.DimCode2, GlobalDimCode2);
                 //LoadDimCodeValues(DimCode3, ShortcutDimCode3);
                 //LoadDimCodeValues(DimCode8, ShortcutDimCode8);
-                DimCode1Label.Text = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
-                DimCode2Label.Text = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
+                createStaff.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
+                createStaff.DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
+                //DimCode3Label.Text = SetFirstLetterToUpper(ShortcutDimCode3.ToLower());
                 //DimCode3Label.Text = SetFirstLetterToUpper(ShortcutDimCode3.ToLower());
             }
             else
             {
                 //DimCode8Label.Text = SetFirstLetterToUpper(ShortcutDimCode8.ToLower());
-                LoadDimCodeValues(DimCode1, GlobalDimCode1);
-                LoadDimCodeValues(DimCode2, GlobalDimCode2);
-                LoadDimCodeValues(DimCode4, ShortcutDimCode4);
+                LoadDimCodeValues(createStaff.DimCode1, GlobalDimCode1);
+                LoadDimCodeValues(createStaff.DimCode2, GlobalDimCode2);
+                LoadDimCodeValues(createStaff.DimCode4, ShortcutDimCode4);
                 // LoadDimCodeValues(DimCode8, ShortcutDimCode8);
-                DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
-                DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
-                DimCode4Labeldd = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
+                createStaff.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
+                createStaff.DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
+                createStaff.DimCode4Label = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
             }
         }
         private void LoadDimCodeValues(DropDownList _DropDownList, string Code)

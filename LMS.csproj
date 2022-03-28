@@ -385,7 +385,9 @@
     <Compile Include="Controllers\CreateSectionTargetsController.cs" />
     <Compile Include="Controllers\CreateStaffClaimsController.cs" />
     <Compile Include="Controllers\CreateTrainingRequestController.cs" />
+    <Compile Include="Controllers\CreateTransportRequestController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\DefineAppraisalSectionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaveApplicationController.cs" />
     <Compile Include="Controllers\LeaveController.cs" />
@@ -414,7 +416,9 @@
     <Compile Include="Models\CreateSectionTargets.cs" />
     <Compile Include="Models\CreateStaffClaims.cs" />
     <Compile Include="Models\CreateTrainingRequest.cs" />
+    <Compile Include="Models\CreateTransportRequest.cs" />
     <Compile Include="Models\Dashboard.cs" />
+    <Compile Include="Models\DefineAppraisalSections.cs" />
     <Compile Include="Models\ForgotPassword.cs" />
     <Compile Include="Models\LeaveApplication.cs" />
     <Compile Include="Models\LeaveDetails.cs" />
@@ -4185,6 +4189,8 @@
     <Content Include="Views\CreateSectionTargets\CreateSectionTargets.cshtml" />
     <Content Include="Views\CreateStaffClaims\CreateStaffClaims.cshtml" />
     <Content Include="Views\CreateTrainingRequest\CreateTrainingRequest.cshtml" />
+    <Content Include="Views\CreateTransportRequest\CreateTransportRequest.cshtml" />
+    <Content Include="Views\DefineAppraisalSections\DefineAppraisalSections.cshtml" />
     <None Include="Web References\WebRef\HRWebPortal.wsdl" />
     <Content Include="Web References\WebRef\LeaveDetail.datasource">
       <DependentUpon>Reference.map</DependentUpon>

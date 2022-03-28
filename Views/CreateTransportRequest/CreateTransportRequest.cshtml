@@ -1,0 +1,504 @@
+﻿@model LMS.Models.CreateTransportRequest
+
+@{
+    ViewBag.Title = "CreateTransportRequest";
+}
+<main id="main" class="main">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <!-- #Include virtual="includes/Sidebar.aspx" -->
+        <div id="content-wrapper">
+            <div class="container-fluid">
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">Transport Requests</li>
+                    <li class="breadcrumb-item active">Create Transport Request</li>
+                </ol>
+                <!-- DataTables Example -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-share-square"></i>
+                        Create Transport Request
+                    </div>
+                    <form runat="server" novalidate="" action="#" method="POST" id="TransportRequestForm" autocomplete="off">
+                        <div class="card-body">
+                            <div class="row mb-5">
+                                <div class="col-md-4 mb-4">
+                                    <div>Transport Request Information</div>
+                                    <div class="text-muted small">Shows information for transport request</div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <asp:label id="DimCode6Label" runat="server" />
+                                                <asp:DropDownList CssClass="form-control" ID="DimCode6" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The department must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="StartDateTime"> Start Date & Time when vehicle is required</label>
+                                                <asp:TextBox class="form-control" id="StartDateTime" runat="server" required="true"></asp:TextBox>
+                                                @Html.TextBoxFor(Model=>Model.StartDateTime,new {@class="form-control", id="StartDateTime", required="true"})
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The Start Date & Time when vehicle is required must be selected</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="EndDateTime">End Date & Time when vehicle is required</label>
+                                                <asp:TextBox class="form-control" id="EndDateTime" runat="server" required="true"></asp:TextBox>
+                                                @Html.TextBoxFor(Model => Model.EndDateTime, new { @class = "form-control", id = "EndDateTime", required = "true" })
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The End Date & Time when vehicle is required must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Purpose for which the vehicle is requested</label>
+                                                <asp:TextBox TextMode="multiline" Columns="50" maxlength="150" Rows="3" runat="server" ID="Purpose" class="form-control MultiLineLimit" required="true"></asp:TextBox>
+                                                @Html.TextBoxFor(Model => Model.Purpose, new {@class="form-control MultiLineLimit",TextMode = "multiline", Columns = "50", maxlength = "150", Rows = "3",ID = "Purpose",required="true" })
+                                                <p class="pull-right text-muted small" id="count_message"></p>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The purpose for which the vehicle is requested must be provided</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <asp:label id="DimCode1Label" runat="server" />
+                                                <asp:DropDownList CssClass="form-control" ID="DimCode1" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The Dimension Code 1 must be selected</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <asp:label id="DimCode2Label" runat="server" />
+                                                <asp:DropDownList CssClass="form-control" ID="DimCode2" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The Dimension Code 2 must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <asp:label id="DimCode3Label" runat="server" />
+                                                <asp:DropDownList CssClass="form-control" ID="DimCode3" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The Dimension Code 3 must be selected</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <asp:label id="DimCode4Label" runat="server" />
+                                                <asp:DropDownList CssClass="form-control" ID="DimCode4" runat="server" AutoPostBack="false" style="width:100%"> </asp:DropDownList>
+
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The Dimension Code 4 must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="Destination">Destination</label>
+                                                <asp:TextBox CssClass="form-control" ID="Destination" runat="server" required="true"> </asp:TextBox>
+                                                @Html.TextBoxFor(Model=>Model.Destination,new {@Class = "form-control",ID = "Destination" ,required = "true"})
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The destination of the trip must be provided</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="VehicleClass">Class of vehicle</label>
+                                                <asp:DropDownList CssClass="form-control" ID="VehicleClass" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The Vehicle class must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="EstimatedDistance">Estimated Distance of trip in Kms</label>
+                                                <asp:TextBox CssClass="form-control" ID="EstimatedDistance" runat="server" required="true"> </asp:TextBox>
+                                                @Html.TextBoxFor(Model=>Model.EstimatedDistance,new {@Class = "form-control" ,ID = "EstimatedDistance",required = "true" })
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The estimated distance of the trip must be provided</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="EstimatedCostOfTrip">Estimated Cost of trip</label>
+                                                <asp:TextBox CssClass="form-control" ID="EstimatedCostOfTrip" runat="server" disabled="true"> </asp:TextBox>
+                                                @Html.TextBoxFor(Model => Model.EstimatedCostOfTrip, new {@Class = "form-control" ,ID = "EstimatedCostOfTrip",disabled = "true" })
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The estimated distance of the trip must be provided</div>
+                                            </div>
+                                        </div>
+
+                                        <input type="hidden" id="Rate" name="Rate" value="">
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer bg-light text-right">
+                            <button id="SubmitTransportRequest" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+
+                    <div class="card-footer small text-muted">Updated today at @DateTime.Now.ToShortTimeString() </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © @DateTime.Now.Year.ToString() Brightsoft Technologies Limited</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+<!-- Bootstrap core CSS-->
+<link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template-->
+<link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+<!-- Page level plugin CSS-->
+<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="~/Assest/css/sb-admin.css" rel="stylesheet">
+<link href="~/Assest/css/select2.min.css" rel="stylesheet" />
+<!--jQUERY date picker--->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
+<script type="text/javascript">
+    var jQuery_1_12_4 = $.noConflict( true );
+</script>
+<script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="~/Assest/js/sb-admin.min.js"></script>
+<!-- Page level plugin JavaScript-->
+<script src="~/Assest/vendor/datatables/jquery.dataTables.js"></script>
+<script src="~/Assest/vendor/datatables/dataTables.bootstrap4.js"></script>
+<script src="~/Assest/js/bootbox.all.min.js"></script>
+<script src="~/Assest/js/bootboxError.js"></script>
+<!-- Demo scripts for this page-->
+<script src="~/Assest/js/jquery.toast.js"></script>
+<script src="~/Assest/js/jquery.alphanum.js"></script>
+<script type="text/javascript">
+
+    $( ".MultiLineLimit" ).on( 'change keydown paste input', function () {
+        this.value = ( this.value.length <= 150 ? this.value : this.value.substring( 0, 150 ) );
+    } );
+    var text_max = 150;
+    $( '#count_message' ).html( text_max + ' remaining' );
+
+    $( '#Purpose' ).keyup( function () {
+        var text_length = $( '#Purpose' ).val().length;
+        var text_remaining = text_max - text_length;
+
+        $( '#count_message' ).html( text_remaining + ' remaining' );
+    } );
+
+    var jQuery_3_3_1 = $.noConflict( true );
+
+    jQuery_3_3_1( '#EstimatedDistance' ).numeric( {
+        maxPreDecimalPlaces: 10,
+        maxDecimalPlaces: 2
+    } );
+
+    jQuery_3_3_1( '#SubmitTransportRequest' ).on( 'click', function ( event ) {
+        event.preventDefault();
+
+        var title = 'Submitting transport request';
+        var icon = 'loading';
+        var duration = 50000 * 1;
+
+        //validate
+        var form = $( "#TransportRequestForm" )
+
+        if ( form[ 0 ].checkValidity() === false ) {
+            event.preventDefault()
+            event.stopPropagation()
+            form.addClass( 'was-validated' );
+        } else if ( form[ 0 ].checkValidity() === true ) {
+            // Perform ajax submit here...
+            jQuery_3_3_1.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+
+            jQuery.ajax( {
+                url: 'CreateTransportRequest.aspx/Save',
+                type: "POST",
+                data: '{param1:"' + $( '#StartDateTime' ).val() + '", param2:"' + $( '#EndDateTime' ).val() + '", param3:"' + $( '#Purpose' ).val() + '", param4:"' + $( '#DimCode1' ).val() + '", param5:"' + $( '#DimCode2' ).val() + '", param6:"' + $( '#DimCode3' ).val() + '", param7:"' + $( '#DimCode6' ).val() + '", param8:"' + $( '#VehicleClass' ).val() + '", param9:"' + $( '#EstimatedDistance' ).val() + '", param10:"' + $( '#Destination' ).val() + '", param11:"' + $( '#DimCode4' ).val() + '" }',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function ( response ) {
+
+                    if ( response != null && response.d != null ) {
+                        var data = response.d;
+                        // alert(typeof (data)); //it comes out to be string
+                        //we need to parse it to JSON
+                        data = $.parseJSON( data );
+
+                        jQuery_3_3_1.Toast.hideToast();
+
+                        if ( data.Status != "000" ) {
+
+                            bootbox.error( { title: "Approval error", message: data.Message } );
+                        } else {
+
+                            bootbox.alert( {
+                                message: data.Message,
+                                callback: function () {
+                                    window.location.href = 'TransportRequests.aspx?status=Pending';
+                                }
+                            } )
+                        }
+                    }
+                },
+                error: function () {
+                    // bootbox.error({ title: "System error", message: "An error occured." });
+                    jQuery_3_3_1.Toast.hideToast();
+
+                    bootbox.alert( {
+                        message: "The transport request was successfully sent for aprroval",
+                        callback: function () {
+                            window.setTimeout( function () {
+                                //alert('redirecting');
+                                window.location.href = 'TransportRequests.aspx?status=Pending';
+                            }, 1000 );//
+                        }
+                    } )
+                },
+                timeout: 10000
+            } );
+        }
+    } );
+
+</script>
+
+<script src="js/jquery.toast.js"></script>
+<!-- JQUERY DATEPICKER-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+
+<script src="js/select2.min.js"></script>
+<script>
+    $( document ).ready( function () {
+        $( "#Attachment" ).hide();
+
+        $( '#PreferredPaymentMethod' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#DimCode1' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#DimCode2' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#DimCode3' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#DimCode4' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#DimCode6' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#VehicleClass' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+
+        //datepickers
+        $( "#StartDateTime" ).datetimepicker( {
+            dateFormat: 'mm/dd/yy',
+
+            onSelect: function ( date ) {
+
+
+
+                //Set Minimum Date of EndDatePicker After Selected Date of StartDatePicker
+                $( "#EndDateTime" ).datepicker( "option", "minDate", date );
+                $( "#EndDateTime" ).datepicker( "option", "maxDate", '+2y' );
+
+                var selectedDate = new Date( date );
+
+                var endTime = selectedDate.getHours() + ":" + selectedDate.getMinutes();
+
+                // $("#EndDateTime").datepicker("option", "minTime", endTime);
+
+                //
+            }
+
+        } ).val();
+        $( "#EndDateTime" ).datetimepicker( {
+            dateFormat: 'mm/dd/yy',
+
+            onSelectDate: function ( date ) {
+
+                console.log( 'Same day' );
+                //var selectedDate = new Date(date);
+
+                //var minDate = $("#EndDateTime").datepicker("option", "minDate");
+                ////// Get today's date
+                //var todaysDate = new Date($("#StartDateTime").val());
+
+                //// call setHours to take the time out of the comparison
+                //if (selectedDate.setHours(0, 0, 0, 0) != todaysDate.setHours(0, 0, 0, 0)) {
+
+                //    console.log('Same day');
+
+                //    var endTime = todaysDate.getHours() + ":" + todaysDate.getMinutes();
+
+                //    $("#EndDateTime").datepicker("option", "minTime", endTime);
+                //} else {
+                //    console.log('Same day');
+                //}
+            }
+        } ).val();
+
+        $( "#EstimatedDistance" ).keyup( function () {
+            if ( $( "#EstimatedDistance" ).val().length == 0 ) {
+                $( "#EstimatedCostOfTrip" ).val( '0' );
+                return;
+            }
+            else {
+                if ( $( "#Rate" ).val().length == 0 ) {
+                    return;
+                } else {
+                    var one = parseInt( $( "#EstimatedDistance" ).val(), 10 );
+                    var three = parseInt( $( "#Rate" ).val(), 10 );
+                    // $(".total").text();
+                    $( "#EstimatedCostOfTrip" ).val( one * three );
+                }
+            }
+
+        } );
+
+        // get Rate $("#Rate").val()
+
+        $( "#VehicleClass" ).change( function () {
+
+
+            $( '#EstimatedDistance' ).val( '' );
+
+            if ( $( "#VehicleClass" ).val() != '' ) {
+
+                //selection fields
+                jQuery_3_3_1.ajax( {
+                    url: 'CreateTransportRequest.aspx/GetVehicleClassRate',
+                    type: "POST",
+                    data: '{Code:"' + $( "#VehicleClass" ).val() + '" }',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function ( response ) {
+
+                        if ( response != null && response.d != null ) {
+                            var data = response.d;
+                            // alert(typeof (data)); //it comes out to be string
+                            //we need to parse it to JSON
+                            data = $.parseJSON( data );
+                            $( '#Rate' ).val( data.Rate );
+                        }
+                    },
+                    error: function () {
+                        bootbox.error( { title: "System error", message: "An error occured." } );
+                    }
+                } );
+            }
+        } );
+    } );
+</script>
+

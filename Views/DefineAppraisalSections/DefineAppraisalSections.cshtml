@@ -1,0 +1,461 @@
+﻿@model LMS.Models.DefineAppraisalSections
+
+@{
+    ViewBag.Title = "DefineAppraisalSections";
+}
+
+<main id="main" class="main">
+
+    <div ID="NavbarContent" runat="server">
+        <!-- #Include virtual="includes/Navbar.aspx" -->
+    </div>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <!-- #Include virtual="includes/Sidebar.aspx" -->
+
+        <div id="content-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">Appraisals</li>
+                    <li class="breadcrumb-item active">Appraisal Sections</li>
+                </ol>
+
+                <!-- DataTables Example -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-question-circle"></i>
+                        <% Response.Write(Request["status"]);%> Appraisals
+                    </div>
+                    <div class="card-body">
+                        @if (HttpContext.Current.Session["ErrorMessage"].ToString()!="") { 
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>An error occured!</strong> @{Response.Write(HttpContext.Current.Session["ErrorMessage"].ToString());}.
+
+                        </div>
+                        } 
+                        <div class="text-right">
+                            <a id="AddAppraisal" class="btn btn-success" href="#" data-toggle="modal" data-target="#AddAppraisalModal">Create Appraisal Section</a>
+                        </div>
+                        <br>
+                        <div class="table-responsive">
+                            <asp:PlaceHolder ID="placeholder" runat="server" />
+                        </div>
+                    </div>
+                    <div class="card-footer small text-muted">Updated today at  @DateTime.Now.ToShortTimeString()</div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © @DateTime.Now.Year.ToString()  Brightsoft Technologies Limited</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Add Appraisal modal-->
+    <div class="modal fade" id="AddAppraisalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="AddAppraisalModalLabel">Add new section</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form runat="server" novalidate="" action="#" method="POST" id="CreateAppraisal" autocomplete="off">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="SectionName" class="form-control-label">Section Description</label>
+                                    <asp:TextBox TextMode="multiline" Columns="30" maxlength="50" Rows="3" runat="server" ID="SectionName" class="form-control MultiLineLimit" required="true"></asp:TextBox>
+                                    <p class="pull-right text-muted small" id="count_message"></p>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The section name must be supplied</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleRadios1" class="form-control-label">Is default appraisal section defined by HR</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="IsHRDefined" id="exampleRadios1" value="Yes" required="true">
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            Yes
+                                        </label>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">The appraisal name must be supplied</div>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="IsHRDefined" id="exampleRadios2" value="No" required="true">
+                                        <label class="form-check-label" for="exampleRadios2">
+                                            No
+                                        </label>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">The appraisal name must be supplied</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="button" id="Submit">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Bootstrap core JavaScript-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Page level plugin JavaScript-->
+<script src="vendor/datatables/jquery.dataTables.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+<!-- Bootstrap core CSS-->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template-->
+<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+<!-- Page level plugin CSS-->
+<link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="css/sb-admin.css" rel="stylesheet">
+<link href="css/custom.css" rel="stylesheet">
+<link href="css/select2.min.css" rel="stylesheet" />
+<!--jQUERY date picker--->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin.min.js"></script>
+<script src="js/bootbox.all.min.js"></script>
+<script src="js/bootboxError.js"></script>
+<script src="js/jquery.pleaseWait.js"></script>
+<!-- JQUERY DATEPICKER-->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="js/select2.min.js"></script>
+<!-- Demo scripts for this page-->
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+<script src="js/jquery.toast.js"></script>
+<script type="text/javascript">
+    var jQuery_3_3_1 = $.noConflict( true );
+</script>
+<script src="js/jquery.toast.js"></script>
+
+<script>
+    $( document ).ready( function () {
+        var table = $( '#dataTable' ).DataTable( {
+            lengthChange: false,
+            buttons: [ 'copy', 'excel', 'pdf', 'print', 'colvis' ]
+        } );
+        $( ".MultiLineLimit" ).on( 'change keydown paste input', function () {
+            this.value = ( this.value.length <= 250 ? this.value : this.value.substring( 0, 250 ) );
+        } );
+        var text_max = 250;
+        $( '#count_message' ).html( text_max + ' remaining' );
+        $( '#SectionName' ).keyup( function () {
+            var text_length = $( '#SectionName' ).val().length;
+            var text_remaining = text_max - text_length;
+
+            $( '#count_message' ).html( text_remaining + ' remaining' );
+        } );
+
+        jQuery_3_3_1( "#Submit" ).click( function ( e ) {
+            // Fetch form to apply custom Bootstrap validation
+            var form = $( "#CreateAppraisal" )
+
+            if ( form[ 0 ].checkValidity() === false ) {
+                event.preventDefault()
+                event.stopPropagation()
+                form.addClass( 'was-validated' );
+            } else if ( form[ 0 ].checkValidity() === true ) {
+                //
+                var radioValue = $( "input[name='IsHRDefined']:checked" ).val();
+
+                // Perform ajax submit here...
+                showToast( 'Saving section' );
+                jQuery.ajax( {
+                    url: 'DefineAppraisalSections.aspx/Submit',
+                    type: "POST",
+                    data: '{param1:"' + $( "#SectionName" ).val() + '", param2:"' + radioValue + '"}',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function ( response ) {
+
+                        if ( response != null && response.d != null ) {
+                            var data = response.d;
+                            // alert(typeof (data)); //it comes out to be string
+                            //we need to parse it to JSON
+                            data = $.parseJSON( data );
+
+                            hideLoading();
+
+                            if ( data.Status != "000" ) {
+                                hideLoading();
+                                bootbox.alert( data.Message );
+                            } else {
+
+                                $( '#CreateAppraisal' ).trigger( "reset" );
+
+                                bootbox.alert( {
+                                    message: data.Message,
+                                    callback: function () {
+                                        location.reload();
+                                    }
+                                } )
+                            }
+                        }
+                    }
+                } );
+            }
+            event.preventDefault();
+        } );
+        table.buttons().container()
+            .appendTo( '#dataTable_wrapper .col-md-6:eq(0)' );
+        jQuery_3_3_1( "#dataTable" ).on( "click", ".DeleteSection", function ( e ) {
+            e.preventDefault();
+
+            var pid = $( this ).attr( 'data-id' );
+
+            bootbox.confirm( {
+                title: "<i class='fa fa-trash'></i> Delete appraisal section?",
+                message: "Do you wish to delete this appraisal section?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function ( result ) {
+
+                    if ( result == true ) {
+
+                        showToast( 'Deleting section' );
+                        // showToast(pid);
+
+                        jQuery.ajax( {
+                            url: 'DefineAppraisalSections.aspx/DeleteSection',
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function ( response ) {
+
+                                if ( response != null && response.d != null ) {
+                                    var data = response.d;
+                                    // alert(typeof (data)); //it comes out to be string
+                                    //we need to parse it to JSON
+                                    data = $.parseJSON( data );
+
+                                    hideLoading();
+
+                                    bootbox.alert( {
+                                        message: data.Message,
+                                        callback: function () {
+                                            location.reload();
+                                        }
+                                    } )
+                                }
+                            },
+                            error: function () {
+                                bootbox.error( { title: "System error", message: "An error occured." } );
+                            }
+                        } );
+                    }
+                }
+            } );
+        } );
+        jQuery_3_3_1( "#dataTable" ).on( "click", ".SetSupervisorDefined", function ( e ) {
+            e.preventDefault();
+
+            var pid = $( this ).attr( 'data-id' );
+
+            bootbox.confirm( {
+                title: "<i class='fa fa-location-arrow'></i> Set to Supervisor Defined?",
+                message: "Do you wish to Set section appraisal to Supervisor Defined?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function ( result ) {
+
+                    if ( result == true ) {
+
+                        showToast( 'Saving changes' );
+                        // showToast(pid);
+
+                        jQuery.ajax( {
+                            url: 'DefineAppraisalSections.aspx/SetSupervisorDefined',
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function ( response ) {
+
+                                if ( response != null && response.d != null ) {
+                                    var data = response.d;
+                                    // alert(typeof (data)); //it comes out to be string
+                                    //we need to parse it to JSON
+                                    data = $.parseJSON( data );
+
+                                    hideLoading();
+
+                                    bootbox.alert( {
+                                        message: data.Message,
+                                        callback: function () {
+                                            location.reload();
+                                        }
+                                    } )
+                                }
+                            },
+                            error: function () {
+                                bootbox.error( { title: "System error", message: "An error occured." } );
+                            }
+                        } );
+                    }
+                }
+            } );
+        } );
+        jQuery_3_3_1( "#dataTable" ).on( "click", ".SetHRDefined", function ( e ) {
+            e.preventDefault();
+
+            var pid = $( this ).attr( 'data-id' );
+
+            bootbox.confirm( {
+                title: "<i class='fa fa-location-arrow'></i> Set to HR Defined?",
+                message: "Do you wish to Set section appraisal to HR Defined?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function ( result ) {
+
+                    if ( result == true ) {
+
+                        showToast( 'Saving changes' );
+                        // showToast(pid);
+
+                        jQuery.ajax( {
+                            url: 'DefineAppraisalSections.aspx/SetHRDefined',
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function ( response ) {
+
+                                if ( response != null && response.d != null ) {
+                                    var data = response.d;
+                                    // alert(typeof (data)); //it comes out to be string
+                                    //we need to parse it to JSON
+                                    data = $.parseJSON( data );
+
+                                    hideLoading();
+
+                                    bootbox.alert( {
+                                        message: data.Message,
+                                        callback: function () {
+                                            location.reload();
+                                        }
+                                    } )
+                                }
+                            },
+                            error: function () {
+                                bootbox.error( { title: "System error", message: "An error occured." } );
+                            }
+                        } );
+                    }
+                }
+            } );
+        } );
+    } );
+    function showToast ( modaltittle ) {
+        var title = modaltittle;
+        var icon = 'loading';
+        var duration = 50000 * 1;
+        $.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+    }
+    function hideLoading () {
+        $.Toast.hideToast();
+    }
+</script>
+

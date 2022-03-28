@@ -20,8 +20,6 @@ namespace LMS.Controllers
         }
         public ActionResult DefineAppraisalSections()
         {
-            
-       
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
             System.Web.HttpContext.Current.Session["IsDashboardActive"] = "";
             System.Web.HttpContext.Current.Session["IsClaimActive"] = "";

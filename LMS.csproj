@@ -4184,6 +4184,7 @@
     <Content Include="Views\CreatePML\CreatePML.cshtml" />
     <Content Include="Views\CreateSectionTargets\CreateSectionTargets.cshtml" />
     <Content Include="Views\CreateStaffClaims\CreateStaffClaims.cshtml" />
+    <Content Include="Views\CreateTrainingRequest\CreateTrainingRequest.cshtml" />
     <None Include="Web References\WebRef\HRWebPortal.wsdl" />
     <Content Include="Web References\WebRef\LeaveDetail.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -4220,7 +4221,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Assest\scss\Uploads\" />
-    <Folder Include="Views\CreateTrainingRequest\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

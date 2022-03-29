@@ -401,6 +401,7 @@
     <Compile Include="Controllers\LeaveRecallForOtherController.cs" />
     <Compile Include="Controllers\LeaveRecallsController.cs" />
     <Compile Include="Controllers\P9FormsController.cs" />
+    <Compile Include="Controllers\PayslipsController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ViewApprovalEntryController.cs" />
     <Compile Include="Controllers\ViewLeaveController.cs" />
@@ -4208,6 +4209,7 @@
     <Content Include="Views\EditTrainingRequest\EditTrainingRequest.cshtml" />
     <Content Include="Views\FillVehicleLogSheet\FillVehicleLogSheet.cshtml" />
     <Content Include="Views\P9Forms\P9Forms.cshtml" />
+    <Content Include="Views\Payslips\Payslips.cshtml" />
     <None Include="Web References\WebRef\HRWebPortal.wsdl" />
     <Content Include="Web References\WebRef\LeaveDetail.datasource">
       <DependentUpon>Reference.map</DependentUpon>

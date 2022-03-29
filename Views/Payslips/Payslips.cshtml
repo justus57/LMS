@@ -1,0 +1,252 @@
+﻿
+@{
+    ViewBag.Title = "Payslips";
+}
+
+<main id="main" class="main">
+
+    <div ID="NavbarContent" runat="server">
+        <!-- #Include virtual="includes/Navbar.aspx" -->
+    </div>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <!-- #Include virtual="includes/Sidebar.aspx" -->
+
+        <div id="content-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">Reports</li>
+                    <li class="breadcrumb-item active">Payslips</li>
+                </ol>
+
+                <!-- DataTables Example -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-file-pdf"></i>
+                        Payslips
+                    </div>
+                    <form runat="server" novalidate="" action="#" method="POST" id="LeaveApplicationForm" autocomplete="off">
+                        <div class="card-body">
+                            <div class="row mb-5">
+                                <div class="col-md-4 mb-4">
+                                    <div>Payslip Information</div>
+                                    <%--<div class="text-muted small">Shows information for specific leaves</div>--%>
+                                </div>
+                                <div class="col-md-8">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="PayslipMonth">Month</label>
+                                                <asp:TextBox runat="server" ID="PayslipMonth" class="form-control date-picker" required="true" type="text"></asp:TextBox>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">You must select month to generate payslip</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="Attachment" runat="server">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Payslip:</label>
+                                                <asp:LinkButton runat="server" OnClick="View_Click" ID="btn_view_attachment">View</asp:LinkButton>
+                                                <asp:LinkButton runat="server" onclick="btn_download_Click" ID="btn_download_attachment">Download</asp:LinkButton>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light text-right">
+                            <button id="Submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                    <div class="card-footer small text-muted">Updated today at  <%: DateTime.Now.ToShortTimeString() %></div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © <%: DateTime.Now.Year.ToString() %>  Brightsoft Technologies Limited</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Bootstrap core JavaScript-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap core CSS-->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template-->
+<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+ 
+
+<!-- Page level plugin CSS-->
+<link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="css/sb-admin.css" rel="stylesheet">
+<link href="css/custom.css" rel="stylesheet">
+<link href="css/select2.min.css" rel="stylesheet" />
+<!--jQUERY date picker--->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Page level plugin JavaScript-->
+<script src="vendor/datatables/jquery.dataTables.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin.min.js"></script>
+<script src="js/bootbox.all.min.js"></script>
+<script src="js/bootboxError.js"></script>
+<script src="js/jquery.pleaseWait.js"></script>
+<!-- JQUERY DATEPICKER-->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="js/select2.min.js"></script>
+<!-- Demo scripts for this page-->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+<script src="js/jquery.toast.js"></script>
+<script type="text/javascript">
+    var jQuery_3_3_1 = $.noConflict( true );
+</script>
+<script src="js/jquery.toast.js"></script>
+
+<script>
+    $( document ).ready( function () {
+        $( "#Attachment" ).hide();
+        $( '#PayslipMonth' ).datepicker( {
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'MM yy',
+            //onSelect: function (date) {
+            //    $("#PayslipMonth").datepicker("option", "minDate", date);
+            //    $("#PayslipMonth").datepicker("option", "maxDate", '+2y');
+            //},
+
+            onClose: function () {
+                var iMonth = $( "#ui-datepicker-div .ui-datepicker-month :selected" ).val();
+                var iYear = $( "#ui-datepicker-div .ui-datepicker-year :selected" ).val();
+                $( this ).datepicker( 'setDate', new Date( iYear, iMonth, 1 ) );
+            },
+
+            beforeShow: function () {
+                if ( ( selDate = $( this ).val() ).length > 0 ) {
+                    iYear = selDate.substring( selDate.length - 4, selDate.length );
+                    iMonth = jQuery.inArray( selDate.substring( 0, selDate.length - 5 ), $( this ).datepicker( 'option', 'monthNames' ) );
+                    $( this ).datepicker( 'option', 'defaultDate', new Date( iYear, iMonth, 1 ) );
+                    $( this ).datepicker( 'setDate', new Date( iYear, iMonth, 1 ) );
+                }
+            }
+        } );
+        $( "#Submit" ).click( function ( event ) {
+
+            // Fetch form to apply custom Bootstrap validation
+            var form = $( "#LeaveApplicationForm" )
+
+            if ( form[ 0 ].checkValidity() === false ) {
+                event.preventDefault()
+                event.stopPropagation()
+                form.addClass( 'was-validated' );
+            } else if ( form[ 0 ].checkValidity() === true ) {
+                // Perform ajax submit here...
+                showToast( 'Generating payslip' );
+
+                jQuery.ajax( {
+                    url: 'Payslips.aspx/GeneratePaylip',
+                    type: "POST",
+                    data: '{param1:"' + $( '#PayslipMonth' ).val() + '"}',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function ( response ) {
+
+                        if ( response != null && response.d != null ) {
+                            var data = response.d;
+                            // alert(typeof (data)); //it comes out to be string
+                            //we need to parse it to JSON
+                            data = $.parseJSON( data );
+
+                            hideLoading();
+
+                            if ( data.Status != "000" ) {
+                                bootbox.alert( data.Message, function () {
+                                    //rest form
+                                    $( "#LeaveApplicationForm" )[ 0 ].reset();
+                                } );
+                            } else {
+                                $( "#Attachment" ).show();
+                            }
+                        }
+                    },
+                    error: function ( jqxhr, status, error ) {
+                        hideLoading();
+
+                        bootbox.alert( error, function () {
+                            //rest form
+                            // $("#LeaveApplicationForm")[0].reset();
+                        } );
+                        console.log( error );
+                    }
+                } );
+            }
+
+            ////uncomment below
+            event.preventDefault();
+        } );
+    } );
+    function showToast ( modaltittle ) {
+        var title = modaltittle;
+        var icon = 'loading';
+        var duration = 50000 * 1;
+        $.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+    }
+    function hideLoading () {
+        $.Toast.hideToast();
+    }
+</script>
+

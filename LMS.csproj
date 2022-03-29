@@ -406,6 +406,7 @@
     <Compile Include="Controllers\StaffClaimsController.cs" />
     <Compile Include="Controllers\TrainingsController.cs" />
     <Compile Include="Controllers\TransportRequestsController.cs" />
+    <Compile Include="Controllers\ViewAdvanceClaimController.cs" />
     <Compile Include="Controllers\ViewApprovalEntryController.cs" />
     <Compile Include="Controllers\ViewLeaveController.cs" />
     <Compile Include="Controllers\ViewLeaveRecallController.cs" />
@@ -448,6 +449,7 @@
     <Compile Include="Models\Payslips.cs" />
     <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\Register.cs" />
+    <Compile Include="Models\ViewAdvanceClaim.cs" />
     <Compile Include="Models\ViewApprovalEntry.cs" />
     <Compile Include="Models\ViewLeave.cs" />
     <Compile Include="Models\ViewLeaveRecall.cs" />
@@ -4217,6 +4219,7 @@
     <Content Include="Views\StaffClaims\StaffClaims.cshtml" />
     <Content Include="Views\Trainings\Trainings.cshtml" />
     <Content Include="Views\TransportRequests\TransportRequests.cshtml" />
+    <Content Include="Views\ViewAdvanceClaim\ViewAdvanceClaim.cshtml" />
     <None Include="Web References\WebRef\HRWebPortal.wsdl" />
     <Content Include="Web References\WebRef\LeaveDetail.datasource">
       <DependentUpon>Reference.map</DependentUpon>

@@ -1,0 +1,695 @@
+﻿
+@{
+    ViewBag.Title = "TransportRequests";
+}
+
+
+<main id="main" class="main">
+    <div ID="NavbarContent" runat="server">
+        <!-- #Include virtual="includes/Navbar.aspx" -->
+    </div>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <!-- #Include virtual="includes/Sidebar.aspx" -->
+
+        <div id="content-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">Transport Requests</li>
+                    <li class="breadcrumb-item active"> @{Response.Write(Request["status"]); } Transport Requests</li>
+                </ol>
+
+                <!-- DataTables Example -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-money-check-alt"></i>
+                        @{Response.Write(Request["status"]); } Transport Requests
+                    </div>
+                    <div class="card-body">
+                        @if (HttpContext.Current.Session["ErrorMessage"].ToString() != "")
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>An error occured!</strong> @{Response.Write(HttpContext.Current.Session["ErrorMessage"].ToString()); }.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        }
+                        <div class="table-responsive">
+                            @Html.Raw(ViewBag.TransportRequests)
+                        </div>
+                    </div>
+                    <div class="card-footer small text-muted">Updated today at  @DateTime.Now.ToShortTimeString() </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright ©  @DateTime.Now.Year.ToString()   Brightsoft Technologies Limited</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Bootstrap core JavaScript-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Bootstrap core CSS-->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template-->
+<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+<!-- Page level plugin CSS-->
+<link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="css/sb-admin.css" rel="stylesheet">
+<link href="css/custom.css" rel="stylesheet">
+<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+<!-- Page level plugin JavaScript-->
+<script src="vendor/datatables/jquery.dataTables.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin.min.js"></script>
+<script src="js/bootbox.all.min.js"></script>
+<script src="js/bootboxError.js"></script>
+<script src="js/jquery.pleaseWait.js"></script>
+
+<!-- Demo scripts for this page-->
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+<script src="js/jquery.toast.js"></script>
+<script type="text/javascript">
+    var jQuery_3_3_1 = $.noConflict( true );
+</script>
+<script src="js/jquery.toast.js"></script>
+
+<script>
+    $( document ).ready( function () {
+        var table = $( '#dataTable' ).DataTable( {
+            lengthChange: false,
+            buttons: [ 'copy', 'excel', 'pdf', 'colvis' ],
+            "order": [ [ 0, "desc" ] ]
+        } );
+
+        table.buttons().container()
+            .appendTo( '#dataTable_wrapper .col-md-6:eq(0)' );
+
+        jQuery_3_3_1( "#dataTable" ).on( "click", ".delete_record", function ( e ) {
+            e.preventDefault();
+
+            var pid = $( this ).attr( 'data-id' );
+
+            bootbox.confirm( {
+                title: "<i class='fa fa-trash-alt'></i> Delete record?",
+                message: "Do you wish to delete this record?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function ( result ) {
+
+                    if ( result == true ) {
+
+                        showToast( 'Deleting transport request' );
+                        // showToast(pid);
+
+                        jQuery.ajax( {
+                            url: 'TransportRequests.aspx/DeleteRecord',
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function ( response ) {
+
+                                if ( response != null && response.d != null ) {
+                                    var data = response.d;
+                                    // alert(typeof (data)); //it comes out to be string
+                                    //we need to parse it to JSON
+                                    data = $.parseJSON( data );
+
+                                    hideLoading();
+
+                                    bootbox.alert( {
+                                        message: data.Message,
+                                        callback: function () {
+                                            window.setTimeout( function () {
+                                                location.reload()
+                                            }, 1000 );
+                                        }
+                                    } )
+                                }
+                            },
+                            error: function () {
+                                bootbox.error( { title: "System error", message: "An error occured." } );
+                            }
+                        } );
+                    }
+                }
+            } );
+        } );
+        jQuery_3_3_1( "#dataTable" ).on( "click", ".submit_record", function ( e ) {
+            e.preventDefault();
+
+            var pid = $( this ).attr( 'data-id' );
+
+            bootbox.confirm( {
+                title: "<i class='fa fa-paper-plane'></i> Submit record?",
+                message: "Do you wish to submit this record?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function ( result ) {
+
+                    if ( result == true ) {
+
+                        showToast( 'Submitting transport request' );
+                        // showToast(pid);
+
+                        jQuery.ajax( {
+                            url: 'TransportRequests.aspx/SubmitRecord',
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function ( response ) {
+
+                                if ( response != null && response.d != null ) {
+                                    var data = response.d;
+                                    // alert(typeof (data)); //it comes out to be string
+                                    //we need to parse it to JSON
+                                    data = $.parseJSON( data );
+
+                                    hideLoading();
+
+
+                                    if ( data.Status != "000" ) {
+                                        hideLoading();
+                                        bootbox.error( { title: "Approval error", message: data.Message } );
+                                    } else {
+
+                                        bootbox.alert( {
+                                            message: data.Message,
+                                            callback: function () {
+                                                window.setTimeout( function () {
+                                                    window.location.href = 'TransportRequests.aspx?status=Pending';
+                                                }, 1000 );
+                                            }
+                                        } )
+                                    }
+
+                                }
+                            },
+                            error: function () {
+                                // bootbox.error({ title: "System error", message: "An error occured." });
+                                hideLoading();
+
+                                bootbox.alert( {
+                                    message: "The transport request was successfully sent for aprroval",
+                                    callback: function () {
+                                        window.setTimeout( function () {
+                                            window.location.href = 'TransportRequests.aspx?status=Pending';
+                                        }, 1000 );
+                                    }
+                                } )
+                            },
+                            timeout: 10000
+                        } );
+                    }
+                }
+            } );
+        } );
+        jQuery_3_3_1( "#dataTable" ).on( "click", ".cancel_record", function ( e ) {
+            e.preventDefault();
+
+            var pid = $( this ).attr( 'data-id' );
+
+            bootbox.confirm( {
+                title: "<i class='fa fa-times'></i> Cancel approval request?",
+                message: "Do you wish to cancel the approval request?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function ( result ) {
+
+                    if ( result == true ) {
+
+                        showToast( 'Cancelling approval request' );
+                        // showToast(pid);
+
+                        jQuery.ajax( {
+                            url: 'TransportRequests.aspx/CancelRequest',
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function ( response ) {
+
+                                if ( response != null && response.d != null ) {
+                                    var data = response.d;
+                                    // alert(typeof (data)); //it comes out to be string
+                                    //we need to parse it to JSON
+                                    data = $.parseJSON( data );
+
+                                    hideLoading();
+
+                                    bootbox.alert( {
+                                        message: data.Message,
+                                        callback: function () {
+                                            window.setTimeout( function () {
+                                                window.location.href = 'TransportRequests.aspx?status=Open';
+                                            }, 1000 );
+                                        }
+                                    } )
+                                }
+                            },
+                            error: function () {
+                                bootbox.error( { title: "System error", message: "An error occured." } );
+                            }
+                        } );
+                    }
+                }
+            } );
+        } );
+        jQuery_3_3_1( "#dataTable" ).on( "click", ".delegate_record", function ( e ) {
+            e.preventDefault();
+
+            var pid = $( this ).attr( 'data-id' );
+
+            bootbox.confirm( {
+                title: "<i class='fa fa-fighter-jet'></i> Delegate approval request?",
+                message: "Do you wish to delegate this approval request?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function ( result ) {
+
+                    if ( result == true ) {
+
+                        showToast( 'Delegating approval request' );
+                        // showToast(pid);
+
+                        jQuery.ajax( {
+                            url: 'TransportRequests.aspx/DelegateRequest',
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function ( response ) {
+
+                                if ( response != null && response.d != null ) {
+                                    var data = response.d;
+                                    // alert(typeof (data)); //it comes out to be string
+                                    //we need to parse it to JSON
+                                    data = $.parseJSON( data );
+
+                                    hideLoading();
+
+                                    bootbox.alert( {
+                                        message: data.Message,
+                                        callback: function () {
+                                            window.setTimeout( function () {
+                                                location.reload()
+                                            }, 1000 );
+                                        }
+                                    } )
+
+                                }
+                            },
+                            error: function () {
+                                // bootbox.error({ title: "System error", message: "An error occured." });
+                                hideLoading();
+
+                                bootbox.alert( {
+                                    message: "The advance request was successfully delegated",
+                                    callback: function () {
+                                        window.setTimeout( function () {
+                                            window.location.href = 'TransportRequests.aspx?status=Pending';
+                                        }, 1000 );
+                                    }
+                                } )
+                            },
+                            timeout: 10000
+                        } );
+                    }
+                }
+            } );
+        } );
+        jQuery_3_3_1( "#dataTable" ).on( "click", ".print_tr", function ( e ) {
+            e.preventDefault();
+
+            var pid = $( this ).attr( 'data-id' );
+
+            jQuery.ajax( {
+                url: 'TransportRequests.aspx/PrintRequest',
+                type: "POST",
+                data: '{param1:"' + pid + '"}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function ( response ) {
+
+                    if ( response != null && response.d != null ) {
+                        var data = response.d;
+                        // alert(typeof (data)); //it comes out to be string
+                        //we need to parse it to JSON
+                        data = $.parseJSON( data );
+
+                        hideLoading();
+
+                        bootbox.confirm( {
+                            title: "<i class='fa fa-print'></i> Print?",
+                            message: "Do you wish to print transport request?",
+                            buttons: {
+                                confirm: {
+                                    label: 'Yes',
+                                    className: 'btn-success'
+                                },
+                                cancel: {
+                                    label: 'No',
+                                    className: 'btn-danger'
+                                }
+                            },
+                            callback: function ( result ) {
+
+                                if ( result == true ) {
+
+                                    window.location.href = "uploads/" + pid + ".pdf";
+
+                                }
+                            }
+                        } );
+
+                    }
+                },
+                error: function () {
+                    hideLoading();
+                },
+                timeout: 10000
+            } );
+        } );
+        jQuery_3_3_1( "#dataTable" ).on( "click", ".closeTrip", function ( e ) {
+            e.preventDefault();
+
+            var pid = $( this ).attr( 'data-id' );
+
+            bootbox.confirm( {
+                title: "<i class='fa fa-calendar-check'></i> Close transport request?",
+                message: "Do you wish to close this transport request?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function ( result ) {
+
+                    if ( result == true ) {
+
+                        showToast( 'Closing transport request' );
+                        // showToast(pid);
+
+                        jQuery.ajax( {
+                            url: 'TransportRequests.aspx/CloseTrip',
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function ( response ) {
+
+                                if ( response != null && response.d != null ) {
+                                    var data = response.d;
+                                    // alert(typeof (data)); //it comes out to be string
+                                    //we need to parse it to JSON
+                                    data = $.parseJSON( data );
+
+                                    hideLoading();
+
+                                    bootbox.alert( {
+                                        message: data.Message,
+                                        callback: function () {
+                                            window.setTimeout( function () {
+                                                location.reload()
+                                            }, 1000 );
+                                        }
+                                    } )
+
+                                }
+                            },
+                            error: function () {
+                                // bootbox.error({ title: "System error", message: "An error occured." });
+                                hideLoading();
+
+                                //bootbox.alert({
+                                //    message: "The advance request was successfully delegated",
+                                //    callback: function () {
+                                //        window.setTimeout(function () {
+                                //            window.location.href = 'TransportRequests.aspx?status=Pending';
+                                //        }, 1000);
+                                //    }
+                                //})
+                            },
+                            timeout: 10000
+                        } );
+                    }
+                }
+            } );
+        } );
+        jQuery_3_3_1( "#dataTable" ).on( "click", ".openTrip", function ( e ) {
+            e.preventDefault();
+
+            var pid = $( this ).attr( 'data-id' );
+
+            bootbox.confirm( {
+                title: "<i class='fa fa-calendar-check'></i> Open trip?",
+                message: "Do you wish to open this closed trip?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function ( result ) {
+
+                    if ( result == true ) {
+
+                        showToast( 'Reopening trip' );
+                        // showToast(pid);
+
+                        jQuery.ajax( {
+                            url: 'TransportRequests.aspx/ReOpenTrip',
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function ( response ) {
+
+                                if ( response != null && response.d != null ) {
+                                    var data = response.d;
+                                    // alert(typeof (data)); //it comes out to be string
+                                    //we need to parse it to JSON
+                                    data = $.parseJSON( data );
+
+                                    hideLoading();
+
+                                    bootbox.alert( {
+                                        message: data.Message,
+                                        callback: function () {
+                                            window.setTimeout( function () {
+                                                location.reload()
+                                            }, 1000 );
+                                        }
+                                    } )
+
+                                }
+                            },
+                            error: function () {
+                                // bootbox.error({ title: "System error", message: "An error occured." });
+                                hideLoading();
+
+                                //bootbox.alert({
+                                //    message: "The advance request was successfully delegated",
+                                //    callback: function () {
+                                //        window.setTimeout(function () {
+                                //            window.location.href = 'TransportRequests.aspx?status=Pending';
+                                //        }, 1000);
+                                //    }
+                                //})
+                            },
+                            timeout: 10000
+                        } );
+                    }
+                }
+            } );
+        } );
+        jQuery_3_3_1( "#dataTable" ).on( "click", ".EndTrip", function ( e ) {
+            e.preventDefault();
+
+            var pid = $( this ).attr( 'data-id' );
+
+            bootbox.confirm( {
+                title: "<i class='fa fa-stop-circle'></i> End trip?",
+                message: "Do you wish to end this trip?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function ( result ) {
+
+                    if ( result == true ) {
+
+                        showToast( 'Ending trip' );
+                        // showToast(pid);
+
+                        jQuery.ajax( {
+                            url: 'TransportRequests.aspx/EndTrip',
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function ( response ) {
+
+                                if ( response != null && response.d != null ) {
+                                    var data = response.d;
+                                    // alert(typeof (data)); //it comes out to be string
+                                    //we need to parse it to JSON
+                                    data = $.parseJSON( data );
+
+                                    hideLoading();
+
+                                    bootbox.alert( {
+                                        message: data.Message,
+                                        callback: function () {
+                                            window.setTimeout( function () {
+                                                location.reload()
+                                            }, 1000 );
+                                        }
+                                    } )
+
+                                }
+                            },
+                            error: function () {
+                                // bootbox.error({ title: "System error", message: "An error occured." });
+                                hideLoading();
+
+                                //bootbox.alert({
+                                //    message: "The advance request was successfully delegated",
+                                //    callback: function () {
+                                //        window.setTimeout(function () {
+                                //            window.location.href = 'TransportRequests.aspx?status=Pending';
+                                //        }, 1000);
+                                //    }
+                                //})
+                            },
+                            timeout: 10000
+                        } );
+                    }
+                }
+            } );
+        } );
+    } );
+    function showToast ( modaltittle ) {
+        var title = modaltittle;
+        var icon = 'loading';
+        var duration = 50000 * 1;
+        $.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+    }
+    function hideLoading () {
+        $.Toast.hideToast();
+    }
+</script>
+

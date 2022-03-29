@@ -1,0 +1,870 @@
+﻿@model LMS.Models.FillVehicleLogSheet
+
+@{
+    ViewBag.Title = "FillVehicleLogSheet";
+}
+
+<main id="main" class="main">
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <!-- #Include virtual="includes/Sidebar.aspx" -->
+        <div id="content-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">Transport Requests</li>
+                    <li class="breadcrumb-item active">Fill Log Sheet</li>
+                </ol>
+                <!-- DataTables Example -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-share-square"></i>
+                        Fill log sheet information
+                    </div>
+
+                    <form runat="server" novalidate="" action="#" method="POST" id="TransportRequestForm" autocomplete="off">
+                        <div class="card-body">
+                            <div class="row mb-5">
+                                <div class="col-md-4 mb-4">
+                                    <div>Transport Request Information</div>
+                                    <div class="text-muted small">Shows information for transport request</div>
+                                </div>
+                                <div class="col-md-8">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <asp:label id="DimCode6Label" runat="server" />
+                                                <asp:DropDownList CssClass="form-control" ID="DimCode6" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The department must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="StartDateTime"> Start Date & Time when vehicle is required</label>
+                                                <asp:TextBox class="form-control" id="StartDateTime" runat="server" required="true" readonly="true"></asp:TextBox>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The Start Date & Time when vehicle is required must be selected</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="EndDateTime">End Date & Time when vehicle is required</label>
+                                                <asp:TextBox class="form-control" id="EndDateTime" runat="server" required="true" readonly="true"></asp:TextBox>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The End Date & Time when vehicle is required must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Purpose for which the vehicle is requested</label>
+                                                <asp:TextBox readonly="true" TextMode="multiline" Columns="50" maxlength="150" Rows="3" runat="server" ID="Purpose" class="form-control MultiLineLimit" required="true"></asp:TextBox>
+                                                <p class="pull-right text-muted small" id="count_message2"></p>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The purpose for which the vehicle is requested must be provided</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <asp:label id="DimCode1Label" runat="server" />
+                                                <asp:DropDownList CssClass="form-control" readonly="true" ID="DimCode1" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The Dimension Code 1 must be selected</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <asp:label id="DimCode2Label" runat="server" />
+                                                <asp:DropDownList CssClass="form-control" readonly="true" ID="DimCode2" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The Dimension Code 2 must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <asp:label id="DimCode3Label" runat="server" />
+                                                <asp:DropDownList CssClass="form-control" readonly="true" ID="DimCode3" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The Dimension Code 3 must be selected</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <asp:label id="DimCode4Label" runat="server" />
+                                                <asp:DropDownList CssClass="form-control" ID="DimCode4" readonly="true" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The Dimension Code 4 must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="VehicleClass">Class of vehicle requested</label>
+                                                <asp:DropDownList CssClass="form-control" ID="VehicleClass" readonly="true" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The Vehicle class must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="VehicleClass">Vehicle assigned</label>
+                                                <asp:DropDownList CssClass="form-control" ID="VehicleAssigned" readonly="true" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The Vehicle class must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="Destination">Destination</label>
+                                                <asp:TextBox CssClass="form-control" ID="Destination" readonly="true" runat="server" required="true"> </asp:TextBox>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The destination of the trip must be provided</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="EstimatedDistance">Estimated Distance of trip in Kms</label>
+                                                <asp:TextBox CssClass="form-control" ID="EstimatedDistance" readonly="true" runat="server" required="true"> </asp:TextBox>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The estimated distance of the trip must be provided</div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="EstimatedCost">Estimated cost of trip</label>
+                                                <asp:TextBox CssClass="form-control" ID="EstimatedCost" readonly="true" runat="server" required="true"> </asp:TextBox>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The estimated distance of the trip must be provided</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row mb-5">
+                                <div class="col-md-12">
+                                    <div class="col-md-4 mb-4">
+                                        <div>Transport Request Information</div>
+                                        <div class="text-muted small">Shows information for transport request</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <%
+                                            if (Request["status"] == "Unclosed")
+                                            {
+                                            %>
+                                            <div class="text-right">
+                                                <a id="AddLog" class="btn btn-success" href="#" data-toggle="modal" data-target="#AddLogLine" data-title="Create Log" title="Add Log">Add log</a>
+                                            </div>
+                                            <%
+                                            }
+                                            else
+                                            {
+
+                                            %>
+                                            <%--<button id="Print" class="btn btn-primary">Print</button>--%>
+                                            <%
+                                            }
+                                            %>
+                                            <br>
+                                            <div class="table-responsive">
+                                                <asp:PlaceHolder ID="placeholder" runat="server" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer bg-light text-right">
+
+                            <%
+                            if (Request["status"] == "Unclosed")
+                            {
+                            %>
+                            <button id="CloseTrip" class="btn btn-primary">End Trip</button>
+                            <%
+                            }
+                            else
+                            {
+
+                            %>
+                            <%--<button id="Print" class="btn btn-primary">Print</button>--%>
+                            <%
+                            }
+                            %>
+                        </div>
+                    </form>
+
+                    <div class="card-footer small text-muted">Updated today at  <%: DateTime.Now.ToShortTimeString() %></div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © <%: DateTime.Now.Year.ToString() %>  Brightsoft Technologies Limited</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <div class="modal fade" id="AddLogLine">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add log</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form novalidate="" action="#" method="POST" id="CreateLogLine" autocomplete="off">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="DestinationRoute">Destination</label>
+                                    <input type="text" class="form-control" id="DestinationRoute" required>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The description must be supplied</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="StartTime">Trip start time</label>
+                                    <input type="text" class="form-control" id="StartTime" required>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The description must be supplied</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="StartTimeOdometerReading">Odometer Reading</label>
+                                    <input type="text" class="form-control" id="StartTimeOdometerReading" required>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The odometer reading must be supplied</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="EndTime">Trip end time</label>
+                                    <input type="text" class="form-control" id="EndTime" required>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The trip end time must be supplied</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="EndTimeOdometerReading">Odometer Reading</label>
+                                    <input type="text" class="form-control" id="EndTimeOdometerReading" required>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The odometer reading must be supplied</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="EndTimeOdometerReading">Notes</label>
+                                    <textarea class="form-control" Rows="3" id="Notes"></textarea>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The odometer reading must be supplied</div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="LineNo" name="LineNo" value="">
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
+                    <div id="DivSubmit">
+                        <button class="btn btn-primary" type="button" id="SaveLog">Save</button>
+                    </div>
+                    <div id="DivUpdate">
+                        <button class="btn btn-success" type="button" id="UpdateLog">Update</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+
+<!-- Bootstrap core CSS-->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template-->
+<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+<!-- Page level plugin CSS-->
+<link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="css/sb-admin.css" rel="stylesheet">
+<link href="css/select2.min.css" rel="stylesheet" />
+<!--jQUERY date picker--->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
+
+
+<script type="text/javascript">
+    var jQuery_1_12_4 = $.noConflict( true );
+</script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="js/sb-admin.min.js"></script>
+<!-- Page level plugin JavaScript-->
+<script src="vendor/datatables/jquery.dataTables.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+<script src="js/bootbox.all.min.js"></script>
+<script src="js/bootboxError.js"></script>
+<!-- Demo scripts for this page-->
+<script src="js/jquery.toast.js"></script>
+<script src="js/jquery.alphanum.js"></script>
+<script type="text/javascript">
+
+    $( ".MultiLineLimit" ).on( 'change keydown paste input', function () {
+        this.value = ( this.value.length <= 150 ? this.value : this.value.substring( 0, 150 ) );
+    } );
+    var text_max = 150;
+    $( '#count_message' ).html( text_max + ' remaining' );
+
+    $( '#Purpose' ).keyup( function () {
+        var text_length = $( '#Purpose' ).val().length;
+        var text_remaining = text_max - text_length;
+
+        $( '#count_message' ).html( text_remaining + ' remaining' );
+    } );
+
+    var jQuery_3_3_1 = $.noConflict( true );
+
+    jQuery_3_3_1( '#EstimatedDistance' ).numeric( {
+        maxPreDecimalPlaces: 10,
+        maxDecimalPlaces: 2
+    } );
+    jQuery_3_3_1( '#StartTimeOdometerReading' ).numeric( {
+        maxPreDecimalPlaces: 10,
+        maxDecimalPlaces: 2
+    } );
+    jQuery_3_3_1( '#EndTimeOdometerReading' ).numeric( {
+        maxPreDecimalPlaces: 10,
+        maxDecimalPlaces: 2
+    } );
+
+    jQuery_3_3_1( '#SaveLog' ).on( 'click', function ( event ) {
+        event.preventDefault();
+
+        var title = 'Saving vehicle log';
+        var icon = 'loading';
+        var duration = 50000 * 1;
+
+        //validate
+        var form = $( "#CreateLogLine" )
+
+        if ( form[ 0 ].checkValidity() === false ) {
+            event.preventDefault()
+            event.stopPropagation()
+            form.addClass( 'was-validated' );
+        } else if ( form[ 0 ].checkValidity() === true ) {
+            // Perform ajax submit here...
+            jQuery_3_3_1.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+
+            jQuery.ajax( {
+                url: 'FillVehicleLogSheet.aspx/Save',
+                type: "POST",
+                data: '{param1:"' + $( '#DestinationRoute' ).val() + '", param2:"' + $( '#StartTime' ).val() + '", param3:"' + $( '#StartTimeOdometerReading' ).val() + '", param4:"' + $( '#EndTime' ).val() + '", param5:"' + $( '#EndTimeOdometerReading' ).val() + '", param6:"' + $( '#Notes' ).val() + '" }',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function ( response ) {
+
+                    if ( response != null && response.d != null ) {
+                        var data = response.d;
+                        // alert(typeof (data)); //it comes out to be string
+                        //we need to parse it to JSON
+                        data = $.parseJSON( data );
+
+                        jQuery_3_3_1.Toast.hideToast();
+
+                        if ( data.Status != "000" ) {
+
+                            bootbox.error( { title: "Submit error", message: data.Message } );
+                        } else {
+
+                            bootbox.alert( {
+                                message: data.Message,
+                                callback: function () {
+                                    window.location.reload();
+                                }
+                            } )
+                        }
+                    }
+                },
+                error: function () {
+                    // bootbox.error({ title: "System error", message: "An error occured." });
+                    jQuery_3_3_1.Toast.hideToast();
+
+                    bootbox.alert( {
+                        message: "The vehicle was successfully assigned",
+                        callback: function () {
+                            window.setTimeout( function () {
+                                //alert('redirecting');
+                                window.location.reload();
+                            }, 1000 );//
+                        }
+                    } )
+                },
+                timeout: 10000
+            } );
+        }
+    } );
+
+    jQuery_3_3_1( "#dataTable" ).on( "click", ".delete_line", function ( e ) {
+        e.preventDefault();
+
+        var pid = $( this ).attr( 'data-id' );
+
+        bootbox.confirm( {
+            title: "<i class='fa fa-trash-alt'></i> Delete log sheet line?",
+            message: "Do you wish to delete this record?",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function ( result ) {
+
+                if ( result == true ) {
+
+                    //showToast('Deleting advance request line');
+                    // showToast(pid);
+
+                    jQuery.ajax( {
+                        url: 'FillVehicleLogSheet.aspx/DeleteLine',
+                        type: "POST",
+                        data: '{param1:"' + pid + '"}',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function ( response ) {
+
+                            if ( response != null && response.d != null ) {
+                                var data = response.d;
+                                // alert(typeof (data)); //it comes out to be string
+                                //we need to parse it to JSON
+                                data = $.parseJSON( data );
+
+                                // hideLoading();
+
+                                bootbox.alert( {
+                                    message: data.Message,
+                                    callback: function () {
+                                        location.reload();
+                                    }
+                                } )
+                            }
+                        },
+                        error: function () {
+                            bootbox.error( { title: "System error", message: "An error occured." } );
+                        }
+                    } );
+                }
+            }
+        } );
+    } );
+
+    jQuery_3_3_1( "#dataTable" ).on( "click", ".EditLine", function ( e ) {
+        e.preventDefault();
+
+        $( '#DivUpdate' ).show();
+        $( '#DivSubmit' ).hide();
+
+        var pid = $( this ).attr( 'data-id' );
+
+        $( "#LineNo" ).val( pid );
+
+        $.ajax( {
+            url: 'FillVehicleLogSheet.aspx/GetRequestLineDetails',
+            type: "POST",
+            data: '{param1:"' + pid + '" }',
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function ( response ) {
+
+                if ( response != null && response.d != null ) {
+                    var data = response.d;
+                    // alert(typeof (data)); //it comes out to be string
+                    //we need to parse it to JSON
+                    data = $.parseJSON( data );
+                    $( "#DestinationRoute" ).val( data.DestinationRoute );
+                    $( '#StartTime' ).val( data.TripStartDateTime );
+                    $( '#StartTimeOdometerReading' ).val( data.StartTimeOdometerReading );
+                    $( '#EndTimeOdometerReading' ).val( data.EndTimeOdometerReading );
+                    $( '#EndTime' ).val( data.TripEndDateTime );
+                    $( '#Notes' ).val( data.Notes );
+                    jQuery_3_3_1( '#AddLogLine' ).modal( 'show' );
+                }
+            }
+        } );
+    } );
+    jQuery_3_3_1( '#UpdateLog' ).on( 'click', function ( event ) {
+        event.preventDefault();
+
+        var title = 'Updating log';
+        var icon = 'loading';
+        var duration = 50000 * 1;
+
+        //validate
+        var form = $( "#CreateLogLine" )
+
+        if ( form[ 0 ].checkValidity() === false ) {
+            event.preventDefault()
+            event.stopPropagation()
+            form.addClass( 'was-validated' );
+        } else if ( form[ 0 ].checkValidity() === true ) {
+            // Perform ajax submit here...
+            jQuery_3_3_1.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+
+            jQuery.ajax( {
+                url: 'FillVehicleLogSheet.aspx/UpdateLog',
+                type: "POST",
+                data: '{param1:"' + $( '#DestinationRoute' ).val() + '", param2:"' + $( '#StartTime' ).val() + '", param3:"' + $( '#StartTimeOdometerReading' ).val() + '", param4:"' + $( '#EndTime' ).val() + '", param5:"' + $( '#EndTimeOdometerReading' ).val() + '", param6:"' + $( '#Notes' ).val() + '",  param7:"' + $( '#LineNo' ).val() + '" }',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function ( response ) {
+
+                    if ( response != null && response.d != null ) {
+                        var data = response.d;
+                        // alert(typeof (data)); //it comes out to be string
+                        //we need to parse it to JSON
+                        data = $.parseJSON( data );
+
+                        jQuery_3_3_1.Toast.hideToast();
+
+                        bootbox.alert( {
+                            message: data.Message,
+                            callback: function () {
+                                location.reload();
+                            }
+                        } )
+                    }
+                }
+            } );
+        }
+    } );
+
+    jQuery_3_3_1( "#CloseTrip" ).on( "click", function ( e ) {
+        e.preventDefault();
+
+        bootbox.confirm( {
+            title: "<i class='fa fa-paper-plane'></i> End Trip?",
+            message: "Do you wish to end this trip?",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function ( result ) {
+
+                if ( result == true ) {
+
+                    jQuery.ajax( {
+                        url: 'FillVehicleLogSheet.aspx/CloseTrip',
+                        type: "POST",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function ( response ) {
+
+                            if ( response != null && response.d != null ) {
+                                var data = response.d;
+                                // alert(typeof (data)); //it comes out to be string
+                                //we need to parse it to JSON
+                                data = $.parseJSON( data );
+
+                                bootbox.alert( {
+                                    message: data.Message,
+                                    callback: function () {
+                                        window.location.href = 'TransportRequests.aspx?status=Unclosed';
+                                    }
+                                } )
+
+                            }
+                        },
+                        error: function () {
+                            hideLoading();
+                        },
+                        timeout: 10000
+                    } );
+
+                }
+            }
+        } );
+    } );
+
+</script>
+
+<script src="js/jquery.toast.js"></script>
+<!-- JQUERY DATEPICKER-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+
+<script src="js/select2.min.js"></script>
+<script>
+    $( document ).ready( function () {
+        $( DimCode1 ).prop( "disabled", true );
+        $( DimCode2 ).prop( "disabled", true );
+        $( DimCode3 ).prop( "disabled", true );
+        $( DimCode4 ).prop( "disabled", true );
+        $( DimCode6 ).prop( "disabled", true );
+        $( VehicleClass ).prop( "disabled", true );
+        $( VehicleAssigned ).prop( "disabled", true );
+        $( "#DivUpdate" ).hide();
+
+
+        $( '#DimCode1' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#DimCode2' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#DimCode3' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#DimCode4' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#DimCode6' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#VehicleClass' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#VehicleAssigned' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        //
+        //$("#StartTimeOdometerReading").keyup(function () {
+        //    if ($("#NoOfUnits").val().length == 0) {
+        //        $("#Amount").val('0');
+        //        return;
+        //    }
+        //    else {
+        //        if ($("#UnitCost").val().length == 0) {
+        //            return;
+        //        } else {
+        //            var one = parseInt($("#NoOfUnits").val(), 10);
+        //            var two = parseInt($("#UnitCost").val(), 10);
+        //            var three = parseInt($("#ExchangeRate").val(), 10);
+        //            // $(".total").text();
+        //            $("#Amount").val(one * two * three);
+        //        }
+        //    }
+
+        //});
+        $( "#EndTimeOdometerReading" ).blur( function () {
+            if ( $( "#StartTimeOdometerReading" ).val().length == 0 ) {
+                return;
+            }
+            else {
+                if ( $( "#EndTimeOdometerReading" ).val().length == 0 ) {
+                    return;
+                } else {
+                    var StartTimeOdometerReading = parseInt( $( "#StartTimeOdometerReading" ).val(), 10 );
+                    var EndTimeOdometerReading = parseInt( $( "#EndTimeOdometerReading" ).val(), 10 );
+
+                    if ( StartTimeOdometerReading > EndTimeOdometerReading ) {
+                        $( "#EndTimeOdometerReading" ).val( '' );
+                        return;
+                    }
+                }
+            }
+
+        } );
+
+        //datepickers
+        $( "#StartTime" ).datetimepicker( {
+            dateFormat: 'mm/dd/yy',
+            maxDate: 'today',
+
+
+            onSelect: function ( date ) {
+
+                var selectedDate = new Date( date );
+
+                //var msecsInADay = 86400000;
+                var endTime = selectedDate.getHours() + ":" + selectedDate.getMinutes();
+                $( "#EndTime" ).datepicker( "option", "minTime", endTime );
+
+                //Set Minimum Date of EndDatePicker After Selected Date of StartDatePicker
+                $( "#EndTime" ).datepicker( "option", "minDate", date );
+                $( "#EndTime" ).datepicker( "option", "maxDate", '+2y' );
+
+            }
+
+        } ).val();
+
+        $( "#EndTime" ).datetimepicker( { dateFormat: 'mm/dd/yy', maxDate: 'today' } ).val();
+
+        //Load Transport req
+
+        $.ajax( {
+            url: 'FillVehicleLogSheet.aspx/LoadTransportRequest',
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function ( response ) {
+
+                if ( response != null && response.d != null ) {
+                    var data = response.d;
+
+                    data = $.parseJSON( data );
+
+                    $( '#StartDateTime' ).val( data.RequestStartDateTime );
+                    $( '#EndDateTime' ).val( data.RequestEndDateTime );
+
+                    $( "#DimCode1" ).val( data.GlobalDimension1Code ).change();
+                    $( "#DimCode2" ).val( data.GlobalDimension2Code ).change();
+                    $( "#DimCode3" ).val( data.ShortcutDimension3Code ).change();
+                    $( "#DimCode4" ).val( data.ShortcutDimension4Code ).change();
+                    $( "#DimCode6" ).val( data.ShortcutDimension6Code ).change();
+                    $( "#EstimatedCost" ).val( data.EstimatedTripCost );
+                    $( "#Balance" ).val( data.Balance );
+                    $( "#VehicleClass" ).val( data.VehicleClassAssigned ).change();
+                    $( "#EstimatedDistance" ).val( data.EstimatedDistance );
+                    $( "#Purpose" ).val( data.PurposeOfTrip );
+                    $( "#Destination" ).val( data.Destination );
+
+                    $( "#VehicleAssigned" ).val( data.VehicleAssigned ).change();
+                    $( "#VehicleClass" ).val( data.VehicleClassRequested ).change();
+
+                }
+            }
+        } );
+
+    } );
+</script>
+
+

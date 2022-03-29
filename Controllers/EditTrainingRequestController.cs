@@ -14,6 +14,7 @@ namespace LMS.Controllers
     public class EditTrainingRequestController : Controller
     {
         static string TrainingNo = null;
+        EditTrainingRequest request = new EditTrainingRequest();
         // GET: EditTrainingRequest
         public ActionResult Index()
         {
@@ -49,12 +50,6 @@ namespace LMS.Controllers
 
         private void LoadApplicableTo()
         {
-            //ApplicableTo.Items.Clear();
-            //ApplicableTo.Items.Insert(0, new ListItem("Position", "POSITION"));
-            //ApplicableTo.Items.Insert(0, new ListItem("Org. Unit", "ORGUNIT"));
-            //ApplicableTo.Items.Insert(0, new ListItem("Individual Employee", "INDIVIDUALEMPLOYEE"));
-            //ApplicableTo.Items.Insert(0, new ListItem("All Employees", "ALLEMPLOYEES"));
-            //ApplicableTo.Items.Insert(0, new ListItem(" ", ""));
             List<ApplicableTo> applicables = new List<ApplicableTo>()
             {
                new ApplicableTo(){Id="Position",Name="POSITION"},
@@ -68,12 +63,6 @@ namespace LMS.Controllers
 
         private void LoadRequirementOfTraining()
         {
-            //RequirementOfTraining.Items.Clear();
-            //RequirementOfTraining.Items.Insert(0, new ListItem("Identification on individual need", "INDIVIDUALNEED"));
-            //RequirementOfTraining.Items.Insert(0, new ListItem("Identification on performance need", "PERFORMANCENEED"));
-            //RequirementOfTraining.Items.Insert(0, new ListItem("Professional requirement", "PROFESSIONALREQUIREMENT"));
-            //RequirementOfTraining.Items.Insert(0, new ListItem("Organizational/Departmental Needs", "ORGANIZATIONALDEPARTMENTALNEEDS"));
-            //RequirementOfTraining.Items.Insert(0, new ListItem(" ", ""));
             List<RequirementOfTraining> requirementOfs = new List<RequirementOfTraining>()
             {
                new RequirementOfTraining(){Id="Identification on individual need",Name="POSITION"},
@@ -139,32 +128,32 @@ namespace LMS.Controllers
             }
             //display
 
-            TrainingDescription = _TrainingDescription;
-            TrainingStartDateTime = _TrainingStartDateTime;
-            TrainingEndDateTime  = _TrainingEndDateTime;
-            Venue = _Venue;
-            Room  = _Room;
-            TrainingInstitution  = _TrainingInstitution;
-            TrainingCost  = _TrainingCost;
-            ApplicableTo.SelectedValue = _ApplicableTo;
-            CourseDescription = _CourseDescription;
+            request.TrainingDescription = _TrainingDescription;
+            request.TrainingStartDateTime = _TrainingStartDateTime;
+            request.TrainingEndDateTime  = _TrainingEndDateTime;
+            request.Venue = _Venue;
+            request.Room  = _Room;
+            request.TrainingInstitution  = _TrainingInstitution;
+            request.TrainingCost  = _TrainingCost;
+            request.ApplicableTo = _ApplicableTo;
+            request.CourseDescription = _CourseDescription;
 
-            if (_RequirementOfTraining == "0")
-            {
-                RequirementOfTraining.Items.FindByValue("ORGANIZATIONALDEPARTMENTALNEEDS").Selected = true;
-            }
-            else if (_RequirementOfTraining == "1")
-            {
-                RequirementOfTraining.Items.FindByValue("PROFESSIONALREQUIREMENT").Selected = true;
-            }
-            else if (_RequirementOfTraining == "2")
-            {
-                RequirementOfTraining.Items.FindByValue("PERFORMANCENEED").Selected = true;
-            }
-            else if (_RequirementOfTraining == "3")
-            {
-                RequirementOfTraining.Items.FindByValue("INDIVIDUALNEED").Selected = true;
-            }
+            //if (_RequirementOfTraining == "0")
+            //{
+            //    RequirementOfTraining.Items.FindByValue("ORGANIZATIONALDEPARTMENTALNEEDS").Selected = true;
+            //}
+            //else if (_RequirementOfTraining == "1")
+            //{
+            //    RequirementOfTraining.Items.FindByValue("PROFESSIONALREQUIREMENT").Selected = true;
+            //}
+            //else if (_RequirementOfTraining == "2")
+            //{
+            //    RequirementOfTraining.Items.FindByValue("PERFORMANCENEED").Selected = true;
+            //}
+            //else if (_RequirementOfTraining == "3")
+            //{
+            //    RequirementOfTraining.Items.FindByValue("INDIVIDUALNEED").Selected = true;
+            //}
         }
         public static string GetTrainingMemberList()
         {

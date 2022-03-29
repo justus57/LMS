@@ -391,6 +391,7 @@
     <Compile Include="Controllers\EditAppraisalController.cs" />
     <Compile Include="Controllers\EditAppraisalSectionController.cs" />
     <Compile Include="Controllers\EditPMLController.cs" />
+    <Compile Include="Controllers\EditTrainingRequestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaveApplicationController.cs" />
     <Compile Include="Controllers\LeaveController.cs" />
@@ -425,6 +426,7 @@
     <Compile Include="Models\EditAppraisal.cs" />
     <Compile Include="Models\EditAppraisalSection.cs" />
     <Compile Include="Models\EditPML.cs" />
+    <Compile Include="Models\EditTrainingRequest.cs" />
     <Compile Include="Models\ForgotPassword.cs" />
     <Compile Include="Models\LeaveApplication.cs" />
     <Compile Include="Models\LeaveDetails.cs" />
@@ -4200,6 +4202,7 @@
     <Content Include="Views\EditAppraisal\EditAppraisal.cshtml" />
     <Content Include="Views\EditAppraisalSection\EditAppraisalSection.cshtml" />
     <Content Include="Views\EditPML\EditPML.cshtml" />
+    <Content Include="Views\EditTrainingRequest\EditTrainingRequest.cshtml" />
     <None Include="Web References\WebRef\HRWebPortal.wsdl" />
     <Content Include="Web References\WebRef\LeaveDetail.datasource">
       <DependentUpon>Reference.map</DependentUpon>

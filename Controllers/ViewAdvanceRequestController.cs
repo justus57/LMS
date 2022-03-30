@@ -1,4 +1,5 @@
 ﻿using LMS.CustomsClasses;
+using LMS.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -18,6 +19,7 @@ namespace LMS.Controllers
         static string folderPath = System.Web.HttpContext.Current.Server.MapPath("~/Uploads/");
         static string AdvanceRequestsHeader = "";
         static string _ShortcutDimCode3 = "";
+        ViewAdvanceRequest ViewAdvance = new ViewAdvanceRequest();
         // GET: ViewAdvanceRequest
         public ActionResult Index()
         {
@@ -86,24 +88,24 @@ namespace LMS.Controllers
             if (System.Web.HttpContext.Current.Session["Company"].ToString() == "KRCS GF Management Unit")
             {
                 //DimCode8Label.Text = "Region to be Paid From";
-                LoadDimCodeValues(DimCode1, GlobalDimCode1);
-                LoadDimCodeValues(DimCode2, GlobalDimCode2);
+                LoadDimCodeValues(ViewAdvance.DimCode1, GlobalDimCode1);
+                LoadDimCodeValues(ViewAdvance.DimCode2, GlobalDimCode2);
                 //LoadDimCodeValues(DimCode3, ShortcutDimCode3);
                 //LoadDimCodeValues(DimCode8, ShortcutDimCode8);
-                DimCode1Label.Text = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
-                DimCode2Label.Text = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
+                ViewAdvance.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
+                ViewAdvance.DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
                 //DimCode3Label.Text = SetFirstLetterToUpper(ShortcutDimCode3.ToLower());
             }
             else
             {
                 //DimCode8Label.Text = SetFirstLetterToUpper(ShortcutDimCode8.ToLower());
-                LoadDimCodeValues(DimCode1, GlobalDimCode1);
-                LoadDimCodeValues(DimCode2, GlobalDimCode2);
-                LoadDimCodeValues(DimCode4, ShortcutDimCode4);
+                LoadDimCodeValues(ViewAdvance.DimCode1, GlobalDimCode1);
+                LoadDimCodeValues(ViewAdvance.DimCode2, GlobalDimCode2);
+                LoadDimCodeValues(ViewAdvance.DimCode4, ShortcutDimCode4);
                 //LoadDimCodeValues(DimCode8, ShortcutDimCode8);
-                DimCode1Label.Text = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
-                DimCode2Label.Text = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
-                DimCode4Label.Text = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
+                ViewAdvance.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
+                ViewAdvance.DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
+                ViewAdvance.DimCode4Label = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
             }
         }
         

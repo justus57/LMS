@@ -6,7 +6,7 @@ using System.Web.UI.WebControls;
 
 namespace LMS.Models
 {
-    public class ViewAdvanceRequest
+    public class ViewAdvanceSurrender
     {
         public string SelectedAdvanceRequest { get; set; }
         public string DateOfRequest { get; set; }
@@ -37,6 +37,10 @@ namespace LMS.Models
         public DropDownList DimCode7 { get; set; }
         public DropDownList DimCode8 { get; set; }
         public string DimCode1Label { get; set; }
-
+    }
+    public class PreferredPaymentMethods
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
     }
 }

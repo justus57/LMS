@@ -3,4 +3,1500 @@
     ViewBag.Title = "ViewAdvanceRequest";
 }
 
+<main id="main" class="main">
 
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <!-- #Include virtual="includes/Sidebar.aspx" -->
+
+
+        <div id="content-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">Advance Requests</li>
+                    <li class="breadcrumb-item">Staff Advance</li>
+                    <li class="breadcrumb-item active">View Staff Advance</li>
+                </ol>
+
+                <!-- DataTables Example -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-wallet"></i>
+                        View Staff Advance
+                    </div>
+                    <form runat="server" novalidate="" action="#" method="POST" id="LeaveApplicationForm" autocomplete="off">
+                        <div class="card-body" id="AdvanceRequestBody">
+                            <div class="row mb-5">
+                                <div class="col-md-4 mb-4">
+                                    <div>Staff Advance <% Response.Write(Portal.classes.AppFunctions.Base64Decode(Request["id"]));%> Information</div>
+                                    <div class="text-muted small">Shows information for advance request</div>
+                                </div>
+                                <div class="col-md-8">
+                                    <fieldset @if (Request["status"] == "Open") { Response.Write("enabled"); } else { Response.Write("disabled"); }>
+
+
+                                        @if ((!String.IsNullOrEmpty(Request["parent"]) && Request["parent"] == "Approver"))
+                                        {
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="Balance">Employee</label>
+                                                        <asp:TextBox CssClass="form-control" ID="Employee" runat="server" required="true" disabled="true"> </asp:TextBox>
+                                                        <div class="valid-feedback">Looks good!</div>
+                                                        <div class="invalid-feedback">The currency must be selected</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        }
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="DateOfRequest">Expected mission start date</label>
+                                                    <asp:TextBox class="form-control" ID="DateOfRequest" runat="server" required="true"></asp:TextBox>
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">The date of request must be selected</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="DateDue">Expected mission end date</label>
+                                                    <asp:TextBox class="form-control" ID="DateDue" runat="server" required="true"></asp:TextBox>
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">The date due must be selected</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <asp:Label ID="DimCode1Label" runat="server" />
+                                                    <asp:DropDownList CssClass="form-control" ID="DimCode1" runat="server" AutoPostBack="false" required="true" Style="width: 100%"></asp:DropDownList>
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">The Dimension Code 1 must be selected</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <asp:Label ID="DimCode2Label" runat="server" />
+                                                    <asp:DropDownList CssClass="form-control" ID="DimCode2" runat="server" AutoPostBack="false" required="true" Style="width: 100%"></asp:DropDownList>
+
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">The Dimension Code 2 must be selected</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <asp:label id="DimCode4Label" runat="server" />
+                                                    <asp:DropDownList CssClass="form-control" ID="DimCode4" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">The Dimension Code 3 must be selected</div>
+                                                </div>
+                                            </div>
+                                            <!--<div class="col-md-6">
+                                                  <div class="form-group">
+                                                       <asp:label id="DimCode8Label" runat="server" />
+                                                      <asp:DropDownList CssClass="form-control" ID ="DimCode8" runat="server" AutoPostBack="false" required ="true" style="width:100%"> </asp:DropDownList>
+
+                                                      <div class="valid-feedback">Looks good!</div>
+                                                      <div class="invalid-feedback">The Dimension Code 8 must be selected</div>
+                                                  </div>
+                                            </div>-->
+                                            <%--GF--%>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="Balance">Balance</label>
+                                                    <asp:TextBox CssClass="form-control" ID="Balance" runat="server" required="true" disabled="false"> </asp:TextBox>
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">The currency must be selected</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Mission Summary (Type activity name and county visited)</label>
+                                                    <asp:TextBox TextMode="multiline" Columns="50" maxlength="150" Rows="3" runat="server" ID="MissionSummary" class="form-control MultiLineLimit" required="true" data-limit=150></asp:TextBox>
+                                                    <p class="pull-right text-muted small" id="count_message"></p>
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">The mission summary must be provided</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="PreferredPaymentMethod">Preferred Payment Method</label>
+                                                    <asp:DropDownList CssClass="form-control" ID="PreferredPaymentMethod" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">The preffered method of payment must be selected</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row mb-5">
+                                <div class="col-md-12">
+                                    <div class="col-md-4 mb-4">
+                                        <div>Staff advance lines</div>
+                                        <div class="text-muted small">Add your staff advance lines here</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            @if (Request["status"] == "Open")
+                                            {
+
+                                                <div class="text-right">
+                                                    <a id="AddAppraisal" class="btn btn-success" href="#" data-toggle="modal" data-target="#AddAdvanceRequestLine" data-title="Add staff advance lines" title="Add staff advance lines">Add staff advance lines</a>
+                                                </div>
+
+                                            }
+                                            <br>
+                                            <div class="table-responsive">
+                                                <asp:PlaceHolder ID="placeholder" runat="server" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+                            <div class="row mb-5">
+                                <div class="col-md-12">
+                                    <div class="col-md-4 mb-4">
+                                        <div>Staff advance attachments</div>
+                                        <div class="text-muted small">Attach ToR(mandatory) and any other staff advance attachment</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            @if (Request["status"] == "Open")
+                                            {
+
+                                                <div class="text-right">
+                                                    <a id="AddAttAppraisal" class="btn btn-success" href="#" data-toggle="modal" data-target="#AddAttachment" data-title="Create new appraisal target" title="Add Attachments">Add Attachments </a>
+                                                </div>
+
+                                            }
+
+
+                                            <br>
+                                            <div class="table-responsive">
+                                                <asp:PlaceHolder ID="placeholder1" runat="server" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer bg-light text-right">
+
+                            @if (Request["status"] == "Open")
+                            {
+
+                                <button id="SubmitAdvance" class="btn btn-primary">Submit</button>
+
+                            }
+                            else if (Request["status"] == "Pending" && (!String.IsNullOrEmpty(Request["parent"]) && Request["parent"] == "Approver")) //&& sent from Approval Entries)
+                            {
+
+                                <button id="Approve" class="btn btn-success">Approve</button>
+                                <button id="Reject" class="btn btn-danger">Reject</button>
+                                <button id="ExitPage" name="ExitPage" class="btn btn-primary">Close</button>
+
+                            }
+                            else
+                            {
+
+
+                                <button id="PrintStaffAdvance" class="btn btn-primary">Print</button>
+
+                            }
+
+                        </div>
+                    </form>
+
+                    <div class="card-footer small text-muted">Updated today at @DateTime.Now.ToShortTimeString() </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © @DateTime.Now.Year.ToString()  Brightsoft Technologies Limited</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <div class="modal fade" id="AddAdvanceRequestLine">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add staff advance Lines</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form novalidate="" action="#" method="POST" id="CreateStaffImprestLines" autocomplete="off">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="Item">Item</label>
+                                    <select class="form-control" id="Item" style="width: 100%" required>
+                                        <option></option>
+                                    </select>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The item must be selected</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="ItemDescription">Description</label>
+                                    <input type="text" class="form-control" id="ItemDescription" required>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The description must be supplied</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="UnitofMeasure">Unit of measure</label>
+                                    <select class="form-control" id="UnitofMeasure" style="width: 100%" required>
+                                        <option></option>
+                                    </select>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The Unit of measure must be supplied</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="UnitCost">Unit cost</label>
+                                    <input type="text" class="form-control" id="UnitCost" required>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The Unit cost must be supplied</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="NoOfUnits">No Of Units</label>
+                                    <input type="text" class="form-control" id="NoOfUnits" required>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The No Of Units must be supplied</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="BudgetLineCode"> Budget line</label>
+                                    <select class="form-control" id="BudgetLineCode" style="width:100%" required>
+                                        <option></option>
+                                    </select>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The budget line must be specified</div>
+                                </div>
+                            </div>
+                        </div>-->
+                        <!--GF-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="BudgetLineCode"> Budget line code </label>
+                                    <input type="text" class="form-control" id="BudgetLineCode" required>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The budget line code must be specified</div>
+                                </div>
+                            </div>
+                        </div> <!--KRCS-->
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="Purpose">Purpose</label>
+                                    <textarea class="form-control" rows="2" id="Purpose" required></textarea>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The purpose must be supplied</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="Amount">Amount</label>
+                                    <input type="text" class="form-control" id="Amount" required>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The Amount must be supplied</div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="AdvanceRequestLineNo" name="AdvanceRequestLineNo" value="">
+                        <input type="hidden" id="ExchangeRate" name="ExchangeRate" value="">
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <div id="DivSubmit">
+                        <button class="btn btn-primary" type="button" id="SubmitStaffImprestLines">Save</button>
+                    </div>
+                    <div id="DivUpdate">
+                        <button class="btn btn-success" type="button" id="UpdateStaffImprestLines">Update</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="AddAttachment">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add staff advance attachment</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form novalidate="" action="#" method="POST" id="AddAttachmentForm" autocomplete="off">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="postedFile" class="form-control-label">Attachment File</label>
+                                    <input type="file" id="postedFile" name="postedFile" class="form-control-file" required accept=".pdf" />
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">A file to upload must be chosen</div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="AttachmentDescription">Attachment description</label>
+                                    <textarea class="form-control" rows="2" id="AttachmentDescription" required></textarea>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The attachment description must be supplied</div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-success" type="button" id="SaveAttachment">Save</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--rejection comment modal-->
+    <div class="modal fade" id="ApplicationRejectionComment" tabindex="-1" role="dialog" aria-labelledby="RejectionCommentTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="RejectionCommentTitle">Reject approval request</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form novalidate="" action="#" method="POST" id="RejectForm" autocomplete="off">
+
+                    <div class="modal-body">
+                        <input class="form-control" id="DocumentNo" disabled required="required" hidden>
+                        <div class="form-group">
+                            <label for="Comment">Rejection Comment</label>
+                            <textarea class="form-control" id="Comment" rows="3" required="required" data-limit=250></textarea>
+                            <p class="pull-right text-muted small" id="count_message2"></p>
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">A rejection comment must be provided</div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" id="SubmitCommentReject" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+
+<!-- Bootstrap core CSS-->
+<link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template-->
+<link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+<!-- Page level plugin CSS-->
+<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="~/Assest/css/sb-admin.css" rel="stylesheet">
+<link href="~/Assest/css/select2.min.css" rel="stylesheet" />
+<!--jQUERY date picker--->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
+
+<script type="text/javascript">
+    var jQuery_1_12_4 = $.noConflict( true );
+</script>
+<script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="~/Assest/js/sb-admin.min.js"></script>
+<!-- Page level plugin JavaScript-->
+<script src="~/Assest/vendor/datatables/jquery.dataTables.js"></script>
+<script src="~/Assest/vendor/datatables/dataTables.bootstrap4.js"></script>
+<script src="~/Assest/js/bootbox.all.min.js"></script>
+<script src="~/Assest/js/bootboxError.js"></script>
+<!-- Demo scripts for this page-->
+<script src="~/Assest/js/jquery.toast.js"></script>
+<script src="~/Assest/js/jquery.alphanum.js"></script>
+<script type="text/javascript">
+    $( ".MultiLineLimit" ).on( 'change keydown paste input', function () {
+        this.value = ( this.value.length <= 50 ? this.value : this.value.substring( 0, 50 ) );
+    } );
+    var text_max = 50;
+    $( '#count_message' ).html( text_max + ' remaining' );
+
+    $( '#MissionSummary' ).keyup( function () {
+        var text_length = $( '#MissionSummary' ).val().length;
+        var text_remaining = text_max - text_length;
+
+        $( '#count_message' ).html( text_remaining + ' remaining' );
+    } );
+    //rejection comments
+    $( 'textarea' ).on( "propertychange keyup input paste",
+
+        function () {
+            var limit = $( this ).data( "limit" );
+            var remainingChars = limit - $( this ).val().length;
+            if ( remainingChars <= 0 ) {
+                $( this ).val( $( this ).val().substring( 0, limit ) );
+            }
+            $( this ).next( 'p' ).text( remainingChars <= 0 ? 0 + ' remaining' : remainingChars + ' remaining' );
+        } );
+
+    var jQuery_3_3_1 = $.noConflict( true );
+
+    jQuery_3_3_1( '#Amount' ).numeric( {
+        maxPreDecimalPlaces: 10,
+        maxDecimalPlaces: 2
+    } );
+    jQuery_3_3_1( '#NoOfUnits' ).numeric( {
+        maxPreDecimalPlaces: 10,
+        maxDecimalPlaces: 2
+    } );
+    jQuery_3_3_1( '#UnitCost' ).numeric( {
+        maxPreDecimalPlaces: 10,
+        maxDecimalPlaces: 2
+    } );
+    //jQuery_3_3_1.ajax({
+    //        url: 'CreateAdvanceRequest.aspx/LoadInterventions',
+    //        type: "POST",
+    //        dataType: "json",
+    //        contentType: "application/json; charset=utf-8",
+    //        success: function (response) {
+
+    //        if (response != null && response.d != null) {
+    //            var data = response.d;
+    //            // alert(typeof (data)); //it comes out to be string
+    //            //we need to parse it to JSON
+    //            data = $.parseJSON(data);
+    //            $("#BudgetLineCode").append($('<option></option>').attr("value", "OTHERS").text("Others"));
+    //            $.each(data, function (i, item) {
+    //                $("#BudgetLineCode").append($('<option></option>').attr("value", item.Code).text(item.Description));
+    //            });
+    //        }
+    //        }
+    //}); //GF
+    jQuery_3_3_1.ajax( {
+        url: 'ViewAdvanceRequest.aspx/LoadAdvanceTypes',
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function ( response ) {
+
+            if ( response != null && response.d != null ) {
+                var data = response.d;
+                // alert(typeof (data)); //it comes out to be string
+                //we need to parse it to JSON
+                data = $.parseJSON( data );
+
+                $.each( data, function ( i, item ) {
+                    $( "#Item" ).append( $( '<option></option>' ).attr( "value", item.Code ).text( item.Description ) );
+                } );
+            }
+        }
+    } );
+
+    jQuery_3_3_1.ajax( {
+        url: 'ViewAdvanceRequest.aspx/LoadUnitsOfMeasure',
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function ( response ) {
+
+            if ( response != null && response.d != null ) {
+                var data = response.d;
+                // alert(typeof (data)); //it comes out to be string
+                //we need to parse it to JSON
+                data = $.parseJSON( data );
+
+                $.each( data, function ( i, item ) {
+                    $( "#UnitofMeasure" ).append( $( '<option></option>' ).attr( "value", item.Code ).text( item.Description ) );
+                } );
+            }
+        }
+    } );
+
+    jQuery_3_3_1.ajax( {
+        url: 'ViewAdvanceRequest.aspx/LoadAdvanceRequest',
+        type: "POST",
+        //data: '{param1:"' + pid + '" }',
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function ( response ) {
+
+            if ( response != null && response.d != null ) {
+                var data = response.d;
+                // alert(typeof (data)); //it comes out to be string
+                //we need to parse it to JSON
+                data = $.parseJSON( data );
+                $( '#DateDue' ).val( data.DateDue );
+                $( '#DateOfRequest' ).val( data.DateOfRequest );
+                // alert(data.PerformanceMeasurementType);
+                $( '#Employee' ).val( data.Requester );
+                $( "#DimCode1" ).val( data.GlobalDimCode1 ).change();
+                $( "#DimCode2" ).val( data.GlobalDimCode2 ).change();
+                $( "#DimCode4" ).val( data.ShortcutDimCode4 ).change();
+                $( "#DimCode8" ).val( data.ShortcutDimCode8 ).change();
+                $( "#Balance" ).val( data.Balance );
+                $( "#PreferredPaymentMethod" ).val( data.PreferredPaymentMethod ).change();
+                $( "#MissionSummary" ).val( data.MissionSummary );
+                //var company = data.RequestToCompany;
+                //$("#RequestToCompany").select2("val", $("#RequestToCompany option:contains('" + company + "')").val());
+            }
+        }
+    } );
+    jQuery_3_3_1( "#PrintStaffAdvance" ).on( "click", function ( e ) {
+        e.preventDefault();
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams( queryString );
+        const ApprovalEntryNo = urlParams.get( 'id' )
+
+        jQuery.ajax( {
+            url: 'ViewAdvanceRequest.aspx/PrintRequest',
+            type: "POST",
+            data: '{param1:"' + ApprovalEntryNo + '"}',
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function ( response ) {
+
+                if ( response != null && response.d != null ) {
+                    var data = response.d;
+                    // alert(typeof (data)); //it comes out to be string
+                    //we need to parse it to JSON
+                    data = $.parseJSON( data );
+
+                    bootbox.confirm( {
+                        title: "<i class='fa fa-print'></i> Print?",
+                        message: "Do you wish to print this Staff Advance?",
+                        buttons: {
+                            confirm: {
+                                label: 'Yes',
+                                className: 'btn-success'
+                            },
+                            cancel: {
+                                label: 'No',
+                                className: 'btn-danger'
+                            }
+                        },
+                        callback: function ( result ) {
+
+                            if ( result == true ) {
+
+                                window.location.href = "uploads/" + data.Status + ".pdf";
+
+                            }
+                        }
+                    } );
+
+                }
+            },
+            error: function () {
+                hideLoading();
+            },
+            timeout: 10000
+        } );
+    } );
+    jQuery_3_3_1( '#ExitPage' ).on( 'click', function ( event ) {
+        event.preventDefault();
+        //return to previous page
+        window.history.back();
+    } );
+    jQuery_3_3_1( '#Approve' ).on( 'click', function ( event ) {
+        event.preventDefault();
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams( queryString );
+        const ApprovalEntryNo = urlParams.get( 'ApprovalEntryNo' )
+
+        bootbox.confirm( {
+            title: "<i class='fa fa-check'></i> Approve?",
+            message: "Do you wish to approve this approval request?",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function ( result ) {
+
+                if ( result == true ) {
+
+                    jQuery.ajax( {
+                        url: 'ViewAdvanceRequest.aspx/ApproveStaffAdvance',
+                        type: "POST",
+                        data: '{param1:"' + ApprovalEntryNo + '"}',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function ( response ) {
+
+                            if ( response != null && response.d != null ) {
+                                var data = response.d;
+                                // alert(typeof (data)); //it comes out to be string
+                                //we need to parse it to JSON
+
+                                data = $.parseJSON( data );
+
+                                if ( data.Status == "000" ) {
+                                    bootbox.alert( {
+                                        message: data.Message,
+                                        callback: function () {
+                                            window.location.href = 'ApprovalEntries.aspx?status=Pending&parent=AdvanceRequests';
+                                        }
+                                    } )
+                                } else {
+                                    //error dialog
+                                    bootbox.error( { title: "Authorization error", message: data.Message } );
+                                }
+                            }
+                        },
+                        error: function () {
+                            bootbox.error( { title: "System error", message: "An error occured." } );
+                        }
+                    } );
+                }
+            }
+        } );
+    } );
+    jQuery_3_3_1( '#Reject' ).on( 'click', function ( event ) {
+        event.preventDefault();
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams( queryString );
+        const ApprovalEntryNo = urlParams.get( 'ApprovalEntryNo' )
+
+        bootbox.confirm( {
+            title: "<i class='fa fa-times'></i> Reject application?",
+            message: "Do you wish to reject this application?",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function ( result ) {
+
+                if ( result == true ) {
+
+                    //prompt for comment
+
+                    jQuery_3_3_1( '#ApplicationRejectionComment' ).modal( 'show' );
+
+                    $( "#ApplicationRejectionComment #DocumentNo" ).val( ApprovalEntryNo );
+                }
+            }
+        } );
+    } );
+    jQuery_3_3_1( '#SubmitCommentReject' ).click( function ( e ) {
+
+        e.preventDefault();
+        //validate
+
+        var form = $( "#RejectForm" )
+        if ( form[ 0 ].checkValidity() === false ) {
+            event.preventDefault()
+            event.stopPropagation()
+            form.addClass( 'was-validated' );
+        } else if ( form[ 0 ].checkValidity() === true ) {
+            //showToast('Rejecting application');
+
+            jQuery.ajax( {
+                url: 'ViewAdvanceRequest.aspx/RejectApplication',
+                type: "POST",
+                data: '{param1:"' + $( '#DocumentNo' ).val() + '", param2:"' + $( '#Comment' ).val() + '"}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function ( response ) {
+
+                    if ( response != null && response.d != null ) {
+                        var data = response.d;
+                        // alert(typeof (data)); //it comes out to be string
+                        //we need to parse it to JSON
+                        data = $.parseJSON( data );
+
+                        //hideLoading();
+
+                        bootbox.alert( {
+                            message: data.Message,
+                            callback: function () {
+                                window.location.href = 'ApprovalEntries.aspx?status=Pending&parent=AdvanceRequests';
+                            }
+                        } )
+                    }
+                },
+                error: function () {
+                    bootbox.error( { title: "System error", message: "An error occured." } );
+                }
+            } );
+        }
+    } );
+    jQuery_3_3_1( "#dataTable" ).on( "click", ".EditAdvanceReqLine", function ( e ) {
+        e.preventDefault();
+
+        $( '#DivUpdate' ).show();
+        $( '#DivSubmit' ).hide();
+
+        var pid = $( this ).attr( 'data-id' );
+
+        $( "#AdvanceRequestLineNo" ).val( pid );
+
+        $.ajax( {
+            url: 'ViewAdvanceRequest.aspx/GetRequestLineDetails',
+            type: "POST",
+            data: '{param1:"' + pid + '" }',
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function ( response ) {
+
+                if ( response != null && response.d != null ) {
+                    var data = response.d;
+                    // alert(typeof (data)); //it comes out to be string
+                    //we need to parse it to JSON
+                    data = $.parseJSON( data );
+
+                    //console.log(data.Purpose);
+                    //$('#QuestionDescription').val(data.Description);
+                    $( "#Item" ).val( data.Item ).change();
+                    $( '#ItemDescription' ).val( data.ItemDescription );
+                    $( '#Purpose' ).val( data.Purpose );
+                    $( '#UnitofMeasure' ).val( data.UnitOfMeasure );
+                    $( '#UnitCost' ).val( data.UnitCost );
+                    $( '#NoOfUnits' ).val( data.NoOfUnits );
+                    $( '#Amount' ).val( data.AdvancedAmountLCY );
+                    $( '#BudgetLineCode' ).val( data.ShortcutDimCode3 ); //KRCS
+                    //$('#BudgetLineCode').val(data.ShortcutDimCode5).change(); //GF
+                    jQuery_3_3_1( '#AddAdvanceRequestLine' ).modal( 'show' );
+                }
+            }
+        } );
+    } );
+    jQuery_3_3_1( "#dataTable" ).on( "click", ".delete_advanceRequestLines", function ( e ) {
+        e.preventDefault();
+
+        var pid = $( this ).attr( 'data-id' );
+
+        bootbox.confirm( {
+            title: "<i class='fa fa-trash-alt'></i> Delete advance request line?",
+            message: "Do you wish to delete this record?",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function ( result ) {
+
+                if ( result == true ) {
+
+                    //showToast('Deleting advance request line');
+                    // showToast(pid);
+
+                    jQuery.ajax( {
+                        url: 'ViewAdvanceRequest.aspx/DeleteAdvanceRequestLines',
+                        type: "POST",
+                        data: '{param1:"' + pid + '"}',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function ( response ) {
+
+                            if ( response != null && response.d != null ) {
+                                var data = response.d;
+                                // alert(typeof (data)); //it comes out to be string
+                                //we need to parse it to JSON
+                                data = $.parseJSON( data );
+
+                                // hideLoading();
+
+                                bootbox.alert( {
+                                    message: data.Message,
+                                    callback: function () {
+                                        location.reload();
+                                    }
+                                } )
+                            }
+                        },
+                        error: function () {
+                            bootbox.error( { title: "System error", message: "An error occured." } );
+                        }
+                    } );
+                }
+            }
+        } );
+    } );
+    jQuery_3_3_1( "#dataTableAttachment" ).on( "click", ".delete_advanceRequestAttachment", function ( e ) {
+        e.preventDefault();
+
+        var pid = $( this ).attr( 'data-id' );
+
+        bootbox.confirm( {
+            title: "<i class='fa fa-trash-alt'></i> Delete attachment?",
+            message: "Do you wish to delete this record?",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function ( result ) {
+
+                if ( result == true ) {
+
+                    jQuery.ajax( {
+                        url: 'ViewAdvanceRequest.aspx/DeleteAdvanceRequestAttachment',
+                        type: "POST",
+                        data: '{param1:"' + pid + '"}',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function ( response ) {
+
+                            if ( response != null && response.d != null ) {
+                                var data = response.d;
+                                // alert(typeof (data)); //it comes out to be string
+                                //we need to parse it to JSON
+                                data = $.parseJSON( data );
+
+                                //hideLoading();
+
+                                bootbox.alert( {
+                                    message: data.Message,
+                                    callback: function () {
+                                        location.reload();
+                                    }
+                                } )
+                            }
+                        },
+                        error: function () {
+                            bootbox.error( { title: "System error", message: "An error occured." } );
+                        }
+                    } );
+                }
+            }
+        } );
+    } );
+
+    jQuery_3_3_1( "#dataTableAttachment" ).on( "click", ".downloadfile", function ( e ) {
+        e.preventDefault();
+
+        var pid = $( this ).attr( 'data-id' );
+        window.location.href = "uploads/" + pid + "";
+
+    } );
+    jQuery_3_3_1( '#SaveAttachment' ).on( 'click', function ( event ) {
+        event.preventDefault();
+
+        var title = 'Uploading Attachment';
+        var icon = 'loading';
+        var duration = 50000 * 1;
+
+        //validate
+        var form = $( "#AddAttachmentForm" )
+
+        if ( form[ 0 ].checkValidity() === false ) {
+            event.preventDefault()
+            event.stopPropagation()
+            form.addClass( 'was-validated' );
+        } else if ( form[ 0 ].checkValidity() === true ) {
+            // Perform ajax submit here...
+            jQuery_3_3_1.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+
+            $.ajax( {
+                url: 'FileUploadHandler.ashx',
+                type: 'POST',
+                data: new FormData( $( '#AddAttachmentForm' )[ 0 ] ),
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function ( file ) {
+
+                    //alert(file.name);
+
+                    jQuery.ajax( {
+                        url: 'ViewAdvanceRequest.aspx/SaveAttachment',
+                        type: "POST",
+                        data: '{ param1:"' + file.name + '", param2:"' + $( '#AttachmentDescription' ).val() + '"  }',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function ( response ) {
+
+                            if ( response != null && response.d != null ) {
+                                var data = response.d;
+                                // alert(typeof (data)); //it comes out to be string
+                                //we need to parse it to JSON
+                                data = $.parseJSON( data );
+
+                                jQuery_3_3_1.Toast.hideToast();
+
+                                bootbox.alert( {
+                                    message: data.Message,
+                                    callback: function () {
+                                        location.reload();
+                                    }
+                                } )
+                            }
+                        }
+                    } );
+                },
+                xhr: function () {
+                    var fileXhr = $.ajaxSettings.xhr();
+                    if ( fileXhr.upload ) {
+                        $( "progress" ).show();
+                        fileXhr.upload.addEventListener( "progress", function ( e ) {
+                            if ( e.lengthComputable ) {
+                                $( "#fileProgress" ).attr( {
+                                    value: e.loaded,
+                                    max: e.total
+                                } );
+                            }
+                        }, false );
+                    }
+                    return fileXhr;
+                }
+            } );
+        }
+    } );
+    jQuery_3_3_1( '#SubmitStaffImprestLines' ).on( 'click', function ( event ) {
+        event.preventDefault();
+
+        var title = 'Submitting Advance Request';
+        var icon = 'loading';
+        var duration = 50000 * 1;
+
+        //validate
+        var form = $( "#CreateStaffImprestLines" )
+
+        if ( form[ 0 ].checkValidity() === false ) {
+            event.preventDefault()
+            event.stopPropagation()
+            form.addClass( 'was-validated' );
+        } else if ( form[ 0 ].checkValidity() === true ) {
+            // Perform ajax submit here...
+            jQuery_3_3_1.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+
+            jQuery.ajax( {
+                url: 'ViewAdvanceRequest.aspx/CreateStaffImprestLines',
+                type: "POST",
+                data: '{param1:"' + $( '#Item' ).val() + '", param2:"' + $( '#ItemDescription' ).val() + '", param3:"' + $( '#UnitofMeasure' ).val() + '", param4:"' + $( '#UnitCost' ).val() + '", param5:"' + $( '#NoOfUnits' ).val() + '", param6:"' + $( '#Amount' ).val() + '",  param7:"' + $( '#Purpose' ).val() + '", param8:"' + $( '#BudgetLineCode' ).val() + '"}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function ( response ) {
+
+                    if ( response != null && response.d != null ) {
+                        var data = response.d;
+                        // alert(typeof (data)); //it comes out to be string
+                        //we need to parse it to JSON
+                        data = $.parseJSON( data );
+
+                        jQuery_3_3_1.Toast.hideToast();
+
+                        bootbox.alert( {
+                            message: data.Message,
+                            callback: function () {
+                                location.reload();
+                            }
+                        } )
+                    }
+                }
+            } );
+        }
+    } );
+    jQuery_3_3_1( '#UpdateStaffImprestLines' ).on( 'click', function ( event ) {
+        event.preventDefault();
+
+        var title = 'Submitting Advance Request';
+        var icon = 'loading';
+        var duration = 50000 * 1;
+
+        //validate
+        var form = $( "#CreateStaffImprestLines" )
+
+        if ( form[ 0 ].checkValidity() === false ) {
+            event.preventDefault()
+            event.stopPropagation()
+            form.addClass( 'was-validated' );
+        } else if ( form[ 0 ].checkValidity() === true ) {
+            // Perform ajax submit here...
+            jQuery_3_3_1.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+
+            jQuery.ajax( {
+                url: 'ViewAdvanceRequest.aspx/UpdateStaffImprestLines',
+                type: "POST",
+                data: '{param1:"' + $( '#Item' ).val() + '", param2:"' + $( '#ItemDescription' ).val() + '", param3:"' + $( '#UnitofMeasure' ).val() + '", param4:"' + $( '#UnitCost' ).val() + '", param5:"' + $( '#NoOfUnits' ).val() + '", param6:"' + $( '#Amount' ).val() + '", param7:"' + $( '#AdvanceRequestLineNo' ).val() + '", param8:"' + $( '#BudgetLineCode' ).val() + '", param9:"' + $( '#Purpose' ).val() + '"}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function ( response ) {
+
+                    if ( response != null && response.d != null ) {
+                        var data = response.d;
+                        // alert(typeof (data)); //it comes out to be string
+                        //we need to parse it to JSON
+                        data = $.parseJSON( data );
+
+                        jQuery_3_3_1.Toast.hideToast();
+
+                        bootbox.alert( {
+                            message: data.Message,
+                            callback: function () {
+                                location.reload();
+                            }
+                        } )
+                    }
+                }
+            } );
+        }
+    } );
+    jQuery_3_3_1( "#dataTableAttachment" ).on( "click", ".delete_attachment", function ( e ) {
+        e.preventDefault();
+
+        var pid = $( this ).attr( 'data-id' );
+
+        bootbox.confirm( {
+            title: "<i class='fa fa-trash-alt'></i> Delete attachment?",
+            message: "Do you wish to delete this attachment?",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function ( result ) {
+
+                if ( result == true ) {
+
+                    //showToast('Deleting advance request line');
+                    // showToast(pid);
+
+                    jQuery.ajax( {
+                        url: 'ViewAdvanceRequest.aspx/DeleteAdvanceRequestAttachment',
+                        type: "POST",
+                        data: '{param1:"' + pid + '"}',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function ( response ) {
+
+                            if ( response != null && response.d != null ) {
+                                var data = response.d;
+                                // alert(typeof (data)); //it comes out to be string
+                                //we need to parse it to JSON
+                                data = $.parseJSON( data );
+
+                                // hideLoading();
+
+                                bootbox.alert( {
+                                    message: data.Message,
+                                    callback: function () {
+                                        location.reload();
+                                    }
+                                } )
+                            }
+                        },
+                        error: function () {
+                            bootbox.error( { title: "System error", message: "An error occured." } );
+                        }
+                    } );
+                }
+            }
+        } );
+    } );
+    jQuery_3_3_1( '#SubmitAdvance' ).on( 'click', function ( event ) {
+        event.preventDefault();
+
+        var title = 'Submitting Advance Request';
+        var icon = 'loading';
+        var duration = 50000 * 1;
+
+        //validate
+        var form = $( "#LeaveApplicationForm" )
+
+        if ( form[ 0 ].checkValidity() === false ) {
+            event.preventDefault()
+            event.stopPropagation()
+            form.addClass( 'was-validated' );
+        } else if ( form[ 0 ].checkValidity() === true ) {
+            // Perform ajax submit here...
+            jQuery_3_3_1.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+
+            jQuery.ajax( {
+                url: 'ViewAdvanceRequest.aspx/Save',
+                type: "POST",
+                data: '{param1:"' + $( '#DateOfRequest' ).val() + '", param2:"' + $( '#DateDue' ).val() + '", param3:"' + $( '#DateDue' ).val() + '", param4:"' + $( '#DimCode1' ).val() + '", param5:"' + $( '#DimCode2' ).val() + '", param6:"' + $( '#DimCode4' ).val() + '", param7:"' + $( '#DimCode8' ).val() + '", param8:"' + $( '#DimCode4' ).val() + '", param9:"' + $( '#PreferredPaymentMethod' ).val() + '",param10:"' + $( '#MissionSummary' ).val() + '" }',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function ( response ) {
+
+                    if ( response != null && response.d != null ) {
+                        var data = response.d;
+                        // alert(typeof (data)); //it comes out to be string
+                        //we need to parse it to JSON
+                        data = $.parseJSON( data );
+
+                        jQuery_3_3_1.Toast.hideToast();
+
+                        if ( data.Status != "000" ) {
+
+                            bootbox.error( { title: "Approval error", message: data.Message } );
+                        } else {
+
+                            bootbox.alert( {
+                                message: data.Message,
+                                callback: function () {
+                                    window.location.href = 'AdvanceRequests.aspx?status=Pending';
+                                }
+                            } )
+                        }
+                    }
+                }
+            } );
+        }
+    } );
+</script>
+<script src="js/jquery.toast.js"></script>
+<!-- JQUERY DATEPICKER-->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="js/select2.min.js"></script>
+<script>
+    $( document ).ready( function () {
+        $( "#Attachment" ).hide();
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams( queryString );
+        const status = urlParams.get( 'status' )
+
+        if ( status != "Open" ) {
+            $( DimCode1 ).prop( "disabled", true );
+            $( DimCode2 ).prop( "disabled", true );
+            $( DimCode4 ).prop( "disabled", true );
+            $( DimCode8 ).prop( "disabled", true );
+            $( PreferredPaymentMethod ).prop( "disabled", true );
+        }
+
+        $( '#PreferredPaymentMethod' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#DimCode1' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#DimCode2' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#DimCode4' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#DimCode8' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+        $( '#Item' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+
+        //$('#BudgetLineCode').select2({
+        //    sorter: function (data) {
+        //        return data.sort(function (a, b) {
+        //            return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+        //        });
+        //    }
+        //}); //GF
+
+        $( '#UnitofMeasure' ).select2( {
+            sorter: function ( data ) {
+                return data.sort( function ( a, b ) {
+                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                } );
+            }
+        } );
+
+        $( "#DateOfRequest" ).datepicker( {
+            dateFormat: 'dd/mm/yy',
+
+            onSelect: function ( date ) {
+
+                $( "#DateDue" ).datepicker( "option", "minDate", date );
+                $( "#DateDue" ).datepicker( "option", "maxDate", '+2y' );
+            }
+
+        } ).val();
+        $( "#DateDue" ).datepicker( { dateFormat: 'dd/mm/yy' } ).val();
+        $( '#DivUpdate' ).hide();
+
+        $( "#NoOfUnits" ).keyup( function () {
+            if ( $( "#NoOfUnits" ).val().length == 0 ) {
+                $( "#Amount" ).val( '0' );
+                return;
+            }
+            else {
+                if ( $( "#UnitCost" ).val().length == 0 ) {
+                    return;
+                } else {
+                    var one = parseFloat( $( "#NoOfUnits" ).val(), 10 );
+                    var two = parseFloat( $( "#UnitCost" ).val(), 10 );
+                    var three = parseFloat( $( "#ExchangeRate" ).val(), 10 );
+                    // $(".total").text();
+                    $( "#Amount" ).val( one * two * three );
+                }
+            }
+
+        } );
+        $( "#UnitCost" ).keyup( function () {
+            if ( $( "#UnitCost" ).val().length == 0 ) {
+                $( "#Amount" ).val( '0' );
+                return;
+            }
+            else {
+                if ( $( "#NoOfUnits" ).val().length == 0 ) {
+                    return;
+                } else {
+                    var one = parseFloat( $( "#NoOfUnits" ).val(), 10 );
+                    var two = parseFloat( $( "#UnitCost" ).val(), 10 );
+                    var three = parseFloat( $( "#ExchangeRate" ).val(), 10 );
+                    // $(".total").text();
+                    $( "#Amount" ).val( one * two * three );
+                }
+            }
+
+        } );
+        $( '#DivUpdate' ).hide();
+        $( "#BudgetLineCode2" ).blur( function () {
+
+            //validate here
+            jQuery_3_3_1.ajax( {
+                url: 'ViewAdvanceRequest.aspx/ValidateDim3Code',
+                type: "POST",
+                data: '{param1:"' + $( "#BudgetLineCode" ).val() + '" }',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function ( response ) {
+
+                    if ( response != null && response.d != null ) {
+                        var data = response.d;
+                        // alert(typeof (data)); //it comes out to be string
+                        //we need to parse it to JSON
+                        data = $.parseJSON( data );
+
+                        if ( data.Status != "000" ) {
+
+                            bootbox.error( { title: "Validation error", message: "The dimension code " + $( "#BudgetLineCode" ).val() + " provided is invalid" } );
+                            $( "#BudgetLineCode" ).val( '' );
+                        }
+                    }
+                },
+                error: function () {
+                    bootbox.error( { title: "System error", message: "An error occured." } );
+                }
+            } );
+        } );
+        $( "#Item" ).change( function () {
+
+            if ( $( "#Item" ).val() != 'OTHERS' ) {
+
+                $( "#NoOfUnits" ).val( '' );
+                $( '#ItemDescription' ).val( '' );
+                // $('#Purpose').val('');
+                $( "#UnitofMeasure" ).val( '' ).change();
+                $( '#UnitCost' ).val( '' );
+                $( '#ExchangeRate' ).val( '' );
+                $( "#Amount" ).val( '' );
+                $( "#ExchangeRate" ).val( '' );
+                //selection fields
+                jQuery_3_3_1.ajax( {
+                    url: 'ViewAdvanceRequest.aspx/LoadAdvanceRequestItem',
+                    type: "POST",
+                    data: '{Code:"' + $( "#Item" ).val() + '" }',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function ( response ) {
+
+                        if ( response != null && response.d != null ) {
+                            var data = response.d;
+                            // alert(typeof (data)); //it comes out to be string
+                            //we need to parse it to JSON
+                            data = $.parseJSON( data );
+                            document.getElementById( 'Amount' ).disabled = true;
+
+                            if ( data.UnitCost == "0" ) {
+                                document.getElementById( 'UnitCost' ).disabled = false;
+                                document.getElementById( 'UnitCost' ).required = true;
+
+                            } else {
+                                document.getElementById( 'UnitCost' ).disabled = true;
+                                document.getElementById( 'ItemDescription' ).disabled = true;
+                                document.getElementById( 'UnitofMeasure' ).disabled = true;
+                            }
+                            $( '#ItemDescription' ).val( data.Description );
+                            $( "#UnitofMeasure" ).val( data.UnitOfMeasure ).change();
+                            $( '#UnitCost' ).val( data.UnitCost );
+                            $( '#ExchangeRate' ).val( data.ExchangeRate );
+                        }
+                    },
+                    error: function () {
+                        //bootbox.error({ title: "System error", message: "An error occured." });
+                    }
+                } );
+            } else {
+                document.getElementById( 'UnitCost' ).disabled = false;
+                document.getElementById( 'ItemDescription' ).disabled = false;
+                document.getElementById( 'UnitofMeasure' ).disabled = false;
+            }
+
+        } );
+    } );
+    function printElem ( divId ) {
+        var content = document.getElementById( divId ).innerHTML;
+        var mywindow = window.open( '', 'Print', 'height=600,width=800' );
+
+        mywindow.document.write( '<html><head><title>Print</title>' );
+        mywindow.document.write( '<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">' );
+        mywindow.document.write( '</head><body >' );
+        mywindow.document.write( content );
+        mywindow.document.write( '</body></html>' );
+
+
+        mywindow.document.close();
+        mywindow.focus()
+        mywindow.print();
+        mywindow.close();
+        return true;
+    }
+</script>

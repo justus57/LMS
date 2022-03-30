@@ -408,6 +408,7 @@
     <Compile Include="Controllers\TransportRequestsController.cs" />
     <Compile Include="Controllers\ViewAdvanceClaimController.cs" />
     <Compile Include="Controllers\ViewAdvanceRequestController.cs" />
+    <Compile Include="Controllers\ViewAdvanceSurrenderController.cs" />
     <Compile Include="Controllers\ViewApprovalEntryController.cs" />
     <Compile Include="Controllers\ViewLeaveController.cs" />
     <Compile Include="Controllers\ViewLeaveRecallController.cs" />
@@ -452,6 +453,7 @@
     <Compile Include="Models\Register.cs" />
     <Compile Include="Models\ViewAdvanceClaim.cs" />
     <Compile Include="Models\ViewAdvanceRequest.cs" />
+    <Compile Include="Models\ViewAdvanceSurrender.cs" />
     <Compile Include="Models\ViewApprovalEntry.cs" />
     <Compile Include="Models\ViewLeave.cs" />
     <Compile Include="Models\ViewLeaveRecall.cs" />
@@ -4259,6 +4261,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Assest\scss\Uploads\" />
+    <Folder Include="Views\ViewAdvanceSurrender\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

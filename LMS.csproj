@@ -411,6 +411,7 @@
     <Compile Include="Controllers\ViewAdvanceSurrenderController.cs" />
     <Compile Include="Controllers\ViewAppraisalController.cs" />
     <Compile Include="Controllers\ViewApprovalEntryController.cs" />
+    <Compile Include="Controllers\ViewClosedTripController.cs" />
     <Compile Include="Controllers\ViewLeaveController.cs" />
     <Compile Include="Controllers\ViewLeaveRecallController.cs" />
     <Compile Include="CustomsClasses\AppClasses.cs" />
@@ -457,6 +458,7 @@
     <Compile Include="Models\ViewAdvanceSurrender.cs" />
     <Compile Include="Models\ViewAppraisal.cs" />
     <Compile Include="Models\ViewApprovalEntry.cs" />
+    <Compile Include="Models\ViewClosedTrip.cs" />
     <Compile Include="Models\ViewLeave.cs" />
     <Compile Include="Models\ViewLeaveRecall.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -4265,6 +4267,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Assest\scss\Uploads\" />
     <Folder Include="Views\ViewAdvanceSurrender\" />
+    <Folder Include="Views\ViewClosedTrip\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

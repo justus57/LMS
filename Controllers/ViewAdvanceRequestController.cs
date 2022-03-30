@@ -27,8 +27,6 @@ namespace LMS.Controllers
         }
         public ActionResult ViewAdvanceRequest()
         {
-           
-        
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "active";
             System.Web.HttpContext.Current.Session["IsDashboardActive"] = "";
             System.Web.HttpContext.Current.Session["IsClaimActive"] = "";
@@ -71,7 +69,6 @@ namespace LMS.Controllers
             }
             return View();
         }
-
         private void GetDimensionCodes()
         {
             string GetDimensionCodesresponseString = CustomsClasses.CreateAdvanceRequestXMLRequests.GetDimensionCodes();

@@ -1,0 +1,425 @@
+﻿@model LMS.Models.ViewAppraisal
+
+@{
+    ViewBag.Title = "ViewAppraisal";
+}
+
+
+<main id="main" class="main">
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <!-- #Include virtual="includes/Sidebar.aspx" -->
+
+        <div id="content-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">Appraisals</li>
+                    <li class="breadcrumb-item active"> @{Response.Write(LMS.CustomsClasses.AppFunctions.Base64Decode(Request["code"])); }</li>
+                </ol>
+
+                <!-- DataTables Example -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-question-circle"></i>
+                        @{Response.Write(LMS.CustomsClasses.AppFunctions.Base64Decode(Request["code"])); }
+                    </div>
+                    <div id="AppraisalBody" class="table-responsive">
+                        <asp:PlaceHolder ID="placeholder" runat="server" />
+                    </div>
+                    <div class="card-footer small text-muted">Updated today at @DateTime.Now.ToShortTimeString() </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © @DateTime.Now.Year.ToString()  Brightsoft Technologies Limited</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Bootstrap core JavaScript-->
+<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+<script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap core CSS-->
+<link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template-->
+<link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+<!-- Page level plugin CSS-->
+<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="~/Assest/css/sb-admin.css" rel="stylesheet">
+<link href="~/Assest/css/custom.css" rel="stylesheet">
+<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+<!-- Core plugin JavaScript-->
+<script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="~/Assest/js/sb-admin.min.js"></script>
+<script src="~/Assest/js/bootbox.all.min.js"></script>
+<script src="~/Assest/js/bootboxError.js"></script>
+<script src="~/Assest/js/jquery.pleaseWait.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+<script src="~/Assest/js/jquery.toast.js"></script>
+<script type="text/javascript">
+
+    $( document ).ready( function () {
+
+        $( 'textarea' ).on( "propertychange keyup input paste",
+
+            function () {
+                                            var limit = $( this ).data( "limit" );
+                                            var remainingChars = limit - $( this ).val().length;
+                                            if ( remainingChars <= 0 ) {
+                    $( this ).val( $( this ).val().substring( 0, limit ) );
+                                            }
+                $( this ).next( 'p' ).text( remainingChars <= 0 ? 0 + ' remaining' : remainingChars + ' remaining' );
+                                        } );
+        //HR Actions
+        $( "#HRSave" ).click( function ( event ) {
+
+                                        // Fetch form to apply custom Bootstrap validation
+                                        var form = $( "#needs-validation" )
+
+            if ( form[ 0 ].checkValidity() === false ) {
+                event.preventDefault()
+                event.stopPropagation()
+                form.addClass( 'was-validated' );
+                                } else if ( form[ 0 ].checkValidity() === true ) {
+                // Perform ajax submit here...
+
+                // do passwords match?
+                showToast( 'Submitting' );
+
+                                var arForm = $( "#needs-validation" ).serializeArray();
+
+                                jQuery.ajax( {
+                    url: "ViewAppraisal.aspx/HRSave",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify( { formVars: arForm } ),
+                    dataType: "json",
+                    success: function ( result ) {
+                                var data = result.d;
+                                // alert(typeof (data)); //it comes out to be string
+                                //we need to parse it to JSON
+                                data = $.parseJSON( data );
+                                hideLoading();
+                                bootbox.alert( {
+                                message: data.Message,
+                            callback: function () {
+                                        window.location.href = 'ApprovalEntries.aspx?parent=Appraisals&status=Open&owner=HR';
+                                    }
+                                } )
+                    },
+                    error: function ( xhr, status ) {
+                                alert( "An error occurred: " + status );
+                            }
+                } );
+            }
+
+            ////uncomment below
+            event.preventDefault();
+                            } );
+        $( "#HRSubmit" ).click( function ( event ) {
+
+                                // Fetch form to apply custom Bootstrap validation
+                                var form = $( "#needs-validation" )
+
+            if ( form[ 0 ].checkValidity() === false ) {
+                event.preventDefault()
+                event.stopPropagation()
+                form.addClass( 'was-validated' );
+                                } else if ( form[ 0 ].checkValidity() === true ) {
+                                    // Perform ajax submit here...
+
+                                    // do passwords match?
+                                    showToast( 'Submitting' );
+
+                                    var arForm = $( "#needs-validation" ).serializeArray();
+
+                                    jQuery.ajax( {
+                                    url: "ViewAppraisal.aspx/HRSubmit",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify( { formVars: arForm } ),
+                    dataType: "json",
+                    success: function ( result ) {
+                                            var data = result.d;
+                                            // alert(typeof (data)); //it comes out to be string
+                                            //we need to parse it to JSON
+                                            data = $.parseJSON( data );
+                                            hideLoading();
+                                            bootbox.alert( {
+                                            message: data.Message,
+                            callback: function () {
+                                                    window.location.href = 'ApprovalEntries.aspx?parent=Appraisals&status=Open&owner=HR';
+                                                }
+                                            } )
+                    },
+                    error: function ( xhr, status ) {
+                                            alert( "An error occurred: " + status );
+                                        }
+                                    } );
+                                }
+
+            ////uncomment below
+            event.preventDefault();
+                            } );
+        //Supervisor Actions
+        $( "#SupervisorSave" ).click( function ( event ) {
+
+                                // Fetch form to apply custom Bootstrap validation
+                                var form = $( "#needs-validation" )
+
+            if ( form[ 0 ].checkValidity() === false ) {
+                event.preventDefault()
+                event.stopPropagation()
+                form.addClass( 'was-validated' );
+                                } else if ( form[ 0 ].checkValidity() === true ) {
+                                    // Perform ajax submit here...
+
+                                    // do passwords match?
+                                    showToast( 'Submitting' );
+
+                                    var arForm = $( "#needs-validation" ).serializeArray();
+
+                                    jQuery.ajax( {
+                                    url: "ViewAppraisal.aspx/SupervisorSave",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify( { formVars: arForm } ),
+                    dataType: "json",
+                    success: function ( result ) {
+                                            var data = result.d;
+                                            // alert(typeof (data)); //it comes out to be string
+                                            //we need to parse it to JSON
+                                            data = $.parseJSON( data );
+                                            hideLoading();
+                                            bootbox.alert( {
+                                            message: data.Message,
+                            callback: function () {
+                                                    window.location.href = 'ApprovalEntries.aspx?parent=Appraisals&status=Open&owner=Approver';
+                                                }
+                                            } )
+                    },
+                    error: function ( xhr, status ) {
+                                            alert( "An error occurred: " + status );
+                                        }
+                                    } );
+                                }
+
+            ////uncomment below
+            event.preventDefault();
+                            } );
+        $( "#SupervisorSubmit" ).click( function ( event ) {
+
+                                // Fetch form to apply custom Bootstrap validation
+                                var form = $( "#needs-validation" )
+
+            if ( form[ 0 ].checkValidity() === false ) {
+                event.preventDefault()
+                event.stopPropagation()
+                form.addClass( 'was-validated' );
+                                } else if ( form[ 0 ].checkValidity() === true ) {
+                                    // Perform ajax submit here...
+
+                                    showToast( 'Submitting' );
+
+                                    var arForm = $( "#needs-validation" ).serializeArray();
+
+                                    jQuery.ajax( {
+                                    url: "ViewAppraisal.aspx/SupervisorSubmit",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify( { formVars: arForm } ),
+                    dataType: "json",
+                    success: function ( result ) {
+                                            var data = result.d;
+                                            // alert(typeof (data)); //it comes out to be string
+                                            //we need to parse it to JSON
+                                            data = $.parseJSON( data );
+                                            hideLoading();
+                                            bootbox.alert( {
+                                            message: data.Message,
+                            callback: function () {
+                                                    window.location.href = 'ApprovalEntries.aspx?parent=Appraisals&status=Open&owner=Approver';
+                                                }
+                                            } )
+                    },
+                    error: function ( xhr, status ) {
+                                            alert( "An error occurred: " + status );
+                                        }
+                                    } );
+                                }
+
+            ////uncomment below
+            event.preventDefault();
+                            } );
+        //EmployeeActions
+        $( "#EmployeeSave" ).click( function ( event ) {
+
+                                // Fetch form to apply custom Bootstrap validation
+                                var form = $( "#needs-validation" )
+
+            if ( form[ 0 ].checkValidity() === false ) {
+                event.preventDefault()
+                event.stopPropagation()
+                form.addClass( 'was-validated' );
+                                } else if ( form[ 0 ].checkValidity() === true ) {
+                // Perform ajax submit here...
+                event.preventDefault();
+                                    // do passwords match?
+                                    showToast( 'Saving' );
+
+                                    var arForm = $( "#needs-validation" ).serializeArray();
+
+                                    jQuery.ajax( {
+                                    url: "ViewAppraisal.aspx/Submit_To_HR",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify( { formVars: arForm } ),
+                    dataType: "json",
+                    success: function ( result ) {
+                                            var data = result.d;
+                                            // alert(typeof (data)); //it comes out to be string
+                                            //we need to parse it to JSON
+                                            data = $.parseJSON( data );
+                                            hideLoading();
+
+                                            bootbox.alert( {
+                                            message: data.Message,
+                            callback: function () {
+                                                    window.location.href = 'Appraisals.aspx?status=Open&owner=Employee';
+                                                }
+                                            } )
+                    },
+                    error: function ( xhr, status ) {
+                                            alert( "An error occurred: " + status );
+                                        }
+                                    } );
+                                }
+
+            ////uncomment below
+            event.preventDefault();
+                            } );
+        $( "#EmployeeSubmit" ).click( function ( event ) {
+
+                                // Fetch form to apply custom Bootstrap validation
+                                var form = $( "#needs-validation" )
+
+            if ( form[ 0 ].checkValidity() === false ) {
+                event.preventDefault()
+                event.stopPropagation()
+                form.addClass( 'was-validated' );
+                                } else if ( form[ 0 ].checkValidity() === true ) {
+                // Perform ajax submit here...
+                event.preventDefault();
+                                    // do passwords match?
+                                    showToast( 'Saving' );
+
+                                    var arForm = $( "#needs-validation" ).serializeArray();
+
+                                    jQuery.ajax( {
+                                    url: "ViewAppraisal.aspx/EmployeeSubmit",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify( { formVars: arForm } ),
+                    dataType: "json",
+                    success: function ( result ) {
+                                            var data = result.d;
+                                            // alert(typeof (data)); //it comes out to be string
+                                            //we need to parse it to JSON
+                                            data = $.parseJSON( data );
+                                            hideLoading();
+
+                                            bootbox.alert( {
+                                            message: data.Message,
+                            callback: function () {
+                                                    window.location.href = 'Appraisals.aspx?status=Open&owner=Employee';
+                                                }
+                                            } )
+                    },
+                    error: function ( xhr, status ) {
+                                            alert( "An error occurred: " + status );
+                                        }
+                                    } );
+                                }
+
+            ////uncomment below
+            event.preventDefault();
+                            } );
+        $( "#PrintAppraisal" ).click( function ( event ) {
+                                printElem( 'AppraisalBody' );
+            event.preventDefault();
+                            } );
+    } );
+
+                            function showToast ( modaltittle ) {
+                                var title = modaltittle;
+                                var icon = 'loading';
+                                var duration = 50000 * 1;
+        $.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+    }
+    function hideLoading () {
+        $.Toast.hideToast();
+                            }
+                            function printElem ( divId ) {
+                                var content = document.getElementById( divId ).innerHTML;
+                                var mywindow = window.open( '', 'Print', 'height=600,width=800' );
+
+                                mywindow.document.write( '<html><head><title>Print</title>' );
+                                mywindow.document.write( '<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">' );
+                                mywindow.document.write( '</head><body >' );
+                                mywindow.document.write( content );
+                                mywindow.document.write( '</body></html>' );
+
+
+                                mywindow.document.close();
+                                mywindow.focus()
+                                mywindow.print();
+                                mywindow.close();
+                                return true;
+                            }
+</script>
+

@@ -4230,6 +4230,7 @@
     <Content Include="Views\ViewAdvanceClaim\ViewAdvanceClaim.cshtml" />
     <Content Include="Views\ViewAdvanceRequest\ViewAdvanceRequest.cshtml" />
     <Content Include="Views\ViewAppraisal\ViewAppraisal.cshtml" />
+    <Content Include="Views\ViewClosedTrip\ViewClosedTrip.cshtml" />
     <None Include="Web References\WebRef\HRWebPortal.wsdl" />
     <Content Include="Web References\WebRef\LeaveDetail.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -4267,7 +4268,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Assest\scss\Uploads\" />
     <Folder Include="Views\ViewAdvanceSurrender\" />
-    <Folder Include="Views\ViewClosedTrip\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

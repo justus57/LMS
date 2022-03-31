@@ -1,0 +1,559 @@
+﻿@model LMS.Models.ViewTraining
+
+@{
+    ViewBag.Title = "ViewTraining";
+}
+
+<main id="main" class="main">
+
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <!-- #Include virtual="includes/Sidebar.aspx" -->
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item">Trainings</li>
+                <li class="breadcrumb-item active">View Training</li>
+            </ol>
+
+            <!-- Training-->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-user"></i>
+                    Training Request
+                </div>
+                <form runat="server" novalidate="" action="#" method="POST" id="TrainingRequestForm" autocomplete="off">
+                    <fieldset disabled>
+                        <div class="card-body">
+                            <div class="row mb-5">
+                                <div class="col-md-4 mb-4">
+                                    <div>Training Information</div>
+                                    <div class="text-muted small">Specify the training information here</div>
+                                </div>
+
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="RequirementOfTraining" class="form-control-label">Requirement of Training</label>
+                                                <asp:DropDownList CssClass="form-control" ID="RequirementOfTraining" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The requirement of training must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="TrainingDescription">Training Description</label>
+                                                <asp:TextBox TextMode="multiline" Columns="50" maxlength="50" Rows="3" runat="server" ID="TrainingDescription" class="form-control MultiLineLimit" required="true" data-limit=250></asp:TextBox>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The training description must be specified</div>
+                                                <p class="pull-right text-muted small" id="count_message"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="ApplicableTo" class="form-control-label">Applicable To</label>
+                                                <asp:DropDownList CssClass="form-control" ID="ApplicableTo" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The applicable to option must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" id="ApplicableToPersons">
+                                            <div class="form-group">
+                                                <label for="ApplicableToEmployee" class="form-control-label">Applicable To person(s)</label>
+                                                <asp:DropDownList CssClass="form-control" ID="ApplicableToEmployee" runat="server" required="true" style="width:100%" name="ApplicableToEmployee[]" multiple="multiple"> </asp:DropDownList>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The leave must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="TrainingStartDateTime">Training Start Date & Time</label>
+                                                <asp:TextBox class="form-control" id="TrainingStartDateTime" runat="server" required="true"></asp:TextBox>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The leave start date must be selected</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="TrainingEndDateTime">Training End Date & Time</label>
+                                                <asp:TextBox class="form-control" id="TrainingEndDateTime" runat="server" required="true"></asp:TextBox>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The leave end date must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="CourseDescription">Course Description</label>
+                                                <asp:TextBox TextMode="multiline" Columns="50" maxlength="50" Rows="3" runat="server" ID="CourseDescription" class="form-control MultiLineLimit" required="true" data-limit=250></asp:TextBox>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The Course description must be specified</div>
+                                                <p class="pull-right text-muted small MultiLineLimitComment" id="count__message"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="Venue">Venue</label>
+                                                <asp:TextBox class="form-control" id="Venue" runat="server" required="true"></asp:TextBox>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The training venue must be specified</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="Room">Room</label>
+                                                <asp:TextBox class="form-control" id="Room" runat="server" required="true"></asp:TextBox>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The training room must be specified</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="TrainingInstitution">Training Institution</label>
+                                                <asp:TextBox class="form-control" id="TrainingInstitution" runat="server" required="true"></asp:TextBox>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The training institution must be specified</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="TrainingCost">Training Cost</label>
+                                                <asp:TextBox class="form-control" id="TrainingCost" runat="server" required="true"></asp:TextBox>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The training cost must be specified</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="Approver">Approver</label>
+                                                <asp:TextBox class="form-control" id="Approver" runat="server" disabled></asp:TextBox>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The training Approver must be specified</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    @if (!String.IsNullOrEmpty(Request["status"]) && LMS.CustomsClasses.AppFunctions.Base64Decode(Request["status"].ToString()) == "Open")
+
+                    {
+                    <div class="card-footer bg-light text-right">
+                        <button id="Submit" class="btn btn-success">Submit</button>
+                    </div>
+                    } 
+
+                    @if (!String.IsNullOrEmpty(Request["status"]) && LMS.CustomsClasses.AppFunctions.Base64Decode(Request["status"].ToString()) == "Pending" && HttpContext.Current.Session["IsTrainingSupervisor"].ToString()=="TRUE")
+                    { 
+                    <div class="card-footer bg-light text-right">
+                        <button id="Reject" class="btn btn-danger">Reject Request</button>
+                        <button id="Approve" class="btn btn-success">Approve Request</button>
+                    </div>
+                    } 
+                </form>
+                <div class="card-footer small text-muted">Updated today at  @DateTime.Now.ToShortTimeString() </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+        <!-- Sticky Footer -->
+        <footer class="sticky-footer">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright © @DateTime.Now.Year.ToString() Brightsoft Technologies Limited</span>
+                </div>
+            </div>
+        </footer>
+        <!-- Sticky Footer -->
+    </div>
+    <!-- /.content-wrapper -->
+</div>
+</main>
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap core CSS-->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin.css" rel="stylesheet">
+    <link href="css/select2.min.css" rel="stylesheet" />
+    <!--jQUERY date picker--->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
+
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin.min.js"></script>
+    <script src="js/bootbox.min.js"></script>
+    <script src="js/bootboxError.js"></script>
+    <!-- JQUERY DATEPICKER-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+    <script src="js/select2.min.js"></script>
+    <script src="js/jquery.pleaseWait.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        var jQuery_3_3_1 = $.noConflict( true );
+    </script>
+    <script src="js/jquery.toast.js"></script>
+    <script>
+        $( document ).ready( function () {
+
+            $( '#ApplicableTo' ).select2( {
+                sorter: function ( data ) {
+                    return data.sort( function ( a, b ) {
+                        return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                    } );
+                }
+            } );
+            $( '#RequirementOfTraining' ).select2();
+
+            var TrainingMembers = <%= GetTrainingMemberList() %>;
+
+            var s2 = $( "#ApplicableToEmployee" ).select2( {
+                placeholder: "Choose applicable to person(s)",
+                tags: true,
+                sorter: function ( data ) {
+                    return data.sort( function ( a, b ) {
+                        return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                    } );
+                }
+            } );
+            //alert(TrainingMembers);
+            // var vals = ["Trade Fair", "CA", "Party"];
+            var vals = TrainingMembers;
+
+            vals.forEach( function ( e ) {
+                if ( !s2.find( 'option:contains(' + e + ')' ).length )
+                    s2.append( $( '<option>' ).text( e ) );
+            } );
+
+            s2.val( vals ).trigger( "change" );
+
+            setInputFilter( document.getElementById( "TrainingCost" ), function ( value ) {
+                return /^-?\d*[.]?\d{0,2}$/.test( value );
+            } );
+            $( ".MultiLineLimit" ).on( 'change keydown paste input', function () {
+                this.value = ( this.value.length <= 250 ? this.value : this.value.substring( 0, 250 ) );
+            } );
+            var text_max = 250;
+            $( '#count_message' ).html( text_max + ' remaining' );
+
+            $( '#TrainingDescription' ).keyup( function () {
+                var text_length = $( '#TrainingDescription' ).val().length;
+                var text_remaining = text_max - text_length;
+
+                $( '#count_message' ).html( text_remaining + ' remaining' );
+            } );
+
+            $( "#TrainingStartDateTime" ).datetimepicker( {
+                dateFormat: 'dd/mm/yy',
+
+                onSelect: function ( date ) {
+
+                    //var selectedDate = new Date(date);
+                    //var msecsInADay = 86400000;
+                    //var endDate = new Date(selectedDate.getTime() + msecsInADay);
+
+                    //Set Minimum Date of EndDatePicker After Selected Date of StartDatePicker
+                    $( "#TrainingEndDateTime" ).datepicker( "option", "minDate", date );
+                    $( "#TrainingEndDateTime" ).datepicker( "option", "maxDate", '+2y' );
+
+                }
+
+            } ).val();
+
+            $( "#ApplicableTo" ).change( function () {
+                //if Individual display drop downlist of employees
+                //if Org. Unit display dropdownlist of Organizational Units
+
+                $( '#ApplicableToEmployee' )
+                    .find( 'option' )
+                    .remove()
+                    .end();
+                //.append('<option value=" "> </option>')
+                //.val(' ');
+
+                if ( $( '#ApplicableTo' ).val() == "INDIVIDUALEMPLOYEE" ) {
+                    $( '#ApplicableToPersons' ).show();
+                    jQuery.ajax( {
+                        url: 'ViewTraining.aspx/GetEmployeeList',
+                        type: "POST",
+                        data: '{param1:"' + $( '#ApplicableTo' ).val() + '" }',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function ( response ) {
+                            if ( response != null && response.d != null ) {
+                                var data = response.d;
+                                // alert(response); //it comes out to be string
+                                //we need to parse it to JSON
+                                data = $.parseJSON( data );
+                                $.each( data, function ( i, item ) {
+
+                                    $( "#ApplicableToEmployee" ).append( $( '<option></option>' ).attr( "value", item.EmployeeCode ).text( item.EmployeeName + " - " + item.EmployeeCode ) );
+                                } );
+                            }
+                        },
+                        error: function ( xhr, ajaxOptions, thrownError ) {
+                            //alert("Error: " + thrownError);
+                        }
+                    } );
+                } else if ( $( '#ApplicableTo' ).val() == "ORGUNIT" ) {
+                    $( '#ApplicableToPersons' ).show();
+                    jQuery.ajax( {
+                        url: 'ViewTraining.aspx/GetOrgUnitList',
+                        type: "POST",
+                        data: '{param1:"' + $( '#ApplicableTo' ).val() + '" }',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function ( response ) {
+                            if ( response != null && response.d != null ) {
+                                var data = response.d;
+                                // alert(response); //it comes out to be string
+                                //we need to parse it to JSON
+                                data = $.parseJSON( data );
+                                $.each( data, function ( i, item ) {
+
+                                    $( "#ApplicableToEmployee" ).append( $( '<option></option>' ).attr( "value", item.Code ).text( item.Name ) );
+                                } );
+                            }
+                        },
+                        error: function ( xhr, ajaxOptions, thrownError ) {
+                            //alert("Error: " + thrownError);
+                        }
+                    } );
+                } else if ( $( '#ApplicableTo' ).val() == "POSITION" ) {
+                    $( '#ApplicableToPersons' ).show();
+                    jQuery.ajax( {
+                        url: 'ViewTraining.aspx/GetHRPositionList',
+                        type: "POST",
+                        data: '{param1:"' + $( '#ApplicableTo' ).val() + '" }',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function ( response ) {
+                            if ( response != null && response.d != null ) {
+                                var data = response.d;
+                                // alert(response); //it comes out to be string
+                                //we need to parse it to JSON
+                                data = $.parseJSON( data );
+                                $.each( data, function ( i, item ) {
+
+                                    $( "#ApplicableToEmployee" ).append( $( '<option></option>' ).attr( "value", item.Code ).text( item.Description ) );
+                                } );
+                            }
+                        },
+                        error: function ( xhr, ajaxOptions, thrownError ) {
+                            //alert("Error: " + thrownError);
+                        }
+                    } );
+                } else if ( $( '#ApplicableTo' ).val() == "ALLEMPLOYEES" ) {
+                    $( '#ApplicableToPersons' ).hide();
+                }
+            } );
+
+            $( "#TrainingEndDateTime" ).datetimepicker( { dateFormat: 'dd/mm/yy' } ).val();
+
+            jQuery_3_3_1( "#Submit" ).click( function ( event ) {
+                event.preventDefault();
+
+                // Fetch form to apply custom Bootstrap validation
+                var form = $( "#TrainingRequestForm" )
+
+                if ( form[ 0 ].checkValidity() === false ) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                    form.addClass( 'was-validated' );
+                } else if ( form[ 0 ].checkValidity() === true ) {
+                    // Perform ajax submit here...
+                    showToast( 'Submitting training request' );
+
+                    jQuery.ajax( {
+                        url: 'ViewTraining.aspx/Submit',
+                        type: "POST",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function ( response ) {
+
+                            if ( response != null && response.d != null ) {
+                                var data = response.d;
+                                // alert(typeof (data)); //it comes out to be string
+                                //we need to parse it to JSON
+                                data = $.parseJSON( data );
+
+                                hideLoading();
+
+                                bootbox.alert( {
+                                    message: data.Message,
+                                    callback: function () {
+                                        window.setTimeout( function () {
+                                            location.reload()
+                                        }, 1000 );
+                                    }
+                                } )
+                            }
+                        }
+                    } );
+                }
+                ////uncomment below
+                event.preventDefault();
+            } );
+
+            jQuery_3_3_1( "#Approve" ).click( function ( event ) {
+                event.preventDefault();
+
+                // Fetch form to apply custom Bootstrap validation
+                var form = $( "#TrainingRequestForm" )
+
+                if ( form[ 0 ].checkValidity() === false ) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                    form.addClass( 'was-validated' );
+                } else if ( form[ 0 ].checkValidity() === true ) {
+                    // Perform ajax submit here...
+                    showToast( 'Submitting training request' );
+
+                    jQuery.ajax( {
+                        url: 'ViewTraining.aspx/Approve',
+                        type: "POST",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function ( response ) {
+
+                            if ( response != null && response.d != null ) {
+                                var data = response.d;
+                                // alert(typeof (data)); //it comes out to be string
+                                //we need to parse it to JSON
+                                data = $.parseJSON( data );
+
+                                hideLoading();
+
+                                bootbox.alert( {
+                                    message: data.Message,
+                                    callback: function () {
+                                        window.setTimeout( function () {
+                                            location.reload()
+                                        }, 1000 );
+                                    }
+                                } )
+                            }
+                        }
+                    } );
+                }
+                ////uncomment below
+                event.preventDefault();
+            } );
+
+            jQuery_3_3_1( "#Reject" ).click( function ( event ) {
+                event.preventDefault();
+
+                // Fetch form to apply custom Bootstrap validation
+                var form = $( "#TrainingRequestForm" )
+
+                if ( form[ 0 ].checkValidity() === false ) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                    form.addClass( 'was-validated' );
+                } else if ( form[ 0 ].checkValidity() === true ) {
+                    // Perform ajax submit here...
+                    showToast( 'Submitting training request' );
+
+                    jQuery.ajax( {
+                        url: 'ViewTraining.aspx/Reject',
+                        type: "POST",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function ( response ) {
+
+                            if ( response != null && response.d != null ) {
+                                var data = response.d;
+                                // alert(typeof (data)); //it comes out to be string
+                                //we need to parse it to JSON
+                                data = $.parseJSON( data );
+
+                                hideLoading();
+
+                                bootbox.alert( {
+                                    message: data.Message,
+                                    callback: function () {
+                                        window.setTimeout( function () {
+                                            location.reload()
+                                        }, 1000 );
+                                    }
+                                } )
+                            }
+                        }
+                    } );
+                }
+                ////uncomment below
+                event.preventDefault();
+            } );
+
+        } );
+
+        // Restricts input for the given textbox to the given inputFilter function.
+        function setInputFilter ( textbox, inputFilter ) {
+            [ "input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop" ].forEach( function ( event ) {
+                textbox.oldValue = "";
+                textbox.addEventListener( event, function () {
+                    if ( inputFilter( this.value ) ) {
+                        this.oldValue = this.value;
+                        this.oldSelectionStart = this.selectionStart;
+                        this.oldSelectionEnd = this.selectionEnd;
+                    } else if ( this.hasOwnProperty( "oldValue" ) ) {
+                        this.value = this.oldValue;
+                        this.setSelectionRange( this.oldSelectionStart, this.oldSelectionEnd );
+                    }
+                } );
+            } );
+        }
+
+        function showToast ( modaltittle ) {
+            var title = modaltittle;
+            var icon = 'loading';
+            var duration = 50000 * 1;
+            $.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
+        }
+        function hideLoading () {
+            $.Toast.hideToast();
+        }
+    </script>

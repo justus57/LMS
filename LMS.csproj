@@ -412,8 +412,11 @@
     <Compile Include="Controllers\ViewAppraisalController.cs" />
     <Compile Include="Controllers\ViewApprovalEntryController.cs" />
     <Compile Include="Controllers\ViewClosedTripController.cs" />
+    <Compile Include="Controllers\ViewCreatedAppraisalController.cs" />
     <Compile Include="Controllers\ViewLeaveController.cs" />
     <Compile Include="Controllers\ViewLeaveRecallController.cs" />
+    <Compile Include="Controllers\ViewTrainingController.cs" />
+    <Compile Include="Controllers\ViewTransportRequestController.cs" />
     <Compile Include="CustomsClasses\AppClasses.cs" />
     <Compile Include="CustomsClasses\AppFunctions.cs" />
     <Compile Include="CustomsClasses\Config.cs" />
@@ -461,6 +464,7 @@
     <Compile Include="Models\ViewClosedTrip.cs" />
     <Compile Include="Models\ViewLeave.cs" />
     <Compile Include="Models\ViewLeaveRecall.cs" />
+    <Compile Include="Models\ViewTraining.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -4231,6 +4235,8 @@
     <Content Include="Views\ViewAdvanceRequest\ViewAdvanceRequest.cshtml" />
     <Content Include="Views\ViewAppraisal\ViewAppraisal.cshtml" />
     <Content Include="Views\ViewClosedTrip\ViewClosedTrip.cshtml" />
+    <Content Include="Views\ViewCreatedAppraisal\ViewCreatedAppraisal.cshtml" />
+    <Content Include="Views\ViewTraining\ViewTraining.cshtml" />
     <None Include="Web References\WebRef\HRWebPortal.wsdl" />
     <Content Include="Web References\WebRef\LeaveDetail.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -4268,6 +4274,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Assest\scss\Uploads\" />
     <Folder Include="Views\ViewAdvanceSurrender\" />
+    <Folder Include="Views\ViewTransportRequest\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -465,6 +465,7 @@
     <Compile Include="Models\ViewLeave.cs" />
     <Compile Include="Models\ViewLeaveRecall.cs" />
     <Compile Include="Models\ViewTraining.cs" />
+    <Compile Include="Models\ViewTransportRequest.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -4237,6 +4238,7 @@
     <Content Include="Views\ViewClosedTrip\ViewClosedTrip.cshtml" />
     <Content Include="Views\ViewCreatedAppraisal\ViewCreatedAppraisal.cshtml" />
     <Content Include="Views\ViewTraining\ViewTraining.cshtml" />
+    <Content Include="Views\ViewTransportRequest\ViewTransportRequest.cshtml" />
     <None Include="Web References\WebRef\HRWebPortal.wsdl" />
     <Content Include="Web References\WebRef\LeaveDetail.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -4274,7 +4276,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Assest\scss\Uploads\" />
     <Folder Include="Views\ViewAdvanceSurrender\" />
-    <Folder Include="Views\ViewTransportRequest\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -6,9 +6,8 @@ using System.Web.UI.WebControls;
 
 namespace LMS.Models
 {
-    public class AssignTransportRequest
+    public class ViewTransportRequest
     {
-
         public string SelectedAdvanceRequest { get; set; }
         public string DateOfRequest { get; set; }
         public string DateDue { get; set; }
@@ -29,6 +28,7 @@ namespace LMS.Models
         public string DimCode3Label { get; set; }
         public string DimCode4Label { get; set; }
         public string DimCode5Label { get; set; }
+        public string DimCode6Label { get; set; }
         public DropDownList DimCode1 { get; set; }
         public DropDownList DimCode2 { get; set; }
         public DropDownList DimCode3 { get; set; }

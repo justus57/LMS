@@ -49,6 +49,7 @@
                                             <div class="form-group">
                                                 <label class="form-control-label" for="DateOfRequest">Actual mission start date</label>
                                                 <asp:TextBox class="form-control" id="DateOfRequest" runat="server" required="true"></asp:TextBox>
+                                                @Html.TextBoxFor(Model=>Model.DateOfRequest,new {@class= "form-control" ,id= "DateOfRequest" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The date of request must be selected</div>
                                             </div>

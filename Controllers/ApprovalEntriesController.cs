@@ -45,6 +45,7 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsAppraisalSupervisor"] = "";
             var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
             var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
+            System.Web.HttpContext.Current.Session["Company"]= "KRCS GF Management Unit";
             if ((string)log == "No")
             {
                 Response.Redirect("/Account/login");
@@ -153,7 +154,6 @@ namespace LMS.Controllers
                 dt = ApprovalEntiesXMLRequests.GetApprovalEntries("TransportRequests", status);
             }
 
-
             //Building an HTML string.
             StringBuilder html = new StringBuilder();
             //Table start.
@@ -207,9 +207,7 @@ namespace LMS.Controllers
             string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
             string response = null;
             string status = null;
-
             //SendApprovalRequest          
-
             try
             {
                 string xmlresponse = ApprovalEntiesXMLRequests.SendApprovalRequest(LeaveHeaderNo, username);
@@ -221,14 +219,11 @@ namespace LMS.Controllers
             {
                 response = e.ToString();
             }
-
-
             var _RequestResponse = new RequestResponse
             {
                 Message = response,
                 Status = status
             };
-
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
      
@@ -343,21 +338,17 @@ namespace LMS.Controllers
                 {
                     response = e.ToString();
                 }
-
             }
             else
             {
                 response = "You must give the rejection comment";
                 status = "999";
             }
-
-
             var _RequestResponse = new RequestResponse
             {
                 Message = response,
                 Status = status
             };
-
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
 

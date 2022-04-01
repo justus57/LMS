@@ -403,7 +403,7 @@ namespace LMS.CustomsClasses
         }
         public static DataTable GetApprovalEntries(string DocumentArea, string status)
         {
-            string WorkflowApprovalUserName = HttpContext.Current.Session["username"].ToString();
+            string WorkflowApprovalUserName = HttpContext.Current.Session["PayrollNo"].ToString();
             int count = 0;
             string AdvanceRequestStatus = null;
 

@@ -121,25 +121,25 @@
                         <i class="fas fa-fw fa-paper-plane"></i><span>Approvals</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                        @if (HttpContext.Current.Session["IsStaffAdvanceApprover"].ToString()=="TRUE" && HttpContext.Current.Session["AdvanceRequests"].ToString()=="TRUE") 
-                            { 
+                        @*@if (HttpContext.Current.Session["IsStaffAdvanceApprover"].ToString()=="TRUE" && HttpContext.Current.Session["AdvanceRequests"].ToString()=="TRUE") 
+                            {*@ 
                                 <h6 class="dropdown-header">Approval Entries:</h6>
-                                <a class="dropdown-item" href="ApprovalEntries.aspx?status=Pending&parent=AdvanceRequests">Pending</a>
-                                <a class="dropdown-item" href="ApprovalEntries.aspx?status=Approved&parent=AdvanceRequests">Approved</a>
-                                <a class="dropdown-item" href="ApprovalEntries.aspx?status=Rejected&parent=AdvanceRequests">Rejected</a>
-                            } 
-                        @if (HttpContext.Current.Session["IsTransportRequestApprover"].ToString()=="TRUE" && HttpContext.Current.Session["TransportRequests"].ToString()=="TRUE")
+                                <a class="dropdown-item" href="@Url.Action("ApprovalEntries","ApprovalEntries", new { parent = "AdvanceRequests",status = "Pending"})">Pending</a>
+                                <a class="dropdown-item" href="@Url.Action("ApprovalEntries","ApprovalEntries", new { parent = "AdvanceRequests",status = "Approved"})">Approved</a>
+                                <a class="dropdown-item" href="@Url.Action("ApprovalEntries","ApprovalEntries", new { parent = "AdvanceRequests",status = "Rejected"})">Rejected</a>
+                            @*}*@ 
+                        @*@if (HttpContext.Current.Session["IsTransportRequestApprover"].ToString()=="TRUE" && HttpContext.Current.Session["TransportRequests"].ToString()=="TRUE")
                             { 
                                 if (HttpContext.Current.Session["IsTransportRequestApprover"].ToString()=="TRUE"  && HttpContext.Current.Session["TransportRequests"].ToString()=="TRUE")
-                                { 
+                                {*@ 
                                 <div class="dropdown-divider"></div>
-                                } 
+                                @*}*@ 
 
                                 <h6 class="dropdown-header">Transport Requests:</h6>
-                                <a class="dropdown-item" href="ApprovalEntries.aspx?status=Pending&parent=TransportRequests">Pending</a>
-                                <a class="dropdown-item" href="ApprovalEntries.aspx?status=Approved&parent=TransportRequests">Approved</a>
-                                <a class="dropdown-item" href="ApprovalEntries.aspx?status=Rejected&parent=TransportRequests">Rejected</a>
-                            }
+                                <a class="dropdown-item" href="@Url.Action("ApprovalEntries","ApprovalEntries", new { parent = "TransportRequests",status = "Pending"})">Pending</a>
+                                <a class="dropdown-item" href="@Url.Action("ApprovalEntries","ApprovalEntries", new { parent = "TransportRequests",status = "Approved"})">Approved</a>
+                                <a class="dropdown-item" href="@Url.Action("ApprovalEntries","ApprovalEntries", new { parent = "TransportRequests",status = "Rejected"})">Rejected</a>
+                            @*}*@
 
                         <!--//start GF-->
                         @*@if (HttpContext.Current.Session["IsGF"].ToString() == "FALSE")
@@ -149,15 +149,15 @@
                             @if ((HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE" || HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE") && HttpContext.Current.Session["Appraisal"].ToString() == "TRUE")
                             {
                                 <h6 class="dropdown-header">Appraisals:</h6>
-                                if (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE")
+                                    if (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE")
                                     {
-                                    <a class="dropdown-item" href="ApprovalEntries.aspx?parent=Appraisals&status=Open&owner=HR">Open</a>
-                                    <a class="dropdown-item" href="ApprovalEntries.aspx?parent=Appraisals&status=Closed&owner=HR">Closed</a>
+                                    <a class="dropdown-item" href="@Url.Action("ApprovalEntries","ApprovalEntries", new { parent = "Appraisals",status = "Open",owner ="HR" })">Open</a>
+                                    <a class="dropdown-item" href="@Url.Action("ApprovalEntries","ApprovalEntries", new { parent = "Appraisals",status = "Closed",owner ="HR" })">Closed</a>
                                     }
-                                 if (HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE")
+                                    if (HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE")
                                     {
-                                    <a class="dropdown-item" href="ApprovalEntries.aspx?parent=Appraisals&status=Open&owner=Approver">Pending</a>
-                                    <a class="dropdown-item" href="ApprovalEntries.aspx?parent=Appraisals&status=Submitted&owner=Approver">Sent To HR</a>
+                                    <a class="dropdown-item" href="@Url.Action("ApprovalEntries","ApprovalEntries", new { parent = "Appraisals",status = "Open",owner ="Approver" })">Pending</a>
+                                    <a class="dropdown-item" href="@Url.Action("ApprovalEntries","ApprovalEntries", new { parent = "Appraisals",status = "Closed",owner ="Approver" })">Sent To HR</a>
                                     }
                             }
                          @*}*@
@@ -184,9 +184,9 @@
                                         <div class="dropdown-divider"></div>
                                      } 
                                     <h6 class="dropdown-header">Training Requests:</h6>
-                                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Pending&parent=Trainings">Pending</a>
-                                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Approved&parent=Trainings">Approved</a>
-                                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Rejected&parent=Trainings">Rejected</a>
+                                    <a class="dropdown-item" href="@Url.Action("ApprovalEntries","ApprovalEntries", new { parent = "Trainings",status = "Pending"})">Pending</a>
+                                    <a class="dropdown-item" href="@Url.Action("ApprovalEntries","ApprovalEntries", new { parent = "Trainings",status = "Approved"})">Approved</a>
+                                    <a class="dropdown-item" href="@Url.Action("ApprovalEntries","ApprovalEntries", new { parent = "Trainings",status = "Rejected"})">Rejected</a>
                     }
                     </ul>
                 </li>

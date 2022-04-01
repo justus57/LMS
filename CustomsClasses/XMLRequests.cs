@@ -3745,6 +3745,19 @@ namespace LMS.CustomsClasses
     }
     public class AdvanceRequestsXMLRequests
     {
+        public static string ValidateDimensionValueCode(string code)
+        {
+            string request = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                                <Body>
+                                    <ValidateDimensionValueCode xmlns=""urn:microsoft-dynamics-schemas/codeunit/HRWebPortal"">
+                                        <code>"+code+@"</code>
+                                    </ValidateDimensionValueCode>
+                                </Body>
+                            </Envelope>";
+            var resp = Assest.Utility.CallWebService(request);
+            var str = Assest.Utility.GetJSONResponse(resp);
+            return str;
+        }
         public static int GetNumberOfAttachments(string AdvanceRequestHdrNo)
         {
             int count = 0;

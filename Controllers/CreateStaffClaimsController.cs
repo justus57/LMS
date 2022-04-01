@@ -41,25 +41,27 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsTrainingActive"] = "";
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
+            System.Web.HttpContext.Current.Session["Company"] = "KRCS GF Management Unit";
 
-            if (Session["Logged"].Equals("No"))
+            var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
+            var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
+            //check if user is logged
+            if ((string)log == "No")
             {
-                Response.Redirect("Login.aspx");
+                Response.Redirect("/Account/login");
             }
-            else if (Session["Logged"].Equals("Yes"))
+            else if ((string)log == "yes")
             {
-                if (Session["RequirePasswordChange"].Equals("TRUE"))
+                if ((object)passRequired == "true")
                 {
-                    Response.Redirect("OneTimePass.aspx");
+                    Response.Redirect("/Account/OneTimePassword");
                 }
                 else
                 {
-
-
                     if (!IsPostBack)
                     {
                         LoadPrefferedMethodOfPayment();
-                        GetDimensionCodes();
+                        //GetDimensionCodes();
                     }
 
                     if (Request.QueryString["No"] != null)
@@ -68,11 +70,11 @@ namespace LMS.Controllers
                     }
                     else
                     {
-                        string DocumentNo = GenerateDocumentNo("");
+                       // string DocumentNo = GenerateDocumentNo("");
 
-                        Session["StaffClaimNo"] = DocumentNo;
+                        //Session["StaffClaimNo"] = DocumentNo;
 
-                        Response.Redirect("CreateStaffClaims.aspx?No=" + DocumentNo + "");
+                        //Response.Redirect("CreateStaffClaims.aspx?No=" + DocumentNo + "");
                     }
 
 
@@ -138,7 +140,7 @@ namespace LMS.Controllers
             html.Append("</table>");
             string strText = html.ToString();
             ////Append the HTML string to Placeholder.
-
+            ViewBag.strText = strText;
             //placeholder1.Controls.Add(new Literal { Text = html.ToString() });
         }
 
@@ -263,8 +265,9 @@ namespace LMS.Controllers
 
             if (System.Web.HttpContext.Current.Session["Company"].ToString() == "KRCS GF Management Unit")
             {
+                DropDownList DimCode1 = createStaff.DimCode1;
                 //DimCode8Label.Text = "Region to be Paid From";
-                LoadDimCodeValues(createStaff.DimCode1, GlobalDimCode1);
+                LoadDimCodeValues(DimCode1, GlobalDimCode1);
                 LoadDimCodeValues(createStaff.DimCode2, GlobalDimCode2);
                 //LoadDimCodeValues(DimCode3, ShortcutDimCode3);
                 //LoadDimCodeValues(DimCode8, ShortcutDimCode8);
@@ -287,24 +290,30 @@ namespace LMS.Controllers
         }
         private void LoadDimCodeValues(DropDownList _DropDownList, string Code)
         {
-            _DropDownList.Items.Clear();
+            //_DropDownList.Items.Clear();
 
-            WebRef.DimCodeValues _DimCodeValues = new WebRef.DimCodeValues();
-            WebserviceConfig.ObjNav.ExportDimensionCodeValues(Code, ref _DimCodeValues);
+            //WebRef.DimCodeValues _DimCodeValues = new WebRef.DimCodeValues();
+            //WebserviceConfig.ObjNav.ValidateDimensionValueCode(Code, ref _DimCodeValues);
+            var DimCodeValue = AdvanceRequestsXMLRequests.ValidateDimensionValueCode(Code);
 
-            foreach (var kvp in _DimCodeValues.DimCodeValue)
-            {
-                _DropDownList.Items.Insert(0, new ListItem(kvp.Code + " - " + kvp.Name, kvp.Code));
-            }
-            _DropDownList.Items.Insert(0, new ListItem(" ", ""));
+            //foreach (var kvp in DimCodeValue)
+            //{
+            //    _DropDownList.Items.Insert(0, new ListItem(kvp.Code + " - " + kvp.Name, kvp.Code));
+            //}
+            // _DropDownList.Items.Insert(0, new ListItem(" ", ""));
+            //ViewBag.data = _DropDownList.Items;
         }
 
         private void LoadPrefferedMethodOfPayment()
         {
-            //PreferredPaymentMethod.Items.Clear();
-            //PreferredPaymentMethod.Items.Insert(0, new ListItem("Mpesa", "2"));
-            //PreferredPaymentMethod.Items.Insert(0, new ListItem("Cheque ", "1"));
-            //PreferredPaymentMethod.Items.Insert(0, new ListItem(" ", "0"));
+            List<PreferredPaymentMethods> selectListItems = new List<PreferredPaymentMethods>()
+            {
+               new PreferredPaymentMethods(){Id="2",Name="Mpesa"},
+               new PreferredPaymentMethods(){Id="1",Name="Cheque"},
+               new PreferredPaymentMethods(){Id="0",Name=" "}
+
+            };
+            ViewBag.LoadPrefferedMethodOfPayment = selectListItems;
         }
         public string SetFirstLetterToUpper(string inString)
         {

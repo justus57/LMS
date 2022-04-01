@@ -48,7 +48,6 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="DateOfRequest">Actual mission start date</label>
-                                                <asp:TextBox class="form-control" id="DateOfRequest" runat="server" required="true"></asp:TextBox>
                                                 @Html.TextBoxFor(Model=>Model.DateOfRequest,new {@class= "form-control" ,id= "DateOfRequest" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The date of request must be selected</div>
@@ -58,7 +57,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="DateDue">Actual date of Return from mission</label>
-                                                <asp:TextBox class="form-control" id="DateDue" runat="server" required="true"></asp:TextBox>
+                                                @Html.TextBoxFor(Model => Model.DateDue, new { @class = "form-control", id = "DateDue" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The actual date of Return from mission must be selected</div>
                                             </div>
@@ -69,6 +68,7 @@
                                             <div class="form-group">
                                                 <asp:label id="DimCode1Label" runat="server" />
                                                 <asp:DropDownList CssClass="form-control" ID="DimCode1" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+                                                @Html.DropDownListFor(model=>Model.DimCode1 , new SelectList(ViewBag.data), new { @CssClass = "form-control",Id="DimCode1",style="100%"})
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The Dimension Code 1 must be selected</div>
                                             </div>
@@ -78,6 +78,7 @@
                                             <div class="form-group">
                                                 <asp:label id="DimCode2Label" runat="server" />
                                                 <asp:DropDownList CssClass="form-control" ID="DimCode2" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+                                                @Html.DropDownListFor(model => Model.DimCode2, new { @class = "form-control", Id = "DimCode1", style = "100%" })
 
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The Dimension Code 2 must be selected</div>
@@ -89,6 +90,7 @@
                                             <div class="form-group">
                                                 <asp:label id="DimCode4Label" runat="server" />
                                                 <asp:DropDownList CssClass="form-control" ID="DimCode4" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+                                                @Html.DropDownListFor(model => Model.DimCode4,new SelectList())
 
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The Dimension Code 3 must be selected</div>
@@ -108,7 +110,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="Balance">Balance</label>
-                                                <asp:TextBox CssClass="form-control" ID="Balance" runat="server" required="true" disabled="false"> </asp:TextBox>
+                                                @Html.TextBoxFor(Model => Model.Balance, new { @class = "form-control", id = "Balance" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The currency must be selected</div>
                                             </div>
@@ -119,6 +121,7 @@
                                             <div class="form-group">
                                                 <label class="form-control-label">Mission Summary (Type activity name and county visited)</label>
                                                 <asp:TextBox TextMode="multiline" Columns="50" maxlength="50" Rows="3" runat="server" ID="MissionSummary" class="form-control MultiLineLimit" required="true"></asp:TextBox>
+                                                @Html.TextBoxFor(Model => Model.MissionSummary, new { @class = "form-control MultiLineLimit", id = "MissionSummary",TextMode = "multiline", Columns = "50", maxlength = "50" ,Rows = "3" })
                                                 <p class="pull-right text-muted small" id="count_message"></p>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The mission summary must be provided</div>
@@ -130,7 +133,7 @@
                                             <div class="form-group">
                                                 <label class="form-control-label" for="PreferredPaymentMethod">Preferred Payment Method</label>
                                                 <asp:DropDownList CssClass="form-control" ID="PreferredPaymentMethod" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
-
+                                                @Html.DropDownListFor(model => Model.PreferredPaymentMethod,)
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The preffered method of payment must be selected</div>
                                             </div>
@@ -153,7 +156,7 @@
 
                                             <br>
                                             <div class="table-responsive">
-                                                <asp:PlaceHolder ID="placeholder" runat="server" />
+                                                @Html.Raw(ViewBag.strText)
                                             </div>
                                         </div>
                                     </div>
@@ -174,6 +177,7 @@
 
                                             <br>
                                             <div class="table-responsive">
+                                                @Html.Raw(ViewBag.placeholder)
                                                 <asp:PlaceHolder ID="placeholder1" runat="server" />
                                             </div>
                                         </div>
@@ -187,7 +191,7 @@
                         </div>
                     </form>
 
-                    <div class="card-footer small text-muted">Updated today at  <%: DateTime.Now.ToShortTimeString() %></div>
+                    <div class="card-footer small text-muted">Updated today at  @DateTime.Now.ToShortTimeString() </div>
                 </div>
 
             </div>
@@ -196,7 +200,7 @@
             <footer class="sticky-footer">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright © <%: DateTime.Now.Year.ToString() %>  Brightsoft Technologies Limited</span>
+                        <span>Copyright © @DateTime.Now.Year.ToString() Brightsoft Technologies Limited</span>
                     </div>
                 </div>
             </footer>
@@ -240,7 +244,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-control-label" for="ItemDescription">Description</label>
-                                    <input type="text" class="form-control" id="ItemDescription" required>
+                                    @Html.TextBoxFor(Model => Model.ItemDescription, new { @class = "form-control", type = "text" })
                                     <div class="valid-feedback">Looks good!</div>
                                     <div class="invalid-feedback">The description must be supplied</div>
                                 </div>
@@ -263,7 +267,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label" for="UnitCost">Unit cost</label>
-                                    <input type="text" class="form-control" id="UnitCost" required>
+                                    @Html.TextBoxFor(Model => Model.UnitCost, new { @class = "form-control", type = "text" })
                                     <div class="valid-feedback">Looks good!</div>
                                     <div class="invalid-feedback">The Unit cost must be supplied</div>
                                 </div>
@@ -271,7 +275,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label" for="NoOfUnits">No Of Units</label>
-                                    <input type="text" class="form-control" id="NoOfUnits" required>
+                                    @Html.TextBoxFor(Model => Model.NoOfUnits, new { @class = "form-control", type = "text" })
                                     <div class="valid-feedback">Looks good!</div>
                                     <div class="invalid-feedback">The No Of Units must be supplied</div>
                                 </div>
@@ -281,13 +285,13 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-control-label" for="BudgetLineCode"> Budget Line Code</label>
-                                    <input type="text" class="form-control" id="BudgetLineCode" required>
+                                    @Html.TextBoxFor(Model => Model.BudgetLineCode, new { @class = "form-control", type = "text" })
                                     <div class="valid-feedback">Looks good!</div>
                                     <div class="invalid-feedback">The budget line code must be specified</div>
                                 </div>
                             </div>
                         </div>
-                        <%--<div class="row">
+                        <!--<div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-control-label" for="BudgetLineCode"> Intervention</label>
@@ -298,12 +302,12 @@
                                     <div class="invalid-feedback">The intervention must be specified</div>
                                 </div>
                             </div>
-                        </div>--%> <%--GF--%>
+                        </div>--> <!--GF-->
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-control-label" for="Purpose">Purpose</label>
-                                    <textarea class="form-control" rows="2" id="Purpose" required></textarea>
+                                    @Html.TextBoxFor(Model => Model.Purpose, new { @class = "form-control", rows = "2" })
                                     <div class="valid-feedback">Looks good!</div>
                                     <div class="invalid-feedback">The purpose must be supplied</div>
                                 </div>
@@ -313,7 +317,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-control-label" for="Amount">Amount(LCY)</label>
-                                    <input type="text" class="form-control" id="Amount" required>
+                                    @Html.TextBoxFor(Model => Model.Amount, new { @class = "form-control", type = "file" })
                                     <div class="valid-feedback">Looks good!</div>
                                     <div class="invalid-feedback">The Amount must be supplied</div>
                                 </div>
@@ -356,14 +360,14 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="postedFile" class="form-control-label">Attachment File</label>
-                                    <input type="file" id="postedFile" name="postedFile" class="form-control-file" required accept=".pdf" />
+                                    @Html.TextBoxFor(Model=>Model.postedFile,new {@class= "form-control-file",type ="file",@accept =".pdf",name = "postedFile"})
                                     <div class="valid-feedback">Looks good!</div>
                                     <div class="invalid-feedback">A file to upload must be chosen</div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <textarea class="form-control" rows="2" id="AttachmentDescription" required></textarea>
+                                    @Html.TextBoxFor(Model => Model.AttachmentDescription,new {@class="form-control",id= "AttachmentDescription" })
                                     <div class="valid-feedback">Looks good!</div>
                                     <div class="invalid-feedback">The attachment description must be supplied</div>
                                 </div>
@@ -373,32 +377,13 @@
                 </div>
 
                 <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <button class="btn btn-success" type="button" id="SaveAttachment">Save</button>
-                </div>
+              
 
             </div>
         </div>
     </div>
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="Logout.aspx">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 </main>
 <script src="~/Assest/vendor/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
@@ -427,8 +412,8 @@
 <link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
 <!-- Custom styles for this template-->
-<link href="css/sb-admin.css" rel="stylesheet">
-<link href="css/select2.min.css" rel="stylesheet" />
+<link href="~/Assest/css/sb-admin.css" rel="stylesheet">
+<link href="~/Assest/select2.min.css" rel="stylesheet" />
 <!--jQUERY date picker--->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
@@ -470,11 +455,8 @@
         contentType: "application/json; charset=utf-8",
         success: function ( response ) {
 
-            if ( response != null && response.d != null ) {
-                var data = response.d;
-                // alert(typeof (data)); //it comes out to be string
-                //we need to parse it to JSON
-                data = $.parseJSON( data );
+            if ( response != null) {
+                var data = $.parseJSON( response );
                 $( "#BudgetLineCode" ).append( $( '<option></option>' ).attr( "value", "OTHERS" ).text( "Others" ) );
                 $.each( data, function ( i, item ) {
                     $( "#BudgetLineCode" ).append( $( '<option></option>' ).attr( "value", item.Code ).text( item.Description ) );
@@ -509,11 +491,8 @@
                 contentType: "application/json; charset=utf-8",
                 success: function ( response ) {
 
-                    if ( response != null && response.d != null ) {
-                        var data = response.d;
-                        // alert(typeof (data)); //it comes out to be string
-                        //we need to parse it to JSON
-                        data = $.parseJSON( data );
+                    if ( response != null) {
+                        var data = $.parseJSON( response );
 
                         jQuery_3_3_1.Toast.hideToast();
 
@@ -582,11 +561,8 @@
                         contentType: "application/json; charset=utf-8",
                         success: function ( response ) {
 
-                            if ( response != null && response.d != null ) {
-                                var data = response.d;
-                                // alert(typeof (data)); //it comes out to be string
-                                //we need to parse it to JSON
-                                data = $.parseJSON( data );
+                            if ( response != null ) {
+                                var data = $.parseJSON( response );
 
                                 // hideLoading();
 
@@ -624,11 +600,8 @@
             contentType: "application/json; charset=utf-8",
             success: function ( response ) {
 
-                if ( response != null && response.d != null ) {
-                    var data = response.d;
-                    // alert(typeof (data)); //it comes out to be string
-                    //we need to parse it to JSON
-                    data = $.parseJSON( data );
+                if ( response != null  ) {
+                    var data = $.parseJSON( response );
                     $( "#Item" ).val( data.Item ).change();
                     $( '#ItemDescription' ).val( data.ItemDescription );
                     $( '#Purpose' ).val( data.Purpose );
@@ -676,11 +649,8 @@
                         contentType: "application/json; charset=utf-8",
                         success: function ( response ) {
 
-                            if ( response != null && response.d != null ) {
-                                var data = response.d;
-                                // alert(typeof (data)); //it comes out to be string
-                                //we need to parse it to JSON
-                                data = $.parseJSON( data );
+                            if ( response != null ) {
+                                var data = $.parseJSON( response );
 
                                 //hideLoading();
 
@@ -745,11 +715,8 @@
                         contentType: "application/json; charset=utf-8",
                         success: function ( response ) {
 
-                            if ( response != null && response.d != null ) {
-                                var data = response.d;
-                                // alert(typeof (data)); //it comes out to be string
-                                //we need to parse it to JSON
-                                data = $.parseJSON( data );
+                            if ( response != null) {
+                                var data = $.parseJSON( response );
 
                                 jQuery_3_3_1.Toast.hideToast();
 
@@ -808,11 +775,8 @@
                 contentType: "application/json; charset=utf-8",
                 success: function ( response ) {
 
-                    if ( response != null && response.d != null ) {
-                        var data = response.d;
-                        // alert(typeof (data)); //it comes out to be string
-                        //we need to parse it to JSON
-                        data = $.parseJSON( data );
+                    if ( response != null) {
+                        var data = $.parseJSON( response );
 
                         jQuery_3_3_1.Toast.hideToast();
 
@@ -855,11 +819,8 @@
                 contentType: "application/json; charset=utf-8",
                 success: function ( response ) {
 
-                    if ( response != null && response.d != null ) {
-                        var data = response.d;
-                        // alert(typeof (data)); //it comes out to be string
-                        //we need to parse it to JSON
-                        data = $.parseJSON( data );
+                    if ( response != null) {
+                        var data = $.parseJSON( response );
 
                         jQuery_3_3_1.Toast.hideToast();
 
@@ -1010,11 +971,8 @@
                 contentType: "application/json; charset=utf-8",
                 success: function ( response ) {
 
-                    if ( response != null && response.d != null ) {
-                        var data = response.d;
-                        // alert(typeof (data)); //it comes out to be string
-                        //we need to parse it to JSON
-                        data = $.parseJSON( data );
+                    if ( response != null) {
+                        var data = $.parseJSON( response );
 
                         if ( data.Status != "000" ) {
 
@@ -1049,11 +1007,8 @@
                     contentType: "application/json; charset=utf-8",
                     success: function ( response ) {
 
-                        if ( response != null && response.d != null ) {
-                            var data = response.d;
-                            // alert(typeof (data)); //it comes out to be string
-                            //we need to parse it to JSON
-                            data = $.parseJSON( data );
+                        if ( response != null ) {
+                            var data = $.parseJSON( response );
 
                             document.getElementById( 'Amount' ).disabled = true;
 
@@ -1094,11 +1049,8 @@
             contentType: "application/json; charset=utf-8",
             success: function ( response ) {
 
-                if ( response != null && response.d != null ) {
-                    var data = response.d;
-                    // alert(typeof (data)); //it comes out to be string
-                    //we need to parse it to JSON
-                    data = $.parseJSON( data );
+                if ( response != null) {
+                    var data = $.parseJSON( response );
                     $( "#Item" ).append( $( '<option></option>' ).attr( "value", "OTHERS" ).text( "Others" ) );
                     $.each( data, function ( i, item ) {
                         $( "#Item" ).append( $( '<option></option>' ).attr( "value", item.Code ).text( item.Description ) );
@@ -1113,11 +1065,8 @@
             contentType: "application/json; charset=utf-8",
             success: function ( response ) {
 
-                if ( response != null && response.d != null ) {
-                    var data = response.d;
-                    // alert(typeof (data)); //it comes out to be string
-                    //we need to parse it to JSON
-                    data = $.parseJSON( data );
+                if ( response != null) {
+                    var data = $.parseJSON( response );
 
                     $.each( data, function ( i, item ) {
                         $( "#UnitofMeasure" ).append( $( '<option></option>' ).attr( "value", item.Code ).text( item.Description ) );

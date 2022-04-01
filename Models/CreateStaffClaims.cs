@@ -15,15 +15,15 @@ namespace LMS.Models
         public string MissionSummary { get; set; }
         public string NoOfUnits { get; set; }
         public string Amount { get; set; }
-        public string ExchangeRate { get; set; }
+        public DropDownList PreferredPaymentMethod { get; set; }
         public string Purpose { get; set; }
         public string AdvanceRequestLineNo { get; set; }
         public string BudgetLineCode { get; set; }
-        public string UnitCost { get; set; }
+        public string postedFile { get; set; }
         public string UnitofMeasure { get; set; }
+        public string AttachmentDescription { get; set; }
         public string ItemDescription { get; set; }
-        public string ActualAmount { get; set; }
-        public string Remarks { get; set; }
+        public string UnitCost { get; set; }
         public string DimCode2Label { get; set; }
         public string DimCode3Label { get; set; }
         public string DimCode4Label { get; set; }

@@ -217,12 +217,12 @@ HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE")
                 </a>
                 <ul id="Advance-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <h6 class="dropdown-header">Staff Advance</h6>
-                    <a class="dropdown-item" href="CreateAdvanceRequest.aspx">New Request</a>
+                    <a class="dropdown-item" href="@Url.Action("CreateAdvanceRequest","CreateAdvanceRequest")">New Request</a>
                     <div class="dropdown-divider"></div>
                     <h6 class="dropdown-header">My Summaries:</h6>
-                    <a class="dropdown-item" href="AdvanceRequests.aspx?status=Open">Open</a>
-                    <a class="dropdown-item" href="AdvanceRequests.aspx?status=Pending">Pending</a>
-                    <a class="dropdown-item" href="AdvanceRequests.aspx?status=Approved">Approved</a>
+                    <a class="dropdown-item" href="@Url.Action("AdvanceRequests", "AdvanceRequests", new { status = "Open"})">Open</a>
+                    <a class="dropdown-item" href="@Url.Action("AdvanceRequests", "AdvanceRequests", new { status = "Pending"})">Pending</a>
+                    <a class="dropdown-item" href="@Url.Action("AdvanceRequests", "AdvanceRequests", new { status = "Approved"})">Approved</a>
                 </ul>
             </li>
             @*}*@
@@ -235,12 +235,12 @@ HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE")
                 <ul id="Surrender-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 
                     <h6 class="dropdown-header">Advance Surrender</h6>
-                    <a class="dropdown-item" href="CreateAdvanceSurrender.aspx">New Request</a>
+                    <a class="dropdown-item" href="@Url.Action("CreateAdvanceSurrender","CreateAdvanceSurrender")">New Request</a>
                     <div class="dropdown-divider"></div>
                     <h6 class="dropdown-header">My Summaries:</h6>
-                    <a class="dropdown-item" href="AdvanceSurrenders.aspx?status=Open">Open</a>
-                    <a class="dropdown-item" href="AdvanceSurrenders.aspx?status=Pending">Pending</a>
-                    <a class="dropdown-item" href="AdvanceSurrenders.aspx?status=Approved">Approved</a>
+                    <a class="dropdown-item" href="@Url.Action("AdvanceSurrenders", "AdvanceSurrenders", new { status = "Open"})">Open</a>
+                    <a class="dropdown-item" href="@Url.Action("AdvanceSurrenders", "AdvanceSurrenders", new { status = "Pending"})">Pending</a>
+                    <a class="dropdown-item" href="@Url.Action("AdvanceSurrenders", "AdvanceSurrenders", new { status = "Approved"})">Approved</a>
                 </ul>
             </li>
             @*}*@
@@ -255,22 +255,22 @@ HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE")
                     <h6 class="dropdown-header">Appraisals</h6>
                     @if (HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE")
                     {
-                        <a class="dropdown-item" href="CreateAppraisal.aspx">Create Appraisal</a>
+                        <a class="dropdown-item" href="@Url.Action("CreateAppraisal","CreateAppraisal")">Create Appraisal</a>
                     }
-                    <a class="dropdown-item" href="Appraisals.aspx?status=New">Fill Appraisal</a>
+                    <a class="dropdown-item" href="@Url.Action("Appraisals", "Appraisals", new { status = "New"})">Fill Appraisal</a>
                     @if (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE")
                     {
                         <div class="dropdown-divider"></div>
                         <h6 class="dropdown-header"> Appraisal Sections:</h6>
-                        <a class="dropdown-item" href="DefineAppraisalSections.aspx">Define Sections</a>
-                        <a class="dropdown-item" href="CreatePML.aspx">Create PMLs</a>
+                        <a class="dropdown-item" href="@Url.Action("DefineAppraisalSections","DefineAppraisalSections")">Define Sections</a>
+                        <a class="dropdown-item" href="@Url.Action("CreatePML","CreatePML")">Create PMLs</a>
                     }
                     <div class="dropdown-divider"></div>
                     <h6 class="dropdown-header">My Appraisals:</h6>
-                    <a class="dropdown-item" href="Appraisals.aspx?status=Open&owner=Employee">Open</a>
-                    <a class="dropdown-item" href="Appraisals.aspx?status=Submitted&owner=Employee">Pending</a>
-                    <a class="dropdown-item" href="Appraisals.aspx?status=HR&owner=Employee">Sent To HR</a>
-                    <a class="dropdown-item" href="Appraisals.aspx?status=Closed&owner=Employee">Closed</a>
+                    <a class="dropdown-item" href="@Url.Action("Appraisals", "Appraisals", new {status = "Open",owner = "Employee" })">Open</a>
+                    <a class="dropdown-item" href="@Url.Action("Appraisals", "Appraisals", new {status = "Submitted",owner = "Employee" })">Pending</a>
+                    <a class="dropdown-item" href="@Url.Action("Appraisals", "Appraisals", new {status = "HR",owner = "Employee" })">Sent To HR</a>
+                    <a class="dropdown-item" href="@Url.Action("Appraisals", "Appraisals", new {status = "Closed",owner = "Employee" })">Closed</a>
                 </ul>
             </li>
             @*}
@@ -342,13 +342,13 @@ HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE")
             </a>
                 <ul id="Trainings-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <h6 class="dropdown-header">Create </h6>
-                <a class="dropdown-item" href="CreateTrainingRequest.aspx">Create Training</a>
+                <a class="dropdown-item" href="@Url.Action("CreateTrainingRequest","CreateTrainingRequest")">Create Training</a>
                 <div class="dropdown-divider"></div>
                 <h6 class="dropdown-header">My Trainings:</h6>
-                <a class="dropdown-item" href="Trainings.aspx?status=Open">Open</a>
-                <a class="dropdown-item" href="Trainings.aspx?status=Pending">Pending</a>
-                <a class="dropdown-item" href="Trainings.aspx?status=Approved">Approved</a>
-                <a class="dropdown-item" href="Trainings.aspx?status=Rejected">Rejected</a>
+                <a class="dropdown-item" href="@Url.Action("Trainings", "Trainings", new { status = "Open"})">Open</a>
+                <a class="dropdown-item" href="@Url.Action("Trainings", "Trainings", new { status = "Pending"})">Pending</a>
+                <a class="dropdown-item" href="@Url.Action("Trainings", "Trainings", new { status = "Approved"})">Approved</a>
+                <a class="dropdown-item" href="@Url.Action("Trainings", "Trainings", new { status = "Rejected"})">Rejected</a>
                </ul>
         </li>
             @*}*@ 
@@ -361,27 +361,27 @@ HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE")
             <ul id="TransportRequests-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 
                 <h6 class="dropdown-header">Transport Requests</h6>
-                <a class="dropdown-item" href="CreateTransportRequest.aspx">New Request</a>
+                <a class="dropdown-item" href="@Url.Action("CreateTransportRequest","CreateTransportRequest")">New Request</a>
                 <div class="dropdown-divider"></div>
                 <h6 class="dropdown-header">My Summaries:</h6>
-                <a class="dropdown-item" href="TransportRequests.aspx?status=Open">Open</a>
-                <a class="dropdown-item" href="TransportRequests.aspx?status=Pending">Pending</a>
-                <a class="dropdown-item" href="TransportRequests.aspx?status=Approved">Approved</a>
+                <a class="dropdown-item" href="@Url.Action("TransportRequests", "TransportRequests", new { status = "Open"})">Open</a>
+                <a class="dropdown-item" href="@Url.Action("TransportRequests", "TransportRequests", new { status = "Pending"})">Pending</a>
+                <a class="dropdown-item" href="@Url.Action("TransportRequests", "TransportRequests", new { status = "Approved"})">Approved</a>
 
                 @*@if (HttpContext.Current.Session["IsTransportManager"].ToString() == "TRUE")
                 {*@
                     <div class="dropdown-divider"></div>
                     <h6 class="dropdown-header">Transport Manager:</h6>
-                    <a class="dropdown-item" href="TransportRequests.aspx?status=Unassigned">Approved But Unassigned</a>
-                    <a class="dropdown-item" href="TransportRequests.aspx?status=Assigned">Assigned</a>
-                    <a class="dropdown-item" href="TransportRequests.aspx?status=Ended">Ended</a>
+                    <a class="dropdown-item" href="@Url.Action("TransportRequests", "TransportRequests", new { status = "Unassigned"})">Approved But Unassigned</a>
+                    <a class="dropdown-item" href="@Url.Action("TransportRequests", "TransportRequests", new { status = "Assigned"})">Assigned</a>
+                    <a class="dropdown-item" href="@Url.Action("TransportRequests", "TransportRequests", new { status = "Ended"})">Ended</a>
                 @*}
                 @if (HttpContext.Current.Session["IsDriver"].ToString() == "TRUE")
                 {*@
                     <div class="dropdown-divider"></div>
                     <h6 class="dropdown-header">Driver:</h6>
-                    <a class="dropdown-item" href="TransportRequests.aspx?status=Unclosed">Assigned But Unclosed</a>
-                    <a class="dropdown-item" href="TransportRequests.aspx?status=Closed">Closed</a>
+                    <a class="dropdown-item" href="@Url.Action("TransportRequests", "TransportRequests", new { status = "Unclosed"})">Assigned But Unclosed</a>
+                    <a class="dropdown-item" href="@Url.Action("TransportRequests", "TransportRequests", new { status = "Closed"})">Closed</a>
                 @*}*@
 
                 </ul>
@@ -397,12 +397,12 @@ HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE")
                 <ul id="Reports-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 
                 <h6 class="dropdown-header">Payslips</h6>
-                <a class="dropdown-item" href="Payslips.aspx">Download</a>
+                <a class="dropdown-item" href="@Url.Action("Payslips","Payslips")">Download</a>
                 <div class="dropdown-divider"></div>
                 <h6 class="dropdown-header"> P9 Forms:</h6>
-                <a class="dropdown-item" href="P9Forms.aspx">Download</a>
+                <a class="dropdown-item" href="@Url.Action("P9Forms","P9Forms")">Download</a>
                 <h6 class="dropdown-header"> Staff Advance:</h6>
-                <a class="dropdown-item" href="AdvanceRequest.aspx">Download</a>
+                <a class="dropdown-item" href="@Url.Action("AdvanceRequest","AdvanceRequest")">Download</a>
                 </ul>
         </li>
              @*}*@ 

@@ -24,12 +24,8 @@ namespace LMS.Controllers
         CreateAdvanceRequest cr = new CreateAdvanceRequest();
 
         // GET: CreateAdvanceRequest
-        public ActionResult CreateAdvanceRequest()
-        {
-            return View();
-        }
-        [AllowAnonymous]
-        [HttpPost]
+     
+       
         public ActionResult CreateAdvanceRequest(CreateAdvanceRequest create)
         {
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "active";
@@ -44,24 +40,27 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsTrainingActive"] = "";
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
-
-            if (Session["Logged"].Equals("No"))
+            System.Web.HttpContext.Current.Session["Company"] = "Management Unit";
+            var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
+            var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
+            //check if user is logged
+            if ((string)log == "No")
             {
-                Response.Redirect("Login.aspx");
+                Response.Redirect("/Account/login");
             }
-            else if (Session["Logged"].Equals("Yes"))
+            else if ((string)log == "yes")
             {
-                if (Session["RequirePasswordChange"].Equals("TRUE"))
+                if ((object)passRequired == "true")
                 {
-                    Response.Redirect("OneTimePass.aspx");
+                    Response.Redirect("/Account/OneTimePassword");
                 }
                 else
                 {
-                    bool IsPostBack = false || true;
-                    if (!IsPostBack)
+                    bool IsPostBack = false;
+                    if (!IsPostBack )
                     {
                         LoadPrefferedMethodOfPayment();
-                        GetDimensionCodes();
+                       GetDimensionCodes();
                     }
 
                     if (Request.QueryString["No"] != null)
@@ -74,11 +73,11 @@ namespace LMS.Controllers
                     {
                         CreatedAdvanceRequestsHeader = _CreatedAdvanceRequestsHeader;
 
-                        string DocumentNo = GenerateDocumentNo("");
+                        //string DocumentNo = GenerateDocumentNo("");
 
-                        Session["AdvanceRequestNo"] = DocumentNo;
+                        //Session["AdvanceRequestNo"] = DocumentNo;
 
-                        Response.Redirect("CreateAdvanceRequest.aspx?No=" + DocumentNo + "");
+                        //Response.Redirect("CreateAdvanceRequest.aspx?No=" + DocumentNo + "");
                     }
                     else
                     {
@@ -205,10 +204,7 @@ namespace LMS.Controllers
                 new PreferredPaymentMethod() {Id = 2, Name="Cheque" },
             };
             ViewBag.PreferredPaymentMethod = list;
-            //PreferredPaymentMethod.Items.Clear();
-            //PreferredPaymentMethod.Items.Insert(0, new ListItem("Mpesa", "2"));
-            //PreferredPaymentMethod.Items.Insert(0, new ListItem("Cheque ", "1"));
-            //PreferredPaymentMethod.Items.Insert(0, new ListItem(" ", "0"));
+           
         }
         private void LoadTableAttachments(string AdvanceRequestHdrNo)
         {

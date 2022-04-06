@@ -340,58 +340,59 @@
 
 <script src="~/Assest/js/select2.min.js"></script>
 <script>
-    $(function () {
-        $("#Attachment").hide();
+    $( "#Attachment" ).hide();
 
-        $('#PreferredPaymentMethod' ).select2( {
-            sorter: function ( data ) {
-                return data.sort( function ( a, b ) {
-                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
-                } );
-            }
-        } );
-        $( '#DimCode1' ).select2( {
-            sorter: function ( data ) {
-                return data.sort( function ( a, b ) {
-                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
-                } );
-            }
-        } );
-        $( '#DimCode2' ).select2( {
-            sorter: function ( data ) {
-                return data.sort( function ( a, b ) {
-                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
-                } );
-            }
-        } );
-        $( '#DimCode3' ).select2( {
-            sorter: function ( data ) {
-                return data.sort( function ( a, b ) {
-                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
-                } );
-            }
-        } );
-        $( '#DimCode4' ).select2( {
-            sorter: function ( data ) {
-                return data.sort( function ( a, b ) {
-                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
-                } );
-            }
-        } );
-        $( '#DimCode6' ).select2( {
-            sorter: function ( data ) {
-                return data.sort( function ( a, b ) {
-                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
-                } );
-            }
-        } );
-        $( '#VehicleClass' ).select2( {
-            sorter: function ( data ) {
-                return data.sort( function ( a, b ) {
-                    return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
-                } );
-            }
-        } );
+    $( '#PreferredPaymentMethod' ).select2( {
+        sorter: function ( data ) {
+            return data.sort( function ( a, b ) {
+                return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+            } );
+        }
+    } );
+    $( '#DimCode1' ).select2( {
+        sorter: function ( data ) {
+            return data.sort( function ( a, b ) {
+                return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+            } );
+        }
+    } );
+    $( '#DimCode2' ).select2( {
+        sorter: function ( data ) {
+            return data.sort( function ( a, b ) {
+                return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+            } );
+        }
+    } );
+    $( '#DimCode3' ).select2( {
+        sorter: function ( data ) {
+            return data.sort( function ( a, b ) {
+                return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+            } );
+        }
+    } );
+    $( '#DimCode4' ).select2( {
+        sorter: function ( data ) {
+            return data.sort( function ( a, b ) {
+                return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+            } );
+        }
+    } );
+    $( '#DimCode6' ).select2( {
+        sorter: function ( data ) {
+            return data.sort( function ( a, b ) {
+                return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+            } );
+        }
+    } );
+    $( '#VehicleClass' ).select2( {
+        sorter: function ( data ) {
+            return data.sort( function ( a, b ) {
+                return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+            } );
+        }
+    } );
+    $(function () {
+        
 
         //datepickers
         $( "#StartDateTime" ).datetimepicker( {

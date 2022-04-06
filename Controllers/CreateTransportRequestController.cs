@@ -20,9 +20,14 @@ namespace LMS.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// Justus Kasyoki 4/06/2022
+        /// 
+        /// Crearting Transport Request by displaying information first
+        /// </summary>
+        /// <returns></returns>
         public ActionResult CreateTransportRequest()
         {
-
             Session["ErrorMessage"] = "";
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
             System.Web.HttpContext.Current.Session["IsDashboardActive"] = "";
@@ -37,15 +42,18 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "active";
 
-            if (Session["Logged"].Equals("No"))//set to No
+            var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
+            var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
+            //check if user is logged
+            if ((string)log == "No")
             {
-                Response.Redirect("Login.aspx");
+                Response.Redirect("/Account/login");
             }
-            else if (Session["Logged"].Equals("Yes"))
+            else if ((string)log == "yes")
             {
-                if (Session["RequirePasswordChange"].Equals("TRUE"))
+                if ((object)passRequired == "true")
                 {
-                    Response.Redirect("OneTimePass.aspx");
+                    Response.Redirect("/Account/OneTimePassword");
                 }
                 else
                 {
@@ -98,8 +106,7 @@ namespace LMS.Controllers
         }
         private void LoadDimCodeValues(DropDownList _DropDownList, string Code)
         {
-            _DropDownList.Items.Clear();
-
+           
             foreach (var kvp in CreateAdvanceRequestXMLRequests.GetDimCode(Code))
             {
                 _DropDownList.Items.Insert(0, new ListItem(kvp.Key + " - " + kvp.Value, kvp.Key));
@@ -112,7 +119,7 @@ namespace LMS.Controllers
             return cultInfo.ToTitleCase(inString);
         }
         
-        public static string GetVehicleClassRate(string Code)
+        public JsonResult GetVehicleClassRate(string Code)
         {
             string rate = WebserviceConfig.ObjNav.GetVehicleClassRate(Code);
             rate = rate.Replace(",", "");
@@ -124,7 +131,7 @@ namespace LMS.Controllers
             return jsonString;
         }
         
-        public static string Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9, string param10, string param11)
+        public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9, string param10, string param11)
         {
             string _Status = "900";
             string _Message = "";
@@ -223,7 +230,7 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
 
     }

@@ -7,336 +7,7 @@
 <main id="main" class="main">
     <div id="wrapper">
 
-        <!-- Sidebar -->
-
-        <ul class="sidebar navbar-nav toggled">
-
-            <li class="nav-item @Html.Raw(HttpContext.Current.Session[" IsDashboardActive"].ToString());
-                ">
-                <a class="nav-link" href="Dashboard.aspx">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-
-            @if (HttpContext.Current.Session["AdvanceClaim"].ToString() == "TRUE") {
-            <li class="nav-item dropdown @{Response.Write(HttpContext.Current.Session[" IsClaimActive"].ToString()); }
-                    ">
-                    <a class="nav-link dropdown-toggle" href="#" id="StaffClaimsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-fw fa-money-check-alt"></i>
-                    <span>Staff Claims</span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="StaffClaimsDropdown">
-                    <h6 class="dropdown-header">Staff Claims</h6>
-                    <a class="dropdown-item" href="CreateStaffClaims.aspx">New Request</a>
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">My Summaries:</h6>
-                    <a class="dropdown-item" href="StaffClaims.aspx?status=Open">Open</a>
-                    <a class="dropdown-item" href="StaffClaims.aspx?status=Pending">Pending</a>
-                    <a class="dropdown-item" href="StaffClaims.aspx?status=Approved">Approved</a>
-
-                </div>
-            </li>
-            } 
-            @if (HttpContext.Current.Session["AdvanceRequests"].ToString() == "TRUE") {
-            <li class="nav-item dropdown @Html.Raw(HttpContext.Current.Session[" IsAdvanceActive"].ToString());
-                ">
-                <a class="nav-link dropdown-toggle" href="#" id="AdvanceRequestsDropdow" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-fw fa-wallet"></i>
-                    <span>Advance Requests</span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="AdvanceRequestsDropdow">
-                    <h6 class="dropdown-header">Staff Advance</h6>
-                    <a class="dropdown-item" href="CreateAdvanceRequest.aspx">New Request</a>
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">My Summaries:</h6>
-                    <a class="dropdown-item" href="AdvanceRequests.aspx?status=Open">Open</a>
-                    <a class="dropdown-item" href="AdvanceRequests.aspx?status=Pending">Pending</a>
-                    <a class="dropdown-item" href="AdvanceRequests.aspx?status=Approved">Approved</a>
-
-                </div>
-            </li>
-            } 
-            @if (HttpContext.Current.Session["AdvanceSurrender"].ToString() == "TRUE") {
-            <li class="nav-item dropdown @Html.Raw(HttpContext.Current.Session[" IsSurrenderActive"].ToString());
-                ">
-                <a class="nav-link dropdown-toggle" href="#" id="AdvanceSurrenderDropdow" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-fw fa-share-square"></i>
-                    <span>Advance Surrenders</span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="AdvanceSurrenderDropdow">
-                    <h6 class="dropdown-header">Advance Surrender</h6>
-                    <a class="dropdown-item" href="CreateAdvanceSurrender.aspx">New Request</a>
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">My Summaries:</h6>
-                    <a class="dropdown-item" href="AdvanceSurrenders.aspx?status=Open">Open</a>
-                    <a class="dropdown-item" href="AdvanceSurrenders.aspx?status=Pending">Pending</a>
-                    <a class="dropdown-item" href="AdvanceSurrenders.aspx?status=Approved">Approved</a>
-
-                </div>
-            </li>
-            } 
-
-            @if (HttpContext.Current.Session["IsGF"].ToString() == "FALSE") {
-
-                if (HttpContext.Current.Session["Appraisal"].ToString() == "TRUE") {
-            <li class="nav-item dropdown @Html.Raw(HttpContext.Current.Session[" IsAppriasalActive"].ToString());
-                ">
-                <a class="nav-link dropdown-toggle" href="#" id="AppraisalsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-fw fa-question-circle"></i>
-                    <span>Appraisals</span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="AppraisalsDropdown">
-                    <h6 class="dropdown-header">Appraisals</h6>
-                    @if (HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE") {
-                    <a class="dropdown-item" href="CreateAppraisal.aspx">Create Appraisal</a>
-                    } 
-                    <a class="dropdown-item" href="Appraisals.aspx?status=New">Fill Appraisal</a>
-                     @if (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE") {
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header"> Appraisal Sections:</h6>
-                    <a class="dropdown-item" href="DefineAppraisalSections.aspx">Define Sections</a>
-                    <a class="dropdown-item" href="CreatePML.aspx">Create PMLs</a>
-                     } 
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">My Appraisals:</h6>
-                    <a class="dropdown-item" href="Appraisals.aspx?status=Open&owner=Employee">Open</a>
-                    <a class="dropdown-item" href="Appraisals.aspx?status=Submitted&owner=Employee">Pending</a>
-                    <a class="dropdown-item" href="Appraisals.aspx?status=HR&owner=Employee">Sent To HR</a>
-                    <a class="dropdown-item" href="Appraisals.aspx?status=Closed&owner=Employee">Closed</a>
-                </div>
-            </li>
-                }
-            } 
-
-            @if ((HttpContext.Current.Session["AdvanceRequests"].ToString() == "TRUE" && HttpContext.Current.Session["IsStaffAdvanceApprover"].ToString() == "TRUE") || HttpContext.Current.Session["IsLeaveApprover"].ToString() == "TRUE" || (HttpContext.Current.Session["IsTrainingSupervisor"].ToString() == "TRUE" && HttpContext.Current.Session["Training"].ToString() == "TRUE") || (HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE" && HttpContext.Current.Session["Appraisal"].ToString() == "TRUE") || (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE" && HttpContext.Current.Session["Appraisal"].ToString() == "TRUE")) {
-            <li class="nav-item dropdown @{Response.Write(HttpContext.Current.Session[" IsApprovalEntriesActive"].ToString()); }
-                ">
-                <a class="nav-link dropdown-toggle" href="#" id="ApprovalEntriesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-fw fa-paper-plane"></i>
-                    <span>Approval Entries</span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="ApprovalEntriesDropdown">
-                    @if (HttpContext.Current.Session["IsStaffAdvanceApprover"].ToString() == "TRUE" && HttpContext.Current.Session["AdvanceRequests"].ToString() == "TRUE") {
-                    <h6 class="dropdown-header">Approval Entries:</h6>
-                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Pending&parent=AdvanceRequests">Pending</a>
-                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Approved&parent=AdvanceRequests">Approved</a>
-                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Rejected&parent=AdvanceRequests">Rejected</a>
-                    } 
-
-                    <!--//start GF-->
-                    @if (HttpContext.Current.Session["IsGF"].ToString() == "FALSE")
-
-                    {
-
-                    if ((HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE" || HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE") && HttpContext.Current.Session["Appraisal"].ToString() == "TRUE")
-                    {
-                    <h6 class="dropdown-header">Appraisals:</h6>
-                        if (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE") {
-                    <a class="dropdown-item" href="ApprovalEntries.aspx?parent=Appraisals&status=Open&owner=HR">Open</a>
-                    <a class="dropdown-item" href="ApprovalEntries.aspx?parent=Appraisals&status=Closed&owner=HR">Closed</a>
-                        }
-                    if (HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE") {
-                    <a class="dropdown-item" href="ApprovalEntries.aspx?parent=Appraisals&status=Open&owner=Approver">Pending</a>
-                    <a class="dropdown-item" href="ApprovalEntries.aspx?parent=Appraisals&status=Submitted&owner=Approver">Sent To HR</a>
-                    } 
-                    }   
-
-
-                    if (HttpContext.Current.Session["IsLeaveApprover"].ToString() == "TRUE")
-                    {
-                    if (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE" || HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE") {
-                    <div class="dropdown-divider"></div>
-                    }
-                    <h6 class="dropdown-header">Leaves:</h6>
-                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Pending&parent=Leaves">Pending</a>
-                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Approved&parent=Leaves">Approved</a>
-                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Rejected&parent=Leaves">Rejected</a>
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">Leave Recalls:</h6>
-                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Pending&parent=LeaveRecalls">Pending</a>
-                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Approved&parent=LeaveRecalls">Approved</a>
-                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Rejected&parent=LeaveRecalls">Rejected</a>
-                    }
-
-                    if (HttpContext.Current.Session["IsTrainingSupervisor"].ToString() == "TRUE" && HttpContext.Current.Session["Appraisal"].ToString() == "TRUE")
-                    {
-                    if (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE" || HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE" && HttpContext.Current.Session["Appraisal"].ToString() == "TRUE")
-                    {
-                    <div class="dropdown-divider"></div>
-                    } 
-                    <h6 class="dropdown-header">Training Requests:</h6>
-                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Pending&parent=Trainings">Pending</a>
-                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Approved&parent=Trainings">Approved</a>
-                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Rejected&parent=Trainings">Rejected</a>
-                    } 
-
-                    if (HttpContext.Current.Session["IsTransportManager"].ToString() == "TRUE" && HttpContext.Current.Session["TransportRequests"].ToString() == "TRUE")
-                    {
-                    if (HttpContext.Current.Session["IsTransportManager"].ToString() == "TRUE" || HttpContext.Current.Session["IsTransportManager"].ToString() == "TRUE" && HttpContext.Current.Session["TransportRequests"].ToString() == "TRUE")
-                    {
-                    <div class="dropdown-divider"></div>
-                    }
-                    <h6 class="dropdown-header">Transport Requests:</h6>
-                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Pending&parent=TransportRequests">Pending</a>
-                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Approved&parent=TransportRequests">Approved</a>
-                    <a class="dropdown-item" href="ApprovalEntries.aspx?status=Rejected&parent=TransportRequests">Rejected</a>
-                    } 
-
-                    }
-
-                    <!--End GF-->
-
-                </div>
-            </li>
-            } 
-
-            @if (HttpContext.Current.Session["IsGF"].ToString() == "FALSE") {
-            <li class="nav-item dropdown @Html.Raw(HttpContext.Current.Session[" IsLeavesActive"].ToString());
-                ">
-                <a class="nav-link dropdown-toggle" href="#" id="LeavesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-fw fa-suitcase"></i>
-                    <span>Leaves</span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="LeavesDropdown">
-                    <h6 class="dropdown-header">Leave Applications:</h6>
-                    <a class="dropdown-item" href="LeaveApplication.aspx">New Application</a>
-                    @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE") {
-                    <a class="dropdown-item" href="LeaveForOther.aspx">Apply for other</a>
-                    } 
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">My Summaries:</h6>
-                    <a class="dropdown-item" href="Leaves.aspx?status=Open&owner=self">Open</a>
-                    <a class="dropdown-item" href="Leaves.aspx?status=Pending&owner=self">Pending</a>
-                    <a class="dropdown-item" href="Leaves.aspx?status=Approved&owner=self">Approved</a>
-                    <a class="dropdown-item" href="Leaves.aspx?status=Rejected&owner=self">Rejected</a>
-                    @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE") {
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">Summaries for others:</h6>
-                    <a class="dropdown-item" href="Leaves.aspx?status=Open&owner=others">Open</a>
-                    <a class="dropdown-item" href="Leaves.aspx?status=Pending&owner=others">Pending</a>
-                    <a class="dropdown-item" href="Leaves.aspx?status=Approved&owner=others">Approved</a>
-                    <a class="dropdown-item" href="Leaves.aspx?status=Rejected&owner=others">Rejected</a>
-                    } 
-                </div>
-            </li>
-            <li class="nav-item dropdown @{Response.Write(HttpContext.Current.Session[" IsRecallActive"].ToString()); }
-                ">
-                <a class="nav-link dropdown-toggle" href="#" id="LeaveRecallDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Leave Recalls</span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="LeaveRecallDropdown">
-                    <h6 class="dropdown-header">Leave Recall Applications:</h6>
-                    <a class="dropdown-item" href="LeaveRecallApplication.aspx">New Application</a>
-                   @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE") {
-                    <a class="dropdown-item" href="LeaveRecallForOther.aspx">Apply for other</a>
-                   } 
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">My Summaries:</h6>
-                    <a class="dropdown-item" href="LeaveRecalls.aspx?status=Open&owner=self">Open</a>
-                    <a class="dropdown-item" href="LeaveRecalls.aspx?status=Pending&owner=self">Pending</a>
-                    <a class="dropdown-item" href="LeaveRecalls.aspx?status=Approved&owner=self">Approved</a>
-                    <a class="dropdown-item" href="LeaveRecalls.aspx?status=Rejected&owner=self">Rejected</a>
-                    @if (HttpContext.Current.Session["CanApplyLeaveForAnother"].ToString() == "TRUE") {
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header"> Summaries for others:</h6>
-                    <a class="dropdown-item" href="LeaveRecalls.aspx?status=Open&owner=others">Open</a>
-                    <a class="dropdown-item" href="LeaveRecalls.aspx?status=Pending&owner=others">Pending</a>
-                    <a class="dropdown-item" href="LeaveRecalls.aspx?status=Approved&owner=others">Approved</a>
-                    <a class="dropdown-item" href="LeaveRecalls.aspx?status=Rejected&owner=others">Rejected</a>
-                    } 
-                </div>
-            </li>
-            if (HttpContext.Current.Session["Reports"].ToString() == "TRUE") {
-            <li class="nav-item dropdown @{Response.Write(HttpContext.Current.Session[" IsReportsActive"].ToString()); }
-                    ">
-                    <a class="nav-link dropdown-toggle" href="#" id="ReportsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-fw fa-file-pdf"></i>
-                    <span>Reports</span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="ReportsDropdown">
-                    <h6 class="dropdown-header">Payslips</h6>
-                    <a class="dropdown-item" href="Payslips.aspx">Download</a>
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header"> P9 Forms:</h6>
-                    <a class="dropdown-item" href="P9Forms.aspx">Download</a>
-                    <h6 class="dropdown-header"> Staff Advance:</h6>
-                    <a class="dropdown-item" href="AdvanceRequest.aspx">Download</a>
-                </div>
-            </li>
-            } 
-            if (HttpContext.Current.Session["Training"].ToString() == "TRUE") {
-            <li class="nav-item dropdown @{Response.Write(HttpContext.Current.Session[" IsTrainingActive"].ToString());}
-                    ">
-                    <a class="nav-link dropdown-toggle" href="#" id="TrainingsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-fw fa-chalkboard-teacher"></i>
-                    <span>Trainings</span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="TrainingsDropdown">
-                    <h6 class="dropdown-header">Create </h6>
-                    <a class="dropdown-item" href="CreateTrainingRequest.aspx">Create Training</a>
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">My Trainings:</h6>
-                    <a class="dropdown-item" href="Trainings.aspx?status=Open">Open</a>
-                    <a class="dropdown-item" href="Trainings.aspx?status=Pending">Pending</a>
-                    <a class="dropdown-item" href="Trainings.aspx?status=Approved">Approved</a>
-                    <a class="dropdown-item" href="Trainings.aspx?status=Rejected">Rejected</a>
-                </div>
-            </li>
-                } 
-
-                } 
-
-            @if (HttpContext.Current.Session["TransportRequests"].ToString() == "TRUE") {
-            <li class="nav-item dropdown @{Response.Write(HttpContext.Current.Session[" IsTransportRequestActive"].ToString()); }
-                            ">
-                            <a class="nav-link dropdown-toggle" href="#" id="TransportRequestsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-fw fa-shuttle-van"></i>
-                    <span>Transport Requests</span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="TransportRequestsDropdown">
-                    <h6 class="dropdown-header">Transport Requests</h6>
-                    <a class="dropdown-item" href="CreateTransportRequest.aspx">New Request</a>
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">My Summaries:</h6>
-                    <a class="dropdown-item" href="TransportRequests.aspx?status=Open">Open</a>
-                    <a class="dropdown-item" href="TransportRequests.aspx?status=Pending">Pending</a>
-                    <a class="dropdown-item" href="TransportRequests.aspx?status=Approved">Approved</a>
-
-                    @if (HttpContext.Current.Session["IsTransportManager"].ToString() == "TRUE") {
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">Transport Manager:</h6>
-                    <a class="dropdown-item" href="TransportRequests.aspx?status=Unassigned">Approved But Unassigned</a>
-                    <a class="dropdown-item" href="TransportRequests.aspx?status=Assigned">Assigned</a>
-                    } 
-                    @if (HttpContext.Current.Session["IsDriver"].ToString() == "TRUE")
-                    {
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">Driver:</h6>
-                    <a class="dropdown-item" href="TransportRequests.aspx?status=Unclosed">Assigned But Unclosed</a>
-                    <a class="dropdown-item" href="TransportRequests.aspx?status=Closed">Closed</a>
-                    } 
-
-                </div>
-            </li>
-                } 
-
-
-            <li class="nav-item dropdown @{Response.Write(HttpContext.Current.Session[" IsProfileActive"].ToString()); }">
-                <a class="nav-link dropdown-toggle" href="#" id="ProfileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-fw fa-user"></i>
-                    <span>User Profile</span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="ProfileDropdown">
-                    <h6 class="dropdown-header">User Information:</h6>
-                    <a class="dropdown-item" href="Profile.aspx">View Profile</a>
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">User Login:</h6>
-                    <a class="dropdown-item" href="ChangePassword.aspx">Change Password</a>
-                </div>
-            </li>
-        </ul>
+       
 
         <div id="content-wrapper">
 
@@ -389,11 +60,7 @@
         <!-- /.content-wrapper -->
 
     </div>
-    <!-- /#wrapper -->
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+  
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -430,8 +97,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-control-label">Code</label>
-                                    <asp:TextBox runat="server" class="form-control" id="PMLCode"></asp:TextBox>
-                                    @Html.TextAreaFor(Model=>Model.PMLCode,new {@class="form-control" })
+                                    @Html.TextBoxFor(Model=>Model.PMLCode,new {@class="form-control" })
                                 </div>
                             </div>
                         </div>
@@ -439,7 +105,6 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="SectionName" class="form-control-label"> Description</label>
-                                    <asp:TextBox TextMode="multiline" Columns="30" maxlength="50" Rows="3" runat="server" ID="Description" class="form-control MultiLineLimit" required="true"></asp:TextBox>
                                     @Html.TextAreaFor(Model=>Model.Description,new { @class= "form-control MultiLineLimit", TextMode = "multiline" ,Columns = "30" ,maxlength = "50", Rows = "3", required = "true" })
                                     <p class="pull-right text-muted small" id="count_message"></p>
                                     <div class="valid-feedback">Looks good!</div>
@@ -490,9 +155,9 @@
 <link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet">
 <!-- Custom styles for this template-->
-<link href="css/sb-admin.css" rel="stylesheet">
-<link href="css/custom.css" rel="stylesheet">
-<link href="css/select2.min.css" rel="stylesheet" />
+<link href="~/Assest/css/sb-admin.css" rel="stylesheet">
+<link href="~/Assest/css/custom.css" rel="stylesheet">
+<link href="~/Assest/css/select2.min.css" rel="stylesheet" />
 <!--jQUERY date picker--->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -510,10 +175,10 @@
 <script type="text/javascript">
     var jQuery_3_3_1 = $.noConflict( true );
 </script>
-<script src="js/jquery.toast.js"></script>
+
 
 <script>
-    $( document ).ready( function () {
+    $(function () {
         var table = $( '#dataTable' ).DataTable( {
             lengthChange: false,
             buttons: [ 'copy', 'excel', 'pdf', 'print', 'colvis' ]
@@ -533,7 +198,7 @@
         jQuery_3_3_1( "#Submit" ).click( function ( e ) {
             // Fetch form to apply custom Bootstrap validation
             var form = $( "#CreateAppraisal" )
-
+            debugger;
             if ( form[ 0 ].checkValidity() === false ) {
                 event.preventDefault()
                 event.stopPropagation()
@@ -541,20 +206,20 @@
             } else if ( form[ 0 ].checkValidity() === true ) {
 
                 // Perform ajax submit here...
-                showToast( 'Submitting application' );
+              //  showToast( 'Submitting application' );
                 jQuery.ajax( {
-                    url: 'CreatePML.aspx/Submit',
+                    url: "@Url.Action("Submit", "CreatePML")",
                     type: "POST",
                     data: '{param1:"' + $( "#PMLCode" ).val() + '", param2:"' + $( "#Description" ).val() + '"}',
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function ( response ) {
 
-                        if ( response != null && response.d != null ) {
-                            var data = response.d;
+                        if ( response != null ) {
+
                             // alert(typeof (data)); //it comes out to be string
                             //we need to parse it to JSON
-                            data = $.parseJSON( data );
+                            var data = $.parseJSON( response );
 
                             hideLoading();
 
@@ -606,18 +271,18 @@
                         // showToast(pid);
 
                         jQuery.ajax( {
-                            url: 'CreatePML.aspx/DeletePML',
+                            url: "@Url.Action("DeletePML", "CreatePML")",
                             type: "POST",
                             data: '{param1:"' + pid + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function ( response ) {
 
-                                if ( response != null && response.d != null ) {
-                                    var data = response.d;
+                                if ( response != null ) {
+                                    
                                     // alert(typeof (data)); //it comes out to be string
                                     //we need to parse it to JSON
-                                    data = $.parseJSON( data );
+                                    var data = $.parseJSON( response );
 
                                     hideLoading();
 

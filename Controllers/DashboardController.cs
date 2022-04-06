@@ -42,6 +42,9 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
             System.Web.HttpContext.Current.Session["IsStaffAdvanceApprover"] = "";
+            System.Web.HttpContext.Current.Session["AdvanceClaim"] = "";
+            System.Web.HttpContext.Current.Session["AdvanceSurrender"] = "";
+            System.Web.HttpContext.Current.Session["IsGF"] = "";
 
             var profileData = this.Session["UserProfile"] as Login;
             try

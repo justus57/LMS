@@ -39,6 +39,10 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsTrainingActive"] = "";
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
+            System.Web.HttpContext.Current.Session["AdvanceClaim"] = "";
+            System.Web.HttpContext.Current.Session["AdvanceSurrender"] = "";
+            System.Web.HttpContext.Current.Session["IsGF"] = "";
+            System.Web.HttpContext.Current.Session[" IsProfileActive"] = "";
 
             var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
             var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
@@ -62,7 +66,7 @@ namespace LMS.Controllers
         }
         private void LoadTable()
         {
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
 
             DataTable dt = new DataTable();
             dt = DefineAppraisalSectionsXMLRequests.GetAppraisalPMLs();
@@ -117,7 +121,7 @@ namespace LMS.Controllers
             ViewBag.placeholder = strText;
         }
        
-        public static string Submit(string param1, string param2)
+        public JsonResult Submit(string param1, string param2)
         {
             string PMLCode = param1;
             string response = "";
@@ -150,10 +154,10 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
       
-        public static string DeletePML(string param1)
+        public JsonResult DeletePML(string param1)
         {
             string PMLNo = param1;
             string status = "999";
@@ -173,7 +177,7 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
     }
 }

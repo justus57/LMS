@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace LMS.Controllers
 {
+
     public class CreatePMLController : Controller
     {
         // GET: CreatePML
@@ -18,6 +19,12 @@ namespace LMS.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// Justus Kasyoki *Developer
+        /// 
+        ///this controller helps create PML and perform Other tasks 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult CreatePML()
         {
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
@@ -33,21 +40,24 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
 
-            //if (Session["Logged"].Equals("No"))
-            //{
-            //    Response.Redirect("Login.aspx");
-            //}
-            //else if (Session["Logged"].Equals("Yes"))
-            //{
-            //    if (Session["RequirePasswordChange"].Equals("TRUE"))
-            //    {
-            //        Response.Redirect("OneTimePass.aspx");
-            //    }
-            //    else
-            //    {
-            //        LoadTable();
-            //    }
-            //}
+            var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
+            var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
+            //check if user is logged
+            if ((string)log == "No")
+            {
+                Response.Redirect("/Account/login");
+            }
+            else if ((string)log == "yes")
+            {
+                if ((object)passRequired == "true")
+                {
+                    Response.Redirect("/Account/OneTimePassword");
+                }
+                else
+                {
+                    LoadTable();
+                }
+            }
             return View();
         }
         private void LoadTable()

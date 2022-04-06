@@ -12,7 +12,13 @@ using System.Web.Mvc;
 namespace LMS.Controllers
 {
     public class TransportRequestsController : Controller
-    {
+    { 
+        /// <summary>
+        /// Justus Kasyoki 4/06/2022
+        /// 
+        /// Make Transport Request and get allow responses
+        /// </summary>
+        /// <returns></returns>
         // GET: TransportRequests
         public ActionResult Index()
         {
@@ -35,15 +41,18 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "active";
 
-            if (Session["Logged"].Equals("No"))//set to No
+            var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
+            var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
+            //check if user is logged
+            if ((string)log == "No")
             {
-                Response.Redirect("Login.aspx");
+                Response.Redirect("/Account/login");
             }
-            else if (Session["Logged"].Equals("Yes"))
+            else if ((string)log == "yes")
             {
-                if (Session["RequirePasswordChange"].Equals("TRUE"))
+                if ((object)passRequired == "true")
                 {
-                    Response.Redirect("OneTimePass.aspx");
+                    Response.Redirect("/Account/OneTimePassword");
                 }
                 else
                 {
@@ -63,7 +72,7 @@ namespace LMS.Controllers
         }
         private void LoadTable(string status)
         {
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
 
             DataTable dt = new DataTable();
 

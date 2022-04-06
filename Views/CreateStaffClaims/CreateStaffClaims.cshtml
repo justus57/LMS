@@ -68,7 +68,7 @@
                                             <div class="form-group">
                                                 <asp:label id="DimCode1Label" runat="server" />
                                                 <asp:DropDownList CssClass="form-control" ID="DimCode1" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
-                                                @Html.DropDownListFor(model=>Model.DimCode1 , new SelectList(ViewBag.data), new { @CssClass = "form-control",Id="DimCode1",style="100%"})
+                                                @*@Html.DropDownListFor(model=>Model.DimCode1 , new SelectList(ViewBag.data), new { @CssClass = "form-control",Id="DimCode1",style="100%"})*@
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The Dimension Code 1 must be selected</div>
                                             </div>
@@ -78,7 +78,7 @@
                                             <div class="form-group">
                                                 <asp:label id="DimCode2Label" runat="server" />
                                                 <asp:DropDownList CssClass="form-control" ID="DimCode2" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
-                                                @Html.DropDownListFor(model => Model.DimCode2, new { @class = "form-control", Id = "DimCode1", style = "100%" })
+                                                @*@Html.DropDownListFor(model => Model.DimCode2, new { @class = "form-control", Id = "DimCode1", style = "100%" })*@
 
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The Dimension Code 2 must be selected</div>
@@ -90,7 +90,7 @@
                                             <div class="form-group">
                                                 <asp:label id="DimCode4Label" runat="server" />
                                                 <asp:DropDownList CssClass="form-control" ID="DimCode4" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
-                                                @Html.DropDownListFor(model => Model.DimCode4,new SelectList())
+                                                @*@Html.DropDownListFor(model => Model.DimCode4,new SelectList())*@
 
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The Dimension Code 3 must be selected</div>
@@ -133,7 +133,7 @@
                                             <div class="form-group">
                                                 <label class="form-control-label" for="PreferredPaymentMethod">Preferred Payment Method</label>
                                                 <asp:DropDownList CssClass="form-control" ID="PreferredPaymentMethod" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
-                                                @Html.DropDownListFor(model => Model.PreferredPaymentMethod,)
+                                                @*@Html.DropDownListFor(model => Model.PreferredPaymentMethod,)*@
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The preffered method of payment must be selected</div>
                                             </div>

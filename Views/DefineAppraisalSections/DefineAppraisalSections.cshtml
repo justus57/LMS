@@ -32,12 +32,12 @@
                 <div class="card mb-3">
                     <div class="card-header">
                         <i class="fas fa-question-circle"></i>
-                        <% Response.Write(Request["status"]);%> Appraisals
+                        @Html.Raw(ViewBag.Appraisals) Appraisals
                     </div>
                     <div class="card-body">
-                        @if (HttpContext.Current.Session["ErrorMessage"].ToString()!="") { 
+                        @if (System.Web.HttpContext.Current.Session["ErrorMessage"].ToString()!="") { 
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>An error occured!</strong> @{Response.Write(HttpContext.Current.Session["ErrorMessage"].ToString());}.
+                            <strong>An error occured!</strong> @Html.Raw(HttpContext.Current.Session["ErrorMessage"].ToString());.
 
                         </div>
                         } 
@@ -46,6 +46,7 @@
                         </div>
                         <br>
                         <div class="table-responsive">
+                            @Html.Raw(ViewBag.DefineAppraisal)
                             <asp:PlaceHolder ID="placeholder" runat="server" />
                         </div>
                     </div>
@@ -68,10 +69,7 @@
 
     </div>
     <!-- /#wrapper -->
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+   
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -108,7 +106,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="SectionName" class="form-control-label">Section Description</label>
-                                    <asp:TextBox TextMode="multiline" Columns="30" maxlength="50" Rows="3" runat="server" ID="SectionName" class="form-control MultiLineLimit" required="true"></asp:TextBox>
+                                    @Html.TextAreaFor(Model => Model.SectionName, new {@class= "form-control MultiLineLimit", TextMode = "multiline", Columns = "30", maxlength = "50" ,Rows = "3" , ID = "SectionName" })
                                     <p class="pull-right text-muted small" id="count_message"></p>
                                     <div class="valid-feedback">Looks good!</div>
                                     <div class="invalid-feedback">The section name must be supplied</div>
@@ -154,39 +152,39 @@
     </div>
 </main>
 <!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+<script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
 <!-- Page level plugin JavaScript-->
-<script src="vendor/datatables/jquery.dataTables.js"></script>
-<script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+<script src="~/Assest/vendor/datatables/jquery.dataTables.js"></script>
+<script src="~/Assest/vendor/datatables/dataTables.bootstrap4.js"></script>
 <!-- Bootstrap core CSS-->
-<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom fonts for this template-->
-<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
 <!-- Page level plugin CSS-->
-<link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet">
 <!-- Custom styles for this template-->
-<link href="css/sb-admin.css" rel="stylesheet">
-<link href="css/custom.css" rel="stylesheet">
-<link href="css/select2.min.css" rel="stylesheet" />
+<link href="~/Assest/css/sb-admin.css" rel="stylesheet">
+<link href="~/Assest/css/custom.css" rel="stylesheet">
+<link href="~/Assest/css/select2.min.css" rel="stylesheet" />
 <!--jQUERY date picker--->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <!-- Custom scripts for all pages-->
-<script src="js/sb-admin.min.js"></script>
-<script src="js/bootbox.all.min.js"></script>
-<script src="js/bootboxError.js"></script>
-<script src="js/jquery.pleaseWait.js"></script>
+<script src="~/Assest/js/sb-admin.min.js"></script>
+<script src="~/Assest/js/bootbox.all.min.js"></script>
+<script src="~/Assest/js/bootboxError.js"></script>
+<script src="~/Assest/js/jquery.pleaseWait.js"></script>
 <!-- JQUERY DATEPICKER-->
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="js/select2.min.js"></script>
+<script src="~/Assest/js/select2.min.js"></script>
 <!-- Demo scripts for this page-->
 
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -200,11 +198,11 @@
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
-<script src="js/jquery.toast.js"></script>
+<script src="~/Assest/js/jquery.toast.js"></script>
 <script type="text/javascript">
     var jQuery_3_3_1 = $.noConflict( true );
 </script>
-<script src="js/jquery.toast.js"></script>
+<script src="~/Assest/js/jquery.toast.js"></script>
 
 <script>
     $( document ).ready( function () {
@@ -239,18 +237,15 @@
                 // Perform ajax submit here...
                 showToast( 'Saving section' );
                 jQuery.ajax( {
-                    url: 'DefineAppraisalSections.aspx/Submit',
+                    url: "@Url.Action("Submit", "DefineAppraisalSections")",
                     type: "POST",
                     data: '{param1:"' + $( "#SectionName" ).val() + '", param2:"' + radioValue + '"}',
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function ( response ) {
 
-                        if ( response != null && response.d != null ) {
-                            var data = response.d;
-                            // alert(typeof (data)); //it comes out to be string
-                            //we need to parse it to JSON
-                            data = $.parseJSON( data );
+                        if ( response != null ) {
+                            var data = $.parseJSON( response );
 
                             hideLoading();
 
@@ -302,18 +297,15 @@
                         // showToast(pid);
 
                         jQuery.ajax( {
-                            url: 'DefineAppraisalSections.aspx/DeleteSection',
+                            url: "@Url.Action("DeleteSection", "DefineAppraisalSections")",
                             type: "POST",
                             data: '{param1:"' + pid + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function ( response ) {
 
-                                if ( response != null && response.d != null ) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-                                    data = $.parseJSON( data );
+                                if ( response != null  ) {
+                                    var data= $.parseJSON( response );
 
                                     hideLoading();
 
@@ -359,18 +351,15 @@
                         // showToast(pid);
 
                         jQuery.ajax( {
-                            url: 'DefineAppraisalSections.aspx/SetSupervisorDefined',
+                            url: "@Url.Action("SetSupervisorDefined", "DefineAppraisalSections")",
                             type: "POST",
                             data: '{param1:"' + pid + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function ( response ) {
 
-                                if ( response != null && response.d != null ) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
-                                    //we need to parse it to JSON
-                                    data = $.parseJSON( data );
+                                if ( response != null ) {
+                                    var data = $.parseJSON( response );
 
                                     hideLoading();
 
@@ -416,18 +405,16 @@
                         // showToast(pid);
 
                         jQuery.ajax( {
-                            url: 'DefineAppraisalSections.aspx/SetHRDefined',
+                            url: "@Url.Action("SetHRDefined", "DefineAppraisalSections")",
                             type: "POST",
                             data: '{param1:"' + pid + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function ( response ) {
 
-                                if ( response != null && response.d != null ) {
-                                    var data = response.d;
-                                    // alert(typeof (data)); //it comes out to be string
+                                if ( response != null) {
                                     //we need to parse it to JSON
-                                    data = $.parseJSON( data );
+                                    var data = $.parseJSON( daresponseta );
 
                                     hideLoading();
 

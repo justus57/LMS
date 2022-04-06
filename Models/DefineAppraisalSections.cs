@@ -7,5 +7,7 @@ namespace LMS.Models
 {
     public class DefineAppraisalSections
     {
+        public string SectionName { get; set; }
+             
     }
 }

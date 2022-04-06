@@ -16,6 +16,12 @@ namespace LMS.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// justus kasyoki 4/06/2022
+        /// 
+        /// Run Appraisals Action to get details to view
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Appraisals()
         {
             Session["ErrorMessage"] = "";
@@ -33,16 +39,20 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
+            
 
-            if (Session["Logged"].Equals("No"))//set to No
+            var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
+            var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
+            //check if user is logged
+            if ((string)log == "No")
             {
-                Response.Redirect("Login.aspx");
+                Response.Redirect("/Account/login");
             }
-            else if (Session["Logged"].Equals("Yes"))
+            else if ((string)log == "yes")
             {
-                if (Session["RequirePasswordChange"].Equals("TRUE"))
+                if ((object)passRequired == "true")
                 {
-                    Response.Redirect("OneTimePass.aspx");
+                    Response.Redirect("/Account/OneTimePassword");
                 }
                 else
                 {
@@ -61,9 +71,15 @@ namespace LMS.Controllers
             }
             return View();
         }
+        /// <summary>
+        /// justus kasyoki 4/06/2022
+        /// 
+        /// load table data
+        /// </summary>
+        /// <param name="status"></param>
         private void LoadTable(string status)
         {
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
 
             DataTable dt = new DataTable();
 
@@ -186,6 +202,12 @@ namespace LMS.Controllers
             //placeholder.Controls.Add(new Literal { Text = html.ToString() });
             ViewBag.Table = strText;
         }
+        /// <summary>
+        /// justus kasyoki 4/06/2022
+        /// 
+        /// clear table data
+        /// </summary>
+        /// <param name="table"></param>
         private void ClearTable(DataTable table)
         {
             try

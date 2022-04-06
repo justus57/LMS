@@ -34,9 +34,8 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <asp:label id="DimCode6Label" runat="server" />
-                                                <asp:DropDownList CssClass="form-control" ID="DimCode6" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
-
+                                                @Html.LabelFor(Model => Model.DimCode6Label);
+                                                @*@Html.DropDownListFor(Model=>Model.DimCode6,new SelectListItem(ViewBag.Dim1), new {@CssClass="form-control", style= "WIdth:100%" })*@
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The department must be selected</div>
                                             </div>
@@ -47,8 +46,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="StartDateTime"> Start Date & Time when vehicle is required</label>
-                                                <asp:TextBox class="form-control" id="StartDateTime" runat="server" required="true"></asp:TextBox>
-                                                @Html.TextBoxFor(Model=>Model.StartDateTime,new {@class="form-control", id="StartDateTime", required="true"})
+                                                @Html.TextBoxFor(Model=>Model.StartDateTime,new { @class="form-control", id="StartDateTime"})
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The Start Date & Time when vehicle is required must be selected</div>
                                             </div>
@@ -57,8 +55,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="EndDateTime">End Date & Time when vehicle is required</label>
-                                                <asp:TextBox class="form-control" id="EndDateTime" runat="server" required="true"></asp:TextBox>
-                                                @Html.TextBoxFor(Model => Model.EndDateTime, new { @class = "form-control", id = "EndDateTime", required = "true" })
+                                               @Html.TextBoxFor(Model => Model.EndDateTime, new { @class = "form-control", id = "EndDateTime" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The End Date & Time when vehicle is required must be selected</div>
                                             </div>
@@ -69,7 +66,6 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="form-control-label">Purpose for which the vehicle is requested</label>
-                                                <asp:TextBox TextMode="multiline" Columns="50" maxlength="150" Rows="3" runat="server" ID="Purpose" class="form-control MultiLineLimit" required="true"></asp:TextBox>
                                                 @Html.TextBoxFor(Model => Model.Purpose, new {@class="form-control MultiLineLimit",TextMode = "multiline", Columns = "50", maxlength = "150", Rows = "3",ID = "Purpose",required="true" })
                                                 <p class="pull-right text-muted small" id="count_message"></p>
                                                 <div class="valid-feedback">Looks good!</div>
@@ -121,7 +117,6 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="Destination">Destination</label>
-                                                <asp:TextBox CssClass="form-control" ID="Destination" runat="server" required="true"> </asp:TextBox>
                                                 @Html.TextBoxFor(Model=>Model.Destination,new {@Class = "form-control",ID = "Destination" ,required = "true"})
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The destination of the trip must be provided</div>
@@ -145,7 +140,6 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="EstimatedDistance">Estimated Distance of trip in Kms</label>
-                                                <asp:TextBox CssClass="form-control" ID="EstimatedDistance" runat="server" required="true"> </asp:TextBox>
                                                 @Html.TextBoxFor(Model=>Model.EstimatedDistance,new {@Class = "form-control" ,ID = "EstimatedDistance",required = "true" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The estimated distance of the trip must be provided</div>
@@ -154,7 +148,6 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="EstimatedCostOfTrip">Estimated Cost of trip</label>
-                                                <asp:TextBox CssClass="form-control" ID="EstimatedCostOfTrip" runat="server" disabled="true"> </asp:TextBox>
                                                 @Html.TextBoxFor(Model => Model.EstimatedCostOfTrip, new {@Class = "form-control" ,ID = "EstimatedCostOfTrip",disabled = "true" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The estimated distance of the trip must be provided</div>
@@ -297,11 +290,10 @@
                 contentType: "application/json; charset=utf-8",
                 success: function ( response ) {
 
-                    if ( response != null && response.d != null ) {
-                        var data = response.d;
+                    if ( response != null) {
                         // alert(typeof (data)); //it comes out to be string
                         //we need to parse it to JSON
-                        data = $.parseJSON( data );
+                       var data = $.parseJSON( response );
 
                         jQuery_3_3_1.Toast.hideToast();
 
@@ -340,18 +332,18 @@
 
 </script>
 
-<script src="js/jquery.toast.js"></script>
+<script src="~/Assest/js/jquery.toast.js"></script>
 <!-- JQUERY DATEPICKER-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
 
-<script src="js/select2.min.js"></script>
+<script src="~/Assest/js/select2.min.js"></script>
 <script>
-    $( document ).ready( function () {
-        $( "#Attachment" ).hide();
+    $(function () {
+        $("#Attachment").hide();
 
-        $( '#PreferredPaymentMethod' ).select2( {
+        $('#PreferredPaymentMethod' ).select2( {
             sorter: function ( data ) {
                 return data.sort( function ( a, b ) {
                     return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
@@ -407,11 +399,9 @@
 
             onSelect: function ( date ) {
 
-
-
                 //Set Minimum Date of EndDatePicker After Selected Date of StartDatePicker
-                $( "#EndDateTime" ).datepicker( "option", "minDate", date );
-                $( "#EndDateTime" ).datepicker( "option", "maxDate", '+2y' );
+                $("#EndDateTime").datepicker( "option", "minDate", date );
+                $("#EndDateTime").datepicker( "option", "maxDate", '+2y' );
 
                 var selectedDate = new Date( date );
 
@@ -485,11 +475,10 @@
                     contentType: "application/json; charset=utf-8",
                     success: function ( response ) {
 
-                        if ( response != null && response.d != null ) {
-                            var data = response.d;
+                        if ( response != null) {
                             // alert(typeof (data)); //it comes out to be string
                             //we need to parse it to JSON
-                            data = $.parseJSON( data );
+                            var data = $.parseJSON( response );
                             $( '#Rate' ).val( data.Rate );
                         }
                     },

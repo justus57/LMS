@@ -18,6 +18,12 @@ namespace LMS.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// justus kasyoki 4/06/2022
+        /// 
+        /// Calls all details for Defining AppraisalSections 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult DefineAppraisalSections()
         {
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
@@ -33,15 +39,18 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
 
-            if (Session["Logged"].Equals("No"))
+            var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
+            var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
+            //check if user is logged
+            if ((string)log == "No")
             {
-                Response.Redirect("Login.aspx");
+                Response.Redirect("/Account/login");
             }
-            else if (Session["Logged"].Equals("Yes"))
+            else if ((string)log == "yes")
             {
-                if (Session["RequirePasswordChange"].Equals("TRUE"))
+                if ((object)passRequired == "true")
                 {
-                    Response.Redirect("OneTimePass.aspx");
+                    Response.Redirect("/Account/OneTimePassword");
                 }
                 else
                 {
@@ -53,7 +62,7 @@ namespace LMS.Controllers
         private void LoadTable()
         {
 
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
 
             DataTable dt = new DataTable();
             dt = DefineAppraisalSectionsXMLRequests.GetAppraisalSections();
@@ -103,11 +112,12 @@ namespace LMS.Controllers
             //Table end.
             html.Append("</table>");
             string strText = html.ToString();
+            ViewBag.DefineAppraisal = strText;
             ////Append the HTML string to Placeholder.
-          //placeholder.Controls.Add(new Literal { Text = html.ToString() });
+            //placeholder.Controls.Add(new Literal { Text = html.ToString() });
         }
         
-        public static string Submit(string param1, string param2)
+        public JsonResult Submit(string param1, string param2)
         {
             string SectionName = param1;
             SectionName = AppFunctions.EscapeInvalidXMLCharacters(SectionName);
@@ -152,10 +162,10 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
         
-        public static string SetHRDefined(string param1)
+        public JsonResult SetHRDefined(string param1)
         {
             string SectionNo = param1;
             string status = "999";
@@ -175,10 +185,10 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
         
-        public static string SetSupervisorDefined(string param1)
+        public JsonResult SetSupervisorDefined(string param1)
         {
             string SectionNo = param1;
             string status = "999";
@@ -197,10 +207,10 @@ namespace LMS.Controllers
                 Message = response,
                 Status = status
             };
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
         
-        public static string DeleteSection(string param1)
+        public JsonResult DeleteSection(string param1)
         {
             string SectionNo = param1;
             string status = "999";
@@ -219,7 +229,7 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
     }
 }

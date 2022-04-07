@@ -112,9 +112,9 @@ namespace LMS.Controllers
             return CreateAdvanceRequestXMLRequests.GetAdvanceTypes();
         }
        
-        public static string LoadAdvanceRequestItem(string Code)
+        public JsonResult LoadAdvanceRequestItem(string Code)
         {
-            return CreateAdvanceRequestXMLRequests.GetAdvanceType(Code);
+            return Json(CreateAdvanceRequestXMLRequests.GetAdvanceType(Code),JsonRequestBehavior.AllowGet);
         }
         private void LoadTableAttachments(string SurrenderHdrNo)
         {
@@ -244,7 +244,7 @@ namespace LMS.Controllers
            // placeholder3.Controls.Add(new Literal { Text = html.ToString() });
         }
        
-        public static string DeleteAdvanceRequestAttachment(string param1)
+        public JsonResult DeleteAdvanceRequestAttachment(string param1)
         {
             string _Status = "";
             string _Message = "";
@@ -262,10 +262,10 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string CreateStaffSurrender(string param1)
+        public JsonResult CreateStaffSurrender(string param1)
         {
             AdvanceRequestsHeaderNumber = param1;
 
@@ -292,7 +292,7 @@ namespace LMS.Controllers
                 }
             }
 
-            return AdvanceRequestsXMLRequests.GetAdvanceRequests("StaffSurrender", AdvanceSurrenderRequestsHeader);
+            return Json(AdvanceRequestsXMLRequests.GetAdvanceRequests("StaffSurrender", AdvanceSurrenderRequestsHeader),JsonRequestBehavior.AllowGet);
         }
        
         public static string LoadAdvanceRequestLines()
@@ -315,7 +315,7 @@ namespace LMS.Controllers
             return JsonConvert.SerializeObject(AdvanceRequestTypesList);
         }
         
-        public static string GetRequestLineDetails(string param1)
+        public JsonResult GetRequestLineDetails(string param1)
         {
             string LineNo = param1;
 
@@ -348,7 +348,7 @@ namespace LMS.Controllers
                 ShortcutDimCode5 = BudgetLineCode
             };
 
-            return JsonConvert.SerializeObject(_AdvanceRequestLines);
+            return Json(JsonConvert.SerializeObject(_AdvanceRequestLines), JsonRequestBehavior.AllowGet);
         }
         
         public void LoadPrefferedMethodOfPayment()
@@ -359,7 +359,7 @@ namespace LMS.Controllers
             //PreferredPaymentMethod.Items.Insert(0, new ListItem(" ", "0"));
         }
         
-        public static string GetSurrenderLineDetails(string param1)
+        public JsonResult GetSurrenderLineDetails(string param1)
         {
             string LineNo = param1;
 
@@ -394,7 +394,7 @@ namespace LMS.Controllers
                 Remarks = Remarks
             };
 
-            return JsonConvert.SerializeObject(_AdvanceRequestLines);
+            return Json(JsonConvert.SerializeObject(_AdvanceRequestLines), JsonRequestBehavior.AllowGet);
         }
         private void LoadStaffSurrenderLines(string AdvanceRequestHdrNo)
         {
@@ -484,7 +484,7 @@ namespace LMS.Controllers
             return AdvanceRequestsHeaderNumber;
         }
         
-        public static string DeleteAdvanceRequestLines(string param1)
+        public JsonResult DeleteAdvanceRequestLines(string param1)
         {
             string LineNo = param1;
             string _Status = "000";
@@ -502,10 +502,10 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string SaveSurrender(string param1, string param2, string param3, string param4, string param5, string param6,
+        public JsonResult SaveSurrender(string param1, string param2, string param3, string param4, string param5, string param6,
             string param7, string param8, string param9, string param10, string param11, string param12, string param13, string param14,
             string param15, string param16, string param17, string param18, string param19, string param20, string param21)
         {
@@ -588,10 +588,10 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
        
-        public static string UpdateSurrender(string param1, string param2, string param3, string param4, string param5, string param6,
+        public JsonResult UpdateSurrender(string param1, string param2, string param3, string param4, string param5, string param6,
            string param7, string param8, string param9, string param10, string param11, string param12, string param13, string param14,
            string param15, string param16, string param17, string param18, string param19, string param20, string param21)
         {
@@ -651,10 +651,10 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9, string param10)
+        public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9, string param10)
         {
             string _Status = "900";
             string _Message = "";
@@ -689,10 +689,10 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string SaveAttachment(string param1, string param2)
+        public JsonResult SaveAttachment(string param1, string param2)
         {
             string _Status = "";
             string _Message = "";
@@ -732,7 +732,7 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         public static void SaveAttachment(string Path, string FileName, string AdvanceSurrenderRequestsHeader, string LineNo)
         {

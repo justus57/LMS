@@ -155,7 +155,7 @@ namespace LMS.Controllers
             //    RequirementOfTraining.Items.FindByValue("INDIVIDUALNEED").Selected = true;
             //}
         }
-        public static string GetTrainingMemberList()
+        public JsonResult GetTrainingMemberList()
         {
             var publicationTable = new List<object>();
 
@@ -164,7 +164,7 @@ namespace LMS.Controllers
                 publicationTable.Add(new[] { kvp.Value });
             }
 
-            return (new JavaScriptSerializer()).Serialize(publicationTable);
+            return Json((new JavaScriptSerializer()).Serialize(publicationTable),JsonRequestBehavior.AllowGet);
         }
         
         public JsonResult GetApplicableToEmployees(string param1)

@@ -167,7 +167,7 @@ namespace LMS.Controllers
             return (new JavaScriptSerializer()).Serialize(publicationTable);
         }
         
-        public static string GetApplicableToEmployees(string param1)
+        public JsonResult GetApplicableToEmployees(string param1)
         {
             List<Employee> employeeObject = new List<Employee>(); //TrainingNo
 
@@ -176,10 +176,10 @@ namespace LMS.Controllers
                 employeeObject.Add(new Employee { EmployeeCode = kvp.Key, EmployeeName = kvp.Value });
             }
 
-            return JsonConvert.SerializeObject(employeeObject);
+            return Json(JsonConvert.SerializeObject(employeeObject),JsonRequestBehavior.AllowGet);
         }
         
-        public static string GetEmployeeList(string param1)
+        public JsonResult GetEmployeeList(string param1)
         {
             List<Employee> employeeObject = new List<Employee>();
 
@@ -188,10 +188,10 @@ namespace LMS.Controllers
                 employeeObject.Add(new Employee { EmployeeCode = kvp.Key, EmployeeName = kvp.Value });
             }
 
-            return JsonConvert.SerializeObject(employeeObject);
+            return Json(JsonConvert.SerializeObject(employeeObject),JsonRequestBehavior.AllowGet);
         }
         
-        public static string GetOrgUnitList(string param1)
+        public JsonResult GetOrgUnitList(string param1)
         {
             List<OrgUnit> OrgUnitObject = new List<OrgUnit>();
 
@@ -200,10 +200,10 @@ namespace LMS.Controllers
                 OrgUnitObject.Add(new OrgUnit { Code = kvp.Key, Name = kvp.Value });
             }
 
-            return JsonConvert.SerializeObject(OrgUnitObject);
+            return Json(JsonConvert.SerializeObject(OrgUnitObject),JsonRequestBehavior.AllowGet);
         }
         
-        public static string HRPositionUnitList(string param1)
+        public JsonResult HRPositionUnitList(string param1)
         {
             List<HRPosition> HRPositionObject = new List<HRPosition>();
 
@@ -212,10 +212,10 @@ namespace LMS.Controllers
                 HRPositionObject.Add(new HRPosition { Code = kvp.Key, Description = kvp.Value });
             }
 
-            return JsonConvert.SerializeObject(HRPositionObject);
+            return Json(JsonConvert.SerializeObject(HRPositionObject), JsonRequestBehavior.AllowGet);
         }
         
-        public static string Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9, string param10, string param11)
+        public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9, string param10, string param11)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
 
@@ -345,10 +345,10 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
         
-        public static string Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9, string param10, string param11)
+        public JsonResult Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9, string param10, string param11)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
 
@@ -483,7 +483,7 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         public static string SubmitTraining(string TrainingNo)
         {

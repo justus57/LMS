@@ -303,7 +303,7 @@ namespace LMS.Controllers
             return JsonConvert.SerializeObject(_RequestResponse);
         }
     
-        public static string Update(NameValue[] formVars)
+        public JsonResult Update(NameValue[] formVars)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string Status = "000";
@@ -415,10 +415,10 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
        
-        public static string GetQuestionDetails(string param1)
+        public JsonResult GetQuestionDetails(string param1)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string QuestnNumber = param1;
@@ -475,11 +475,11 @@ namespace LMS.Controllers
                 AppraisalSection = AppraisalSection
             };
 
-            return JsonConvert.SerializeObject(questionDetails);
+            return Json(JsonConvert.SerializeObject(questionDetails),JsonRequestBehavior.AllowGet);
 
         }
         
-        public static string DeleteAppraisalTarget(string param1)
+        public JsonResult DeleteAppraisalTarget(string param1)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string QuestionNumber = param1;
@@ -501,10 +501,10 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
        
-        public static string CopyAppraisalTargets(string param1)
+        public JsonResult CopyAppraisalTargets(string param1)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string AppraisalHeaderNumber = param1;
@@ -589,7 +589,7 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
     }
 }

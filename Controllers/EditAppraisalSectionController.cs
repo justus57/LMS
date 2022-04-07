@@ -67,7 +67,7 @@ namespace LMS.Controllers
             return RecordAppraisalResponse;
         }
         
-        public static string UpdateAppraisalSection(string param1, string param2)
+        public JsonResult UpdateAppraisalSection(string param1, string param2)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string Status = "000";
@@ -103,7 +103,7 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
     }
 }

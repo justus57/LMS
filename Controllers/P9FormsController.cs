@@ -88,7 +88,7 @@ namespace LMS.Controllers
             Response.BinaryWrite(buffer);
         }
         
-        public static string GenerateP9Form(string param1)
+        public JsonResult GenerateP9Form(string param1)
         {
             string _Status = "900";
             string _Message = "An error occured";
@@ -118,7 +118,7 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
     }
 }

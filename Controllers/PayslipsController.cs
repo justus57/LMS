@@ -66,7 +66,7 @@ namespace LMS.Controllers
             Response.BinaryWrite(buffer);
         }
         
-        public static string GeneratePaylip(string param1)
+        public JsonResult GeneratePaylip(string param1)
         {
             string _Status = "900";
             string _Message = "";
@@ -106,7 +106,7 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
 
     }

@@ -196,8 +196,7 @@ namespace LMS.Controllers
             {
                 Console.Write(es);
             }
-        }
-       
+        }      
         public JsonResult SubmitOpenLeaveRecall(string param1)
         {
             string LeaveHeaderNo = param1;
@@ -227,8 +226,7 @@ namespace LMS.Controllers
             };
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
-        }
-       
+        }     
         public JsonResult DeleteOpenLeaveRecall(string param1)
         {
             //decode          
@@ -258,7 +256,6 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet); 
         }
-       
         public JsonResult Cancel(string param1)
         {
             //decode          

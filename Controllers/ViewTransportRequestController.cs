@@ -67,9 +67,7 @@ namespace LMS.Controllers
                 }
             }
             return View();
-        }
-
-        
+        }     
         public static string LoadTransportRequest()
         {
             double TripCost = 0;
@@ -140,7 +138,6 @@ namespace LMS.Controllers
             };
             return JsonConvert.SerializeObject(_TransportRequest);
         }
-
         private void GetDimensionCodes()
         {
             string GetDimensionCodesresponseString = CustomsClasses.CreateAdvanceRequestXMLRequests.GetDimensionCodes();
@@ -200,8 +197,24 @@ namespace LMS.Controllers
             TextInfo cultInfo = new CultureInfo("en-US", false).TextInfo;
             return cultInfo.ToTitleCase(inString);
         }
-
-        public static string Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9, string param10, string param11)
+        /// <summary>
+        /// Justus kasyoki c#Developer
+        /// 
+        /// this gets data from view using Json format
+        /// </summary>
+        /// <param name="param1"></param>
+        /// <param name="param2"></param>
+        /// <param name="param3"></param>
+        /// <param name="param4"></param>
+        /// <param name="param5"></param>
+        /// <param name="param6"></param>
+        /// <param name="param7"></param>
+        /// <param name="param8"></param>
+        /// <param name="param9"></param>
+        /// <param name="param10"></param>
+        /// <param name="param11"></param>
+        /// <returns></returns>
+        public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9, string param10, string param11)
         {
             string _Status = "900";
             string _Message = "";
@@ -266,10 +279,9 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
-        }
-        
-        public static string PrintRequest(string param1)
+            return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
+        }       
+        public JsonResult PrintRequest(string param1)
         {
             string No = AppFunctions.Base64Decode(param1);
 
@@ -301,11 +313,10 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
-        //Approver views
-        
-        public static string RejectApprovalRequest(string param1, string param2)
+        //Approver views      
+        public JsonResult RejectApprovalRequest(string param1, string param2)
         {
             string ApprovalEntryNo = AppFunctions.Base64Decode(param1);
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -357,10 +368,9 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
-        }
-        
-        public static string ApproveApprovalRequest(string param1)
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
+        }      
+        public JsonResult ApproveApprovalRequest(string param1)
         {
             string _Status = "";
             string _Message = "";
@@ -380,10 +390,9 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
-        }
-        
-        public static string GetVehicleClassRate(string Code)
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
+        }    
+        public JsonResult GetVehicleClassRate(string Code)
         {
             string rate = WebserviceConfig.ObjNav.GetVehicleClassRate(Code);
             rate = rate.Replace(",", "");

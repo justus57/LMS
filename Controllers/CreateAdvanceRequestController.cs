@@ -523,7 +523,7 @@ namespace LMS.Controllers
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
 
-        public static string DeleteAdvanceRequestLines(string param1)
+        public JsonResult DeleteAdvanceRequestLines(string param1)
         {
             string LineNo = param1;
             string _Status = "000";
@@ -551,7 +551,7 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult DeleteAdvanceRequestAttachment(string param1)

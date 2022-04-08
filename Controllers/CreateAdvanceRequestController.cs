@@ -272,7 +272,7 @@ namespace LMS.Controllers
             return JsonConvert.SerializeObject(result);
         }
 
-        public static string GetRequestLineDetails(string param1)
+        public JsonResult GetRequestLineDetails(string param1)
         {
             string LineNo = param1;
 
@@ -301,10 +301,10 @@ namespace LMS.Controllers
                 ShortcutDimCode5 = ShortCutDimCode5,
             };
 
-            return JsonConvert.SerializeObject(_AdvanceRequestLines);
+            return Json(JsonConvert.SerializeObject(_AdvanceRequestLines),JsonRequestBehavior.AllowGet);
         }
 
-        public static string CreateStaffImprestLines(string param1, string param2, string param3, string param4, string param5, string param6,
+        public ActionResult CreateStaffImprestLines(string param1, string param2, string param3, string param4, string param5, string param6,
             string param7, string param8, string param9, string param10, string param11, string param12, string param13, string param14,
             string param15, string param16, string param17)
         {
@@ -450,10 +450,10 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
 
-        public static string GenerateDocumentNo(string RegionCode)
+        public JsonResult GenerateDocumentNo(string RegionCode)
         {
             string DocumentNo = "";
             string DocumentNoXMLResponse = CreateAdvanceRequestXMLRequests.GetAdvanceRequestNewNo("StaffAdvance", RegionCode);
@@ -468,7 +468,7 @@ namespace LMS.Controllers
                 // _CreatedAdvanceRequestsHeader = DocumentNo;
 
             }
-            return DocumentNo;
+            return Json(DocumentNo,JsonRequestBehavior.AllowGet);
         }
 
         public static string UpdateStaffImprestLines(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)

@@ -171,7 +171,7 @@ namespace LMS.Controllers
             // placeholder.Controls.Add(new Literal { Text = html.ToString() });
         }
        
-        public static string GetAppraisalSectionList()
+        public JsonResult GetAppraisalSectionList()
         {
             List<AppraisalSection> AppraisalSectionObject = new List<AppraisalSection>();
 
@@ -179,10 +179,10 @@ namespace LMS.Controllers
             {
                 AppraisalSectionObject.Add(new AppraisalSection { Code = kvp.Key, Description = kvp.Value });
             }
-            return JsonConvert.SerializeObject(AppraisalSectionObject);
+            return Json(JsonConvert.SerializeObject(AppraisalSectionObject),JsonRequestBehavior.AllowGet);
         }
        
-        public static string GetAppraisalsList()
+        public JsonResult GetAppraisalsList()
         {
             //exclude current appraisal
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -194,10 +194,10 @@ namespace LMS.Controllers
                 AppraisalObject.Add(new Appraisal { AppraisalHeaderNumber = kvp.Key, AppraisalDescription = kvp.Value });
             }
 
-            return JsonConvert.SerializeObject(AppraisalObject);
+            return Json(JsonConvert.SerializeObject(AppraisalObject), JsonRequestBehavior.AllowGet);
         }
        
-        public static string CreateNewAppraisalQuestion(NameValue[] formVars)
+        public JsonResult CreateNewAppraisalQuestion(NameValue[] formVars)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string Status = "000";
@@ -300,7 +300,7 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
     
         public JsonResult Update(NameValue[] formVars)

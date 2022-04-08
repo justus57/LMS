@@ -237,7 +237,7 @@ namespace LMS.Controllers
             return cultInfo.ToTitleCase(inString);
         }
        
-        public static string Save(string param1, string param2, string param3)
+        public JsonResult Save(string param1, string param2, string param3)
         {
             string _Status = "900";
             string _Message = "";
@@ -270,7 +270,7 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
     }
 }

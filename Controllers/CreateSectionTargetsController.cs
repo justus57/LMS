@@ -163,7 +163,7 @@ namespace LMS.Controllers
             ViewBag.AppraisalBody = strText;
         }
         
-        public static string GetAppraisalSectionList()
+        public JsonResult GetAppraisalSectionList()
         {
             List<AppraisalSection> AppraisalSectionObject = new List<AppraisalSection>();
 
@@ -172,10 +172,10 @@ namespace LMS.Controllers
                 AppraisalSectionObject.Add(new AppraisalSection { Code = kvp.Key, Description = kvp.Value });
             }
 
-            return JsonConvert.SerializeObject(AppraisalSectionObject);
+            return Json(JsonConvert.SerializeObject(AppraisalSectionObject), JsonRequestBehavior.AllowGet);
         }
         
-        public static string CreateNewAppraisalQuestion()
+        public JsonResult CreateNewAppraisalQuestion()
         {
             List<NameValue> formVars = new List<NameValue>();
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -275,7 +275,7 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
         public static string Update()
@@ -371,7 +371,7 @@ namespace LMS.Controllers
             return JsonConvert.SerializeObject(_RequestResponse);
         }
         
-        public static string GetQuestionDetails(string param1)
+        public JsonResult GetQuestionDetails(string param1)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string QuestnNumber = param1;
@@ -424,11 +424,11 @@ namespace LMS.Controllers
                 WeightScoreValue = weightScoreValue
             };
 
-            return JsonConvert.SerializeObject(_QuestionDetails);
+            return Json(JsonConvert.SerializeObject(_QuestionDetails), JsonRequestBehavior.AllowGet);
 
         }
         
-        public static string DeleteAppraisalTarget(string param1)
+        public JsonResult DeleteAppraisalTarget(string param1)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string QuestnNumber = param1;
@@ -450,7 +450,7 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
     }
 }

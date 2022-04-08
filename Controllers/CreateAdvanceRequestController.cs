@@ -372,7 +372,7 @@ namespace LMS.Controllers
                 else
                 {
                     CreateAdvanceRequest cr = new CreateAdvanceRequest();
-                    DocumentNo = GenerateDocumentNo(DimCode8);
+                    DocumentNo = GenerateDocumentNo(DimCode8).ToString();
 
                     //CreatedAdvanceRequestsHeader = DocumentNo;
 
@@ -422,7 +422,7 @@ namespace LMS.Controllers
                 {
                     CreateAdvanceRequest cr = new CreateAdvanceRequest();
                     //DocumentNo = cr.GenerateDocumentNo(DimCode8);
-                    DocumentNo = GenerateDocumentNo(DimCode8);
+                    DocumentNo = GenerateDocumentNo(DimCode8).ToString();
 
                     //CreatedAdvanceRequestsHeader = DocumentNo;
 

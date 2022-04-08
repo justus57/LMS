@@ -471,7 +471,7 @@ namespace LMS.Controllers
             return Json(DocumentNo,JsonRequestBehavior.AllowGet);
         }
 
-        public static string UpdateStaffImprestLines(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
+        public JsonResult UpdateStaffImprestLines(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
             string _Status = "";
             string _Message = "";
@@ -520,7 +520,7 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
 
         public static string DeleteAdvanceRequestLines(string param1)
@@ -554,7 +554,7 @@ namespace LMS.Controllers
             return JsonConvert.SerializeObject(_RequestResponse);
         }
 
-        public static string DeleteAdvanceRequestAttachment(string param1)
+        public JsonResult DeleteAdvanceRequestAttachment(string param1)
         {
             string _Status = "000";
             string _Message = "";
@@ -572,10 +572,10 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
 
-        public static string SaveAttachment(string param1, string param2)
+        public JsonResult SaveAttachment(string param1, string param2)
         {
             string _Status = "";
             string _Message = "";
@@ -614,10 +614,10 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
        
-        public static string Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
+        public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
             string _Status = "900";
             string _Message = "";
@@ -702,12 +702,12 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
 
-        public static string ValidateDim3Code(string param1)
+        public JsonResult ValidateDim3Code(string param1)
         {
-            return CreateAdvanceRequestXMLRequests.ValidateShortcutDimCode3(param1);
+            return Json(CreateAdvanceRequestXMLRequests.ValidateShortcutDimCode3(param1),JsonRequestBehavior.AllowGet);
         } 
     }
 }

@@ -517,7 +517,7 @@ namespace LMS.Controllers
            // placeholder.Controls.Add(new Literal { Text = html.ToString() });
         }
         
-        public static string HRSave(NameValue[] formVars)
+        public JsonResult HRSave(NameValue[] formVars)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
 
@@ -610,10 +610,10 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
         
-        public static string HRSubmit(NameValue[] formVars)
+        public JsonResult HRSubmit(NameValue[] formVars)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
 
@@ -707,10 +707,10 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string SupervisorSave(NameValue[] formVars)
+        public JsonResult SupervisorSave(NameValue[] formVars)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
 
@@ -787,10 +787,10 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string SupervisorSubmit(NameValue[] formVars)
+        public JsonResult SupervisorSubmit(NameValue[] formVars)
         {
 
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -855,10 +855,10 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string EmployeeSave(NameValue[] formVars)
+        public JsonResult EmployeeSave(NameValue[] formVars)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
 
@@ -1027,10 +1027,10 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
         
-        public static string EmployeeSubmit(NameValue[] formVars)
+        public JsonResult EmployeeSubmit(NameValue[] formVars)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
 
@@ -1199,7 +1199,7 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
     }
 }

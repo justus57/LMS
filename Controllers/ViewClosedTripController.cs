@@ -334,7 +334,7 @@ namespace LMS.Controllers
             return strText;
         }
         
-        public static string Save(string param1, string param2, string param3, string param4, string param5, string param6)
+        public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string _Status = "900";
@@ -375,10 +375,10 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string UpdateLog(string param1, string param2, string param3, string param4, string param5, string param6, string param7)
+        public JsonResult UpdateLog(string param1, string param2, string param3, string param4, string param5, string param6, string param7)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string _Status = "900";
@@ -416,10 +416,10 @@ namespace LMS.Controllers
                 Status = _Status,
                 Message = _Message
             };
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string DeleteLine(string param1)
+        public JsonResult DeleteLine(string param1)
         {
             string No = AppFunctions.Base64Decode(param1);
             string status = "";
@@ -446,10 +446,10 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string GetRequestLineDetails(string param1)
+        public JsonResult GetRequestLineDetails(string param1)
         {
             string LogSheetLineResponse = WebserviceConfig.ObjNav.GetLogSheetLine(Convert.ToInt32(param1));
             LogSheetLine LogSheeteObj = JsonConvert.DeserializeObject<LogSheetLine>(LogSheetLineResponse);
@@ -475,10 +475,10 @@ namespace LMS.Controllers
                 Notes = Notes
 
             };
-            return JsonConvert.SerializeObject(_LogSheetLine);
+            return Json(JsonConvert.SerializeObject(_LogSheetLine),JsonRequestBehavior.AllowGet);
         }
         
-        public static string CloseTrip()
+        public JsonResult CloseTrip()
         {
             string _Status = "900";
             string _Message = "";
@@ -505,7 +505,7 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
     }
 }

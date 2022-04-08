@@ -119,7 +119,7 @@ namespace LMS.Controllers
        
         }
         
-        public static string SubmitTraining(string param1)
+        public JsonResult SubmitTraining(string param1)
         {
             string status = "999";
             string Msg = "";
@@ -148,10 +148,10 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
         
-        public static string DeleteRecord(string param1)
+        public JsonResult DeleteRecord(string param1)
         {
             string TrainingNo = AppFunctions.Base64Decode(param1);
             string status = "";
@@ -178,7 +178,7 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
     }
 }

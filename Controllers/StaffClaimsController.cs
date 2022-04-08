@@ -120,7 +120,7 @@ namespace LMS.Controllers
             //placeholder.Controls.Add(new Literal { Text = html.ToString() });
         }
         
-        public static string DeleteRecord(string param1)
+        public JsonResult DeleteRecord(string param1)
         {
             string AdvanceRequestHdrNo = AppFunctions.Base64Decode(param1);
             string status = "";
@@ -147,10 +147,10 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string SubmitRecord(string param1)
+        public JsonResult SubmitRecord(string param1)
         {
             string AdvanceRequestHdrNo = AppFunctions.Base64Decode(param1);
             string status = "";
@@ -177,10 +177,10 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string CancelRequest(string param1)
+        public JsonResult CancelRequest(string param1)
         {
             string AdvanceRequestHdrNo = AppFunctions.Base64Decode(param1);
             string status = "";
@@ -207,10 +207,10 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string DelegateRequest(string param1)
+        public JsonResult DelegateRequest(string param1)
         {
             string AdvanceRequestHdrNo = AppFunctions.Base64Decode(param1);
             string status = "";
@@ -237,10 +237,10 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string PrintRequest(string param1)
+        public JsonResult PrintRequest(string param1)
         {
             string AdvanceRequestHdrNo = param1;
 
@@ -272,7 +272,7 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
     }
 }

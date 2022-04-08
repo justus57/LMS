@@ -314,7 +314,7 @@ namespace LMS.Controllers
             return table;
         }
         
-        public static string DeleteRecord(string param1)
+        public JsonResult DeleteRecord(string param1)
         {
             string No = AppFunctions.Base64Decode(param1);
             string status = "";
@@ -341,10 +341,10 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string SubmitRecord(string param1)
+        public JsonResult SubmitRecord(string param1)
         {
             string No = AppFunctions.Base64Decode(param1);
             string status = "";
@@ -371,10 +371,10 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string CancelRequest(string param1)
+        public JsonResult CancelRequest(string param1)
         {
             string No = AppFunctions.Base64Decode(param1);
             string status = "";
@@ -401,10 +401,10 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string DelegateRequest(string param1)
+        public JsonResult DelegateRequest(string param1)
         {
             string approvalEntry = AppFunctions.Base64Decode(param1);
             string status = "";
@@ -431,10 +431,10 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string PrintRequest(string param1)
+        public JsonResult PrintRequest(string param1)
         {
             string No = param1;
 
@@ -466,10 +466,10 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string CloseTrip(string param1)
+        public JsonResult CloseTrip(string param1)
         {
             string DocumentNo = param1;
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -497,11 +497,11 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         //
         
-        public static string ReOpenTrip(string param1)
+        public JsonResult ReOpenTrip(string param1)
         {
             string DocumentNo = param1;
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -529,10 +529,10 @@ namespace LMS.Controllers
                 Message = Msg
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
-        public static string EndTrip(string param1)
+        public JsonResult EndTrip(string param1)
         {
             string _Status = "900";
             string _Message = "";
@@ -560,7 +560,7 @@ namespace LMS.Controllers
                 Message = _Message
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
 
     }

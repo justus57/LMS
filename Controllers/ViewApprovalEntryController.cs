@@ -184,15 +184,16 @@ namespace LMS.Controllers
             }
             return View();
         }
-        protected void btn_download_Click(object sender, EventArgs e)
+        public ActionResult btn_download_Click()
         {
             Response.ContentType = "Application/pdf";
             Response.AppendHeader("Content-Disposition", "attachment; filename=" + attachmentName + "");
             // Response.TransmitFile(Server.MapPath("~/doc/help.pdf"));
             Response.TransmitFile(fileforDownload);
             Response.End();
+            return View();
         }
-        protected void View_Click(object sender, EventArgs e)
+        public ActionResult View_Click()
         {
             string pdfPath = fileforDownload;
             WebClient client = new WebClient();
@@ -200,6 +201,7 @@ namespace LMS.Controllers
             Response.ContentType = "application/pdf";
             Response.AddHeader("content-length", buffer.Length.ToString());
             Response.BinaryWrite(buffer);
+            return View();
         }
         private void GetAttachment(string DocumentNo)
         {

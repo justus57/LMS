@@ -20,7 +20,7 @@ namespace LMS.Models
         public string BudgetLineCode { get; set; }
         public string UnitCost { get; set; }
         public string ItemDescription { get; set; }
-        public string ClaimedAmount { get; set; }
+        public string LoadPreferredPaymentMethod { get; set; }
         public string ClaimedAmountLCY { get; set; }
         public string DimCode2Label { get; set; }
         public string DimCode3Label { get; set; }

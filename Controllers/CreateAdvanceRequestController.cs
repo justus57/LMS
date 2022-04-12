@@ -60,7 +60,7 @@ namespace LMS.Controllers
                     if (!IsPostBack )
                     {
                         LoadPrefferedMethodOfPayment();
-                       GetDimensionCodes();
+                       //GetDimensionCodes();
                     }
 
                     if (Request.QueryString["No"] != null)
@@ -144,7 +144,7 @@ namespace LMS.Controllers
         }
         private void LoadDimCodeValues(DropDownList _DropDownList, string Code)
         {
-            _DropDownList.Items.Clear();
+          //  _DropDownList.Items.Clear();
 
             WebRef.DimCodeValues _DimCodeValues = new WebRef.DimCodeValues();
             WebserviceConfig.ObjNav.ExportDimensionCodeValues(Code, ref _DimCodeValues);

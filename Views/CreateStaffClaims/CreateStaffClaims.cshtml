@@ -120,7 +120,6 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="form-control-label">Mission Summary (Type activity name and county visited)</label>
-                                                <asp:TextBox TextMode="multiline" Columns="50" maxlength="50" Rows="3" runat="server" ID="MissionSummary" class="form-control MultiLineLimit" required="true"></asp:TextBox>
                                                 @Html.TextBoxFor(Model => Model.MissionSummary, new { @class = "form-control MultiLineLimit", id = "MissionSummary",TextMode = "multiline", Columns = "50", maxlength = "50" ,Rows = "3" })
                                                 <p class="pull-right text-muted small" id="count_message"></p>
                                                 <div class="valid-feedback">Looks good!</div>
@@ -131,9 +130,9 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label class="form-control-label" for="PreferredPaymentMethod">Preferred Payment Method</label>
+                                                <label class="form-control-label" for="PreferredPaymentMethod">Preferred Payment Method </label></br>
                                                 <asp:DropDownList CssClass="form-control" ID="PreferredPaymentMethod" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
-                                                @*@Html.DropDownListFor(model => Model.PreferredPaymentMethod,)*@
+                                                @Html.DropDownList("PreferredPaymentMethod", @ViewBag.PreferredPaymentMethod as List<SelectListItem>, "Select PreferredPaymentMethod", new { @CssClass ="form - control", style = "width:100%" , ID = "PreferredPaymentMethod" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The preffered method of payment must be selected</div>
                                             </div>
@@ -449,7 +448,7 @@
 
 
     jQuery_3_3_1.ajax( {
-        url: 'CreateAdvanceRequest.aspx/LoadInterventions',
+        url: "@Url.Action("LoadInterventions", "CreateAdvanceRequest")",
         type: "POST",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
@@ -484,7 +483,7 @@
             jQuery_3_3_1.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
 
             jQuery.ajax( {
-                url: 'CreateStaffClaims.aspx/Save',
+                url: "@Url.Action("Save", "CreateStaffClaims")",
                 type: "POST",
                 data: '{param1:"' + $( '#DateOfRequest' ).val() + '", param2:"' + $( '#DateDue' ).val() + '", param3:"' + $( '#DimCode4' ).val() + '", param4:"' + $( '#DimCode1' ).val() + '", param5:"' + $( '#DimCode2' ).val() + '", param6:"' + $( '#DimCode3' ).val() + '", param7:"' + $( '#DimCode8' ).val() + '", param8:"' + $( '#DimCode4' ).val() + '", param9:"' + $( '#PreferredPaymentMethod' ).val() + '", param10:"' + $( '#MissionSummary' ).val() + '"  }',
                 dataType: "json",
@@ -554,7 +553,7 @@
                     // showToast(pid);
 
                     jQuery.ajax( {
-                        url: 'CreateStaffClaims.aspx/DeleteAdvanceRequestLines',
+                        url:"@Url.Action("DeleteAdvanceRequestLines", "CreateStaffClaims")",
                         type: "POST",
                         data: '{param1:"' + pid + '"}',
                         dataType: "json",
@@ -593,7 +592,7 @@
         $( "#AdvanceRequestLineNo" ).val( pid );
 
         $.ajax( {
-            url: 'CreateStaffClaims.aspx/GetRequestLineDetails',
+            url:"@Url.Action("GetRequestLineDetails", "CreateStaffClaims")",
             type: "POST",
             data: '{param1:"' + pid + '" }',
             dataType: "json",
@@ -642,7 +641,7 @@
                     // showToast(pid);
 
                     jQuery.ajax( {
-                        url: 'CreateStaffClaims.aspx/DeleteAdvanceRequestAttachment',
+                        url: "@Url.Action("DeleteAdvanceRequestAttachment", "CreateStaffClaims")",
                         type: "POST",
                         data: '{param1:"' + pid + '"}',
                         dataType: "json",
@@ -708,7 +707,7 @@
                     //alert(file.name);
 
                     jQuery.ajax( {
-                        url: 'CreateStaffClaims.aspx/SaveAttachment',
+                        url: "@Url.Action("SaveAttachment", "CreateStaffClaims")",
                         type: "POST",
                         data: '{ param1:"' + file.name + '", param2:"' + $( '#AttachmentDescription' ).val() + '"  }',
                         dataType: "json",
@@ -768,7 +767,7 @@
 
 
             jQuery.ajax( {
-                url: 'CreateStaffClaims.aspx/CreateAdvanceClaim',
+                url:"@Url.Action("CreateAdvanceClaim", "CreateStaffClaims")",
                 type: "POST",
                 data: '{ param1:"' + $( '#DimCode4' ).val() + '", param2:"' + $( '#ActualAmount' ).val() + '", param3:"' + $( '#Item' ).val() + '", param4:"' + $( '#ItemDescription' ).val() + '", param5:"' + $( '#UnitofMeasure' ).val() + '", param6:"' + $( '#UnitCost' ).val() + '", param7:"' + $( '#NoOfUnits' ).val() + '", param8:"' + $( '#Amount' ).val() + '", param9:"' + $( '#DateOfRequest' ).val() + '", param10:"' + $( '#DateDue' ).val() + '", param11:"' + $( "#RequestToCompany option:selected" ).html() + '", param12:"' + $( '#DimCode1' ).val() + '", param13:"' + $( '#DimCode2' ).val() + '", param14:"' + $( '#BudgetLineCode' ).val() + '", param15:"' + $( '#DimCode8' ).val() + '", param16:"' + $( '#DimCode3' ).val() + '",param17:"' + $( "#AdvanceRequestLineNo" ).val() + '", param18:"' + $( "#PreferredPaymentMethod" ).val() + '",param19:"' + $( "#MissionSummary" ).val() + '", param20:"' + $( "#Purpose" ).val() + '"  }',
                 dataType: "json",
@@ -812,7 +811,7 @@
             jQuery_3_3_1.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
 
             jQuery.ajax( {
-                url: 'CreateStaffClaims.aspx/UpdateAdvanceClaim',
+                url: "@Url.Action("UpdateAdvanceClaim", "CreateStaffClaims")",
                 type: "POST",
                 data: '{ param1:"' + $( '#DimCode8' ).val() + '", param2:"' + $( '#ActualAmount' ).val() + '", param3:"' + $( '#Item' ).val() + '", param4:"' + $( '#ItemDescription' ).val() + '", param5:"' + $( '#UnitofMeasure' ).val() + '", param6:"' + $( '#UnitCost' ).val() + '", param7:"' + $( '#NoOfUnits' ).val() + '", param8:"' + $( '#Amount' ).val() + '", param9:"' + $( '#DateOfRequest' ).val() + '", param10:"' + $( '#DateDue' ).val() + '", param11:"' + $( "#RequestToCompany option:selected" ).html() + '", param12:"' + $( '#DimCode1' ).val() + '", param13:"' + $( '#DimCode2' ).val() + '", param14:"' + $( '#BudgetLineCode' ).val() + '", param15:"' + $( '#DimCode4' ).val() + '", param16:"' + $( '#Currency' ).val() + '",param17:"' + $( "#AdvanceRequestLineNo" ).val() + '", param18:"' + $( "#PreferredPaymentMethod" ).val() + '", param19:"' + $( "#MissionSummary" ).val() + '", param20:"' + $( "#Purpose" ).val() + '" }',
                 dataType: "json",
@@ -964,7 +963,7 @@
 
             //validate here
             jQuery_3_3_1.ajax( {
-                url: 'CreateStaffClaims.aspx/ValidateDim3Code',
+                url: "@Url.Action("ValidateDim3Code", "CreateStaffClaims")",
                 type: "POST",
                 data: '{param1:"' + $( "#BudgetLineCode" ).val() + '" }',
                 dataType: "json",
@@ -1000,7 +999,7 @@
                 $( "#ExchangeRate" ).val( '' );
                 //selection fields
                 jQuery_3_3_1.ajax( {
-                    url: 'CreateStaffClaims.aspx/LoadAdvanceRequestItem',
+                    url: "@Url.Action("LoadAdvanceRequestItem", "CreateStaffClaims")",
                     type: "POST",
                     data: '{Code:"' + $( "#Item" ).val() + '" }',
                     dataType: "json",
@@ -1043,7 +1042,7 @@
 
         } );
         $.ajax( {
-            url: 'CreateStaffClaims.aspx/LoadAdvanceTypes',
+            url: "@Url.Action("LoadAdvanceTypes", "CreateStaffClaims")",
             type: "POST",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
@@ -1059,7 +1058,7 @@
             }
         } );
         $.ajax( {
-            url: 'CreateStaffClaims.aspx/LoadUnitsOfMeasure',
+            url: "@Url.Action("LoadUnitsOfMeasure", "CreateStaffClaims")",
             type: "POST",
             dataType: "json",
             contentType: "application/json; charset=utf-8",

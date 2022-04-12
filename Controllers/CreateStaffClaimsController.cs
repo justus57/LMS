@@ -61,12 +61,12 @@ namespace LMS.Controllers
                     if (!IsPostBack)
                     {
                         LoadPrefferedMethodOfPayment();
-                        //GetDimensionCodes();
+                        GetDimensionCodes();
                     }
 
                     if (Request.QueryString["No"] != null)
                     {
-                        //  AdvanceClaimRequestsHeader = Request.QueryString["No"].Trim();
+                        //AdvanceClaimRequestsHeader = Request.QueryString["No"].Trim();
                     }
                     else
                     {
@@ -306,14 +306,12 @@ namespace LMS.Controllers
 
         private void LoadPrefferedMethodOfPayment()
         {
-            List<PreferredPaymentMethods> selectListItems = new List<PreferredPaymentMethods>()
-            {
-               new PreferredPaymentMethods(){Id="2",Name="Mpesa"},
-               new PreferredPaymentMethods(){Id="1",Name="Cheque"},
-               new PreferredPaymentMethods(){Id="0",Name=" "}
-
-            };
-            ViewBag.LoadPrefferedMethodOfPayment = selectListItems;
+            
+               List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem { Text = "", Value = "0" });
+            items.Add(new SelectListItem { Text = "Mpesa", Value = "1" });
+            items.Add(new SelectListItem { Text = "Cheque", Value = "2" });
+              ViewBag.LoadPrefferedMethodOfPayment = items;
         }
         public string SetFirstLetterToUpper(string inString)
         {

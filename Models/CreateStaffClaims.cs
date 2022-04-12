@@ -15,7 +15,7 @@ namespace LMS.Models
         public string MissionSummary { get; set; }
         public string NoOfUnits { get; set; }
         public string Amount { get; set; }
-        public DropDownList PreferredPaymentMethod { get; set; }
+        public string LoadPreferredPaymentMethod { get; set; }
         public string Purpose { get; set; }
         public string AdvanceRequestLineNo { get; set; }
         public string BudgetLineCode { get; set; }
@@ -37,5 +37,10 @@ namespace LMS.Models
         public DropDownList DimCode7 { get; set; }
         public DropDownList DimCode8 { get; set; }
         public string DimCode1Label { get; set; }
+        public class PreferredPaymentMethod
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+        }
     }
 }

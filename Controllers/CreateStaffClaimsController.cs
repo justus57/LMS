@@ -306,12 +306,14 @@ namespace LMS.Controllers
 
         private void LoadPrefferedMethodOfPayment()
         {
-            
-               List<SelectListItem> items = new List<SelectListItem>();
-            items.Add(new SelectListItem { Text = "", Value = "0" });
-            items.Add(new SelectListItem { Text = "Mpesa", Value = "1" });
-            items.Add(new SelectListItem { Text = "Cheque", Value = "2" });
-              ViewBag.LoadPrefferedMethodOfPayment = items;
+            List<PreferredPaymentMethod> items = new List<PreferredPaymentMethod>()
+            {
+                new PreferredPaymentMethod() {Id = 0, Name="" },
+                new PreferredPaymentMethod() {Id = 1, Name="Mpesa" },
+                new PreferredPaymentMethod() {Id = 1, Name="Cheque" },
+            };
+
+            ViewBag.LoadPrefferedMethodOfPayment = items;
         }
         public string SetFirstLetterToUpper(string inString)
         {

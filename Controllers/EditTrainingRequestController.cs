@@ -36,9 +36,7 @@ namespace LMS.Controllers
                 else
                 {
                     LoadRequirementOfTraining();
-                    LoadApplicableTo();
-                    
-
+                    LoadApplicableTo();                  
                     string i = Request.QueryString["id"].Trim();
                     string _TrainingNo = AppFunctions.Base64Decode(i);
                     TrainingNo = _TrainingNo;

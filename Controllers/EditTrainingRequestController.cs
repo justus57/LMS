@@ -22,7 +22,6 @@ namespace LMS.Controllers
         }
         public ActionResult EditTrainingRequest()
         {
-
             if (Session["Logged"].Equals("No"))
             {
                 Response.Redirect("Login.aspx");
@@ -76,8 +75,6 @@ namespace LMS.Controllers
         {
             string TrainingDetailsResponse = TrainingsXMLRequests.GetTrainingDetail(v);
             dynamic json = JObject.Parse(TrainingDetailsResponse);
-
-
             string _TrainingStartDateTime = "";
             string _TrainingEndDateTime = "";
             string _TrainingDescription = json.Description;
@@ -125,7 +122,6 @@ namespace LMS.Controllers
                 }
             }
             //display
-
             request.TrainingDescription = _TrainingDescription;
             request.TrainingStartDateTime = _TrainingStartDateTime;
             request.TrainingEndDateTime  = _TrainingEndDateTime;
@@ -185,7 +181,6 @@ namespace LMS.Controllers
             {
                 employeeObject.Add(new Employee { EmployeeCode = kvp.Key, EmployeeName = kvp.Value });
             }
-
             return Json(JsonConvert.SerializeObject(employeeObject),JsonRequestBehavior.AllowGet);
         }
         
@@ -197,7 +192,6 @@ namespace LMS.Controllers
             {
                 OrgUnitObject.Add(new OrgUnit { Code = kvp.Key, Name = kvp.Value });
             }
-
             return Json(JsonConvert.SerializeObject(OrgUnitObject),JsonRequestBehavior.AllowGet);
         }
         
@@ -209,7 +203,6 @@ namespace LMS.Controllers
             {
                 HRPositionObject.Add(new HRPosition { Code = kvp.Key, Description = kvp.Value });
             }
-
             return Json(JsonConvert.SerializeObject(HRPositionObject), JsonRequestBehavior.AllowGet);
         }
         
@@ -243,7 +236,6 @@ namespace LMS.Controllers
             string TrainingEndDate = AppFunctions.ConvertToNavDate(_TrainingEndDateTime);
             string TrainingEndTime = AppFunctions.ConvertToNavTime(_TrainingEndDateTime);
 
-
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
 
             string[] values = _ApplicableToPersons.Split(',');
@@ -254,8 +246,6 @@ namespace LMS.Controllers
 
                 dictionary.Add(values[i].ToString().Trim('"'), values[i].ToString().Trim('"'));
             }
-
-
 
             try
             {
@@ -388,8 +378,6 @@ namespace LMS.Controllers
                 dictionary.Add(values[i].ToString().Trim('"'), values[i].ToString().Trim('"'));
             }
 
-
-
             try
             {
                 string No = TrainingNo;// "TRAINING000002";
@@ -457,8 +445,6 @@ namespace LMS.Controllers
                 dynamic jsonSubmitResponse = JObject.Parse(createTrainingXML);
 
                 status = jsonSubmitResponse.Status;
-
-
 
                 if (status == "000")
                 {

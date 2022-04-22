@@ -362,10 +362,8 @@ namespace LMS.Controllers
 
             string TrainingStartDate = AppFunctions.ConvertToNavDate(_TrainingStartDateTime);
             string TrainingStartTime = AppFunctions.ConvertToNavTime(_TrainingStartDateTime);
-
             string TrainingEndDate = AppFunctions.ConvertToNavDate(_TrainingEndDateTime);
             string TrainingEndTime = AppFunctions.ConvertToNavTime(_TrainingEndDateTime);
-
 
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
 
@@ -374,7 +372,6 @@ namespace LMS.Controllers
             for (int i = 0; i < values.Length; i++)
             {
                 values[i] = values[i].Trim();
-
                 dictionary.Add(values[i].ToString().Trim('"'), values[i].ToString().Trim('"'));
             }
 
@@ -454,19 +451,16 @@ namespace LMS.Controllers
                 {
                     Msg = "An error occured. The training was not updated";
                 }
-
             }
             catch (Exception e)
             {
                 Msg = e.Message;
             }
-
             var _RequestResponse = new RequestResponse
             {
                 Status = status,
                 Message = Msg
             };
-
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         public static string SubmitTraining(string TrainingNo)

@@ -68,7 +68,6 @@ namespace LMS.Controllers
                         _CreatedAdvanceRequestsHeader = Request.QueryString["No"].Trim();
                     }
 
-
                     if (_CreatedAdvanceRequestsHeader == "")
                     {
                         CreatedAdvanceRequestsHeader = _CreatedAdvanceRequestsHeader;
@@ -82,7 +81,6 @@ namespace LMS.Controllers
                     else
                     {
                         CreatedAdvanceRequestsHeader = _CreatedAdvanceRequestsHeader;
-
                         LoadTable(Session["AdvanceRequestNo"].ToString());
                         LoadTableAttachments(Session["AdvanceRequestNo"].ToString());
                     }
@@ -105,11 +103,9 @@ namespace LMS.Controllers
             string ShortcutDimCode4 = json.ShortcutDimension4Code;
             string ShortcutDimCode8 = json.ShortcutDimension8Code;
 
-
             if (System.Web.HttpContext.Current.Session["Company"].ToString() == "Management Unit")
             {
                 LineDimension = "INTERVENTION";
-
                 // DimCode8Label.Text = "Region to be Paid From";
                 LoadDimCodeValues(cr.DimCode1, GlobalDimCode1);
                 LoadDimCodeValues(cr.DimCode2, GlobalDimCode2);
@@ -122,7 +118,6 @@ namespace LMS.Controllers
             else
             {
                 LineDimension = ShortcutDimCode3;
-
                 // DimCode8Label.Text = SetFirstLetterToUpper(ShortcutDimCode8.ToLower());
                 LoadDimCodeValues(cr.DimCode1, GlobalDimCode1);
                 LoadDimCodeValues(cr.DimCode2, GlobalDimCode2);
@@ -160,7 +155,6 @@ namespace LMS.Controllers
         {
             return AdvanceRequestsXMLRequests.GetAdvanceRequests("StaffAdvance", CreatedAdvanceRequestsHeader);
         }
-
         public static string LoadAdvanceTypes()
         {
             return CreateAdvanceRequestXMLRequests.GetAdvanceTypes();

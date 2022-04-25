@@ -68,7 +68,6 @@ namespace LMS.Controllers
 
             DataTable dt = new DataTable();
             dt.Clear();
-
             dt = AdvanceRequestsXMLRequests.GetAdvanceRequestsList(status, username);
 
             // DataTable 

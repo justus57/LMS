@@ -49,8 +49,6 @@ namespace LMS.Controllers
                 else
                 {
                     string status = Request.QueryString["status"].Trim();
-
-
                     if (status == "")
                     {
                         Response.Redirect(Request.UrlReferrer.ToString());
@@ -69,8 +67,6 @@ namespace LMS.Controllers
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
 
             DataTable dt = new DataTable();
-
-
             dt.Clear();
 
             dt = AdvanceRequestsXMLRequests.GetAdvanceRequestsList(status, username);

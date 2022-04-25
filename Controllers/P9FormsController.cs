@@ -16,8 +16,6 @@ namespace LMS.Controllers
         static string folderPath = System.Web.HttpContext.Current.Server.MapPath("~/Uploads/");
         static string fileforDownload = "";
         static string attachmentName = "";
-    
-
         // GET: P9Forms
         public ActionResult Index()
         {
@@ -61,7 +59,6 @@ namespace LMS.Controllers
 
         private void CreateYearsList()
         {
-            
             //create Loop to Insert years in descending order
 
             int CurrentYear = DateTime.Now.Year;

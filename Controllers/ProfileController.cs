@@ -40,9 +40,7 @@ namespace LMS.Controllers
                     // get employees information                                                                               
                     GetUserInformationresponseString = ProfileXMLRequests.GetUserInformation(username);
                     dynamic json = JObject.Parse(GetUserInformationresponseString);
-
                     string Status = json.Status;
-
                     string EmployeeName = json.EmployeeName;
                     profile.txt_name = EmployeeName;
                     string PhoneNo = json.PhoneNo;

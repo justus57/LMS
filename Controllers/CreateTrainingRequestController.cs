@@ -19,8 +19,6 @@ namespace LMS.Controllers
         }
         public ActionResult CreateTrainingRequest()
         {
-            
-        
             System.Web.HttpContext.Current.Session["IsAdvanceActive"] = "";
             System.Web.HttpContext.Current.Session["IsDashboardActive"] = "";
             System.Web.HttpContext.Current.Session["IsClaimActive"] = "";
@@ -52,16 +50,20 @@ namespace LMS.Controllers
             }
             return View();
         }
-
         private void LoadApplicableTo()
         {
-
             List<SelectListItem> items = new List<SelectListItem>();
+
             items.Add(new SelectListItem { Text = "Position", Value = "Position" });
+
             items.Add(new SelectListItem { Text = "Org. Unit", Value = "Org. Unit" });
+
             items.Add(new SelectListItem { Text = "Individual Employee", Value = "Individual Employee" });
+
             items.Add(new SelectListItem { Text = "All Employees", Value = "All Employees" });
+
             items.Add(new SelectListItem { Text = "", Value = "" });
+
             ViewBag.LoadApplicableTo = items;
             
         }
@@ -69,11 +71,17 @@ namespace LMS.Controllers
         private void LoadRequirementOfTraining()
         {
             List<SelectListItem> items = new List<SelectListItem>();
+
             items.Add(new SelectListItem { Text = "Organizational/Departmental Needs", Value = "ORGANIZATIONALDEPARTMENTALNEEDS" });
+
             items.Add(new SelectListItem { Text = "Identification on individual need", Value = "INDIVIDUALNEED" });
+
             items.Add(new SelectListItem { Text = "Identification on performance need", Value = "PERFORMANCENEED" });
+
             items.Add(new SelectListItem { Text = "Professional requirement", Value = "PROFESSIONALREQUIREMENT" });
+
             items.Add(new SelectListItem { Text = "", Value = "" });
+
             ViewBag.LoadRequirementOfTraining = items;
            
         }

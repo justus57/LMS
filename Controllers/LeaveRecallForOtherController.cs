@@ -350,10 +350,8 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-
         private static string GetDocumentNumber(string username)
         {
-            
             string DocumentNumberResponse = LeaveRecallForOtherXMLRequests.GetDocumentNumber(username);
             dynamic json = JObject.Parse(DocumentNumberResponse);
             return json.DocumentNo;

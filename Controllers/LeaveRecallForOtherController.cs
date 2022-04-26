@@ -15,7 +15,6 @@ namespace LMS.Controllers
     public class LeaveRecallForOtherController : Controller
     {
         public string namelist { get; private set; }
-
         // GET: LeaveRecallForOther
         public ActionResult Index()
         {
@@ -35,7 +34,6 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsTrainingActive"] = "";
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
-
             var username1 = System.Web.HttpContext.Current.Session["PayrollNo"];
             GetEmployeeList();
             return View();
@@ -44,8 +42,11 @@ namespace LMS.Controllers
         public JsonResult GetUserLeaves(string param1)
         {
             int position = param1.IndexOf(',');
+
             var param = param1.Substring(0, position);
+
             string UserLeavesresponseString = LeaveForOtherXMLRequests.GetUserLeaves(param);
+
             List<LeaveTypes> leavetype = new List<LeaveTypes>();
             /////break dynamic json and put it in a list, then serialize the list to json object
             foreach (var kvp in AppFunctions.BreakDynamicJSON(UserLeavesresponseString))
@@ -62,7 +63,9 @@ namespace LMS.Controllers
             try
             {
                 int position = param2.IndexOf(',');
+
                 var param = param2.Substring(0, position);
+
                 string ApprovedLeavesResponse = LeaveRecallForOtherXMLRequests.GetApprovedLeaves(param, param1);
 
                 JavaScriptSerializer ser = new JavaScriptSerializer();
@@ -88,10 +91,15 @@ namespace LMS.Controllers
         public void GetEmployeeList()
         {
             var castedDico = LeaveForOtherXMLRequests.GetEmpoyeeList();
+
             var array = castedDico.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
             var myList = new List<KeyValuePair<string, string>>(array);
+
             Dictionary<string, string> dictionary = new Dictionary<string, string>(array);
+
             List<string> keyList = new List<string>(dictionary.Keys);
+
             List<string> ValueList = new List<string>();
 
             foreach (KeyValuePair<string, string> item in castedDico)
@@ -117,7 +125,9 @@ namespace LMS.Controllers
             try
             {
                 int position = param2.IndexOf(',');
+
                 var param = param2.Substring(0, position);
+
                 string LeaveDetailsresponseString = LeaveRecallForOtherXMLRequests.GetLeaveDetails(param1, param);
 
                 dynamic json = JObject.Parse(LeaveDetailsresponseString);
@@ -151,7 +161,8 @@ namespace LMS.Controllers
 
         public JsonResult GetLeaveState(string param1, string param2, string param3)
         {
-            string employeeNo = System.Web.HttpContext.Current.Session["PayrollNo"].ToString(); ;
+            string employeeNo = System.Web.HttpContext.Current.Session["PayrollNo"].ToString(); 
+
             string causeofAbsenceCode = param1;
             string startDate = param2;
             string endDate = param3;
@@ -302,8 +313,11 @@ namespace LMS.Controllers
         public JsonResult Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8)
         {
             string username = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
+
             int position = param7.IndexOf(',');
+
             var param = param7.Substring(0, position);
+
             string EmployeeID = param.Trim();
             string EmployeeName = param8.Trim();
             string DocumentNo = GetDocumentNumber(EmployeeID);

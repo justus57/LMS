@@ -72,7 +72,6 @@ namespace LMS.Controllers
                     if (Request.QueryString["No"] != null)
                     {
                         AdvanceRequestsHeaderNumber = Request.QueryString["No"].Trim();
-
                         _ShortcutDimCode3 = "";
                     }
                     else
@@ -93,8 +92,6 @@ namespace LMS.Controllers
                         AdvanceSurrenderRequestsHeader = "";
                         _ShortcutDimCode3 = "";
                     }
-
-
                     LoadAdvanceRequestList();
                     LoadStaffSurrenderLines(AdvanceSurrenderRequestsHeader);
                     LoadTableAttachments(AdvanceSurrenderRequestsHeader);

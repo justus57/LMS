@@ -165,6 +165,7 @@ namespace LMS.Controllers
             List<AdvanceRequestTypes> AdvanceRequestTypesList = new List<AdvanceRequestTypes>();
 
             WebRef.DimCodeValues _DimCodeValues = new WebRef.DimCodeValues();
+
             WebserviceConfig.ObjNav.ExportDimensionCodeValues(LineDimension, ref _DimCodeValues);
 
             foreach (var kvp in _DimCodeValues.DimCodeValue)
@@ -194,7 +195,9 @@ namespace LMS.Controllers
             List<PreferredPaymentMethod> list = new List<PreferredPaymentMethod>()
             {
                 new PreferredPaymentMethod() {Id = 0, Name="" },
+
                 new PreferredPaymentMethod() {Id = 1, Name="Mpesa" },
+
                 new PreferredPaymentMethod() {Id = 2, Name="Cheque" },
             };
             ViewBag.PreferredPaymentMethod = list;

@@ -44,6 +44,7 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsLeaveApprover"] = "";
             System.Web.HttpContext.Current.Session["IsAppraisalSupervisor"] = "";
             var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
+
             var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
             System.Web.HttpContext.Current.Session["Company"]= "KRCS GF Management Unit";
             if ((string)log == "No")

@@ -17,11 +17,17 @@ namespace LMS.Controllers
     public class CreateAdvanceSurrenderController : Controller
     {
         static string folderPath = System.Web.HttpContext.Current.Server.MapPath("~/Uploads/");
+
         static string AdvanceSurrenderRequestsHeader = "";
+
         static string AdvanceRequestsHeaderNumber = "";
+
         static string _ShortcutDimCode3 = "";
+
         private bool IsPostBack;
+
         CreateAdvanceSurrender CreateAdvance =new CreateAdvanceSurrender();
+
         // GET: CreateAdvanceSurrender
         public ActionResult Index()
         {

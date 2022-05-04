@@ -120,7 +120,6 @@ namespace LMS.Controllers
             }
             html.Append("</tr>");
             html.Append("</tfoot>");
-
             //Building the Data rows.
             html.Append("<tbody>");
             foreach (DataRow row in dt.Rows)
@@ -181,7 +180,6 @@ namespace LMS.Controllers
             {
                 AdvanceRequestTypesList.Add(new AdvanceRequestTypes { Code = kvp.Code, Description = kvp.Code + " - " + kvp.Name });
             }
-
             return JsonConvert.SerializeObject(AdvanceRequestTypesList);
         }
         
@@ -193,16 +191,13 @@ namespace LMS.Controllers
             string DeleteAttachmentResponse = AdvanceRequestsXMLRequests.DeleteAttachment(param1);
 
             dynamic jsonDeleteAttachmentResponse = JObject.Parse(DeleteAttachmentResponse);
-
             _Status = jsonDeleteAttachmentResponse.Status;
             _Message = jsonDeleteAttachmentResponse.Msg;
-
             var _RequestResponse = new RequestResponse
             {
                 Status = _Status,
                 Message = _Message
             };
-
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
@@ -217,7 +212,6 @@ namespace LMS.Controllers
 
             string GetAdvanceRequestLineResponse = CustomsClasses.StaffClaims.GetAdvanceRequestLine(LineNo);
             dynamic jsonGetAdvanceRequestLineResponse = JObject.Parse(GetAdvanceRequestLineResponse);
-
             string Item = jsonGetAdvanceRequestLineResponse.Item;
             string ItemDescription = jsonGetAdvanceRequestLineResponse.ItemDescription;
             string UnitOfMeasure = jsonGetAdvanceRequestLineResponse.UnitOfMeasure;
@@ -253,7 +247,6 @@ namespace LMS.Controllers
         private void GetDimensionCodes()
         {
             string GetDimensionCodesresponseString = CreateAdvanceRequestXMLRequests.GetDimensionCodes();
-
             dynamic json = JObject.Parse(GetDimensionCodesresponseString);
             string GlobalDimCode1 = json.GlobalDimension1Code;
             string GlobalDimCode2 = json.GlobalDimension2Code;
@@ -303,7 +296,6 @@ namespace LMS.Controllers
             // _DropDownList.Items.Insert(0, new ListItem(" ", ""));
             //ViewBag.data = _DropDownList.Items;
         }
-
         private void LoadPrefferedMethodOfPayment()
         {
             List<PreferredPaymentMethod> items = new List<PreferredPaymentMethod>()
@@ -320,7 +312,6 @@ namespace LMS.Controllers
             TextInfo cultInfo = new CultureInfo("en-US", false).TextInfo;
             return cultInfo.ToTitleCase(inString);
         }
-
         
         public JsonResult LoadAdvanceRequestItem(string Code)
         {
@@ -371,7 +362,6 @@ namespace LMS.Controllers
                 Status = _Status,
                 Message = _Message
             };
-
             return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
 
@@ -408,9 +398,7 @@ namespace LMS.Controllers
 
             string DocumentNo = "";
 
-
             //KRCS  uses DimCode1, DimCode2, DimCode4 and DimCode3 on the lines
-
 
             DimCode1 = param12;
             DimCode2 = param13;

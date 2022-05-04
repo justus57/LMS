@@ -421,24 +421,18 @@ namespace LMS.Controllers
             if (System.Web.HttpContext.Current.Session["StaffClaimNo"].ToString() != "")
             {
                 DocumentNo = System.Web.HttpContext.Current.Session["StaffClaimNo"].ToString();
-
                 string UpdateAdvanceRequestResponse = CustomsClasses.StaffClaims.UpdateAdvanceRequest(DocumentNo, "StaffClaim", DateOfRequest, DateDue, username, username, RequestToCompany, DimCode1, DimCode2, DimCode1, DimCode2, "", DimCode4, "", "", "", "", Currency, DocumentNo, preferredPaymentMethod, MissionSummary);
-
                 string CreateAdvanceRequestXMLRequestsRssponse = CustomsClasses.StaffClaims.CreateAdvanceClaimLine(DocumentNo, Item, ItemDescription, UnitOfMeasure, NoOfUnits, UnitCost, Amount, Purpose, DimCode1, DimCode2, DimCode1, DimCode2, DimCode3, DimCode4, "", "", "", "");
                 dynamic jsonCreateAdvanceRequestXMLRequestsRssponse = JObject.Parse(CreateAdvanceRequestXMLRequestsRssponse);
-
                 string LineNo = jsonCreateAdvanceRequestXMLRequestsRssponse.Status;
-
                 _Status = System.Web.HttpContext.Current.Session["StaffClaimNo"].ToString();// jsonCreateAdvanceRequestXMLRequestsRssponse.Status;
                 _Message = jsonCreateAdvanceRequestXMLRequestsRssponse.Msg;
             }
-
             var _RequestResponse = new RequestResponse
             {
                 Status = _Status,
                 Message = _Message
             };
-
             return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
         
@@ -446,7 +440,6 @@ namespace LMS.Controllers
             string param7, string param8, string param9, string param10, string param11, string param12, string param13, string param14,
             string param15, string param16, string param17, string param18, string param19, string param20)
         {
-
             string LineNo = param17;
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string _Status = "000";
@@ -491,24 +484,18 @@ namespace LMS.Controllers
                 string DimCode8 = jsonAdvanceRequestFields.ShortcutDimCode8;
 
                 string UpdateAdvanceRequestResponse = CustomsClasses.StaffClaims.UpdateAdvanceRequest(DocumentNo, "StaffClaim", DateOfRequest, DateDue, username, username, RequestToCompany, DimCode1, DimCode2, DimCode1, DimCode2, "", DimCode4, "", "", "", "", Currency, DocumentNo, preferredPaymentMethod, MissionSummary);
-
                 string CreateAdvanceRequestXMLRequestsRssponse = CustomsClasses.StaffClaims.UpdatAdvanceClaimLine(DocumentNo, Item, ItemDescription, UnitOfMeasure, NoOfUnits, UnitCost, Amount, LineNo, "", Purpose, DimCode1, DimCode2, DimCode1, DimCode2, DimCode3, DimCode4, "", "", "", "");
                 dynamic jsonCreateAdvanceRequestXMLRequestsRssponse = JObject.Parse(CreateAdvanceRequestXMLRequestsRssponse);
-
                 string LineNo2 = jsonCreateAdvanceRequestXMLRequestsRssponse.Status;
-
                 //SaveAttachment(DocumentPath, FileName, DocumentNo, LineNo, LineNo2);
-
                 _Status = System.Web.HttpContext.Current.Session["StaffClaimNo"].ToString();// jsonCreateAdvanceRequestXMLRequestsRssponse.Status;
                 _Message = jsonCreateAdvanceRequestXMLRequestsRssponse.Msg;
             }
-
             var _RequestResponse = new RequestResponse
             {
                 Status = _Status,
                 Message = _Message
             };
-
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
@@ -521,7 +508,6 @@ namespace LMS.Controllers
             string DateOfRequest = param1;
             string DateDue = param2;
             string RequestToCompany = "";
-
 
             string DimCode1 = "";
             string DimCode2 = "";
@@ -548,7 +534,6 @@ namespace LMS.Controllers
                 DimCode4 = param3;
                 DimCode8 = "";
             }
-
             try
             {
                 if (System.Web.HttpContext.Current.Session["StaffClaimNo"].ToString() != "")
@@ -566,19 +551,16 @@ namespace LMS.Controllers
                     _Status = json.Status;
                     _Message = json.Msg;
                 }
-
             }
             catch (Exception es)
             {
                 _Message = es.Message;
             }
-
             var _RequestResponse = new RequestResponse
             {
                 Status = _Status,
                 Message = _Message
             };
-
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
@@ -630,11 +612,8 @@ namespace LMS.Controllers
         {
             //FileName = string.Format(@"{0}", DateTime.Now.Ticks);
             string AttachmentDescription = FileName;
-
             object IsUploaded =Convert.ToString(StaffClaims.UploadFile("1", AdvanceSurrenderRequestsHeader, Path, AttachmentDescription, lineNo, lineNo2));
-
-        }
-        
+        }       
         public JsonResult ValidateDim3Code(string param1)
         {
             return Json(CreateAdvanceRequestXMLRequests.ValidateShortcutDimCode3(param1),JsonRequestBehavior.AllowGet);

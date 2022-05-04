@@ -126,24 +126,20 @@ namespace LMS.Controllers
         public JsonResult GetEmployeeList(string param1)
         {
             List<Employee> employeeObject = new List<Employee>();
-
             foreach (var kvp in LeaveRecallForOtherXMLRequests.GetEmpoyeeList())
             {
                 employeeObject.Add(new Employee { EmployeeCode = kvp.Key, EmployeeName = kvp.Value });
             }
-
             return Json(JsonConvert.SerializeObject(employeeObject), JsonRequestBehavior.AllowGet);
         }
        
         public JsonResult GetOrgUnitList(string param1)
         {
             List<OrgUnit> OrgUnitObject = new List<OrgUnit>();
-
             foreach (var kvp in CreateAppraisalXMLREquests.GetOrgUnitList())
             {
                 OrgUnitObject.Add(new OrgUnit { Code = kvp.Key, Name = kvp.Value });
             }
-
             return Json(JsonConvert.SerializeObject(OrgUnitObject),JsonRequestBehavior.AllowGet);
         }
         

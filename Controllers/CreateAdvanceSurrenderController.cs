@@ -425,24 +425,24 @@ namespace LMS.Controllers
             if (System.Web.HttpContext.Current.Session["Company"].ToString() == "KRCS GF Management Unit")
             {
                 //DimCode8Label.Text = "Region to be Paid From";
-                LoadDimCodeValues(CreateAdvance.DimCode1, GlobalDimCode1);
-                LoadDimCodeValues(CreateAdvance.DimCode2, GlobalDimCode2);
+                //LoadDimCodeValues(CreateAdvance.DimCode1, GlobalDimCode1);
+                //LoadDimCodeValues(CreateAdvance.DimCode2, GlobalDimCode2);
                 //LoadDimCodeValues(DimCode3, ShortcutDimCode3);
                 //LoadDimCodeValues(DimCode8, ShortcutDimCode8);
-                CreateAdvance.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
-                CreateAdvance.DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
+                ViewBag.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
+                ViewBag.DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
                 //DimCode3Label.Text = SetFirstLetterToUpper(ShortcutDimCode3.ToLower());
             }
             else
             {
                 //DimCode8Label.Text = SetFirstLetterToUpper(ShortcutDimCode8.ToLower());
-                LoadDimCodeValues(CreateAdvance.DimCode1, GlobalDimCode1);
-                LoadDimCodeValues(CreateAdvance.DimCode2, GlobalDimCode2);
-                LoadDimCodeValues(CreateAdvance.DimCode4, ShortcutDimCode4);
+                //LoadDimCodeValues(CreateAdvance.DimCode1, GlobalDimCode1);
+                //LoadDimCodeValues(CreateAdvance.DimCode2, GlobalDimCode2);
+                //LoadDimCodeValues(CreateAdvance.DimCode4, ShortcutDimCode4);
                 //LoadDimCodeValues(DimCode8, ShortcutDimCode8);
-                CreateAdvance.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
-                CreateAdvance.DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
-                CreateAdvance.DimCode4Label = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
+                ViewBag.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
+                ViewBag.DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
+                ViewBag.DimCode4Label = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
             }
         }
         private void LoadDimCodeValues(DropDownList _DropDownList, string Code)

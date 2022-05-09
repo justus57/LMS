@@ -68,7 +68,6 @@
                                                 <div class="invalid-feedback">The date of request must be selected</div>
                                             </div>
                                         </div>
-
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="DateDue">Expected mission end date</label>
@@ -88,12 +87,10 @@
                                                 <div class="invalid-feedback">The Dimension Code 1 must be selected</div>
                                             </div>
                                         </div>
-
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <asp:label id="DimCode2Label" runat="server" />
                                                 <asp:DropDownList CssClass="form-control" ID="DimCode2" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
-                                                
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The Dimension Code 2 must be selected</div>
                                             </div>
@@ -284,7 +281,6 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="ItemDescription">Item Description</label>
                                         <input type="text" class="form-control" id="ItemDescription" required>
-                                        @Html.TextBoxFor(model => model.ItemDescription, new { @class = "form-control", id = "UnitofMeasure" })
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The description must be supplied</div>
                                     </div>
@@ -296,7 +292,6 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="UnitofMeasure">Unit of measure</label>
                                         <input type="text" class="form-control" id="UnitofMeasure" required>
-                                        @Html.TextBoxFor(model => model.UnitofMeasure, new { @class = "form-control", id = "UnitofMeasure" })
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The Unit of measure must be supplied</div>
                                     </div>
@@ -307,7 +302,6 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="UnitCost">Unit cost</label>
                                         <input type="text" class="form-control" id="UnitCost" required>
-                                        @Html.TextBoxFor(model => model.UnitCost, new { @class = "form-control", id = "UnitCost" })
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The Unit cost must be supplied</div>
                                     </div>
@@ -316,7 +310,6 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="NoOfUnits">No Of Units</label>
                                         <input type="text" class="form-control" id="NoOfUnits" required>
-                                        @Html.TextBoxFor(model => model.NoOfUnits, new { @class = "form-control", id = "NoOfUnits" })
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The No Of Units must be supplied</div>
                                     </div>
@@ -326,7 +319,6 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="BudgetLineCode">Budget Line Code</label>
-                                        @Html.TextBoxFor(model => model.BudgetLineCode, new { @class = "form-control", id = "BudgetLineCode" })
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The budget line code must be specified</div>
                                     </div>
@@ -645,7 +637,7 @@
                     // showToast(pid);
 
                     jQuery.ajax( {
-                        url: 'CreateAdvanceSurrender.aspx/DeleteAdvanceRequestLines',
+                        url:"@Url.Action("DeleteAdvanceRequestLines", "CreateAdvanceSurrender")",
                         type: "POST",
                         data: '{param1:"' + pid + '"}',
                         dataType: "json",
@@ -684,14 +676,14 @@
         $( "#AdvanceRequestLineNo" ).val( pid );
 
         $.ajax( {
-            url: 'CreateAdvanceSurrender.aspx/GetSurrenderLineDetails',
+            url:"@Url.Action("GetSurrenderLineDetails", "CreateAdvanceSurrender")",
             type: "POST",
             data: '{param1:"' + pid + '" }',
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function ( response ) {
 
-                if ( response != null && response.d != null ) {
+                if ( response != null ) {
                     var data = $.parseJSON( response );
                     jQuery_3_3_1( '#AddAdvanceRequestLine' ).modal( 'show' );
                     // document.getElementById('AdvanceRequestLineItem').disabled = true;
@@ -748,7 +740,7 @@
                     // showToast(pid);
 
                     jQuery.ajax( {
-                        url: 'CreateAdvanceSurrender.aspx/DeleteAdvanceRequestAttachment',
+                        url:"@Url.Action("DeleteAdvanceRequestAttachment", "CreateAdvanceSurrender")",
                         type: "POST",
                         data: '{param1:"' + pid + '"}',
                         dataType: "json",
@@ -824,18 +816,15 @@
                     //alert(file.name);
 
                     jQuery.ajax( {
-                        url: 'CreateAdvanceSurrender.aspx/SaveAttachment',
+                        url:"@Url.Action("SaveAttachment", "CreateAdvanceSurrender")",
                         type: "POST",
                         data: '{ param1:"' + file.name + '", param2:"' + $( '#AttachmentDescription' ).val() + '"  }',
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         success: function ( response ) {
 
-                            if ( response != null && response.d != null ) {
-                                var data = response.d;
-                                // alert(typeof (data)); //it comes out to be string
-                                //we need to parse it to JSON
-                                data = $.parseJSON( data );
+                            if ( response != null) {
+                                var data = $.parseJSON( data );
 
                                 jQuery_3_3_1.Toast.hideToast();
 
@@ -885,18 +874,15 @@
             jQuery_3_3_1.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
 
             jQuery.ajax( {
-                url: 'CreateAdvanceSurrender.aspx/UpdateSurrender',
+                url:"@Url.Action("UpdateSurrender", "CreateAdvanceSurrender")",
                 type: "POST",
                 data: '{ param1:"' + $( '#BudgetLineCode' ).val() + '", param2:"' + $( '#ActualAmount' ).val() + '", param3:"' + $( '#Item' ).val() + '", param4:"' + $( '#ItemDescription' ).val() + '", param5:"' + $( '#UnitofMeasure' ).val() + '", param6:"' + $( '#UnitCost' ).val() + '", param7:"' + $( '#NoOfUnits' ).val() + '", param8:"' + $( '#Amount' ).val() + '", param9:"' + $( '#DateOfRequest' ).val() + '", param10:"' + $( '#DateDue' ).val() + '", param11:"' + $( "#RequestToCompany option:selected" ).html() + '", param12:"' + $( '#DimCode1' ).val() + '", param13:"' + $( '#DimCode2' ).val() + '", param14:"' + $( '#BudgetLineCode' ).val() + '", param15:"' + $( '#DimCode4' ).val() + '", param16:"' + $( '#Currency' ).val() + '",param17:"' + $( "#AdvanceRequestLineNo" ).val() + '", param18:"' + $( "#PreferredPaymentMethod" ).val() + '", param19:"' + $( "#Remarks" ).val() + '", param20:"' + $( "#MissionSummary" ).val() + '", param21:"' + $( "#Purpose" ).val() + '" }',
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function ( response ) {
 
-                    if ( response != null && response.d != null ) {
-                        var data = response.d;
-                        // alert(typeof (data)); //it comes out to be string
-                        //we need to parse it to JSON
-                        data = $.parseJSON( data );
+                    if ( response != null) {
+                        var data = $.parseJSON( data );
 
                         jQuery_3_3_1.Toast.hideToast();
 
@@ -931,18 +917,15 @@
             jQuery_3_3_1.Toast.showToast( { title: title, duration: duration, icon: icon, image: '' } );
 
             jQuery.ajax( {
-                url: 'CreateAdvanceSurrender.aspx/SaveSurrender',
+                url:"@Url.Action("SaveSurrender", "CreateAdvanceSurrender")",
                 type: "POST",
                 data: '{ param1:"' + $( '#BudgetLineCode' ).val() + '", param2:"' + $( '#ActualAmount' ).val() + '", param3:"' + $( '#Item' ).val() + '", param4:"' + $( '#ItemDescription' ).val() + '", param5:"' + $( '#UnitofMeasure' ).val() + '", param6:"' + $( '#UnitCost' ).val() + '", param7:"' + $( '#NoOfUnits' ).val() + '", param8:"' + $( '#Amount' ).val() + '", param9:"' + $( '#DateOfRequest' ).val() + '", param10:"' + $( '#DateDue' ).val() + '", param11:"' + $( "#RequestToCompany option:selected" ).html() + '", param12:"' + $( '#DimCode1' ).val() + '", param13:"' + $( '#DimCode2' ).val() + '", param14:"' + $( '#BudgetLineCode' ).val() + '", param15:"' + $( '#DimCode4' ).val() + '", param16:"' + $( '#Currency' ).val() + '",param17:"' + $( "#AdvanceRequestLineNo" ).val() + '", param18:"' + $( "#PreferredPaymentMethod" ).val() + '",param19:"' + $( "#Remarks" ).val() + '", param20:"' + $( "#MissionSummary" ).val() + '", param21:"' + $( "#Purpose" ).val() + '" }',
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function ( response ) {
 
-                    if ( response != null && response.d != null ) {
-                        var data = response.d;
-                        // alert(typeof (data)); //it comes out to be string
-                        //we need to parse it to JSON
-                        data = $.parseJSON( data );
+                    if ( response != null) {
+                        var data = $.parseJSON( data );
 
                         jQuery_3_3_1.Toast.hideToast();
 
@@ -1151,18 +1134,15 @@
 
                                 //Create Surrender
                                 jQuery_3_3_1.ajax( {
-                                    url: 'CreateAdvanceSurrender.aspx/CreateStaffSurrender',
+                                    url:"@Url.Action("CreateStaffSurrender", "CreateAdvanceSurrender")",
                                     type: "POST",
                                     data: '{param1:"' + $( "#AdvanceRequestList" ).val() + '" }',
                                     dataType: "json",
                                     contentType: "application/json; charset=utf-8",
                                     success: function ( response ) {
 
-                                        if ( response != null && response.d != null ) {
-                                            var data = response.d;
-                                            // alert(typeof (data)); //it comes out to be string
-                                            //we need to parse it to JSON
-                                            data = $.parseJSON( data );
+                                        if ( response != null ) {
+                                            var data = $.parseJSON( data );
 
                                             $( '#DateDue' ).val( data.DateDue );
                                             $( '#DateOfRequest' ).val( data.DateOfRequest );
@@ -1205,18 +1185,15 @@
             $( "#ExchangeRate" ).val( '' );
 
             $.ajax( {
-                url: 'CreateAdvanceSurrender.aspx/GetRequestLineDetails',
+                url:"@Url.Action("GetRequestLineDetails", "CreateAdvanceSurrender")",
                 type: "POST",
                 data: '{param1:"' + $( "#AdvanceRequestLineItem" ).val() + '" }',
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function ( response ) {
 
-                    if ( response != null && response.d != null ) {
-                        var data = response.d;
-                        // alert(typeof (data)); //it comes out to be string
-                        //we need to parse it to JSON
-                        data = $.parseJSON( data );
+                    if ( response != null ) {
+                        var data = $.parseJSON( data );
 
 
                         document.getElementById( 'Amount' ).disabled = true;
@@ -1275,18 +1252,15 @@
                 $( "#ExchangeRate" ).val( '' );
                 //selection fields
                 jQuery_3_3_1.ajax( {
-                    url: 'CreateAdvanceRequest.aspx/LoadAdvanceRequestItem',
+                    url:"@Url.Action("LoadAdvanceRequestItem", "CreateAdvanceSurrender")",
                     type: "POST",
                     data: '{Code:"' + $( "#Item" ).val() + '" }',
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function ( response ) {
 
-                        if ( response != null && response.d != null ) {
-                            var data = response.d;
-                            // alert(typeof (data)); //it comes out to be string
-                            //we need to parse it to JSON
-                            data = $.parseJSON( data );
+                        if ( response != null) {
+                            var data = $.parseJSON( data );
 
 
                             document.getElementById( 'Amount' ).disabled = true;
@@ -1324,17 +1298,14 @@
         } );
 
         $.ajax( {
-            url: 'CreateAdvanceSurrender.aspx/LoadAdvanceTypes',
+            url:"@Url.Action("LoadAdvanceTypes", "CreateAdvanceSurrender")",
             type: "POST",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function ( response ) {
 
-                if ( response != null && response.d != null ) {
-                    var data = response.d;
-                    // alert(typeof (data)); //it comes out to be string
-                    //we need to parse it to JSON
-                    data = $.parseJSON( data );
+                if ( response != null ) {
+                    var data = $.parseJSON( data );
                     $( "#Item" ).append( $( '<option></option>' ).attr( "value", "OTHERS" ).text( "Others" ) );
                     $.each( data, function ( i, item ) {
                         $( "#Item" ).append( $( '<option></option>' ).attr( "value", item.Code ).text( item.Description ) );
@@ -1343,17 +1314,14 @@
             }
         } );
         $.ajax( {
-            url: 'CreateAdvanceSurrender.aspx/LoadAdvanceRequestLines',
+            url: "@Url.Action("LoadAdvanceRequestLines", "CreateAdvanceSurrender")",
             type: "POST",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function ( response ) {
 
-                if ( response != null && response.d != null ) {
-                    var data = response.d;
-                    // alert(typeof (data)); //it comes out to be string
-                    //we need to parse it to JSON
-                    data = $.parseJSON( data );
+                if ( response != null ) {
+                    var data = $.parseJSON( data );
 
                     $.each( data, function ( i, item ) {
                         // $("#AdvanceRequestLineItem").append($('<option></option>').attr("value", item.No).text(item.ItemDescription));
@@ -1363,16 +1331,14 @@
         } );
 
         $.ajax( {
-            url: 'CreateAdvanceSurrender.aspx/LoadAdvanceSurrender',
+            url:"@Url.Action("LoadAdvanceSurrender", "CreateAdvanceSurrender")",
             type: "POST",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function ( response ) {
 
-                if ( response != null && response.d != null ) {
-                    var data = response.d;
-
-                    data = $.parseJSON( data );
+                if ( response != null ) {
+                    var datas = $.parseJSON( data );
 
                     $( '#DateOfRequest' ).val( data.DateOfRequest );
                     $( '#DateDue' ).val( data.DateDue );

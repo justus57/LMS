@@ -41,6 +41,7 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
             System.Web.HttpContext.Current.Session["Company"] = "Management Unit";
+
             var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
             var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
             //check if user is logged
@@ -59,7 +60,7 @@ namespace LMS.Controllers
                     bool IsPostBack = false;
                     if (!IsPostBack )
                     {
-                        LoadPrefferedMethodOfPayment();
+                       LoadPrefferedMethodOfPayment();
                        GetDimensionCodes();
                     }
 
@@ -72,11 +73,11 @@ namespace LMS.Controllers
                     {
                         CreatedAdvanceRequestsHeader = _CreatedAdvanceRequestsHeader;
 
-                        //string DocumentNo = GenerateDocumentNo("");
+                        //string DocumentNo = GenerateDocumentNo("").ToString();
 
-                        //Session["AdvanceRequestNo"] = DocumentNo;
+                       // Session["AdvanceRequestNo"] = DocumentNo;
 
-                        //Response.Redirect("CreateAdvanceRequest.aspx?No=" + DocumentNo + "");
+                       // Response.Redirect("CreateAdvanceRequest.aspx?No=" + DocumentNo + "");
                     }
                     else
                     {
@@ -107,8 +108,8 @@ namespace LMS.Controllers
             {
                 LineDimension = "INTERVENTION";
                 // DimCode8Label.Text = "Region to be Paid From";
-                LoadDimCodeValues(cr.DimCode1, GlobalDimCode1);
-                LoadDimCodeValues(cr.DimCode2, GlobalDimCode2);
+                //LoadDimCodeValues("DimCode1", GlobalDimCode1);
+              //  LoadDimCodeValues(cr.DimCode2, GlobalDimCode2);
                 // LoadDimCodeValues(DimCode3, ShortcutDimCode3);
                 // LoadDimCodeValues(DimCode8, ShortcutDimCode8);
                 ViewBag.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
@@ -119,9 +120,9 @@ namespace LMS.Controllers
             {
                 LineDimension = ShortcutDimCode3;
                 // DimCode8Label.Text = SetFirstLetterToUpper(ShortcutDimCode8.ToLower());
-                LoadDimCodeValues(cr.DimCode1, GlobalDimCode1);
-                LoadDimCodeValues(cr.DimCode2, GlobalDimCode2);
-                LoadDimCodeValues(cr.DimCode4, ShortcutDimCode4);
+               // LoadDimCodeValues(cr.DimCode1, GlobalDimCode1);
+              //  LoadDimCodeValues(cr.DimCode2, GlobalDimCode2);
+              //  LoadDimCodeValues(cr.DimCode4, ShortcutDimCode4);
                 // LoadDimCodeValues(DimCode8, ShortcutDimCode8);
                 ViewBag.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
                 ViewBag.DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
@@ -137,7 +138,7 @@ namespace LMS.Controllers
             TextInfo cultInfo = new CultureInfo("en-US", false).TextInfo;
             return cultInfo.ToTitleCase(inString);
         }
-        private void LoadDimCodeValues(DropDownList _DropDownList, string Code)
+        private void LoadDimCodeValues(string _DropDownList, string Code)
         {
           //  _DropDownList.Items.Clear();
 
@@ -146,9 +147,9 @@ namespace LMS.Controllers
 
             foreach (var kvp in _DimCodeValues.DimCodeValue)
             {
-                _DropDownList.Items.Insert(0, new ListItem(kvp.Code + " - " + kvp.Name, kvp.Code));
+                //_DropDownList.Items.Insert(0, new ListItem(kvp.Code + " - " + kvp.Name, kvp.Code));
             }
-            _DropDownList.Items.Insert(0, new ListItem(" ", ""));
+            //_DropDownList.Items.Insert(0, new ListItem(" ", ""));
         }
 
         public JsonResult LoadAdvanceRequest()
@@ -194,7 +195,7 @@ namespace LMS.Controllers
         private void LoadTable(string AdvanceRequestHdrNo)
         {
             string strText = AdvanceRequestsXMLRequests.GetAdvanceRequestsLinesTable(AdvanceRequestHdrNo, "Open");
-            ViewBag.Table = strText;
+            ViewBag.AddAdvanceRequestLine = strText;
         }
         private void LoadPrefferedMethodOfPayment()
         {

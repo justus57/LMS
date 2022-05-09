@@ -52,35 +52,37 @@ namespace LMS.Controllers
                 else
                 {
                     {
-                    //PerformanceMeasurementType.Items.Clear();
+                        //PerformanceMeasurementType.Items.Clear();
 
-                    //PerformanceMeasurementType.Items.Insert(0, new ListItem("Options", "Options"));
-                    //PerformanceMeasurementType.Items.Insert(0, new ListItem("Weighted Score", "WeightedScore"));
-                    //PerformanceMeasurementType.Items.Insert(0, new ListItem("Description", "Description"));
-                    //PerformanceMeasurementType.Items.Insert(0, new ListItem(" ", ""));
+                        //PerformanceMeasurementType.Items.Insert(0, new ListItem("Options", "Options"));
+                        //PerformanceMeasurementType.Items.Insert(0, new ListItem("Weighted Score", "WeightedScore"));
+                        //PerformanceMeasurementType.Items.Insert(0, new ListItem("Description", "Description"));
+                        //PerformanceMeasurementType.Items.Insert(0, new ListItem(" ", ""));
 
-                    string s = Request.QueryString["id"].Trim();
+                        string s = Request.QueryString["id"].Trim();
 
-                    if (s == "")
-                    {
-                        Response.Redirect(Request.UrlReferrer.ToString());
-                    }
-                    else
-                    {
                         if (s == "")
                         {
                             Response.Redirect(Request.UrlReferrer.ToString());
                         }
                         else
                         {
-                            string AppraisalHeader = AppFunctions.Base64Decode(s);
-                            AppraisalHeaderNo = AppraisalHeader;
-                            LoadTable(AppraisalHeader);
-                            //AppraisalSection.Items.Insert(0, new ListItem(String.Empty, String.Empty));
-                            //AppraisalSection.SelectedIndex = 0;
+                            if (s == "")
+                            {
+                                Response.Redirect(Request.UrlReferrer.ToString());
+                            }
+                            else
+                            {
+                                string AppraisalHeader = AppFunctions.Base64Decode(s);
+                                AppraisalHeaderNo = AppraisalHeader;
+                                LoadTable(AppraisalHeader);
+                                //AppraisalSection.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+                                //AppraisalSection.SelectedIndex = 0;
+                            }
                         }
                     }
                 }
+
             }
             return View();
         }
@@ -175,7 +177,7 @@ namespace LMS.Controllers
             ////Append the HTML string to Placeholder.
             // placeholder.Controls.Add(new Literal { Text = html.ToString() });
         }
-       
+
         public JsonResult GetAppraisalSectionList()
         {
             List<AppraisalSection> AppraisalSectionObject = new List<AppraisalSection>();
@@ -184,9 +186,9 @@ namespace LMS.Controllers
             {
                 AppraisalSectionObject.Add(new AppraisalSection { Code = kvp.Key, Description = kvp.Value });
             }
-            return Json(JsonConvert.SerializeObject(AppraisalSectionObject),JsonRequestBehavior.AllowGet);
+            return Json(JsonConvert.SerializeObject(AppraisalSectionObject), JsonRequestBehavior.AllowGet);
         }
-       
+
         public JsonResult GetAppraisalsList()
         {
             //exclude current appraisal
@@ -201,7 +203,7 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(AppraisalObject), JsonRequestBehavior.AllowGet);
         }
-       
+
         public JsonResult CreateNewAppraisalQuestion(NameValue[] formVars)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -307,7 +309,7 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-    
+
         public JsonResult Update(NameValue[] formVars)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -422,7 +424,7 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-       
+
         public JsonResult GetQuestionDetails(string param1)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -480,10 +482,10 @@ namespace LMS.Controllers
                 AppraisalSection = AppraisalSection
             };
 
-            return Json(JsonConvert.SerializeObject(questionDetails),JsonRequestBehavior.AllowGet);
+            return Json(JsonConvert.SerializeObject(questionDetails), JsonRequestBehavior.AllowGet);
 
         }
-        
+
         public JsonResult DeleteAppraisalTarget(string param1)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -508,7 +510,7 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-       
+
         public JsonResult CopyAppraisalTargets(string param1)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -596,5 +598,8 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
+
+
+
     }
 }

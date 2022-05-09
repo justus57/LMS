@@ -102,7 +102,6 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="AppraisalName" class="form-control-label">Appraisal Name</label>
-                                    <asp:TextBox TextMode="multiline" Columns="30" maxlength="50" Rows="3" runat="server" ID="AppraisalName" class="form-control MultiLineLimit" required="true"></asp:TextBox>
                                     @Html.TextAreaFor(Model =>Model.AppraisalName,new { @class= "form-control MultiLineLimit", TextMode="multiline",Columns="30",maxlength="50",Rows="3",required = true})
                                     <p class="pull-right text-muted small" id="count_message"></p>
                                     <div class="valid-feedback">Looks good!</div>
@@ -136,7 +135,6 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label" for="AppraisalStartDay">Appraisal Start Date</label>
-                                    <asp:TextBox class="form-control" id="AppraisalStartDay" runat="server" required="true"></asp:TextBox>
                                     @Html.TextAreaFor(Model=> Model.AppraisalStartDay,new { @class = "form-control",id = "AppraisalStartDay" })
                                     <div class="valid-feedback">Looks good!</div>
                                     <div class="invalid-feedback">The appraisal start date must be selected</div>
@@ -146,7 +144,6 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label" for="AppraisalEndDay">Appraisal End Date</label>
-                                    <asp:TextBox class="form-control" id="AppraisalEndDay" runat="server" required="true"></asp:TextBox>
                                     @Html.TextAreaFor(model=> Model.AppraisalEndDay,new { @class= "form-control",id="" })
                                     <div class="valid-feedback">Looks good!</div>
                                     <div class="invalid-feedback">The appraisal end date must be selected</div>

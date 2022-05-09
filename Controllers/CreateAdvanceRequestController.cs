@@ -60,7 +60,7 @@ namespace LMS.Controllers
                     if (!IsPostBack )
                     {
                         LoadPrefferedMethodOfPayment();
-                       //GetDimensionCodes();
+                       GetDimensionCodes();
                     }
 
                     if (Request.QueryString["No"] != null)
@@ -111,8 +111,8 @@ namespace LMS.Controllers
                 LoadDimCodeValues(cr.DimCode2, GlobalDimCode2);
                 // LoadDimCodeValues(DimCode3, ShortcutDimCode3);
                 // LoadDimCodeValues(DimCode8, ShortcutDimCode8);
-                cr.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
-                cr.DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
+                ViewBag.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
+                ViewBag.DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
                 // DimCode3Label.Text = SetFirstLetterToUpper(ShortcutDimCode3.ToLower());
             }
             else
@@ -123,9 +123,9 @@ namespace LMS.Controllers
                 LoadDimCodeValues(cr.DimCode2, GlobalDimCode2);
                 LoadDimCodeValues(cr.DimCode4, ShortcutDimCode4);
                 // LoadDimCodeValues(DimCode8, ShortcutDimCode8);
-                cr.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
-                cr.DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
-                cr.DimCode4Label = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
+                ViewBag.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
+                ViewBag.DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
+                ViewBag.DimCode4Label = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
             }
 
             System.Web.HttpContext.Current.Session["LCY"] = json.LCY;
@@ -151,16 +151,20 @@ namespace LMS.Controllers
             _DropDownList.Items.Insert(0, new ListItem(" ", ""));
         }
 
-        public static string LoadAdvanceRequest()
+        public JsonResult LoadAdvanceRequest()
         {
-            return AdvanceRequestsXMLRequests.GetAdvanceRequests("StaffAdvance", CreatedAdvanceRequestsHeader);
+           var LoadAdvanceRequest =  AdvanceRequestsXMLRequests.GetAdvanceRequests("StaffAdvance", CreatedAdvanceRequestsHeader);
+            return Json(JsonConvert.SerializeObject(LoadAdvanceRequest), JsonRequestBehavior.AllowGet);
+
         }
-        public static string LoadAdvanceTypes()
+        public JsonResult LoadAdvanceTypes()
         {
-            return CreateAdvanceRequestXMLRequests.GetAdvanceTypes();
+           var LoadAdvanceTypes = CreateAdvanceRequestXMLRequests.GetAdvanceTypes();
+            return Json(JsonConvert.SerializeObject(LoadAdvanceTypes), JsonRequestBehavior.AllowGet);
+
         }
 
-        public static string LoadInterventions()
+        public JsonResult LoadInterventions()
         {
             List<AdvanceRequestTypes> AdvanceRequestTypesList = new List<AdvanceRequestTypes>();
 
@@ -173,17 +177,19 @@ namespace LMS.Controllers
                 AdvanceRequestTypesList.Add(new AdvanceRequestTypes { Code = kvp.Code, Description = kvp.Code + " - " + kvp.Name });
             }
 
-            return JsonConvert.SerializeObject(AdvanceRequestTypesList);
+            return Json(JsonConvert.SerializeObject(AdvanceRequestTypesList), JsonRequestBehavior.AllowGet);
         }
 
-        public static string LoadAdvanceRequestItem(string Code)
+        public JsonResult LoadAdvanceRequestItem(string Code)
         {
-            return CreateAdvanceRequestXMLRequests.GetAdvanceType(Code);
+           var LoadAdvanceRequestItem = CreateAdvanceRequestXMLRequests.GetAdvanceType(Code);
+            return Json(JsonConvert.SerializeObject(LoadAdvanceRequestItem), JsonRequestBehavior.AllowGet);
         }
 
-        public static string LoadUnitsOfMeasure()
+        public JsonResult LoadUnitsOfMeasure()
         {
-            return CreateAdvanceRequestXMLRequests.GetUnitOfMeasure();
+          var LoadUnitsOfMeasure = CreateAdvanceRequestXMLRequests.GetUnitOfMeasure();
+            return Json(JsonConvert.SerializeObject(LoadUnitsOfMeasure), JsonRequestBehavior.AllowGet);
         }
         private void LoadTable(string AdvanceRequestHdrNo)
         {
@@ -259,14 +265,14 @@ namespace LMS.Controllers
             html.Append("</table>");
             string strText = html.ToString();
             ////Append the HTML string to Placeholder.
-            ViewBag.Table = strText;
+            ViewBag.AddAttachment = strText;
             // placeholder1.Controls.Add(new Literal { Text = html.ToString() });
         }
 
-        public static string LoadBudgetLineCode()
+        public JsonResult LoadBudgetLineCode()
         {
             string[] result = CreateAdvanceRequestXMLRequests.GetShortcutDimCodeArrayString(LineDimension);
-            return JsonConvert.SerializeObject(result);
+            return  Json(JsonConvert.SerializeObject(result), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetRequestLineDetails(string param1)

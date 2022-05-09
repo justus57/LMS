@@ -19,7 +19,7 @@ namespace LMS.Models
         public string AdvanceRequestLineNo { get; set; }
         public string BudgetLineCode { get; set; }
         public string UnitCost { get; set; }
-        public string ItemDescription { get; set; }
+        public string AttachmentDescription { get; set; }
         public string LoadPreferredPaymentMethod { get; set; }
         public string ClaimedAmountLCY { get; set; }
         public string DimCode2Label { get; set; }

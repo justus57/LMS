@@ -36,7 +36,6 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-control-label" for="DateOfRequest">Expected mission start date</label>
-                                        <asp:TextBox class="form-control" id="DateOfRequest" runat="server" required="true"></asp:TextBox>
                                         @Html.TextBoxFor(model => model.DateOfRequest, new { @class = "form-control" })
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The date of request must be selected</div>
@@ -46,7 +45,6 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-control-label" for="DateDue">Expected mission end date</label>
-                                        <asp:TextBox class="form-control" id="DateDue" runat="server" required="true"></asp:TextBox>
                                         @Html.TextBoxFor(model => model.DateDue, new { @class = "form-control" })
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The date due must be selected</div>
@@ -66,9 +64,8 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <asp:label id="DimCode2Label" runat="server" />
+                                        @Html.LabelFor(m => m.DimCode2Label)
                                         <asp:DropDownList CssClass="form-control" ID="DimCode2" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
-
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The Dimension Code 2 must be selected</div>
                                     </div>
@@ -77,9 +74,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <asp:label id="DimCode4Label" runat="server" />
+                                        @Html.LabelFor(m => m.DimCode2Label)
                                         <asp:DropDownList CssClass="form-control" ID="DimCode4" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
-
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The Dimension Code 4 must be selected</div>
                                     </div>
@@ -99,7 +95,7 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="Balance">Balance</label>
                                         <asp:TextBox CssClass="form-control" ID="Balance" runat="server" required="true" disabled="false"> </asp:TextBox>
-                                        @Html.TextBoxFor(model => model.Balance, new { @class = "form-control" })
+                                        @Html.TextBoxFor(model => model.Balance, new { @Class = "form-control" })
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The currency must be selected</div>
                                     </div>
@@ -109,8 +105,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="form-control-label">Mission Summary (Type activity name and county visited)</label>
-                                        <asp:TextBox TextMode="multiline" Columns="50" maxlength="50" Rows="3" runat="server" ID="MissionSummary" class="form-control MultiLineLimit" required="true"></asp:TextBox>
-                                        @Html.TextBoxFor(model => model.MissionSummary, new { @class = "form-control" })
+                                        @Html.TextAreaFor(model => model.MissionSummary, new { @class = "form-control MultiLineLimit", TextMode = "multiline" ,Columns = "50", maxlength = "50" ,Rows = "3" })
                                         <p class="pull-right text-muted small" id="count_message"></p>
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">The preffered method of payment must be provided</div>
@@ -146,7 +141,7 @@
                                     </div>
                                     <br>
                                     <div class="table-responsive">
-                                        <asp:PlaceHolder ID="placeholder" runat="server" />
+                                        @Html.Raw(ViewBag.AddAdvanceRequestLine);
                                     </div>
                                 </div>
                             </div>
@@ -168,6 +163,7 @@
                                     <br>
                                     <div class="table-responsive">
                                         <asp:PlaceHolder ID="placeholder1" runat="server" />
+                                        @Html.Raw(ViewBag.AddAttachment);
                                     </div>
                                 </div>
                             </div>
@@ -233,7 +229,6 @@
                         <div class="form-group">
                             <label class="form-control-label" for="ItemDescription">Description</label>
                             <input type="text" class="form-control" id="ItemDescription" required>
-                            @Html.TextBoxFor(model => model.ItemDescription, new { @class = "form-control" })
                             <div class="valid-feedback">Looks good!</div>
                             <div class="invalid-feedback">The description must be supplied</div>
                         </div>
@@ -257,7 +252,6 @@
                         <div class="form-group">
                             <label class="form-control-label" for="UnitCost">Unit cost</label>
                             <input type="text" class="form-control" id="UnitCost" required>
-                            @Html.TextBoxFor(model => model.UnitCost, new { @class = "form-control" })
                             <div class="valid-feedback">Looks good!</div>
                             <div class="invalid-feedback">The Unit cost must be supplied</div>
                         </div>
@@ -289,7 +283,6 @@
                         <div class="form-group">
                             <label class="form-control-label" for="BudgetLineCode">Budget Line</label>
                             <input type="text" class="form-control" id="BudgetLineCode" required>
-                            @Html.TextBoxFor(model => model.BudgetLineCode, new { @class = "form-control" })
                             <div class="valid-feedback">Looks good!</div>
                             <div class="invalid-feedback">The intervention must be specified</div>
                         </div>
@@ -301,7 +294,6 @@
                         <div class="form-group">
                             <label class="form-control-label" for="Purpose">Purpose</label>
                             <textarea class="form-control" rows="2" id="Purpose" required></textarea>
-                            @Html.TextBoxFor(model => model.Purpose, new { @class = "form-control" })
                             <div class="valid-feedback">Looks good!</div>
                             <div class="invalid-feedback">The purpose must be supplied</div>
                         </div>
@@ -312,16 +304,13 @@
                         <div class="form-group">
                             <label class="form-control-label" for="Amount">Amount(LCY)</label>
                             <input type="text" class="form-control" id="Amount" required>
-                            @Html.TextBoxFor(model => model.Amount, new { @class = "form-control" })
                             <div class="valid-feedback">Looks good!</div>
                             <div class="invalid-feedback">The Amount must be supplied</div>
                         </div>
                     </div>
                 </div>
                 <input type="hidden" id="ExchangeRate" name="ExchangeRate" value="">
-                @Html.TextBoxFor(model => model.ExchangeRate, new { @class = "form-control" })
                 <input type="hidden" id="AdvanceRequestLineNo" name="AdvanceRequestLineNo" value="">
-                @Html.TextBoxFor(model => model.AdvanceRequestLineNo, new { @class = "form-control" })
             </form>
         </div>
 
@@ -365,8 +354,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="form-control-label" for="AttachmentDescription">Attachment description</label>
-                            <textarea class="form-control" rows="2" id="AttachmentDescription" required></textarea>
-
+                            @Html.TextBoxFor(model => model.AttachmentDescription, new { @class = "form-control" })
                             <div class="valid-feedback">Looks good!</div>
                             <div class="invalid-feedback">The attachment description must be supplied</div>
                         </div>
@@ -403,24 +391,24 @@
     </div>
     </div>
     </main>
-    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="~/Assest/vendor/jquery/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
     var jQuery_1_12_4 = $.noConflict(true);
     </script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="js/sb-admin.min.js"></script>
+    <script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="Assest/js/sb-admin.min.js"></script>
     <!-- Page level plugin JavaScript-->
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-    <script src="vendor/datatables/sum().js"></script>
-    <script src="js/bootbox.all.min.js"></script>
-    <script src="js/bootboxError.js"></script>
+    <script src="Assest/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="Assest/vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="Assest/vendor/datatables/sum().js"></script>
+    <script src="Assest/js/bootbox.all.min.js"></script>
+    <script src="Assest/js/bootboxError.js"></script>
     <!-- Demo scripts for this page-->
-    <script src="js/jquery.toast.js"></script>
-    <script src="js/jquery.alphanum.js"></script>
+    <script src="Assest/js/jquery.toast.js"></script>
+    <script src="Assest/js/jquery.alphanum.js"></script>
     <script type="text/javascript">
 
     $(".MultiLineLimit").on('change keydown paste input', function () {
@@ -470,18 +458,18 @@
         jQuery_3_3_1.Toast.showToast({ title: title, duration: duration, icon: icon, image: '' });
 
         jQuery.ajax({
-            url: 'CreateAdvanceRequest.aspx/Save',
+            url: "@Url.Action("Save", "CreateAdvanceRequest")",
             type: "POST",
             data: '{param1:"' + $('#DateOfRequest').val() + '", param2:"' + $('#DateDue').val() + '", param3:"' + $('#DimCode4').val() + '", param4:"' + $('#DimCode1').val() + '", param5:"' + $('#DimCode2').val() + '", param6:"' + $('#MissionSummary').val() + '", param7:"' + $('#DimCode8').val() + '", param8:"' + $('#DimCode4').val() + '", param9:"' + $('#PreferredPaymentMethod').val() + '" }',
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (response) {
 
-                if (response != null && response.d != null) {
-                    var data = response.d;
+                if (response != null) {
+
                     // alert(typeof (data)); //it comes out to be string
                     //we need to parse it to JSON
-                    data = $.parseJSON(data);
+                    var data = $.parseJSON(data);
 
                     jQuery_3_3_1.Toast.hideToast();
 
@@ -543,18 +531,17 @@
                 // showToast(pid);
 
                 jQuery.ajax({
-                    url: 'CreateAdvanceRequest.aspx/DeleteAdvanceRequestLines',
+                    url: "@Url.Action("DeleteAdvanceRequestLines", "CreateAdvanceRequest")",
                     type: "POST",
                     data: '{param1:"' + pid + '"}',
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function (response) {
 
-                        if (response != null && response.d != null) {
-                            var data = response.d;
+                        if (response != null) {
                             // alert(typeof (data)); //it comes out to be string
                             //we need to parse it to JSON
-                            data = $.parseJSON(data);
+                            var data = $.parseJSON(data);
 
                             // hideLoading();
 
@@ -585,18 +572,17 @@
     $("#AdvanceRequestLineNo").val(pid);
 
     $.ajax({
-        url: 'CreateAdvanceRequest.aspx/GetRequestLineDetails',
+        url:"@Url.Action("GetRequestLineDetails", "CreateAdvanceRequest")",
         type: "POST",
         data: '{param1:"' + pid + '" }',
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (response) {
 
-            if (response != null && response.d != null) {
-                var data = response.d;
+            if (response != null) {
                 // alert(typeof (data)); //it comes out to be string
                 //we need to parse it to JSON
-                data = $.parseJSON(data);
+                var data = $.parseJSON(data);
                 $("#Item").val(data.Item).change();
                 $('#ItemDescription').val(data.ItemDescription);
                 $('#Purpose').val(data.Purpose);
@@ -630,18 +616,17 @@
         jQuery_3_3_1.Toast.showToast({ title: title, duration: duration, icon: icon, image: '' });
 
         jQuery.ajax({
-            url: 'CreateAdvanceRequest.aspx/UpdateStaffImprestLines',
+            url: "@Url.Action("UpdateStaffImprestLines", "CreateAdvanceRequest")",
             type: "POST",
             data: '{param1:"' + $('#Item').val() + '", param2:"' + $('#ItemDescription').val() + '", param3:"' + $('#UnitofMeasure').val() + '", param4:"' + $('#UnitCost').val() + '", param5:"' + $('#NoOfUnits').val() + '", param6:"' + $('#Amount').val() + '", param7:"' + $('#AdvanceRequestLineNo').val() + '", param8:"' + $('#BudgetLineCode').val() + '", param9:"' + $('#Purpose').val() + '"}',
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (response) {
 
-                if (response != null && response.d != null) {
-                    var data = response.d;
+                if (response != null ) {
                     // alert(typeof (data)); //it comes out to be string
                     //we need to parse it to JSON
-                    data = $.parseJSON(data);
+                    var data = $.parseJSON(data);
 
                     jQuery_3_3_1.Toast.hideToast();
 
@@ -679,18 +664,17 @@
             if (result == true) {
 
                 jQuery.ajax({
-                    url: 'CreateAdvanceRequest.aspx/DeleteAdvanceRequestAttachment',
+                    url:"@Url.Action("DeleteAdvanceRequestAttachment", "CreateAdvanceRequest")",
                     type: "POST",
                     data: '{param1:"' + pid + '"}',
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function (response) {
 
-                        if (response != null && response.d != null) {
-                            var data = response.d;
+                        if ( response != null ) {
                             // alert(typeof (data)); //it comes out to be string
                             //we need to parse it to JSON
-                            data = $.parseJSON(data);
+                          var data = $.parseJSON(data);
 
                             //hideLoading();
 
@@ -747,18 +731,15 @@
                 //alert(file.name);
 
                 jQuery.ajax({
-                    url: 'CreateAdvanceRequest.aspx/SaveAttachment',
+                    url: "@Url.Action("SaveAttachment", "CreateAdvanceRequest")",
                     type: "POST",
                     data: '{ param1:"' + file.name + '", param2:"' + $('#AttachmentDescription').val() + '"  }',
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function (response) {
 
-                        if (response != null && response.d != null) {
-                            var data = response.d;
-                            // alert(typeof (data)); //it comes out to be string
-                            //we need to parse it to JSON
-                            data = $.parseJSON(data);
+                        if (response != null) {
+                            var data  = $.parseJSON(data);
 
                             jQuery_3_3_1.Toast.hideToast();
 
@@ -809,18 +790,15 @@
         jQuery_3_3_1.Toast.showToast({ title: title, duration: duration, icon: icon, image: '' });
 
         jQuery.ajax({
-            url: 'CreateAdvanceRequest.aspx/CreateStaffImprestLines',
+            url: "@Url.Action("CreateStaffImprestLines", "CreateAdvanceRequest")",
             type: "POST",
             data: '{param1:"' + $('#Item').val() + '", param2:"' + $('#ItemDescription').val() + '", param3:"' + $('#UnitofMeasure').val() + '", param4:"' + $('#UnitCost').val() + '", param5:"' + $('#NoOfUnits').val() + '", param6:"' + $('#Amount').val() + '", param7:"' + $('#DateOfRequest').val() + '", param8:"' + $('#DateDue').val() + '", param9:"' + $('#DimCode4').val() + '", param10:"' + $('#DimCode1').val() + '", param11:"' + $('#DimCode2').val() + '", param12:"' + $('#BudgetLineCode').val() + '", param13:"' + $('#DimCode4').val() + '", param14:"' + $('#DimCode8').val() + '", param15:"' + $('#PreferredPaymentMethod').val() + '", param16:"' + $('#MissionSummary').val() + '", param17:"' + $('#Purpose').val() + '"}',
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (response) {
 
-                if (response != null && response.d != null) {
-                    var data = response.d;
-                    // alert(typeof (data)); //it comes out to be string
-                    //we need to parse it to JSON
-                    data = $.parseJSON(data);
+                if (response != null) {
+                    var data = $.parseJSON(data);
 
                     jQuery_3_3_1.Toast.hideToast();
 
@@ -840,12 +818,12 @@
 
     </script>
 
-    <script src="js/jquery.toast.js"></script>
+    <script src="Assest/js/jquery.toast.js"></script>
     <!-- JQUERY DATEPICKER-->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <%--
-    <script src="js/select2.min.js"></script>--%>
+    <script src="Assest/js/select2.min.js"></script>--%>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script>
     $(document).ready(function () {
@@ -965,7 +943,7 @@
 
         //validate here
         jQuery_3_3_1.ajax({
-            url: 'CreateAdvanceRequest.aspx/ValidateDim3Code',
+            url: "@Url.Action("ValidateDim3Code", "CreateAdvanceRequest")",
             type: "POST",
             data: '{param1:"' + $("#BudgetLineCode").val() + '" }',
             dataType: "json",
@@ -1005,18 +983,15 @@
             $("#ExchangeRate").val('');
             //selection fields
             jQuery_3_3_1.ajax({
-                url: 'CreateAdvanceRequest.aspx/LoadAdvanceRequestItem',
+                url:"@Url.Action("LoadAdvanceRequestItem", "CreateAdvanceRequest")",
                 type: "POST",
                 data: '{Code:"' + $("#Item").val() + '" }',
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
 
-                    if (response != null && response.d != null) {
-                        var data = response.d;
-                        // alert(typeof (data)); //it comes out to be string
-                        //we need to parse it to JSON
-                        data = $.parseJSON(data);
+                    if (response != null ) {
+                        var data = $.parseJSON(data);
 
 
                         document.getElementById('Amount').disabled = true;
@@ -1074,17 +1049,14 @@
     //GF
 
     $.ajax({
-        url: 'CreateAdvanceRequest.aspx/LoadAdvanceTypes',
+        url:"@Url.Action("LoadAdvanceTypes", "CreateAdvanceRequest")",
         type: "POST",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (response) {
 
-            if (response != null && response.d != null) {
-                var data = response.d;
-                // alert(typeof (data)); //it comes out to be string
-                //we need to parse it to JSON
-                data = $.parseJSON(data);
+            if (response != null ) {
+                var data  = $.parseJSON(data);
                 $("#Item").append($('<option></option>').attr("value", "OTHERS").text("Others"));
                 $.each(data, function (i, item) {
                     $("#Item").append($('<option></option>').attr("value", item.Code).text(item.Description));
@@ -1093,17 +1065,14 @@
         }
     });
     $.ajax({
-        url: 'CreateAdvanceRequest.aspx/LoadUnitsOfMeasure',
+        url: "@Url.Action("LoadUnitsOfMeasure", "CreateAdvanceRequest")",
         type: "POST",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (response) {
 
-            if (response != null && response.d != null) {
-                var data = response.d;
-                // alert(typeof (data)); //it comes out to be string
-                //we need to parse it to JSON
-                data = $.parseJSON(data);
+            if (response != null) {
+                var data  = $.parseJSON(data);
 
                 $.each(data, function (i, item) {
                     $("#UnitofMeasure").append($('<option></option>').attr("value", item.Code).text(item.Description));
@@ -1112,13 +1081,13 @@
         }
     });
     $.ajax({
-        url: 'CreateAdvanceRequest.aspx/LoadAdvanceRequest',
+        url:"@Url.Action("LoadAdvanceRequest", "CreateAdvanceRequest")",
         type: "POST",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (response) {
 
-            if (response != null && response.d != null) {
+            if (response != null) {
                 var data = response.d;
 
                 data = $.parseJSON(data);
@@ -1135,5 +1104,5 @@
         }
     });
     });
-</script>
+    </script>
 

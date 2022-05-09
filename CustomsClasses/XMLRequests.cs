@@ -3535,24 +3535,25 @@ namespace LMS.CustomsClasses
             List<AdvanceRequestTypes> AdvanceRequestTypesList = new List<AdvanceRequestTypes>();
 
             string Advancetypedata = WebService.ExportAdvanceTypes();
-
-            XmlDocument xmlSoapRequest = new XmlDocument();
-            xmlSoapRequest.LoadXml(Advancetypedata);
-
-            int count = 0;
-
-            foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("AdvanceType"))
+            if (Advancetypedata != "")
             {
-                XmlNode NodeCode = xmlSoapRequest.GetElementsByTagName("Code")[count];
-                string Code = NodeCode.InnerText;
-                XmlNode NodeDescription = xmlSoapRequest.GetElementsByTagName("Description")[count];
-                string Description = NodeDescription.InnerText;
+                XmlDocument xmlSoapRequest = new XmlDocument();
+                xmlSoapRequest.LoadXml(Advancetypedata);
 
-                AdvanceRequestTypesList.Add(new AdvanceRequestTypes { Code = Code, Description = Description });
+                int count = 0;
 
-                count++;
+                foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("AdvanceType"))
+                {
+                    XmlNode NodeCode = xmlSoapRequest.GetElementsByTagName("Code")[count];
+                    string Code = NodeCode.InnerText;
+                    XmlNode NodeDescription = xmlSoapRequest.GetElementsByTagName("Description")[count];
+                    string Description = NodeDescription.InnerText;
+
+                    AdvanceRequestTypesList.Add(new AdvanceRequestTypes { Code = Code, Description = Description });
+
+                    count++;
+                }
             }
-
             return JsonConvert.SerializeObject(AdvanceRequestTypesList);
         }
         public static string GetUnitOfMeasure()
@@ -3560,22 +3561,24 @@ namespace LMS.CustomsClasses
             List<AdvanceRequestTypes> AdvanceRequestTypesList = new List<AdvanceRequestTypes>();
 
             string Advancetypedata = WebService.ExportUnitOfMeasure();
-
-            XmlDocument xmlSoapRequest = new XmlDocument();
-            xmlSoapRequest.LoadXml(Advancetypedata);
-
-            int count = 0;
-
-            foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("Unit"))
+            if (Advancetypedata != "")
             {
-                XmlNode NodeCode = xmlSoapRequest.GetElementsByTagName("Code")[count];
-                string Code = NodeCode.InnerText;
-                XmlNode NodeDescription = xmlSoapRequest.GetElementsByTagName("Description")[count];
-                string Description = NodeDescription.InnerText;
+                XmlDocument xmlSoapRequest = new XmlDocument();
+                xmlSoapRequest.LoadXml(Advancetypedata);
 
-                AdvanceRequestTypesList.Add(new AdvanceRequestTypes { Code = Code, Description = Code });
+                int count = 0;
 
-                count++;
+                foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("Unit"))
+                {
+                    XmlNode NodeCode = xmlSoapRequest.GetElementsByTagName("Code")[count];
+                    string Code = NodeCode.InnerText;
+                    XmlNode NodeDescription = xmlSoapRequest.GetElementsByTagName("Description")[count];
+                    string Description = NodeDescription.InnerText;
+
+                    AdvanceRequestTypesList.Add(new AdvanceRequestTypes { Code = Code, Description = Code });
+
+                    count++;
+                }
             }
 
             return JsonConvert.SerializeObject(AdvanceRequestTypesList);

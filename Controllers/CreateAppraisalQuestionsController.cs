@@ -52,13 +52,7 @@ namespace LMS.Controllers
                 else
                 {
                     {
-                        //PerformanceMeasurementType.Items.Clear();
-
-                        //PerformanceMeasurementType.Items.Insert(0, new ListItem("Options", "Options"));
-                        //PerformanceMeasurementType.Items.Insert(0, new ListItem("Weighted Score", "WeightedScore"));
-                        //PerformanceMeasurementType.Items.Insert(0, new ListItem("Description", "Description"));
-                        //PerformanceMeasurementType.Items.Insert(0, new ListItem(" ", ""));
-
+                       
                         string s = Request.QueryString["id"].Trim();
 
                         if (s == "")

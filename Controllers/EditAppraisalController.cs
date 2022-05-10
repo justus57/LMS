@@ -35,15 +35,18 @@ namespace LMS.Controllers
             System.Web.HttpContext.Current.Session["IsProfileActive"] = "";
             System.Web.HttpContext.Current.Session["IsTransportRequestActive"] = "";
 
-            if (Session["Logged"].Equals("No"))
+            var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
+            var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
+            //check if user is logged
+            if ((string)log == "No")
             {
-                Response.Redirect("Login.aspx");
+                Response.Redirect("/Account/login");
             }
-            else if (Session["Logged"].Equals("Yes"))
+            else if ((string)log == "yes")
             {
-                if (Session["RequirePasswordChange"].Equals("TRUE"))
+                if ((object)passRequired == "true")
                 {
-                    Response.Redirect("OneTimePass.aspx");
+                    Response.Redirect("/Account/OneTimePassword");
                 }
                 else
                 {
@@ -72,9 +75,7 @@ namespace LMS.Controllers
                             string AppraisalHeader = AppFunctions.Base64Decode(s);
                             _AppraisalHeader = AppraisalHeader;
                             //load appraisal
-
                             FetchAppraisalDetails(AppraisalHeader);
-
                         }
                     }
                 }
@@ -92,11 +93,9 @@ namespace LMS.Controllers
             string AppraisalStartDayText = json.AppraisalStartDate;
             string AppraisalEndDayText = json.AppraisalEndDate;
             string AppraisalApplicableTo = json.AppraisalApplicableTo;
-
             editAppraisal.AppraisalName = AppraisalNameText;
             editAppraisal.AppraisalStartDay = Convert.ToDateTime(AppraisalStartDayText).ToString("MM/dd/yyyy");
             editAppraisal.AppraisalEndDay = Convert.ToDateTime(AppraisalEndDayText).ToString("MM/dd/yyyy");
-
             //applicable To
             editAppraisal.ApplicableTo = AppraisalApplicableTo;
 
@@ -109,7 +108,6 @@ namespace LMS.Controllers
             {
                 publicationTable.Add(new[] { kvp.Value });
             }
-
             return (new JavaScriptSerializer()).Serialize(publicationTable);
         }
         
@@ -121,7 +119,6 @@ namespace LMS.Controllers
             {
                 employeeObject.Add(new Employee { EmployeeCode = kvp.Key, EmployeeName = kvp.Value });
             }
-
             return JsonConvert.SerializeObject(employeeObject);
         }
         

@@ -114,7 +114,6 @@ namespace LMS.Controllers
         public static string GetEmployeeList(string param1)
         {
             List<Employee> employeeObject = new List<Employee>();
-
             foreach (var kvp in LeaveRecallForOtherXMLRequests.GetEmpoyeeList())
             {
                 employeeObject.Add(new Employee { EmployeeCode = kvp.Key, EmployeeName = kvp.Value });
@@ -130,41 +129,32 @@ namespace LMS.Controllers
             {
                 OrgUnitObject.Add(new OrgUnit { Code = kvp.Key, Name = kvp.Value });
             }
-
             return JsonConvert.SerializeObject(OrgUnitObject);
         }
         
         public static string HRPositionUnitList(string param1)
         {
             List<HRPosition> HRPositionObject = new List<HRPosition>();
-
             foreach (var kvp in CreateAppraisalXMLREquests.HRPositionList())
             {
                 HRPositionObject.Add(new HRPosition { Code = kvp.Key, Description = kvp.Value });
             }
-
             return JsonConvert.SerializeObject(HRPositionObject);
         }
-        
         public static string DeleteAppraisal(string param1)
         {
             string AppraisalHeaderNo = param1;
             string response = "";
             string status = "";
             string xmlresponse = CreateAppraisalXMLREquests.DeleteAppraisal(AppraisalHeaderNo);
-
             dynamic json = JObject.Parse(xmlresponse);
-
             response = json.Msg;
             status = json.Status;
-
-
             var _RequestResponse = new RequestResponse
             {
                 Message = response,
                 Status = status
             };
-
             return JsonConvert.SerializeObject(_RequestResponse);
         }
         
@@ -179,11 +169,8 @@ namespace LMS.Controllers
             string AppraisalEndDay = param4;
             string AppraisalName = param5;
             AppraisalName = AppFunctions.EscapeInvalidXMLCharacters(AppraisalName);
-
             string xmlresponse = CreateAppraisalXMLREquests.UpdateAppraisal(_AppraisalHeader, username, AppraisalName, ApplicableTo, AppraisalStartDay, AppraisalEndDay);
-
             dynamic json = JObject.Parse(xmlresponse);
-
             response = json.Msg;
             status = json.Status;
 

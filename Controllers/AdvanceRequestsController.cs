@@ -115,6 +115,7 @@ namespace LMS.Controllers
             //Table end.
             html.Append("</table>");
             string strText = html.ToString();
+            ViewBag.AdvanceRequests = strText;
             ////Append the HTML string to Placeholder.
             // placeholder.Controls.Add(new Literal { Text = html.ToString() });
         }

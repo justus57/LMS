@@ -46,6 +46,7 @@
                                             <div class="form-group">
                                                 <label for="ApplicableTo" class="form-control-label">Applicable To</label>
                                                 <asp:DropDownList CssClass="form-control" ID="ApplicableTo" runat="server" AutoPostBack="false" required="true" style="width:100%"> </asp:DropDownList>
+                                                @Html.DropDownListFor(model => model.ApplicableTo, (SelectList)ViewBag.ApplicableTo,new {@Class="form-control", style = "width:100%" })
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">The applicable to option must be selected</div>
                                             </div>

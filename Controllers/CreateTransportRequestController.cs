@@ -57,7 +57,7 @@ namespace LMS.Controllers
                 }
                 else
                 {
-                    GetDimensionCodes();
+                   // GetDimensionCodes();
                 }
             }
             return View();
@@ -83,11 +83,11 @@ namespace LMS.Controllers
 
             LoadVehicleClass(createTransport.VehicleClass);
 
-            createTransport.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
-            createTransport.DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
-            createTransport.DimCode3Label = SetFirstLetterToUpper(ShortcutDimCode3.ToLower());
-            createTransport.DimCode4Label = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
-            createTransport.DimCode6Label = "Your Department";
+            ViewBag.DimCode1Label = SetFirstLetterToUpper(GlobalDimCode1.ToLower());
+            ViewBag.DimCode2Label = SetFirstLetterToUpper(GlobalDimCode2.ToLower());
+            ViewBag.DimCode3Label = SetFirstLetterToUpper(ShortcutDimCode3.ToLower());
+            ViewBag.DimCode4Label = SetFirstLetterToUpper(ShortcutDimCode4.ToLower());
+            ViewBag.DimCode6Label = "Your Department";
             //load dynamic list
 
         }

@@ -22,15 +22,18 @@ namespace LMS.Controllers
         }
         public ActionResult EditTrainingRequest()
         {
-            if (Session["Logged"].Equals("No"))
+            var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
+            var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
+            //check if user is logged
+            if ((string)log == "No")
             {
-                Response.Redirect("Login.aspx");
+                Response.Redirect("/Account/login");
             }
-            else if (Session["Logged"].Equals("Yes"))
+            else if ((string)log == "yes")
             {
-                if (Session["RequirePasswordChange"].Equals("TRUE"))
+                if ((object)passRequired == "true")
                 {
-                    Response.Redirect("OneTimePass.aspx");
+                    Response.Redirect("/Account/OneTimePassword");
                 }
                 else
                 {

@@ -50,8 +50,6 @@ namespace LMS.Controllers
                 else
                 {
                     string status = Request.QueryString["status"].Trim();
-
-
                     if (status == "")
                     {
                         Response.Redirect(Request.UrlReferrer.ToString());

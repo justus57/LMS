@@ -106,36 +106,36 @@ namespace LMS.Controllers
             return (new JavaScriptSerializer()).Serialize(publicationTable);
         }
         
-        public static string GetEmployeeList(string param1)
+        public ActionResult GetEmployeeList(string param1)
         {
             List<Employee> employeeObject = new List<Employee>();
             foreach (var kvp in LeaveRecallForOtherXMLRequests.GetEmpoyeeList())
             {
                 employeeObject.Add(new Employee { EmployeeCode = kvp.Key, EmployeeName = kvp.Value });
             }
-            return JsonConvert.SerializeObject(employeeObject);
+            return Json(JsonConvert.SerializeObject(employeeObject),JsonRequestBehavior.AllowGet);
         }
         
-        public static string GetOrgUnitList(string param1)
+        public ActionResult GetOrgUnitList(string param1)
         {
             List<OrgUnit> OrgUnitObject = new List<OrgUnit>();
             foreach (var kvp in CreateAppraisalXMLREquests.GetOrgUnitList())
             {
                 OrgUnitObject.Add(new OrgUnit { Code = kvp.Key, Name = kvp.Value });
             }
-            return JsonConvert.SerializeObject(OrgUnitObject);
+            return Json(JsonConvert.SerializeObject(OrgUnitObject), JsonRequestBehavior.AllowGet);
         }
         
-        public static string HRPositionUnitList(string param1)
+        public ActionResult HRPositionUnitList(string param1)
         {
             List<HRPosition> HRPositionObject = new List<HRPosition>();
             foreach (var kvp in CreateAppraisalXMLREquests.HRPositionList())
             {
                 HRPositionObject.Add(new HRPosition { Code = kvp.Key, Description = kvp.Value });
             }
-            return JsonConvert.SerializeObject(HRPositionObject);
+            return Json(JsonConvert.SerializeObject(HRPositionObject), JsonRequestBehavior.AllowGet);
         }
-        public static string DeleteAppraisal(string param1)
+        public ActionResult DeleteAppraisal(string param1)
         {
             string AppraisalHeaderNo = param1;
             string response = "";
@@ -149,10 +149,10 @@ namespace LMS.Controllers
                 Message = response,
                 Status = status
             };
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
         
-        public static string SubmitAppraisal(string param1, string param2, string param3, string param4, string param5)
+        public ActionResult SubmitAppraisal(string param1, string param2, string param3, string param4, string param5)
         {
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string response = "";
@@ -174,7 +174,7 @@ namespace LMS.Controllers
                 Status = status
             };
 
-            return JsonConvert.SerializeObject(_RequestResponse);
+            return Json(JsonConvert.SerializeObject(_RequestResponse),JsonRequestBehavior.AllowGet);
         }
     }
 }

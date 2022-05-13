@@ -57,7 +57,7 @@ namespace LMS.Controllers
                 }
                 else
                 {
-                   // GetDimensionCodes();
+                   GetDimensionCodes();
                 }
             }
             return View();

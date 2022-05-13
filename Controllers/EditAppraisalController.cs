@@ -50,14 +50,7 @@ namespace LMS.Controllers
                 }
                 else
                 {
-                    //List<SelectListItem> items = new List<SelectListItem>();
-                    //items.Add(new SelectListItem { Text = "Position", Value = "Position" });
-                    //items.Add(new SelectListItem { Text = "Org. Unit", Value = "Org. Unit" });
-                    //items.Add(new SelectListItem { Text = "Individual Employee", Value = "Individual Employee" });
-                    //items.Add(new SelectListItem { Text = "All Employees", Value = "All Employees" });
-                    //items.Add(new SelectListItem { Text = "", Value = "" });
                     var exemploList = new SelectList(new[] { "Position", "Org. Unit", "Individual Employee" , "All Employees" ,""});
-               
                     ViewBag.ApplicableTo = exemploList;
 
                     string s = Request.QueryString["id"].Trim();

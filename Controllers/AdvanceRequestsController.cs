@@ -125,13 +125,10 @@ namespace LMS.Controllers
             string AdvanceRequestHdrNo = AppFunctions.Base64Decode(param1);
             string status = "";
             string Msg = "";
-
             try
             {
                 string DeleteAdvanceRequestXMLResponse = AdvanceRequestsXMLRequests.DeleteAdvanceRequest(AdvanceRequestHdrNo);
-
                 dynamic json = JObject.Parse(DeleteAdvanceRequestXMLResponse);
-
                 status = json.Status;
                 Msg = json.Msg;
 

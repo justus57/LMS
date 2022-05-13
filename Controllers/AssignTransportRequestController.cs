@@ -231,10 +231,10 @@ namespace LMS.Controllers
             }
             _DropDownList.Items.Insert(0, new ListItem(" ", ""));
         }
-        public string SetFirstLetterToUpper(string inString)
+        public ActionResult SetFirstLetterToUpper(string inString)
         {
             TextInfo cultInfo = new CultureInfo("en-US", false).TextInfo;
-            return cultInfo.ToTitleCase(inString);
+            return Json(cultInfo.ToTitleCase(inString),JsonRequestBehavior.AllowGet);
         }
        
         public JsonResult Save(string param1, string param2, string param3)

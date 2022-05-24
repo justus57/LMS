@@ -163,7 +163,7 @@
                         @*}*@
 
                         @if (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE" ||
-HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE")
+                            HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE")
                         {
                             <div class="dropdown-divider"></div>
                         }
@@ -176,7 +176,6 @@ HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE")
                         <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Pending", parent = "LeaveRecalls" })">Pending</a>
                         <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Approved", parent = "LeaveRecalls" })">Approved</a>
                         <a class="dropdown-item" href="@Url.Action("ApprovalEntries", "ApprovalEntries", new { status = "Rejected", parent = "LeaveRecalls" })">Rejected</a>
-
                         @if (HttpContext.Current.Session["IsTrainingSupervisor"].ToString() == "TRUE" && HttpContext.Current.Session["Appraisal"].ToString() == "TRUE")
                         {
                             if (HttpContext.Current.Session["IsHRManager"].ToString() == "TRUE" || HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE" && HttpContext.Current.Session["Appraisal"].ToString() == "TRUE")
@@ -192,7 +191,6 @@ HttpContext.Current.Session["IsAppraisalSupervisor"].ToString() == "TRUE")
                 </li>
             }
             @*@if (HttpContext.Current.Session["AdvanceClaim"].ToString()=="TRUE") {*@
-
             <li class="nav-item ">
                 <a class="nav-link collapsed" data-bs-target="#tables-nav" role="button" data-bs-toggle="collapse" href="#">
                     <i class="fas fa-fw fa-money-check-alt"></i><span>Staff Claims</span><i class="bi bi-chevron-down ms-auto"></i>

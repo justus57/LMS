@@ -188,7 +188,6 @@ namespace LMS.Controllers
                 string DeleteAdvanceRequestXMLResponse = AdvanceRequestsXMLRequests.CancelAdvanceRequest(AdvanceRequestHdrNo, "0");
 
                 dynamic json = JObject.Parse(DeleteAdvanceRequestXMLResponse);
-
                 status = json.Status;
                 Msg = json.Msg;
 

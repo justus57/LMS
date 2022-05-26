@@ -48,7 +48,6 @@ namespace LMS.Controllers
                 {
                     Response.Redirect("/Account/OneTimePassword");
                 }
-                
             }
             return View();
         }
@@ -76,7 +75,6 @@ namespace LMS.Controllers
             string _Message = "";
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
 
-
             string pdfName = "StaffAdvance" + username + ".pdf";
             string FileName = folderPath + pdfName;
 
@@ -97,7 +95,6 @@ namespace LMS.Controllers
             {
                 AppFunctions.WriteLog(es.Message);
             }
-
 
             var _RequestResponse = new RequestResponse
             {

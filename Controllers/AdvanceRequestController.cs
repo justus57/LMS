@@ -74,7 +74,6 @@ namespace LMS.Controllers
             string _Status = "900";
             string _Message = "";
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
-
             string pdfName = "StaffAdvance" + username + ".pdf";
             string FileName = folderPath + pdfName;
 

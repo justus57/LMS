@@ -84,7 +84,6 @@ namespace LMS.Controllers
                 attachmentName = pdfName;
 
                 fileforDownload = FileName;
-
                 dynamic json = JObject.Parse(XMLRequestResponse);
 
                 _Status = json.Status;
@@ -100,7 +99,6 @@ namespace LMS.Controllers
                 Status = _Status,
                 Message = _Message
             };
-
             return JsonConvert.SerializeObject(_RequestResponse);
         }
     }

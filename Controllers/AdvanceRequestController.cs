@@ -18,7 +18,7 @@ namespace LMS.Controllers
         // GET: AdvanceRequest
         public ActionResult Index()
         {
-            return View();
+           return View();
         }
         public ActionResult AdvanceRequest()
         {

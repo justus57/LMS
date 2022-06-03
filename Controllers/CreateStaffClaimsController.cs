@@ -18,7 +18,6 @@ namespace LMS.Controllers
     {
         static string folderPath = System.Web.HttpContext.Current.Server.MapPath("~/Uploads/");
         static string _ShortcutDimCode3 = "";
-
         public bool IsPostBack { get; private set; }
         CreateStaffClaims createStaff = new CreateStaffClaims();
 

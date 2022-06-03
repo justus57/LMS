@@ -40,7 +40,7 @@ namespace LMS.Controllers
             //check if user is logged
             if ((string)log == "No")
             {
-                Response.Redirect("/Account/login");
+               Response.Redirect("/Account/login");
             }
             else if ((string)log == "yes")
             {
@@ -80,12 +80,9 @@ namespace LMS.Controllers
             try
             {
                 string XMLRequestResponse = WebserviceConfig.ObjNav.ExportStaffAdvance(username, FileName);
-
                 attachmentName = pdfName;
-
                 fileforDownload = FileName;
                 dynamic json = JObject.Parse(XMLRequestResponse);
-
                 _Status = json.Status;
                 _Message = json.Msg;
             }

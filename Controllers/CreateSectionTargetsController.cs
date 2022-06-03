@@ -83,9 +83,7 @@ namespace LMS.Controllers
             html.Append("<form id='needs-validation' novalidate autocomplete='off' method ='post'>");
             html.Append("<div class='card-body'>");
             string quenss = DefineAppraisalSectionsXMLRequests.GetQuestionsToFillJson(AppraisalHeaderNumber, "", "ExportAll", _AppraisalSection);
-
             dynamic stuff = JsonConvert.DeserializeObject(quenss.Replace("\"", "'"));
-
             html.Append("<ol>");
 
             foreach (var QuestionsToFill in stuff)

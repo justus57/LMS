@@ -75,8 +75,6 @@ namespace LMS.Controllers
 
                         //Response.Redirect("CreateStaffClaims.aspx?No=" + DocumentNo + "");
                     }
-
-
                     //LoadStaffClaimLines(Session["StaffClaimNo"].ToString());
                     //LoadTableAttachments(Session["StaffClaimNo"].ToString());
                     //LoadAdvanceRequest(Session["StaffClaimNo"].ToString());
@@ -167,7 +165,6 @@ namespace LMS.Controllers
             //    PreferredPaymentMethod.Items.FindByValue(_PreferredPaymentMethod).Selected = true;
             //}
         }
-        
         public static string LoadInterventions()
         {
             List<AdvanceRequestTypes> AdvanceRequestTypesList = new List<AdvanceRequestTypes>();

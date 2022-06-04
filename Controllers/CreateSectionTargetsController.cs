@@ -186,11 +186,7 @@ namespace LMS.Controllers
             string QuestionType = "";
             string weightScoreValue = "0.0";
             // string AppraisalSection = "";
-
-
             ArrayList objectivesArray = new ArrayList();
-
-
             foreach (NameValue nv in formVars)
             {
                 if (nv.name.StartsWith("new_objective"))
@@ -227,11 +223,8 @@ namespace LMS.Controllers
                         weightScoreValue = "0.0";
                     }
                 }
-
             }
-
             //save target
-
             string DocumentNoXMLResponse = AppraisalsXMLRequests.GetDocumentNo("HRAppraisalTarget");
             dynamic jsonDocumentNo = JObject.Parse(DocumentNoXMLResponse);
             Status = jsonDocumentNo.Status;
@@ -256,11 +249,8 @@ namespace LMS.Controllers
                         QuestionObjectiveNumber = ObjectiveNo;
 
                         DefineAppraisalSectionsXMLRequests.CreateAppraisalQuestionObjective(username, _AppraisalSection, QuestionObjectiveNumber, HRAppraisalTargetNo, AppFunctions.EscapeInvalidXMLCharacters(item.ToString()));
-
                     }
-
                 }
-
             }
             else
             {
@@ -272,7 +262,6 @@ namespace LMS.Controllers
                 Status = Status,
                 Message = Msg
             };
-
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         
@@ -292,7 +281,6 @@ namespace LMS.Controllers
 
             ArrayList objectivesArray = new ArrayList();
 
-
             foreach (NameValue nv in formVars)
             {
                 if (nv.name.StartsWith("new_objective"))
@@ -303,7 +291,6 @@ namespace LMS.Controllers
                     if (objectiveDecription.Length > 250)
                     {
                         var truncated = objectiveDecription.Substring(0, 250);
-
                         objectiveDecription = truncated.ToString();
                     }
 
@@ -337,11 +324,8 @@ namespace LMS.Controllers
             }
 
             //save target changes
-
             string TargetResponse = DefineAppraisalSectionsXMLRequests.CreateNewAppraisalQuestion(HRAppraisalTargetNo, username, _AppraisalSection, AppFunctions.EscapeInvalidXMLCharacters(QuestionDescription), QuestionType, weightScoreValue, _AppraisalSection);
-
             Msg = "The appraisal section target was updated successfully";
-
             DefineAppraisalSectionsXMLRequests.DeleteAppraisalTargetObjectives(_AppraisalSection, HRAppraisalTargetNo);
 
             foreach (var item in objectivesArray)
@@ -355,7 +339,6 @@ namespace LMS.Controllers
                 {
                     string ObjectiveNo = jsonObjectiveNo.DocumentNo;
                     QuestionObjectiveNumber = ObjectiveNo;
-
                     DefineAppraisalSectionsXMLRequests.CreateAppraisalQuestionObjective(username, _AppraisalSection, QuestionObjectiveNumber, HRAppraisalTargetNo, AppFunctions.EscapeInvalidXMLCharacters(item.ToString()));
                 }
             }
@@ -376,11 +359,8 @@ namespace LMS.Controllers
             string QuestionDescription = "";
             string Performance_Measurement_Type = "";
             string weightScoreValue = "";
-
             string TargetDetails = DefineAppraisalSectionsXMLRequests.GetQuestionsToFillJson(_AppraisalSection, QuestnNumber, "ExportSingle", "");
-
             dynamic stuff = JsonConvert.DeserializeObject(TargetDetails.Replace("\"", "'"));
-
             foreach (var QuestionsToFill in stuff)
             {
                 QuestionDescription = QuestionsToFill.QuestionDescription;
@@ -402,7 +382,6 @@ namespace LMS.Controllers
             if (Performance_Measurement_Type == "1")
             {
                 Performance_Measurement_Type = "Description";
-
             }
             else if (Performance_Measurement_Type == "2")
             {
@@ -421,9 +400,7 @@ namespace LMS.Controllers
                 PerformanceMeasurementType = Performance_Measurement_Type,
                 WeightScoreValue = weightScoreValue
             };
-
             return Json(JsonConvert.SerializeObject(_QuestionDetails), JsonRequestBehavior.AllowGet);
-
         }
         
         public JsonResult DeleteAppraisalTarget(string param1)

@@ -50,13 +50,6 @@ namespace LMS.Controllers
                 else
                 {
                     LoadAppraisals("New");
-
-                    //ApplicableTo.Items.Clear();
-                    //ApplicableTo.Items.Insert(0, new ListItem("Position", "Position"));
-                    //ApplicableTo.Items.Insert(0, new ListItem("Org. Unit", "OrgUnit"));
-                    //ApplicableTo.Items.Insert(0, new ListItem("Individual Employee", "IndividualEmployee"));
-                    //ApplicableTo.Items.Insert(0, new ListItem("All Employees", "AllEmployees"));
-                    //ApplicableTo.Items.Insert(0, new ListItem(" ", ""));
                 }
             }
             return View();
@@ -146,12 +139,10 @@ namespace LMS.Controllers
         public JsonResult HRPositionUnitList(string param1)
         {
             List<HRPosition> HRPositionObject = new List<HRPosition>();
-
             foreach (var kvp in CreateAppraisalXMLREquests.HRPositionList())
             {
                 HRPositionObject.Add(new HRPosition { Code = kvp.Key, Description = kvp.Value });
             }
-
             return Json(JsonConvert.SerializeObject(HRPositionObject),JsonRequestBehavior.AllowGet);
         }
         

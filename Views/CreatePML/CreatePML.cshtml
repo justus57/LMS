@@ -186,6 +186,7 @@
         $( ".MultiLineLimit" ).on( 'change keydown paste input', function () {
             this.value = ( this.value.length <= 250 ? this.value : this.value.substring( 0, 250 ) );
         } );
+
         var text_max = 250;
         $( '#count_message' ).html( text_max + ' remaining' );
         $( '#Description' ).keyup( function () {

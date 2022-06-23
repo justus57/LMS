@@ -23,7 +23,6 @@ namespace LMS.Controllers
             var param1 = EmployeeData.EmployeeNumber;
             var param2 = EmployeeData.Password;
             string Msg = null;
-
             //perform user validation form Nav
             var Result = UserLogin(param1, param2);
 

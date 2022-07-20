@@ -1,0 +1,302 @@
+﻿
+@{
+    ViewBag.Title = "ViewRequisitions";
+}
+
+
+<main id="main" class="main">
+    <div id="wrapper">
+        <div id="content-wrapper">
+            <div class="container-fluid">
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">Requisitions</li>
+                    <li class="breadcrumb-item active"> @Html.Raw(ViewBag.WordHtml) Applications</li>
+                </ol>
+                <!-- DataTables Example -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-suitcase"></i>
+                        @Html.Raw(ViewBag.WordHtml) Requisition Applications
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                @Html.Raw(ViewBag.Table)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer small text-muted">Updated today at @DateTime.Now.ToShortTimeString()</div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+            <!-- /.content-wrapper -->
+        </div>
+    </div>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="#">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+@*Bootstrap core JavaScript*@
+<script type="text/javascript">
+    var jQuery_3_3_1 = $.noConflict(true);
+</script>
+<script src="~/Assest/js/jquery.toast.js"></script>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    $(function () {
+        var table = $('#dataTable').DataTable({
+            lengthChange: false,
+            buttons: ['copy', 'excel', 'pdf', 'colvis'],
+            "order": [[0, "desc"]]
+        });
+        table.buttons().container()
+            .appendTo('#dataTable_wrapper .col-md-6:eq(0)');
+        jQuery_3_3_1("#dataTable").on("click", ".delete_record", function (e) {
+            e.preventDefault();
+
+            var pid = $(this).attr('data-id');
+
+            bootbox.confirm({
+                title: "<i class='fa fa-trash'></i> Delete record?",
+                message: "Do you wish to delete this Leave application?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        showToast('Deleting application');
+                        jQuery.ajax({
+                            url: "@Url.Action("leave", "Leave")",
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+
+                                if (response != null) {
+                                    var data = $.parseJSON(response);
+
+                                    hideLoading();
+
+                                    bootbox.alert(data.Message);
+
+                                    window.setTimeout(function () {
+                                        location.reload()
+                                    }, 1000);
+                                }
+                            },
+                            error: function () {
+                                bootbox.error({ title: "System error", message: "An error occured." });
+                            }
+                        });
+                    }
+                }
+            });
+        });
+
+        jQuery_3_3_1("#dataTable").on("click", ".submit_record", function (e) {
+            e.preventDefault();
+            var pid = $(this).attr('data-id');
+            var startdate = $(this).attr('data-date');
+
+            bootbox.confirm({
+                title: "<i class='fa fa-paper-plane'></i> Submit?",
+                message: "Do you wish to submit this Leave application?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+                    if (result == true) {
+                        showToast('Submitting application');
+
+                        jQuery.ajax({
+                            url: "@Url.Action("SubmitOpenLeave", "Leave")",
+                            type: "POST",
+                            data: '{param1:"' + pid + '", param2:"' + startdate + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+
+                                if (response != null) {
+                                    var data = $.parseJSON(response);
+
+                                    hideLoading();
+
+                                    if (data.Status == "000") {
+
+                                        bootbox.alert(data.Message);
+                                    } else {
+
+                                        bootbox.error({ title: "Application error", message: data.Message });
+                                    }
+
+                                }
+                            },
+                            error: function () {
+                                bootbox.error({ title: "System error", message: "An error occured." });
+                            }
+                        });
+                    }
+                }
+            });
+        });
+
+        jQuery_3_3_1("#dataTable").on("click", ".cancel_record", function (e) {
+            e.preventDefault();
+            var pid = $(this).attr('data-id');
+            var parent = $(this).parent("td").parent("tr");
+
+            bootbox.confirm({
+                title: "<i class='fa fa-times'></i> Cancel?",
+                message: "Do you wish to cancel this Leave application?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        showToast('Cancelling application');
+
+                        jQuery.ajax({
+                            url:"@Url.Action("CancelOpenLeave", "Leave")",
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+
+                                if (response != null) {
+                                    var data = $.parseJSON(response);
+
+                                    hideLoading();
+
+                                    bootbox.alert(data.Message);
+                                    //window.location.href = "PendingLeaves.aspx";
+                                    window.setTimeout(function () {
+                                        location.reload()
+                                    }, 1000);
+                                }
+                            },
+                            error: function () {
+                                bootbox.alert('An error occured');
+                            }
+                        });
+                    }
+                }
+            });
+        });
+
+        jQuery_3_3_1("#dataTable").on("click", ".delegate_record", function (e) {
+            e.preventDefault();
+            var pid = $(this).attr('data-id');
+
+            bootbox.confirm({
+                title: "<i class='fa fa-fighter-jet'></i> Delegate?",
+                message: "Do you wish to delegate this Leave application?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        showToast('Delegating application');
+
+                        jQuery.ajax({
+                            url:"@Url.Action("DelegatePendingLeave", "Leave")",
+                            type: "POST",
+                            data: '{param1:"' + pid + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+
+                                if (response != null ) {
+                                    var data = $.parseJSON(response);
+
+                                    hideLoading();
+
+                                    if (data.Status == "000") {
+                                        $('body').pleaseWait('stop');
+                                        bootbox.alert(data.Message);
+                                    } else {
+                                        $('body').pleaseWait('stop');
+                                        bootbox.error({ title: "Application error", message: data.Message });
+                                    }
+
+                                    //window.setTimeout(function () {
+                                    //    location.reload()
+                                    //}, 3000);
+                                }
+                            },
+                            error: function () {
+                                bootbox.error({ title: "System error", message: "An error occured." });
+                            }
+                        });
+                    }
+                }
+            });
+        });
+    });
+    function showToast(modaltittle) {
+        var title = modaltittle;
+        var icon = 'loading';
+        var duration = 50000 * 1;
+        $.Toast.showToast({ title: title, duration: duration, icon: icon, image: '' });
+    }
+    function hideLoading() {
+        $.Toast.hideToast();
+    }
+</script>
+  
+
+

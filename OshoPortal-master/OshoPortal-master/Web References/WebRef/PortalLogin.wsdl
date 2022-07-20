@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:tns="urn:microsoft-dynamics-schemas/codeunit/PortalLogin" targetNamespace="urn:microsoft-dynamics-schemas/codeunit/PortalLogin" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <schema elementFormDefault="qualified" targetNamespace="urn:microsoft-dynamics-schemas/codeunit/PortalLogin" xmlns="http://www.w3.org/2001/XMLSchema">
+      <element name="ChangeEmployeePassword">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="employeeNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="oldPassword" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="newPassword" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="ChangeEmployeePassword_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="return_value" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="ConfirmEmployeePassword">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="employeeNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="password" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="ConfirmEmployeePassword_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="return_value" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="RecoverLostPassword">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="employeeNo" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="RecoverLostPassword_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="return_value" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+    </schema>
+  </types>
+  <message name="ChangeEmployeePassword">
+    <part name="parameters" element="tns:ChangeEmployeePassword" />
+  </message>
+  <message name="ChangeEmployeePassword_Result">
+    <part name="parameters" element="tns:ChangeEmployeePassword_Result" />
+  </message>
+  <message name="ConfirmEmployeePassword">
+    <part name="parameters" element="tns:ConfirmEmployeePassword" />
+  </message>
+  <message name="ConfirmEmployeePassword_Result">
+    <part name="parameters" element="tns:ConfirmEmployeePassword_Result" />
+  </message>
+  <message name="RecoverLostPassword">
+    <part name="parameters" element="tns:RecoverLostPassword" />
+  </message>
+  <message name="RecoverLostPassword_Result">
+    <part name="parameters" element="tns:RecoverLostPassword_Result" />
+  </message>
+  <portType name="PortalLogin_Port">
+    <operation name="ChangeEmployeePassword">
+      <input name="ChangeEmployeePassword" message="tns:ChangeEmployeePassword" />
+      <output name="ChangeEmployeePassword_Result" message="tns:ChangeEmployeePassword_Result" />
+    </operation>
+    <operation name="ConfirmEmployeePassword">
+      <input name="ConfirmEmployeePassword" message="tns:ConfirmEmployeePassword" />
+      <output name="ConfirmEmployeePassword_Result" message="tns:ConfirmEmployeePassword_Result" />
+    </operation>
+    <operation name="RecoverLostPassword">
+      <input name="RecoverLostPassword" message="tns:RecoverLostPassword" />
+      <output name="RecoverLostPassword_Result" message="tns:RecoverLostPassword_Result" />
+    </operation>
+  </portType>
+  <binding name="PortalLogin_Binding" type="tns:PortalLogin_Port">
+    <binding transport="http://schemas.xmlsoap.org/soap/http" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+    <operation name="ChangeEmployeePassword">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/PortalLogin:ChangeEmployeePassword" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="ChangeEmployeePassword">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="ChangeEmployeePassword_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="ConfirmEmployeePassword">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/PortalLogin:ConfirmEmployeePassword" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="ConfirmEmployeePassword">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="ConfirmEmployeePassword_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="RecoverLostPassword">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/PortalLogin:RecoverLostPassword" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="RecoverLostPassword">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="RecoverLostPassword_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+  </binding>
+  <service name="PortalLogin">
+    <port name="PortalLogin_Port" binding="tns:PortalLogin_Binding">
+      <address location="http://btl-svr-01.btl.local:8047/BC180-1/WS/Osho%20Chemical%20Industries%20Ltd/Codeunit/PortalLogin" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,365 @@
+﻿@model OshoPortal.Models.CreatePurchase
+
+@{
+    ViewBag.Title = "CreatePurchase";
+}
+
+<main id="main" class="main">
+
+    <form novalidate="" action="#" method="POST" id="CreatePurchaseForm" autocomplete="off">
+        @*<div class="card-body">*@
+            <div class="row mb-1">
+                <div class="col-md-4 mb-4">
+                    <div>Create Purchase Requisation</div>
+                    <div class="text-muted small"></div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="Leave_Type" class="form-control-label">ITEMS LIST</label>
+                                <select Class="form-control" ID="Items" name="items" AutoPostBack="false" style="width:100%">
+                                    <option selected value="0">---Select---</option>
+                                    @foreach (var item in ViewBag.Leaves)
+                                    {
+                        <option value="@item" customAttribute="item.SomethingSpecial">
+                            @item
+                        </option>}
+                                </select>
+                                <div class="valid-feedback">Looks good!</div>
+                                <div class="invalid-feedback">The leave type must be selected</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Item Description</label>
+                                @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @readonly = "readonly", id = "Description", autofocus = "" })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Unit Of Measure</label>
+                                @Html.TextBoxFor(model => model.UnitOfMeasure, new { @class = "form-control", id = "UnitOfMeasure", @readonly = "readonly", autofocus = "" })
+                                @Html.ValidationMessageFor(model => model.UnitOfMeasure, "", new { @class = "" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Item Cost</label>
+                                @Html.TextBoxFor(model => model.cost, new { @class = "form-control", @readonly = "readonly", id = "cost", autofocus = "" })
+                                @Html.ValidationMessageFor(model => model.cost, "", new { @class = "" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="SelectDate">Requisition Date</label>
+                                @Html.TextBoxFor(model => model.SelectDate, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.SelectDate, "", new { @class = "" })
+                                <div class="valid-feedback">Looks good!</div>
+                                <div class="invalid-feedback">The  date must be selected</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label">No of Items</label>
+                                @Html.TextBoxFor(model => model.NOofItems, new { @class = "form-control", id = "NOofItems", autofocus = "" })
+                                @Html.ValidationMessageFor(model => model.NOofItems, "", new { @class = "" })
+                            </div>
+                        </div>
+              
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-control-label">Comment</label>
+                                @Html.TextAreaFor(model => model.Comment, new { @class = "form-control", id = "Comment", autofocus = "" })
+                                @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="card-footer bg-light text-right">
+            <button id="Save" class="btn btn-outline-success">Save</button>
+            <button id="Submit" class="btn btn-outline-primary">Submit</button>
+        </div>
+    </form>
+</main>
+<link href="~/Assest/css/select2.min.css" rel="stylesheet" />
+<!--jQUERY date picker--->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- Bootstrap core JavaScript-->
+<script src="~/Assest/vendor/jquery/jquery.min.js"></script>
+<script src="~/Assest/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="~/Assest/vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Bootstrap core CSS-->
+<link href="~/Assest/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom fonts for this template-->
+<link href="~/Assest/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<!-- Page level plugin CSS-->
+<link href="~/Assest/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+<!-- Custom scripts for all pages-->
+<script src="~/Assest/js/sb-admin.min.js"></script>
+<script src="~/Assest/js/bootbox.min.js"></script>
+<script src="~/Assest/js/bootboxError.js"></script>
+<!-- JQUERY DATEPICKER-->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    var jQuery_3_3_1 = $.noConflict(true);
+</script>
+<script src="~/Assest/js/jquery.toast.js"></script>
+<script>
+     $(function () {
+         //calculate the words in textarea
+         $(".MultiLineLimit").on('change keydown paste input', function () {
+             this.value = (this.value.length <= 250 ? this.value : this.value.substring(0, 250));
+         });
+         var text_max = 250;
+         $('#count_message').html(text_max + 'remaining');
+         $('#Comment').keyup(function () {
+             var text_length = $('#Comment').val().length;
+             var text_remaining = text_max - text_length;
+
+             $('#count_message').html(text_remaining + 'remaining');
+         });
+         //date picker for the leavestartday
+         $("#SelectDate").datepicker({
+             dateFormat: 'dd/mm/yy',
+             onSelect: function (date) {
+                 $("#LeaveEndDay").datepicker("option", "minDate", date);
+                 $("#LeaveEndDay").datepicker("option", "maxDate", '+2y');
+             }
+         }).val();
+        //hide upload
+         $('#UploadDiv').hide();
+         $("#Items").change(function () {
+             var data = $('#Items').val();
+
+             //post the selected item to controller
+             jQuery.ajax({
+                 url:"@Url.Action("GetitemDetails", "CreatePurchase")",
+                 type: "POST",
+                 data: '{param1:"' + data + '" }',
+                 dataType: "json",
+                 contentType: "application/json; charset=utf-8",
+                 success: function (response) {
+                     // console.log(JSON.stringify(response));
+                         if (response != null ) {
+                             var data = $.parseJSON(response);;
+                             console.log(data);
+                         //set fields values
+                             $( '#Description' ).val( data.Description);
+                             $( '#UnitOfMeasure' ).val( data.UnitOfMeasure);
+                             $( '#cost' ).val( data.Cost);
+                             
+                         }
+                     }
+                 });
+         });
+         // LeaveStartDay datepicker event handler
+         $("#SelectDate").change(function () {
+             //when the date is changed
+             if ($("#Leave_Type").val() == "0") {
+                 //alert user to select a leave type first
+                 bootbox.alert("Please select a Leave Type", function () {
+                     //set leave start date value to blank
+                     $("#SelectDate").val('');
+                 });
+             }
+             //reset selection fields
+             if ($("#LeaveEndDay").val() != '') {
+                 $("#LeaveEndDay").val('');
+             }
+             if ($("#LeaveDaysApplied").val() != '') {
+                 $("#LeaveDaysApplied").val('');
+             }
+             if ($("#ReturnDate").val() != '') {
+                 $("#ReturnDate").val('');
+             }
+         });
+    
+         //days applied events
+        
+         //save button to controller save function
+         jQuery_3_3_1("#Save").click(function (event) {
+             event.preventDefault();
+
+             // Fetch form to apply custom Bootstrap validation
+             var form = $("#CreatePurchaseForm")
+             console.log(form);
+             if (form[0].checkValidity() === false) {
+                 event.preventDefault()
+                 event.stopPropagation()
+                 form.addClass('was-validated');
+             } else if (form[0].checkValidity() === true) {
+                 // Perform ajax submit here...
+                 showToast('Saving application');
+                 //function for checkig fileupload
+
+                 $.ajax({
+                     data: new FormData( $('#CreatePurchaseForm')[0]) ,
+                     cache: false,
+                     contentType: false,
+                     processData: false,
+                     success: function (file) {
+
+                         var Description = $('#Description').val();
+                         var cost = $('#cost').val();
+                         var NOofItems = $('#NOofItems').val();
+                         var SelectDate = $('#SelectDate').val();
+                         var items = $('#items').val();
+                         var Comment = $('#Comment').val();
+                         var UnitOfMeasure = $('#UnitOfMeasure').val();
+                         jQuery.ajax({
+                             url:"@Url.Action("Save", "CreatePurchase")",
+                             type: "POST",
+                             data: '{param1:"' + items + '", param2:"' + Description + '", param3:"' + NOofItems + '", param4:"' + cost + '", param5:"' + SelectDate + '", param6:"' + Comment + '" , param7:"' + UnitOfMeasure + '"}',
+                             dataType: "json",
+                             contentType: "application/json; charset=utf-8",
+                             success: function (response) {
+                                 console.log(data);
+                                 if (response != null ) {
+                                     //we need to parse it to JSON
+                                     data = $.parseJSON(response);
+                                     hideLoading();
+                                     bootbox.alert(data.Message);
+                                     //reset fields
+                                     $("#CreatePurchaseForm")[0].reset();
+                                     $("#Items").select2("val", "");
+                                 }
+                             }
+                         });
+                     },
+                     xhr: function () {
+                         var fileXhr = $.ajaxSettings.xhr();
+                         if (fileXhr.upload) {
+                             $("progress").show();
+                             fileXhr.upload.addEventListener("progress", function (e) {
+                                 if (e.lengthComputable) {
+                                     $("#fileProgress").attr({
+                                         value: e.loaded,
+                                         max: e.total
+                                     });
+                                 }
+                             }, false);
+                         }
+                         return fileXhr;
+                     }
+                 });
+             }
+             //uncomment below
+             event.preventDefault();
+         });
+         //submit to controller submit function
+         jQuery_3_3_1("#Submit").click(function (e) {
+             // Fetch form to apply custom Bootstrap validation
+             var form = $("#CreatePurchaseForm")
+
+             if (form[0].checkValidity() === false) {
+                 event.preventDefault()
+                 event.stopPropagation()
+                 form.addClass('was-validated');
+             } else if (form[0].checkValidity() === true) {
+
+                 var formdata = new FormData( $('#CreatePurchaseForm')[0]);
+                 // Perform ajax submit here...
+                 showToast('Submitting application');
+                 $.ajax({
+                     
+                     data: formdata,
+                     cache: false,
+                     contentType: false,
+                     processData: false,
+                     success: function (file) {
+                         var Description = $( '#Description' ).val();
+                         var cost = $('#cost').val();
+                         var NOofItems = $( '#NOofItems' ).val();
+                         var SelectDate = $( '#SelectDate' ).val();
+                         var items = $( '#items' ).val();
+                         var Comment = $( '#Comment' ).val();
+                         var UnitOfMeasure = $( '#UnitOfMeasure' ).val();
+
+                         jQuery.ajax({
+                             url:"@Url.Action("Submit", " CreatePurchase")",
+                             type: "POST",
+
+                             dataType: "json",
+                             contentType: "application/json; charset=utf-8",
+                             success: function (response) {
+
+                                 if (response != null ) {
+
+                                     //we need to parse it to JSON
+                                     data = $.parseJSON(response);
+
+                                     hideLoading();
+
+                                     bootbox.alert(data.Message);
+                                     //reset fields
+                                     $("#LeaveApplicationForm")[0].reset();
+                                   //  $("#Leave_Type").select2("val", "");
+                                 }
+                             }
+                         });
+                     },
+                     xhr: function () {
+                         var fileXhr = $.ajaxSettings.xhr();
+                         if (fileXhr.upload) {
+                             $("progress").show();
+                             fileXhr.upload.addEventListener("progress", function (e) {
+                                 if (e.lengthComputable) {
+                                     $("#fileProgress").attr({
+                                         value: e.loaded,
+                                         max: e.total
+                                     });
+                                 }
+                             }, false);
+                         }
+                         return fileXhr;
+                     }
+                 });
+             }
+             event.preventDefault();
+         });
+     });
+
+     //dateConverter
+     function convertDate(date, symbol, new_symbol) {
+
+         if (date != '') {
+             var raw_date = date;
+             if (raw_date.indexOf(symbol) > 0) {
+                 day = raw_date.substr(0, 2);
+                 month = raw_date.substr(3, 2);
+                 year = raw_date.substr(6, 4);
+
+                 return (year + new_symbol + month + new_symbol + day).toString();
+
+             } else {
+                 return date;
+             }
+         } else {
+             return date;
+         }
+     }
+     function showToast(modaltittle) {
+         var title = modaltittle;
+         var icon = 'loading';
+         var duration = 50000 * 1;
+         $.Toast.showToast({ title: title, duration: duration, icon: icon, image: '' });
+     }
+     function hideLoading() {
+         $.Toast.hideToast();
+     }
+</script>

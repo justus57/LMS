@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:tns="urn:microsoft-dynamics-schemas/codeunit/webportal" targetNamespace="urn:microsoft-dynamics-schemas/codeunit/webportal" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <schema xmlns:tns="urn:microsoft-dynamics-nav/xmlports/x51202" elementFormDefault="qualified" targetNamespace="urn:microsoft-dynamics-nav/xmlports/x51202" xmlns="http://www.w3.org/2001/XMLSchema">
+      <complexType name="RequisitionHeader">
+        <sequence />
+        <attribute name="DocumentType" type="string" use="required" />
+        <attribute name="DocumentNo" type="string" use="required" />
+        <attribute name="RequestByNo" type="string" use="required" />
+        <attribute name="RequestByName" type="string" use="required" />
+        <attribute name="CurrencyCode" type="string" use="required" />
+        <attribute name="ShortcutDimCode1" type="string" use="required" />
+        <attribute name="ShortcutDimCode2" type="string" use="required" />
+        <attribute name="RequestDate" type="string" use="required" />
+        <attribute name="ValidToDate" type="string" use="required" />
+        <attribute name="RequestedReceiptDate" type="string" use="required" />
+        <attribute name="StatusAsText" type="string" use="required" />
+        <attribute name="Approver" type="string" use="required" />
+      </complexType>
+      <complexType name="RequisitionHeaderList" mixed="true">
+        <sequence>
+          <element minOccurs="1" maxOccurs="unbounded" name="RequisitionHeader" type="tns:RequisitionHeader" />
+        </sequence>
+      </complexType>
+      <element name="RequisitionHeaderList" type="tns:RequisitionHeaderList" />
+    </schema>
+    <schema xmlns:bc="urn:microsoft-dynamics-nav/xmlports/GetWebItemList" xmlns:tns="urn:microsoft-dynamics-nav/xmlports/x51200" elementFormDefault="qualified" targetNamespace="urn:microsoft-dynamics-nav/xmlports/x51200" xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="urn:microsoft-dynamics-nav/xmlports/GetWebItemList" />
+      <complexType name="Item">
+        <sequence>
+          <element minOccurs="1" maxOccurs="1" name="ItemNo" type="string" />
+          <element minOccurs="1" maxOccurs="1" name="ItemDescription" type="string" />
+        </sequence>
+      </complexType>
+      <complexType name="ItemList" mixed="true">
+        <sequence>
+          <element minOccurs="1" maxOccurs="unbounded" name="Item" type="tns:Item" />
+        </sequence>
+      </complexType>
+      <element name="ItemList" type="tns:ItemList" />
+    </schema>
+    <schema elementFormDefault="qualified" targetNamespace="urn:microsoft-dynamics-schemas/codeunit/webportal" xmlns="http://www.w3.org/2001/XMLSchema">
+      <element name="DeleteDocument">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="documentArea" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="documentNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="employee" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="DeleteDocument_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="return_value" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetItemDetails">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="itemNo" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetItemDetails_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="return_value" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetNewDocumentNo">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="documentNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="employeeNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="foreignRequisition" type="boolean" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetNewDocumentNo_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="return_value" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="documentNo" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetRequisitionDetail">
+        <complexType>
+          <sequence>
+            <element xmlns:q1="urn:microsoft-dynamics-nav/xmlports/x51202" minOccurs="1" maxOccurs="1" name="requisitionDetail" type="q1:RequisitionHeaderList" />
+            <element minOccurs="1" maxOccurs="1" name="documentNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="employeeNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="operation" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetRequisitionDetail_Result">
+        <complexType>
+          <sequence>
+            <element xmlns:q2="urn:microsoft-dynamics-nav/xmlports/x51202" minOccurs="1" maxOccurs="1" name="requisitionDetail" type="q2:RequisitionHeaderList" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetRequisitionList">
+        <complexType>
+          <sequence>
+            <element xmlns:q3="urn:microsoft-dynamics-nav/xmlports/x51202" minOccurs="1" maxOccurs="1" name="requisitionList" type="q3:RequisitionHeaderList" />
+            <element minOccurs="1" maxOccurs="1" name="employeeNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="requestAs" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="approvalStatus" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetRequisitionList_Result">
+        <complexType>
+          <sequence>
+            <element xmlns:q4="urn:microsoft-dynamics-nav/xmlports/x51202" minOccurs="1" maxOccurs="1" name="requisitionList" type="q4:RequisitionHeaderList" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetWebItemList">
+        <complexType>
+          <sequence>
+            <element xmlns:q5="urn:microsoft-dynamics-nav/xmlports/x51200" minOccurs="1" maxOccurs="1" name="itemList" type="q5:ItemList" />
+            <element minOccurs="1" maxOccurs="1" name="employeeNo" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetWebItemList_Result">
+        <complexType>
+          <sequence>
+            <element xmlns:q6="urn:microsoft-dynamics-nav/xmlports/x51200" minOccurs="1" maxOccurs="1" name="itemList" type="q6:ItemList" />
+          </sequence>
+        </complexType>
+      </element>
+    </schema>
+  </types>
+  <message name="DeleteDocument">
+    <part name="parameters" element="tns:DeleteDocument" />
+  </message>
+  <message name="DeleteDocument_Result">
+    <part name="parameters" element="tns:DeleteDocument_Result" />
+  </message>
+  <message name="GetItemDetails">
+    <part name="parameters" element="tns:GetItemDetails" />
+  </message>
+  <message name="GetItemDetails_Result">
+    <part name="parameters" element="tns:GetItemDetails_Result" />
+  </message>
+  <message name="GetNewDocumentNo">
+    <part name="parameters" element="tns:GetNewDocumentNo" />
+  </message>
+  <message name="GetNewDocumentNo_Result">
+    <part name="parameters" element="tns:GetNewDocumentNo_Result" />
+  </message>
+  <message name="GetRequisitionDetail">
+    <part name="parameters" element="tns:GetRequisitionDetail" />
+  </message>
+  <message name="GetRequisitionDetail_Result">
+    <part name="parameters" element="tns:GetRequisitionDetail_Result" />
+  </message>
+  <message name="GetRequisitionList">
+    <part name="parameters" element="tns:GetRequisitionList" />
+  </message>
+  <message name="GetRequisitionList_Result">
+    <part name="parameters" element="tns:GetRequisitionList_Result" />
+  </message>
+  <message name="GetWebItemList">
+    <part name="parameters" element="tns:GetWebItemList" />
+  </message>
+  <message name="GetWebItemList_Result">
+    <part name="parameters" element="tns:GetWebItemList_Result" />
+  </message>
+  <portType name="webportal_Port">
+    <operation name="DeleteDocument">
+      <input name="DeleteDocument" message="tns:DeleteDocument" />
+      <output name="DeleteDocument_Result" message="tns:DeleteDocument_Result" />
+    </operation>
+    <operation name="GetItemDetails">
+      <input name="GetItemDetails" message="tns:GetItemDetails" />
+      <output name="GetItemDetails_Result" message="tns:GetItemDetails_Result" />
+    </operation>
+    <operation name="GetNewDocumentNo">
+      <input name="GetNewDocumentNo" message="tns:GetNewDocumentNo" />
+      <output name="GetNewDocumentNo_Result" message="tns:GetNewDocumentNo_Result" />
+    </operation>
+    <operation name="GetRequisitionDetail">
+      <input name="GetRequisitionDetail" message="tns:GetRequisitionDetail" />
+      <output name="GetRequisitionDetail_Result" message="tns:GetRequisitionDetail_Result" />
+    </operation>
+    <operation name="GetRequisitionList">
+      <input name="GetRequisitionList" message="tns:GetRequisitionList" />
+      <output name="GetRequisitionList_Result" message="tns:GetRequisitionList_Result" />
+    </operation>
+    <operation name="GetWebItemList">
+      <input name="GetWebItemList" message="tns:GetWebItemList" />
+      <output name="GetWebItemList_Result" message="tns:GetWebItemList_Result" />
+    </operation>
+  </portType>
+  <binding name="webportal_Binding" type="tns:webportal_Port">
+    <binding transport="http://schemas.xmlsoap.org/soap/http" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+    <operation name="DeleteDocument">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/webportal:DeleteDocument" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="DeleteDocument">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="DeleteDocument_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="GetItemDetails">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/webportal:GetItemDetails" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="GetItemDetails">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="GetItemDetails_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="GetNewDocumentNo">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/webportal:GetNewDocumentNo" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="GetNewDocumentNo">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="GetNewDocumentNo_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="GetRequisitionDetail">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/webportal:GetRequisitionDetail" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="GetRequisitionDetail">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="GetRequisitionDetail_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="GetRequisitionList">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/webportal:GetRequisitionList" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="GetRequisitionList">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="GetRequisitionList_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="GetWebItemList">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/webportal:GetWebItemList" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="GetWebItemList">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="GetWebItemList_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+  </binding>
+  <service name="webportal">
+    <port name="webportal_Port" binding="tns:webportal_Binding">
+      <address location="http://btl-svr-01.btl.local:8047/BC180-1/WS/Osho%20Chemical%20Industries%20Ltd/Codeunit/webportal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+    </port>
+  </service>
+</definitions>

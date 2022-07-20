@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="OshoPortal.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="OshoPortal_WebRef_PortalLogin" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://btl-svr-01.btl.local:8047/BC180-1/WS/Osho%20Chemical%20Industries%20Ltd/Codeunit/PortalLogin</Value>
+    </Setting>
+    <Setting Name="OshoPortal_WebPortal_webportal" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://btl-svr-01.btl.local:8047/BC180-1/WS/Osho%20Chemical%20Industries%20Ltd/Codeunit/webportal</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

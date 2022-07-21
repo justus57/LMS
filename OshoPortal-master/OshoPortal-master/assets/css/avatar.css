@@ -1,0 +1,29 @@
+﻿body {
+
+}
+.avatar {
+    vertical-align: central;
+    
+    border-radius: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    color:darkblue;
+    font-style:oblique;
+}
+.text-block {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: black;
+    color: Red;
+    padding-left: 20px;
+    padding-right: 20px;
+}

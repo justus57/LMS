@@ -53,19 +53,20 @@ namespace OshoPortal.Controllers
         }
         private void LoadTable(string status, string owner)
         {
+            string endpoint = "";
             DataTable dt;
 
             if (owner == "self")
             {
-                dt = ProductsXMLRequests.GetPageData(status, owner);
+                dt = ProductsXMLRequests.GetPageData(status, owner,endpoint);
             }
             else if (owner == "others")
             {
-                dt = ProductsXMLRequests.GetPageData(status, owner);
+                dt = ProductsXMLRequests.GetPageData(status, owner, endpoint);
             }
             else
             {
-                dt = ProductsXMLRequests.GetPageData(status, owner);
+                dt = ProductsXMLRequests.GetPageData(status, owner, endpoint);
             }
             //Building an HTML string.
             StringBuilder html = new StringBuilder();

@@ -40,6 +40,7 @@ namespace OshoPortal.Controllers
             }
             catch(Exception es)
             {
+                SystemLogs.WriteLog(es.Message);
                 return RedirectToAction("");
             }
             return View();

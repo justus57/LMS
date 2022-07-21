@@ -133,7 +133,7 @@
 
                         showToast('Deleting application');
                         jQuery.ajax({
-                            url: "@Url.Action("leave", "Leave")",
+                            url: "@Url.Action("DeleteOpenRequisition", "ViewRequisitions")",
                             type: "POST",
                             data: '{param1:"' + pid + '"}',
                             dataType: "json",
@@ -184,7 +184,7 @@
                         showToast('Submitting application');
 
                         jQuery.ajax({
-                            url: "@Url.Action("SubmitOpenLeave", "Leave")",
+                            url: "@Url.Action("SubmitOpenRequisition", "ViewRequisitions")",
                             type: "POST",
                             data: '{param1:"' + pid + '", param2:"' + startdate + '"}',
                             dataType: "json",
@@ -240,7 +240,7 @@
                         showToast('Cancelling application');
 
                         jQuery.ajax({
-                            url:"@Url.Action("CancelOpenLeave", "Leave")",
+                            url:"@Url.Action("CancelOpenRequisition", "ViewRequisitions")",
                             type: "POST",
                             data: '{param1:"' + pid + '"}',
                             dataType: "json",
@@ -292,7 +292,7 @@
                         showToast('Delegating application');
 
                         jQuery.ajax({
-                            url:"@Url.Action("DelegatePendingLeave", "Leave")",
+                            url:"@Url.Action("DelegatePendingRequisition", "ViewRequisitions")",
                             type: "POST",
                             data: '{param1:"' + pid + '"}',
                             dataType: "json",

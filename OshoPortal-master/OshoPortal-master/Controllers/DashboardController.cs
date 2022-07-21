@@ -20,7 +20,6 @@ namespace OshoPortal.Controllers
             var log1 = System.Web.HttpContext.Current.Session["logged"] = "yes";
             try
             {
-                string GetUserInformationresponseString = null;
                 if ((string)log1 == "No")
                 {
                     Response.Redirect("/Account/Login");

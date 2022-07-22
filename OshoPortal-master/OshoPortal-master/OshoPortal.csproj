@@ -145,8 +145,8 @@
     <Compile Include="Controllers\ApprovalsController.cs" />
     <Compile Include="Controllers\CreatePurchaseController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\EditRequisitionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\RequisitionController.cs" />
     <Compile Include="Controllers\ViewRequisitionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -157,6 +157,7 @@
     <Compile Include="Models\CreatePurchase.cs" />
     <Compile Include="Models\CreateStoreRequestion.cs" />
     <Compile Include="Models\Dashboard.cs" />
+    <Compile Include="Models\EditRequisition.cs" />
     <Compile Include="Models\ForgotPassword.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Login.cs" />
@@ -2124,7 +2125,7 @@
     <Content Include="Web References\WebPortal\RequisitionHeaderList.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
-    <Content Include="Views\Requisition\Requestion.cshtml" />
+    <Content Include="Views\EditRequisition\EditRequisition.cshtml" />
     <None Include="Web References\WebPortal\webportal.wsdl" />
     <None Include="Web References\WebRef\PortalLogin.wsdl" />
     <Content Include="Web References\WebRef\Reference.map">

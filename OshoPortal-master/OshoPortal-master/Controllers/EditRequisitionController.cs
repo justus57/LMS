@@ -44,7 +44,6 @@ namespace OshoPortal.Controllers
                     ViewBag.WordHtml = Requisition;
                     string username = System.Web.HttpContext.Current.Session["Username"].ToString();
                     var data = GetItemsList.Getitemdetail(username, Requisition, "self");
-
                 }
                 //}
             }

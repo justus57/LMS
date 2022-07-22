@@ -253,30 +253,30 @@ namespace OshoPortal.Modules
         public static string Getitemdetail(string EmpNo, string DocumentNo, string status)
         {
             string reqitem = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
-    <Body>
-        <GetRequisitionDetail xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
-            <requisitionDetail>
-                <RequisitionHeader xmlns=""urn:microsoft-dynamics-nav/xmlports/x51202"">
-                    <DocumentType>[string]</DocumentType>
-                    <DocumentNo>[string]</DocumentNo>
-                    <RequestByNo>[string]</RequestByNo>
-                    <RequestByName>[string]</RequestByName>
-                    <CurrencyCode>[string]</CurrencyCode>
-                    <ShortcutDimCode1>[string]</ShortcutDimCode1>
-                    <ShortcutDimCode2>[string]</ShortcutDimCode2>
-                    <RequestDate>[string]</RequestDate>
-                    <ValidToDate>[string]</ValidToDate>
-                    <RequestedReceiptDate>[string]</RequestedReceiptDate>
-                    <StatusAsText>[string]</StatusAsText>
-                    <Approver>[string]</Approver>
-                </RequisitionHeader>
-            </requisitionDetail>
-            <documentNo>"+DocumentNo+@"</documentNo>
-            <employeeNo>"+EmpNo+@"</employeeNo>
-            <operation>"+status+@"</operation>
-        </GetRequisitionDetail>
-    </Body>
-</Envelope>";
+                                                <Body>
+                                                    <GetRequisitionDetail xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
+                                                        <requisitionDetail>
+                                                            <RequisitionHeader xmlns=""urn:microsoft-dynamics-nav/xmlports/x51202"">
+                                                                <DocumentType>[string]</DocumentType>
+                                                                <DocumentNo>[string]</DocumentNo>
+                                                                <RequestByNo>[string]</RequestByNo>
+                                                                <RequestByName>[string]</RequestByName>
+                                                                <CurrencyCode>[string]</CurrencyCode>
+                                                                <ShortcutDimCode1>[string]</ShortcutDimCode1>
+                                                                <ShortcutDimCode2>[string]</ShortcutDimCode2>
+                                                                <RequestDate>[string]</RequestDate>
+                                                                <ValidToDate>[string]</ValidToDate>
+                                                                <RequestedReceiptDate>[string]</RequestedReceiptDate>
+                                                                <StatusAsText>[string]</StatusAsText>
+                                                                <Approver>[string]</Approver>
+                                                            </RequisitionHeader>
+                                                        </requisitionDetail>
+                                                        <documentNo>"+DocumentNo+@"</documentNo>
+                                                        <employeeNo>"+EmpNo+@"</employeeNo>
+                                                        <operation>"+status+@"</operation>
+                                                    </GetRequisitionDetail>
+                                                </Body>
+                                            </Envelope>";
             var response = WSConnection.CallWebServicePortal(reqitem);
             return response;
         }

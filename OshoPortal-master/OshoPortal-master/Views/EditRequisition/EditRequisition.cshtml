@@ -34,10 +34,10 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="Leave_Type" class="form-control-label">ITEMS LIST</label>
+                                            <label for="Items" class="form-control-label">ITEMS LIST</label>
                                             <select Class="form-control" ID="Items" name="items" AutoPostBack="false" style="width:100%">
                                                 <option selected value="0">---Select---</option>
-                                                @foreach (var item in ViewBag.Leaves)
+                                                @foreach (var item in ViewBag.items)
                                                 {
                                                     <option value="@item" customAttribute="item.SomethingSpecial">
                                                         @item
@@ -45,7 +45,7 @@
                                                 }
                                             </select>
                                             <div class="valid-feedback">Looks good!</div>
-                                            <div class="invalid-feedback">The leave type must be selected</div>
+                                            <div class="invalid-feedback">The Items must be selected</div>
                                         </div>
                                     </div>
                                 </div>
@@ -167,8 +167,8 @@
          $("#SelectDate").datepicker({
              dateFormat: 'dd/mm/yy',
              onSelect: function (date) {
-                 $("#LeaveEndDay").datepicker("option", "minDate", date);
-                 $("#LeaveEndDay").datepicker("option", "maxDate", '+2y');
+                 //$("#LeaveEndDay").datepicker("option", "minDate", date);
+                 //$("#LeaveEndDay").datepicker("option", "maxDate", '+2y');
              }
          }).val();
         //hide upload

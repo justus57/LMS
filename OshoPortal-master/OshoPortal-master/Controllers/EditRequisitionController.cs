@@ -9,6 +9,8 @@ namespace OshoPortal.Controllers
 {
     public class EditRequisitionController : Controller
     {
+        public string documentNo { get; private set; }
+
         // GET: EditRequisition
         public ActionResult Index()
         {
@@ -17,30 +19,34 @@ namespace OshoPortal.Controllers
         public ActionResult EditRequisition()
         {
             var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
-            var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
+            //bool passRequired = (bool)System.Web.HttpContext.Current.Session["RequirePasswordChange"];
             if ((string)log == "No")
             {
                 Response.Redirect("/Account/login");
             }
             else if ((string)log == "yes")
             {
-                if ((string)passRequired == "true")
+                //if (passRequired == true)
+                //{
+                //    Response.Redirect("/Account/OneTimePassword");
+                //}
+                //else
+                //{
+                string s = Request.QueryString["id"].Trim();
+                if (s == "")
                 {
-                    Response.Redirect("/Account/OneTimePassword");
+                    Response.Redirect(Request.UrlReferrer.ToString());
                 }
                 else
                 {
-                    string s = Request.QueryString["id"].Trim();
-                    if (s == "")
-                    {
-                        Response.Redirect(Request.UrlReferrer.ToString());
-                    }
-                    else
-                    {
-                        string Requisition  = Functions.Base64Decode(s);
-                        ViewBag.WordHtml = Requisition;
-                    }
+                    string Requisition = Functions.Base64Decode(s);
+                    documentNo = Requisition;
+                    ViewBag.WordHtml = Requisition;
+                    string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+                    var data = GetItemsList.Getitemdetail(username, Requisition, "self");
+
                 }
+                //}
             }
             return View();
         }

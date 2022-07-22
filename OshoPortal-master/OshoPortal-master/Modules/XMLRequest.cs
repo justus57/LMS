@@ -115,7 +115,7 @@ namespace OshoPortal.Modules
     {
         public static DataTable GetPageData(string status, string RequestAS,string endpoint)
         {
-            string LeaveStatus = null;
+            string Status = null;
             string AppliedAs = null;
 
             if (status == "self")
@@ -129,19 +129,19 @@ namespace OshoPortal.Modules
 
             if (status == "Open")
             {
-                LeaveStatus = "Open";
+               Status = "Open";
             }
             else if (status == "Pending")
             {
-                LeaveStatus = "PendingApproval";
+                Status = "PendingApproval";
             }
             else if (status == "Approved")
             {
-                LeaveStatus = "Approved";
+                Status = "Approved";
             }
             else if (status == "Rejected")
             {
-                LeaveStatus = "Rejected";
+               Status = "Rejected";
             }
 
             string username = HttpContext.Current.Session["Username"].ToString();
@@ -154,12 +154,12 @@ namespace OshoPortal.Modules
 
             DataTable table = new DataTable();
             table.Columns.Add("Date Submitted", typeof(string));
-            table.Columns.Add("Employee Name", typeof(string));
-            table.Columns.Add("RequestByNo", typeof(string));
             table.Columns.Add("DocumentNo", typeof(string));
-            table.Columns.Add("ValidToDate", typeof(string));
+            table.Columns.Add("Employee Name", typeof(string));
+            table.Columns.Add("RequestByNo", typeof(string));           
+            table.Columns.Add("ValidToDate", typeof(string));         
+            table.Columns.Add("Status", typeof(string));
             table.Columns.Add("Approver", typeof(string));
-            table.Columns.Add("StatusAsText", typeof(string));           
             table.Columns.Add("View", typeof(string));
 
 
@@ -194,19 +194,20 @@ namespace OshoPortal.Modules
 
                     if (status == "Open")
                     {
-                        table.Rows.Add(Functions.ConvertTime(RequestDate), EmployeeName, RequestByNo, DocumentNo, Functions.ConvertTime(ValidToDate), Approver, StatusAsText, "<a class = 'btn btn-secondary btn-xs' href = " + endpoint + Functions.Base64Encode(DocumentType) + "&status=Open" + " data-toggle='tooltip' title='Edit Application'><span class = 'fa fa-edit'> </span></a>  <a class = 'btn btn-success btn-xs submit_record' data-id=" + Functions.Base64Encode(DocumentType) + " data-date=" + Functions.ConvertTime(ValidToDate) + " href = 'javascript:void(0)' data-toggle='tooltip' title='Submit Application'><span class = 'fa fa-paper-plane'> </span></a> <a class = 'btn btn-danger btn-xs delete_record' data-id=" + Functions.Base64Encode(DocumentType) + " href = 'javascript:void(0)' data-toggle='tooltip' title='Delete Application'><span class = 'fa fa-trash'> </span></a> <a class = 'btn btn-primary btn-xs' href = " + endpoint + Functions.Base64Encode(DocumentType) + "&status=Open" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
+                      //  table.Rows.Add(Functions.ConvertTime(RequestDate), EmployeeName, RequestByNo, DocumentNo, Functions.ConvertTime(ValidToDate), Approver, StatusAsText, "<a class = 'btn btn-secondary btn-xs' href = " + endpoint + Functions.Base64Encode(DocumentType) + "&status=Open" + " data-toggle='tooltip' title='Edit Application'><span class = 'fa fa-edit'> </span></a>  <a class = 'btn btn-success btn-xs submit_record' data-id=" + Functions.Base64Encode(DocumentType) + " data-date=" + Functions.ConvertTime(ValidToDate) + " href = 'javascript:void(0)' data-toggle='tooltip' title='Submit Application'><span class = 'fa fa-paper-plane'> </span></a> <a class = 'btn btn-danger btn-xs delete_record' data-id=" + Functions.Base64Encode(DocumentType) + " href = 'javascript:void(0)' data-toggle='tooltip' title='Delete Application'><span class = 'fa fa-trash'> </span></a> <a class = 'btn btn-primary btn-xs' href = " + endpoint + Functions.Base64Encode(DocumentType) + "&status=Open" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
+                        table.Rows.Add(Functions.ConvertTime(RequestDate), DocumentNo, EmployeeName, RequestByNo, Functions.ConvertTime(ValidToDate), StatusAsText, Approver, "<a class = 'btn btn-secondary btn-xs' href = " + endpoint + "?id=" + Functions.Base64Encode(DocumentNo) + "&status=Open" + " data-toggle='tooltip' title='Edit Application'><span class = 'fa fa-edit'> </span></a><a class = 'btn btn-success btn-xs submit_record' data-id=" + Functions.Base64Encode(DocumentNo) + " data-date=" + Functions.ConvertTime(ValidToDate) + " href = 'javascript:void(0)'><span class = 'fa fa-paper-plane' data-toggle='tooltip' title='Submit Application'> </span></a> <a class = 'btn btn-danger btn-xs delete_record' data-id=" + Functions.Base64Encode(DocumentNo) + " href = 'javascript:void(0)'><span class = 'fa fa-trash' data-toggle='tooltip' title='Delete Application'> </span></a> <a class = 'btn btn-primary btn-xs' href = " + endpoint + "?id=" +Functions.Base64Encode(DocumentNo) + "&status=Open" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
                     }
                     else if (status == "Pending")
                     {
-                        table.Rows.Add(Functions.ConvertTime(RequestDate), EmployeeName, RequestByNo, DocumentNo, Functions.ConvertTime(ValidToDate), Functions.ConvertTime(Approver), StatusAsText, "<a class = 'btn btn-danger btn-xs cancel_record' data-id=" + Functions.Base64Encode(DocumentType) + " href = 'javascript:void(0)' data-toggle='tooltip' title='Cancel Application'><span class = 'fa fa-times' > </span></a> <a class = 'btn btn-primary btn-xs' href = " + "ViewLeave.aspx?id=" + Functions.Base64Encode(DocumentType) + "&status=Pending" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
+                        table.Rows.Add(Functions.ConvertTime(RequestDate), DocumentNo, EmployeeName, RequestByNo,  Functions.ConvertTime(ValidToDate), StatusAsText, Approver,  "<a class = 'btn btn-danger btn-xs cancel_record' data-id=" + Functions.Base64Encode(DocumentNo) + " href = 'javascript:void(0)' data-toggle='tooltip' title='Cancel Application'><span class = 'fa fa-times' > </span></a> <a class = 'btn btn-primary btn-xs' href = " +endpoint+ "?id=" + Functions.Base64Encode(DocumentNo) + "&status=Pending" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
                     }
                     else if (status == "Approved")
                     {
-                        table.Rows.Add(Functions.ConvertTime(RequestDate), EmployeeName, RequestByNo, DocumentNo, Functions.ConvertTime(ValidToDate), Functions.ConvertTime(Approver), StatusAsText, "<a class = 'btn btn-primary btn-xs' href = " + "ViewLeave.aspx?id=" + Functions.Base64Encode(DocumentType) + "&status=Approved" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
+                        table.Rows.Add(Functions.ConvertTime(RequestDate), DocumentNo, EmployeeName, RequestByNo,  Functions.ConvertTime(ValidToDate), StatusAsText, Approver, "<a class = 'btn btn-primary btn-xs' href = " + endpoint+"?id=" + Functions.Base64Encode(DocumentNo) + "&status=Approved" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
                     }
                     else if (status == "Rejected")
                     {
-                        table.Rows.Add(Functions.ConvertTime(RequestDate), EmployeeName, RequestByNo, DocumentNo, Functions.ConvertTime(ValidToDate), Functions.ConvertTime(Approver), StatusAsText, "<a class = 'btn btn-primary btn-xs' href = " + "ViewLeave.aspx?id=" + Functions.Base64Encode(DocumentType) + "&status=Rejected" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
+                        table.Rows.Add(Functions.ConvertTime(RequestDate), DocumentNo, EmployeeName, RequestByNo,Functions.ConvertTime(ValidToDate), StatusAsText, Approver, "<a class = 'btn btn-primary btn-xs' href = " + endpoint+"?id=" + Functions.Base64Encode(DocumentNo) + "&status=Rejected" + " data-toggle='tooltip' title='View Application'><span class = 'fa fa-eye'> </span></a>");
                     }
 
                     count++;
@@ -245,6 +246,37 @@ namespace OshoPortal.Modules
                                         </GetRequisitionList>
                                     </Body>
                                 </Envelope>";
+            var response = WSConnection.CallWebServicePortal(reqitem);
+            return response;
+        }
+
+        public static string Getitemdetail(string EmpNo, string DocumentNo, string status)
+        {
+            string reqitem = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+    <Body>
+        <GetRequisitionDetail xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
+            <requisitionDetail>
+                <RequisitionHeader xmlns=""urn:microsoft-dynamics-nav/xmlports/x51202"">
+                    <DocumentType>[string]</DocumentType>
+                    <DocumentNo>[string]</DocumentNo>
+                    <RequestByNo>[string]</RequestByNo>
+                    <RequestByName>[string]</RequestByName>
+                    <CurrencyCode>[string]</CurrencyCode>
+                    <ShortcutDimCode1>[string]</ShortcutDimCode1>
+                    <ShortcutDimCode2>[string]</ShortcutDimCode2>
+                    <RequestDate>[string]</RequestDate>
+                    <ValidToDate>[string]</ValidToDate>
+                    <RequestedReceiptDate>[string]</RequestedReceiptDate>
+                    <StatusAsText>[string]</StatusAsText>
+                    <Approver>[string]</Approver>
+                </RequisitionHeader>
+            </requisitionDetail>
+            <documentNo>"+DocumentNo+@"</documentNo>
+            <employeeNo>"+EmpNo+@"</employeeNo>
+            <operation>"+status+@"</operation>
+        </GetRequisitionDetail>
+    </Body>
+</Envelope>";
             var response = WSConnection.CallWebServicePortal(reqitem);
             return response;
         }

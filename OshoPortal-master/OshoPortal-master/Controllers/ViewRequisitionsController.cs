@@ -39,7 +39,7 @@ namespace OshoPortal.Controllers
                     string status = Request.QueryString["status"];
                     ViewBag.WordHtml = status;
                     string owner = Request.QueryString["owner"];
-                    string endpoint = Url.Action("Requisition", "Requisition", new { id = "" });
+                    string endpoint = Url.Action("EditRequisition", "EditRequisition", new { id = "" });
                     if (status == "" || owner == "")
                     {
                         Response.Redirect(Request.UrlReferrer.ToString());
@@ -120,9 +120,9 @@ namespace OshoPortal.Controllers
         }
         public JsonResult SubmitOpenRequisition(string param1, string param2)
         {
-            string LeaveHeaderNo = Functions.Base64Decode(param1);
+            string HeaderNo = Functions.Base64Decode(param1);
 
-            DateTime LeaveStartDay = Functions.GetDateTime(param2);
+            DateTime date = Functions.GetDateTime(param2);
             string response = null;
             string status = null;
 
@@ -218,7 +218,7 @@ namespace OshoPortal.Controllers
         public JsonResult DelegatePendingRequisition(string param1)
         {
             string username = null;
-            string LeaveHeaderNo = Functions.Base64Decode(param1);
+            string HeaderNo = Functions.Base64Decode(param1);
 
             //if (TempData.ContainsKey("mydata"))
             //    username = TempData["mydata"].ToString();

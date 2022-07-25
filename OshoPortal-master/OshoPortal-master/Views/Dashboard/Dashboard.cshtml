@@ -63,7 +63,7 @@
                                 <div class="row">
                                     <div class="col-md-5 pr-1">
                                         <div class="form-group">
-                                            <label>Company (disabled)</label>
+                                            <label>Company Name</label>
                                             <input type="text" class="form-control" disabled="" placeholder="Company" value="OSHO Chemicals">
                                         </div>
                                     </div>
@@ -77,9 +77,9 @@
                                     </div>
                                     <div class="col-md-4 pl-1">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Email address</label>
+                                            <label>Title</label>
                                             @*<input type="email" class="form-control" placeholder="Email">*@
-                                            @Html.TextBoxFor(m => m.email, new { @class = "form-control ", @readonly = "readonly", id = "email", autofocus = "" })
+                                            @Html.TextBoxFor(m => m.Title, new { @class = "form-control ", @readonly = "readonly", id = "Title", autofocus = "" })
 
                                         </div>
                                     </div>
@@ -105,9 +105,9 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Address</label>
+                                            <label for="exampleInputEmail1">Email address</label>
                                             @*<input type="text" class="form-control" placeholder="Home Address" value="Melbourne, Australia">*@
-                                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control textarea", @readonly = "readonly", id = "Address", autofocus = "" })
+                                            @Html.TextBoxFor(m => m.email, new { @class = "form-control textarea", @readonly = "readonly", id = "email", autofocus = "" })
 
                                         </div>
                                     </div>
@@ -115,25 +115,25 @@
                                 <div class="row">
                                     <div class="col-md-4 pr-1">
                                         <div class="form-group">
-                                            <label>City</label>
+                                            <label>BirthDate</label>
                                             @*<input type="text" class="form-control" placeholder="City" value="Melbourne">*@
-                                            @Html.TextBoxFor(m => m.City, new { @class = "form-control textarea", @readonly = "readonly", id = "City", autofocus = "" })
+                                            @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control textarea", @readonly = "readonly", id = "BirthDate", autofocus = "" })
 
                                         </div>
                                     </div>
                                     <div class="col-md-4 px-1">
                                         <div class="form-group">
-                                            <label>Country</label>
+                                            <label>EmploymentDate</label>
                                             @*<input type="text" class="form-control" placeholder="Country" value="Australia">*@
-                                            @Html.TextBoxFor(m => m.Country, new { @class = "form-control textarea",  @readonly = "readonly", id = "Country", autofocus = "" })
+                                            @Html.TextBoxFor(m => m.EmploymentDate, new { @class = "form-control textarea",  @readonly = "readonly", id = "Country", autofocus = "" })
 
                                         </div>
                                     </div>
                                     <div class="col-md-4 pl-1">
                                         <div class="form-group">
-                                            <label>Postal Code</label>
+                                            <label>Bank Account</label>
                                             @*<input type="number" class="form-control" placeholder="ZIP Code">*@
-                                            @Html.TextBoxFor(m => m.PostalCode, new { @class = "form-control textarea", type = "number", @readonly = "readonly", id = "PostalCode", autofocus = "" })
+                                            @Html.TextBoxFor(m => m.BankAccountNo, new { @class = "form-control textarea", type = "number", @readonly = "readonly", id = "BankAccountNo", autofocus = "" })
 
                                         </div>
                                     </div>

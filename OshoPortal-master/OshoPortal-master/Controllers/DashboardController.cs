@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using OshoPortal.Models;
 using OshoPortal.Modules;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,9 @@ namespace OshoPortal.Controllers
         {
             return View();
         }
-        public ActionResult Dashboard()
+        public ActionResult Dashboard(Dashboard dashboard)
         {
+            string GetUserInformationresponseString = null;
             var log1 = System.Web.HttpContext.Current.Session["logged"] = "yes";
             try
             {
@@ -44,26 +46,43 @@ namespace OshoPortal.Controllers
                         string code1 = name.Split(' ').Last();
                         //get user information
                         string username = System.Web.HttpContext.Current.Session["Username"].ToString();
-                        //GetUserInformationresponseString = LoginXMLRequests.GetUserInformation(PayrollNm.ToString());
-                       // dynamic json = JObject.Parse(GetUserInformationresponseString);
+                        GetUserInformationresponseString = XMLRequest.GetUserInformation(username);
+                        dynamic json = JObject.Parse(GetUserInformationresponseString);
+                        string Status = json.Status;
+                        string EmployeeName = json.EmployeeName;
+                        dashboard.Username = json.EmployeeNo;
+                        dashboard.FirstName = code;
+                        dashboard.LastName = code1;
+                        dashboard.BankBranch = json.BankBranch;
+                        dashboard.BankAccountNo = json.BankAccountNo;
+                        dashboard.BirthDate = json.BirthDate;
+                        //if (date != "")
+                        //{
+                        //    DateTime oDate = DateTime.ParseExact(date, "MM/dd/yy", System.Globalization.CultureInfo.InvariantCulture);
+                        //    dashboard.BirthDate = oDate.ToString("MMMM dd yyyy");
+                        ////}
+                        //dashboard.BirthDate = Functions.GetDateTime(date);
+                        dashboard.email = json.Email;
+                        dashboard.Title = json.Title;                     
+                        string EmploymentDate = json.EmploymentDate;
+                      
 
-                  //      string Status = json.Status;
-                       
-
-                     
-                        
-
+                        if (EmploymentDate != "")
+                        {
+                            DateTime oDate = DateTime.ParseExact(EmploymentDate, "MM/dd/yy", System.Globalization.CultureInfo.InvariantCulture);
+                            dashboard.EmploymentDate = oDate.ToString("MMMM dd yyyy");
+                        }
                         if (DateTime.Now.Hour < 12)
                         {
                             ViewBag.Greetings= " "+"Good Morning <br/>" + code +"!";
                         }
                         else if (DateTime.Now.Hour < 17)
                         {
-                            ViewBag.Greetings = " " + "Good Afternoon <br/>" + UserFullName;
+                            ViewBag.Greetings = " " + "Good Afternoon <br/>" + code;
                         }
                         else
                         {
-                            ViewBag.Greetings = " " + "Good Evening <br/>" + UserFullName;
+                            ViewBag.Greetings = " " + "Good Evening <br/>" + code;
                         }
                     }
                 }
@@ -72,7 +91,7 @@ namespace OshoPortal.Controllers
             {
                 Console.Write(ex);
             }
-            return View();
+            return View(dashboard);
         }
     }
 }

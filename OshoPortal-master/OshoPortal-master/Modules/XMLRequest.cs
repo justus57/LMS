@@ -10,7 +10,18 @@ namespace OshoPortal.Modules
 {
     public class XMLRequest
     {
-
+        public static string GetUserInformation(string EmpNo)
+        {
+            var req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                                    <Body>
+                                        <GetEmployeeHomeData xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
+                                            <employeeNo>" + EmpNo + @"</employeeNo>
+                                        </GetEmployeeHomeData>
+                                    </Body>
+                                </Envelope>";
+            string response = WSConnection.CallWebServicePortal(req);
+            return WSConnection.GetJSONResponse(response);
+        }
     }
    
     public class LoginXMLRequests
@@ -280,5 +291,6 @@ namespace OshoPortal.Modules
             var response = WSConnection.CallWebServicePortal(reqitem);
             return response;
         }
+      
     }
 }

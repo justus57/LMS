@@ -44,6 +44,7 @@ namespace OshoPortal.Controllers
                         ViewBag.user = code +"'s";
                         string name1 = UserFullName.ToString();
                         string code1 = name.Split(' ').Last();
+
                         //get user information
                         string username = System.Web.HttpContext.Current.Session["Username"].ToString();
                         GetUserInformationresponseString = XMLRequest.GetUserInformation(username);
@@ -56,12 +57,7 @@ namespace OshoPortal.Controllers
                         dashboard.BankBranch = json.BankBranch;
                         dashboard.BankAccountNo = json.BankAccountNo;
                         dashboard.BirthDate = json.BirthDate;
-                        //if (date != "")
-                        //{
-                        //    DateTime oDate = DateTime.ParseExact(date, "MM/dd/yy", System.Globalization.CultureInfo.InvariantCulture);
-                        //    dashboard.BirthDate = oDate.ToString("MMMM dd yyyy");
-                        ////}
-                        //dashboard.BirthDate = Functions.GetDateTime(date);
+                       
                         dashboard.email = json.Email;
                         dashboard.Title = json.Title;                     
                         string EmploymentDate = json.EmploymentDate;

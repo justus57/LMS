@@ -89,10 +89,12 @@ namespace OshoPortal.Controllers
             string status = "000";
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string DocumentNo = "";
+            
             string DocumentNoResponse = GetDocumentNumber();
             dynamic json = JObject.Parse(DocumentNoResponse);
             status = json.Status;
-
+            string name = param1;
+            string code = name.Split(' ').First();
             if (status == "000")
             {
 
@@ -102,21 +104,17 @@ namespace OshoPortal.Controllers
                 string RequestDate = DateTime.Now.ToString("dd-MM-yyyy");//d/m/Y
                 string DateCreated = DateTime.Now.ToString("dd-MM-yyyy");
                 string AccountId = System.Web.HttpContext.Current.Session["Username"].ToString();
-                string ReturnDate = param1;
-                string LeaveCode = param2;
-                string Description = param3;
-                Description = param7;
-                string StartDate = param4;
-                string EndDate = param5;
-                string LeaveDays = param6;//qty
-                 Description = param7; //param7.Replace(@"\", @"\\");
-        //        string folderPath = System.Web.HttpContext.Current.Server.MapPath("~/Uploads/");
-                //string documentpath = folderPath + param7;
-
+                string Item = code;
+                string Description = param2;
+                string Quatity = param3;
+                string Amount = param4;
+                string DateofSelection = param5;
+                string Comment = param6;//qty
+                string unitofMeasure = param7; //param7.Replace(@"\", @"\\");
 
                 try
                 {
-                    
+                    var saverequisition = XMLRequest.SaveRequisition(DocumentNo, EmployeeID, EmployeeName, Item, Description, Quatity, unitofMeasure, Amount, DateofSelection); 
                 }
                 catch (Exception es)
                 {

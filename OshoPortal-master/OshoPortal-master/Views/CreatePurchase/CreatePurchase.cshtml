@@ -24,7 +24,8 @@
                                     {
                         <option value="@item" customAttribute="item.SomethingSpecial">
                             @item
-                        </option>}
+                        </option>
+}
                                 </select>
                                 <div class="valid-feedback">Looks good!</div>
                                 <div class="invalid-feedback">The leave type must be selected</div>
@@ -73,8 +74,15 @@
                                 @Html.TextBoxFor(model => model.NOofItems, new { @class = "form-control", id = "NOofItems", autofocus = "" })
                                 @Html.ValidationMessageFor(model => model.NOofItems, "", new { @class = "" })
                             </div>
+                        </div>              
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Amount</label>
+                                @Html.TextBoxFor(model => model.Amount, new { @class = "form-control", id = "Amount", autofocus = "" })
+                                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "" })
+                            </div>
                         </div>
-              
+
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -142,7 +150,16 @@
              }
          }).val();
         //hide upload
-         $('#UploadDiv').hide();
+         $( '#UploadDiv' ).hide();
+         $( '#NOofItems' ).change(
+             function () {
+
+                 var cost = $( '#cost' ).val();
+                 var noofitem = $( '#NOofItems' ).val();
+                 var total = cost * noofitem;
+                 $('#Amount').val(total);
+             }
+         );
          $("#Items").change(function () {
              var data = $('#Items').val();
 
@@ -213,9 +230,9 @@
                      contentType: false,
                      processData: false,
                      success: function (file) {
-
+                         var data = $( '#Items' ).val();
                          var Description = $('#Description').val();
-                         var cost = $('#cost').val();
+                         var cost = $('#Amount').val();
                          var NOofItems = $('#NOofItems').val();
                          var SelectDate = $('#SelectDate').val();
                          var items = $('#items').val();
@@ -224,7 +241,7 @@
                          jQuery.ajax({
                              url:"@Url.Action("Save", "CreatePurchase")",
                              type: "POST",
-                             data: '{param1:"' + items + '", param2:"' + Description + '", param3:"' + NOofItems + '", param4:"' + cost + '", param5:"' + SelectDate + '", param6:"' + Comment + '" , param7:"' + UnitOfMeasure + '"}',
+                             data: '{param1:"' + data + '", param2:"' + Description + '", param3:"' + NOofItems + '", param4:"' + cost + '", param5:"' + SelectDate + '", param6:"' + Comment + '" , param7:"' + UnitOfMeasure + '"}',
                              dataType: "json",
                              contentType: "application/json; charset=utf-8",
                              success: function (response) {

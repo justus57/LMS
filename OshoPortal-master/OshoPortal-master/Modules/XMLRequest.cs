@@ -22,6 +22,26 @@ namespace OshoPortal.Modules
             string response = WSConnection.CallWebServicePortal(req);
             return WSConnection.GetJSONResponse(response);
         }
+        public static string SaveRequisition(string documentNo,string EmpNo,string EmpName,string Item, string description,string quantity,string unitOfMeasure,string amount,string dateofSelection)
+        {
+            string req =@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                                            <Body>
+                                                <SaveRequisitionDetails xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
+                                                    <documentNo>"+ documentNo + @"</documentNo>
+                                                    <employeeID>" + EmpNo + @"</employeeID>
+                                                    <employeeName>" + EmpName + @"</employeeName>
+                                                    <item>" + Item + @"</item>
+                                                    <description>" + description + @"</description>
+                                                    <quantity>" + quantity + @"</quantity>
+                                                    <unitOfMeasure>" + unitOfMeasure + @"</unitOfMeasure>
+                                                    <amount>" + amount + @"</amount>
+                                                    <dateofSelection>" + dateofSelection + @"</dateofSelection>
+                                                </SaveRequisitionDetails>
+                                            </Body>
+                                        </Envelope>";
+            string response = WSConnection.CallWebServicePortal(req);
+            return WSConnection.GetJSONResponse(response);
+        }
     }
    
     public class LoginXMLRequests

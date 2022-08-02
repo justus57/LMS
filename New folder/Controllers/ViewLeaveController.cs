@@ -57,12 +57,12 @@ namespace LMS.Controllers
             }
             else if ((string)log == "yes")
             {
-                if ((string)passRequired == "true")
-                {
-                    Response.Redirect("/Account/OneTimePassword");
-                }
-                else
-                {
+                //if ((bool)passRequired == true)
+                //{
+                //    Response.Redirect("/Account/OneTimePassword");
+                //}
+                //else
+                //{
                     string s = Request.QueryString["id"].Trim();
                     if (s == "")
                     {
@@ -157,7 +157,7 @@ namespace LMS.Controllers
                         }
                         data = view;
                     }
-                }
+                //}
             }
         
             return View(data);

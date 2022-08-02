@@ -1,4 +1,5 @@
-﻿using OshoPortal.Modules;
+﻿using Newtonsoft.Json.Linq;
+using OshoPortal.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +44,9 @@ namespace OshoPortal.Controllers
                     documentNo = Requisition;
                     ViewBag.WordHtml = Requisition;
                     string username = System.Web.HttpContext.Current.Session["Username"].ToString();
-                    var data = GetItemsList.Getitemdetail(username, Requisition, "self");
+                    var datavalues = GetItemsList.Getitemdetail(username, Requisition, "self");
+                    dynamic json = JObject.Parse(datavalues);
+
                 }
                 //}
             }

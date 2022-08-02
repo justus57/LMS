@@ -37,12 +37,12 @@
                                             <label for="Items" class="form-control-label">ITEMS LIST</label>
                                             <select Class="form-control" ID="Items" name="items" AutoPostBack="false" style="width:100%">
                                                 <option selected value="0">---Select---</option>
-                                                @foreach (var item in ViewBag.items)
+                                                @*@foreach (var item in ViewBag.items)
                                                 {
                                                     <option value="@item" customAttribute="item.SomethingSpecial">
                                                         @item
                                                     </option>
-                                                }
+                                                }*@
                                             </select>
                                             <div class="valid-feedback">Looks good!</div>
                                             <div class="invalid-feedback">The Items must be selected</div>

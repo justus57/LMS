@@ -291,7 +291,7 @@ namespace OshoPortal.Modules
                                             </Body>
                                         </Envelope>";
             var response = WSConnection.CallWebServicePortal(reqitem);
-            return response;
+            return WSConnection.GetJSONResponse(response);
         }
       
     }

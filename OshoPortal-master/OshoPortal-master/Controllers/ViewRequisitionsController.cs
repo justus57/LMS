@@ -169,10 +169,11 @@ namespace OshoPortal.Controllers
             //send XML req to delete record
             try
             {
-                //string DeleteOpenLeaveresponseString = LeavesXMLRequests.DeleteOpenLeave(documentNo);
-                //dynamic json = JObject.Parse(DeleteOpenLeaveresponseString);
-                //status = json.Status;
-                //Message = json.Message;
+                string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+                string DeleteOpenRequisitionresponseString = XMLRequest.DeleteDocument(documentNo,"",username);
+                dynamic json = JObject.Parse(DeleteOpenRequisitionresponseString);
+                status = json.Status;
+                Message = json.Message;
             }
             catch (Exception es)
             {

@@ -42,6 +42,20 @@ namespace OshoPortal.Modules
             string response = WSConnection.CallWebServicePortal(req);
             return WSConnection.GetJSONResponse(response);
         }
+        public static string DeleteDocument(string documentNo,string documentArea, string employee)
+        {
+            var req = @" <Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                                    <Body>
+                                        <DeleteDocument xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
+                                            <documentArea>[string]</documentArea>
+                                            <documentNo>"+documentNo+@"</documentNo>
+                                            <employee>"+employee+@"</employee>
+                                        </DeleteDocument>
+                                    </Body>
+                                </Envelope>";
+            string response = WSConnection.CallWebServicePortal(req);
+            return WSConnection.GetJSONResponse(response);
+        }
     }
    
     public class LoginXMLRequests

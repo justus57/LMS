@@ -358,7 +358,160 @@
                  });
              }
              event.preventDefault();
-         });
+         } );
+           jQuery_3_3_1('#delete_record').click(function (e) {
+
+            e.preventDefault();
+
+            bootbox.confirm({
+                title: "<i class='fa fa-trash'></i> Delete record?",
+                message: "Do you wish to delete this  application?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        showToast('Deleting application');
+
+                        jQuery.ajax({
+                            url: "@Url.Action("DeleteOpenRequisition", "EditRequisition")",
+                            type: "POST",
+                            data: '{param1:"' + $('#LeaveCodeTxt').val() + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+
+                                if (response != null) {
+                                    var data = $.parseJSON(data);
+
+                                    hideLoading();;
+
+                                    bootbox.alert(data.Message);
+                                    //
+                                    window.setTimeout(function () {
+                                        parent.history.back();
+                                    }, 2000);
+                                }
+                            },
+                            error: function () {
+                                bootbox.alert('An error occured');
+                            }
+                        });
+                    }
+                }
+            });
+           } );
+            jQuery_3_3_1('#cancel_record').click(function (e) {
+
+            e.preventDefault();
+
+            bootbox.confirm({
+                title: "<i class='fa fa-times'></i> Cancel?",
+                message: "Do you wish to cancel this application?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        showToast('Cancelling application');
+
+                        jQuery.ajax({
+                            url: "@Url.Action("CancelLeave", "EditRequisition")",
+                            type: "POST",
+                            data: '{param1:"' + $('#LeaveCodeTxt').val() + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+
+                                if (response != null) {
+                                    var data = $.parseJSON(data);
+
+                                    hideLoading();;
+
+                                    bootbox.alert(data.Message);
+                                    parent.history.back();
+                                    //window.setTimeout(function () {
+                                    //    location.reload()
+                                    //}, 3000);
+                                }
+                            },
+                            error: function () {
+                                bootbox.alert('An error occured');
+                            }
+                        });
+                    }
+                }
+            });
+            } );
+         jQuery_3_3_1('#delegate_record').click(function (e) {
+
+            e.preventDefault();
+
+            bootbox.confirm({
+                title: "<i class='fa fa-fighter-jet'></i> Delegate?",
+                message: "Do you wish to delegate this application?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+
+                    if (result == true) {
+
+                        showToast('Delegating application');
+
+                        jQuery.ajax({
+                            url:"@Url.Action("DelegatePendingLeave", "ViewLeave")",
+                            type: "POST",
+                            data: '{param1:"' + $('#LeaveCodeTxt').val() + '"}',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+
+                                if (response != null) {
+                                    var data = $.parseJSON(data);
+
+                                    hideLoading();
+
+                                    bootbox.alert(data.Message);
+                                    // parent.history.back();
+                                    //window.setTimeout(function () {
+                                    //    location.reload()
+                                    //}, 3000);
+                                }
+                            },
+                            error: function () {
+                                bootbox.alert('An error occured');
+                            }
+                        });
+                    }
+                }
+            });
+        });
      });
 
      //dateConverter

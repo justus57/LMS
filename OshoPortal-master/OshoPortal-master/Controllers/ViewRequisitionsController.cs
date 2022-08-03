@@ -50,9 +50,7 @@ namespace OshoPortal.Controllers
                         LoadTable(status, owner,endpoint);
                     }
                 }
-
             }
-
             return View();
         }
         private void LoadTable(string status, string owner,string endpoint)

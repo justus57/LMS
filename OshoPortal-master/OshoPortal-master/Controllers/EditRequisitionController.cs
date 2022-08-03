@@ -118,7 +118,7 @@ namespace OshoPortal.Controllers
             string response = null;
             string status = null;
 
-            //string xmlresponse = LeavesXMLRequests.DelegateApprovalRequest(LeaveHeaderNo.Trim(), username);
+           // string xmlresponse = XMLRequest.DelegateApprovalRequest(LeaveHeaderNo.Trim(), username);
 
             //dynamic json = JObject.Parse(xmlresponse);
 
@@ -133,5 +133,6 @@ namespace OshoPortal.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
+
     }
 }

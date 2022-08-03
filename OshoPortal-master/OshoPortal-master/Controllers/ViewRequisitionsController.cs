@@ -160,7 +160,6 @@ namespace OshoPortal.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-
         public JsonResult DeleteOpenRequisition(string param1)
         {
             string status = "";
@@ -215,7 +214,6 @@ namespace OshoPortal.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-
         public JsonResult DelegatePendingRequisition(string param1)
         {
             string username = null;

@@ -13,7 +13,6 @@ namespace OshoPortal.Controllers
     public class EditRequisitionController : Controller
     {
         public string documentNo { get; private set; }
-
         // GET: EditRequisition
         public ActionResult Index()
         {

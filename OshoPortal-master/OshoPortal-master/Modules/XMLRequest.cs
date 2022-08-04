@@ -24,21 +24,41 @@ namespace OshoPortal.Modules
         }
         public static string SaveRequisition(string documentNo,string EmpNo,string EmpName,string Item, string description,string quantity,string unitOfMeasure,string amount,string dateofSelection)
         {
-            string req =@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
-                                            <Body>
-                                                <SaveRequisitionDetails xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
-                                                    <documentNo>"+ documentNo + @"</documentNo>
-                                                    <employeeID>" + EmpNo + @"</employeeID>
-                                                    <employeeName>" + EmpName + @"</employeeName>
-                                                    <item>" + Item + @"</item>
-                                                    <description>" + description + @"</description>
-                                                    <quantity>" + quantity + @"</quantity>
-                                                    <unitOfMeasure>" + unitOfMeasure + @"</unitOfMeasure>
-                                                    <amount>" + amount + @"</amount>
-                                                    <dateofSelection>" + dateofSelection + @"</dateofSelection>
-                                                </SaveRequisitionDetails>
-                                            </Body>
-                                        </Envelope>";
+            string req = @" <Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                                     <Body>
+                                            <SaveRequisitionDetails xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
+                                                <requisitionDetail>
+                                                    <RequisitionHeader xmlns=""urn:microsoft-dynamics-nav/xmlports/x51202"">
+                                                        <DocumentType>1</DocumentType>
+                                                        <DocumentNo></DocumentNo>
+                                                        <RequestByNo></RequestByNo>
+                                                        <RequestByName></RequestByName>
+                                                        <CurrencyCode></CurrencyCode>
+                                                        <ShortcutDimCode1></ShortcutDimCode1>
+                                                        <ShortcutDimCode2></ShortcutDimCode2>
+                                                        <RequestDate>" + dateofSelection + @"</RequestDate>
+                                                        <ValidToDate></ValidToDate>
+                                                        <RequestedReceiptDate></RequestedReceiptDate>
+                                                        <StatusAsText></StatusAsText>
+                                                        <Approver></Approver>
+                                                        <RequisitionHdrLine>
+                                                            <Type>ITEM</Type>
+                                                            <No>" + Item + @"</No>
+                                                            <Description>"+ description + @"</Description>
+                                                            <Quantity>"+ quantity + @"</Quantity>
+                                                            <LocationCode></LocationCode>
+                                                            <UnitofMeasureCode></UnitofMeasureCode>
+                                                       
+                                                            <UnitCostLCY>0</UnitCostLCY>
+                                                        </RequisitionHdrLine>
+                                                    </RequisitionHeader>
+                                                </requisitionDetail>
+                                                <documentNo>" + documentNo + @"</documentNo>
+                                                <employeeNo>"+ EmpNo + @"</employeeNo>
+                                                <operation>IMPORT</operation>
+                                            </SaveRequisitionDetails>
+                                        </Body>
+                                    </Envelope>";
             string response = WSConnection.CallWebServicePortal(req);
             return WSConnection.GetJSONResponse(response);
         }

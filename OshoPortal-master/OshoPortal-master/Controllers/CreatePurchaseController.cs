@@ -212,7 +212,7 @@ namespace OshoPortal.Controllers
             string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                     <Body>
                                         <GetNewDocumentNo xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
-                                            <documentNo>[string]</documentNo>
+                                            <documentNo></documentNo>
                                             <employeeNo>"+username+@"</employeeNo>
                                             <foreignRequisition>false</foreignRequisition>
                                         </GetNewDocumentNo>

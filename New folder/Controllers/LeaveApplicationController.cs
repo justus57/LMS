@@ -481,6 +481,7 @@ namespace LMS.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
+        }
         private static string GetDocumentNumber()
         {
             //get Leave number

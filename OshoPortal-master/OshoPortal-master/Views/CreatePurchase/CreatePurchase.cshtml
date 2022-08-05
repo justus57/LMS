@@ -17,18 +17,32 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="Leave_Type" class="form-control-label">ITEMS LIST</label>
+                                <label for="Leave_Type" class="form-control-label">TYPE</label>
+                                <select Class="form-control" ID="Type" name="Type" AutoPostBack="false" style="width:100%">
+                                    <option selected value="0">---Select---</option>
+                                    @*@foreach (var item in ViewBag.Leaves)
+                                    {
+                        <option value="@item" customAttribute="item.SomethingSpecial">
+                            @item
+                        </option>}*@
+                                </select>
+                                <div class="valid-feedback">Looks good!</div>
+                                <div class="invalid-feedback">The type must be selected</div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="Leave_Type" class="form-control-label">Item Specific</label>
                                 <select Class="form-control" ID="Items" name="items" AutoPostBack="false" style="width:100%">
                                     <option selected value="0">---Select---</option>
                                     @foreach (var item in ViewBag.Leaves)
                                     {
                         <option value="@item" customAttribute="item.SomethingSpecial">
                             @item
-                        </option>
-}
+                        </option>}
                                 </select>
                                 <div class="valid-feedback">Looks good!</div>
-                                <div class="invalid-feedback">The leave type must be selected</div>
+                                <div class="invalid-feedback">The item must be selected</div>
                             </div>
                         </div>
                     </div>
@@ -95,6 +109,28 @@
                     </div>
                 </div>
             </div>
+         <hr>
+                <div class="row mb-5">
+                <div class="col-md-12"> 
+                <div class="col-md-4 mb-4">
+                    <div>Staff claim Lines</div>
+                    <div class="text-muted small">Add your staff claim lines here</div>
+                </div>                 
+                    <div class="row">
+                        <div class="col-md-12">                          
+                            <div class="text-right">
+                                <a id="AddAppraisal" class="btn btn-success" href="#" data-toggle="modal" data-target="#AddAdvanceRequestLine" data-title="Create new Staff Claim line" title="Add Staff Claim line">Add Staff Claim line</a>                                             
+                            </div>                      
+                                   
+                            <br>    
+                            <div class="table-responsive">
+                                <asp:PlaceHolder ID="placeholder" runat="server" />     
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div> 
+                <hr>
         <div class="card-footer bg-light text-right">
             <button id="Save" class="btn btn-outline-success">Save</button>
             <button id="Submit" class="btn btn-outline-primary">Submit</button>

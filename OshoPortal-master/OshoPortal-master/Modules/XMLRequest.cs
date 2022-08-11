@@ -331,30 +331,30 @@ namespace OshoPortal.Modules
             string Status = null;
             string AppliedAs = null;
 
-            if (status == "self")
+            switch (status)
             {
-                AppliedAs = "Employee";
-            }
-            else if (status == "others")
-            {
-                AppliedAs = "AppliedForAnother";
+                case "self":
+                    AppliedAs = "Employee";
+                    break;
+                case "others":
+                    AppliedAs = "AppliedForAnother";
+                    break;
             }
 
-            if (status == "Open")
+            switch (status)
             {
-               Status = "Open";
-            }
-            else if (status == "Pending")
-            {
-                Status = "PendingApproval";
-            }
-            else if (status == "Approved")
-            {
-                Status = "Approved";
-            }
-            else if (status == "Rejected")
-            {
-               Status = "Rejected";
+                case "Open":
+                    Status = "Open";
+                    break;
+                case "Pending":
+                    Status = "PendingApproval";
+                    break;
+                case "Approved":
+                    Status = "Approved";
+                    break;
+                case "Rejected":
+                    Status = "Rejected";
+                    break;
             }
 
             string username = HttpContext.Current.Session["Username"].ToString();

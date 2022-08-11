@@ -22,34 +22,40 @@ namespace OshoPortal.Controllers
         {
             var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
             //bool passRequired = (bool)System.Web.HttpContext.Current.Session["RequirePasswordChange"];
-            if ((string)log == "No")
+            switch (log)
             {
-                Response.Redirect("/Account/login");
-            }
-            else if ((string)log == "yes")
-            {
-                //if (passRequired == true)
-                //{
-                //    Response.Redirect("/Account/OneTimePassword");
-                //}
-                //else
-                //{
-                string s = Request.QueryString["id"].Trim();
-                if (s == "")
-                {
-                    Response.Redirect(Request.UrlReferrer.ToString());
-                }
-                else
-                {
-                    string Requisition = Functions.Base64Decode(s);
-                    documentNo = Requisition;
-                    ViewBag.WordHtml = Requisition;
-                    string username = System.Web.HttpContext.Current.Session["Username"].ToString();
-                    var datavalues = GetItemsList.Getitemdetail(username, Requisition, "self");
-                    dynamic json = JObject.Parse(datavalues);
+                case "No":
+                    Response.Redirect("/Account/login");
+                    break;
+                case "yes":
+                    {
+                        //if (passRequired == true)
+                        //{
+                        //    Response.Redirect("/Account/OneTimePassword");
+                        //}
+                        //else
+                        //{
+                        string s = Request.QueryString["id"].Trim();
+                        switch (s)
+                        {
+                            case "":
+                                Response.Redirect(Request.UrlReferrer.ToString());
+                                break;
+                            default:
+                                {
+                                    string Requisition = Functions.Base64Decode(s);
+                                    documentNo = Requisition;
+                                    ViewBag.WordHtml = Requisition;
+                                    string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+                                    var datavalues = GetItemsList.Getitemdetail(username, Requisition, "self");
+                                    dynamic json = JObject.Parse(datavalues);
+                                    break;
+                                }
+                        }
 
-                }
-                //}
+                        break;
+                        //}
+                    }
             }
             return View();
         }

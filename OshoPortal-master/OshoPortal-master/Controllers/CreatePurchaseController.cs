@@ -26,16 +26,18 @@ namespace OshoPortal.Controllers
             try
             {
                 var username = System.Web.HttpContext.Current.Session["Username"].ToString();
+
                 var productslist = createRequisition.Requisition(username);
+
                 var array = productslist.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
                 var myList = new List<KeyValuePair<string, string>>(array);
+
                 Dictionary<string, string> dictionary = new Dictionary<string, string>(array);
-                List<string> ValueList = new List<string>();
-                foreach (KeyValuePair<string, string> item in dictionary)
-                {
-                    var data = item.Key+"  "+ item.Value;
-                    ValueList.Add(data);
-                }
+
+                List<string> ValueList = (from KeyValuePair<string, string> item in dictionary
+                                          let data = item.Key + "  " + item.Value
+                                          select data).ToList();
                 ViewBag.Leaves = ValueList;
             }
             catch(Exception es)
@@ -48,11 +50,11 @@ namespace OshoPortal.Controllers
         }
         public JsonResult GetitemDetails(string param1)
         {
-            string Status = "";
-            string ItemNo = "";
-            string Description = "";
-            string UnitOfMeasure = "";
-            string Cost = "";
+            string Status = NewMethod();
+            string ItemNo = NewMethod();
+            string Description = NewMethod();
+            string UnitOfMeasure = NewMethod();
+            string Cost = NewMethod();
             try
             {
                 string name = param1;
@@ -66,7 +68,7 @@ namespace OshoPortal.Controllers
                 Description = json.Description;
                 UnitOfMeasure = json.UnitOfMeasure;
                 Cost = json.Cost;
-                
+
             }
             catch (Exception e)
             {
@@ -79,53 +81,61 @@ namespace OshoPortal.Controllers
                 Description = Description,
                 UnitOfMeasure = UnitOfMeasure,
                 Cost = Cost,
-                
+
             };
             return Json(JsonConvert.SerializeObject(detail), JsonRequestBehavior.AllowGet);
         }
+
+        private static string NewMethod()
+        {
+            return "";
+        }
+
         public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7)
         {
-            string response = "";
+            string response = NewMethod();
             string status = "000";
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
-            string DocumentNo = "";
-            
+            string DocumentNo = NewMethod();           
             string DocumentNoResponse = GetDocumentNumber();
             dynamic json = JObject.Parse(DocumentNoResponse);
             status = json.Status;
-            string name = param1;
-            string code = name.Split(' ').First();
-            if (status == "000")
+            string code = param1.Split(' ').First();
+            switch (status)
             {
+                case "000":
+                    {
 
-                DocumentNo = json.DocumentNo;
-                string EmployeeID = System.Web.HttpContext.Current.Session["Username"].ToString();
-                string EmployeeName = System.Web.HttpContext.Current.Session["Profile"].ToString();
-                string RequestDate = DateTime.Now.ToString("dd-MM-yyyy");//d/m/Y
-                string DateCreated = DateTime.Now.ToString("dd-MM-yyyy");
-                string AccountId = System.Web.HttpContext.Current.Session["Username"].ToString();
-                string Item = code;
-                string Description = param2;
-                string Quatity = param3;
-                string Amount = param4;
-                string DateofSelection = param5;
-                string Comment = param6;//qty
-                string unitofMeasure = param7; //param7.Replace(@"\", @"\\");
+                        DocumentNo = json.DocumentNo;
+                        string EmployeeID = System.Web.HttpContext.Current.Session["Username"].ToString();
+                        string EmployeeName = System.Web.HttpContext.Current.Session["Profile"].ToString();
+                        string RequestDate = DateTime.Now.ToString("dd-MM-yyyy");//d/m/Y
+                        string DateCreated = DateTime.Now.ToString("dd-MM-yyyy");
+                        string AccountId = System.Web.HttpContext.Current.Session["Username"].ToString();
+                        string Item = code;
+                        string Description = param2;
+                        string Quatity = param3;
+                        string Amount = param4;
+                        string DateofSelection = param5;
+                        string Comment = param6;
+                        string unitofMeasure = param7;
+                        try
+                        {
+                            var saverequisition = XMLRequest.SaveRequisition(DocumentNo, EmployeeID, EmployeeName, Item, Description, Quatity, unitofMeasure, Amount, DateofSelection);
+                        }
+                        catch (Exception es)
+                        {
+                            response = es.ToString();
+                            status = "999";
+                        }
 
-                try
-                {
-                    var saverequisition = XMLRequest.SaveRequisition(DocumentNo, EmployeeID, EmployeeName, Item, Description, Quatity, unitofMeasure, Amount, DateofSelection); 
-                }
-                catch (Exception es)
-                {
-                    response = es.ToString();
+                        break;
+                    }
+
+                default:
+                    response = json.Msg;
                     status = "999";
-                }
-            }
-            else
-            {
-                response = json.Msg;
-                status = "999";
+                    break;
             }
 
             var _RequestResponse = new RequestResponse
@@ -141,7 +151,7 @@ namespace OshoPortal.Controllers
         {
             //get Leave number 
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
-            string DocumentNo = "";
+            string DocumentNo = NewMethod();
             string response = null;
             string status = null;
 
@@ -161,40 +171,45 @@ namespace OshoPortal.Controllers
                 dynamic json = JObject.Parse(DocumentNoResponse);
                 status = json.Status;
 
-                if (status == "000")
-                {
-                    DocumentNo = json.DocumentNo;
-                    string EmployeeID = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
-                    string EmployeeName = System.Web.HttpContext.Current.Session["Username"].ToString();
-                    string RequestDate = DateTime.Now.ToString("dd/MM/yyyy");//d/m/Y
-                    string DateCreated = DateTime.Now.ToString("dd/MM/yyyy");
-                    string AccountId = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
-                    string ReturnDate = param1;
-                    string LeaveCode = param2;
-                    string Description = param3;
-                    Description = Functions.EscapeInvalidXMLCharacters(Description);
-                    string StartDate = param4;
-                    string EndDate = param5;
-                    string LeaveDays = param6;//qty
-                    string uploadpath = param7; //param7.Replace(@"\", @"\\");
-                    string folderPath = System.Web.HttpContext.Current.Server.MapPath("~/Uploads/");
-                    string documentpath = folderPath + param7;
-                    try
+            switch (status)
+            {
+                case "000":
                     {
-                       
+                        DocumentNo = json.DocumentNo;
+                        string EmployeeID = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
+                        string EmployeeName = System.Web.HttpContext.Current.Session["Username"].ToString();
+                        string RequestDate = DateTime.Now.ToString("dd/MM/yyyy");//d/m/Y
+                        string DateCreated = DateTime.Now.ToString("dd/MM/yyyy");
+                        string AccountId = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
+                        string ReturnDate = param1;
+                        string LeaveCode = param2;
+                        string Description = param3;
+                        Description = Functions.EscapeInvalidXMLCharacters(Description);
+                        string StartDate = param4;
+                        string EndDate = param5;
+                        string LeaveDays = param6;
+                        string uploadpath = param7; 
+                        string folderPath = System.Web.HttpContext.Current.Server.MapPath("~/Uploads/");
+                        string documentpath = folderPath + param7;
+                        try
+                        {
+
+                        }
+                        catch (Exception es)
+                        {
+                            response = es.Message;
+                            status = "999";
+                            SystemLogs.WriteLog(es.Message);
+                        }
+
+                        break;
                     }
-                    catch (Exception es)
-                    {
-                        response = es.Message;
-                        status = "999";
-                        SystemLogs.WriteLog(es.Message);
-                    }
-                }
-                else
-                {
+
+                default:
                     response = json.Msg;
                     status = "999";
-                }
+                    break;
+            }
             //}
             //var _RequestResponse = new RequestResponse
             //{

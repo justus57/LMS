@@ -57,17 +57,17 @@ namespace OshoPortal.Controllers
         {
             DataTable dt;
 
-            if (owner == "self")
+            switch (owner)
             {
-                dt = ProductsXMLRequests.GetPageData(status, owner, endpoint);
-            }
-            else if (owner == "others")
-            {
-                dt = ProductsXMLRequests.GetPageData(status, owner, endpoint);
-            }
-            else
-            {
-                dt = ProductsXMLRequests.GetPageData(status, owner, endpoint);
+                case "self":
+                    dt = ProductsXMLRequests.GetPageData(status, owner, endpoint);
+                    break;
+                case "others":
+                    dt = ProductsXMLRequests.GetPageData(status, owner, endpoint);
+                    break;
+                default:
+                    dt = ProductsXMLRequests.GetPageData(status, owner, endpoint);
+                    break;
             }
             //Building an HTML string.
             StringBuilder html = new StringBuilder();

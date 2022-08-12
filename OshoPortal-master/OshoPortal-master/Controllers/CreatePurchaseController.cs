@@ -60,9 +60,7 @@ namespace OshoPortal.Controllers
                 string name = param1;
                 string code = name.Split(' ').First();
 
-                string Itemdetails = createRequisition.GetitemDetails(code);
-                dynamic json = JObject.Parse(Itemdetails);
-
+                dynamic json = JObject.Parse(createRequisition.GetitemDetails(code));
                 Status = json.Status;
                 ItemNo = json.ItemNo;
                 Description = json.Description;

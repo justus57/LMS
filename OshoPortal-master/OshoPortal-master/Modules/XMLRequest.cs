@@ -22,8 +22,7 @@ namespace OshoPortal.Modules
                                         </GetEmployeeHomeData>
                                     </Body>
                                 </Envelope>";
-            string response = WSConnection.CallWebServicePortal(req);
-            return WSConnection.GetJSONResponse(response);
+            return WSConnection.GetJSONResponse(WSConnection.CallWebServicePortal(req));
         }
         public static string SaveRequisition(string documentNo,string EmpNo,string EmpName,string Item, string description,string quantity,string unitOfMeasure,string amount,string dateofSelection)
         {

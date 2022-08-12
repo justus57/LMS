@@ -5,123 +5,123 @@
 }
 
 <main id="main" class="main">
-            <div class="container-fluid">
-                <!-- Breadcrumbs-->
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="#">Dashboard</a>
-                    </li>
-                    <li class="breadcrumb-item">Purchase Requisition</li>
-                    <li class="breadcrumb-item active">@Html.Raw(ViewBag.WordHtml)</li>
-                </ol>
-                <!-- Leave-->
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <i class="fas fa-suitcase"></i>
-                        Purchase Requisition Information
-                    </div>
-                    <form novalidate="" action="#" method="POST" id="CreatePurchaseForm" autocomplete="off">
-                        @*<div class="card-body">*@
-                        <div class="row mb-1">
-                            <div class="col-md-4 mb-4">
-                                <div>Create Purchase Requisation</div>
-                                <div class="text-muted small"></div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="Items" class="form-control-label">ITEMS LIST</label>
-                                            <select Class="form-control" ID="Items" name="items" AutoPostBack="false" style="width:100%">
-                                                <option selected value="0">---Select---</option>
-                                                @*@foreach (var item in ViewBag.items)
-                                                {
-                                                    <option value="@item" customAttribute="item.SomethingSpecial">
-                                                        @item
-                                                    </option>
-                                                }*@
-                                            </select>
-                                            <div class="valid-feedback">Looks good!</div>
-                                            <div class="invalid-feedback">The Items must be selected</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label">Item Description</label>
-                                            @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @readonly = "readonly", id = "Description", autofocus = "" })
-                                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "" })
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label">Unit Of Measure</label>
-                                            @Html.TextBoxFor(model => model.UnitOfMeasure, new { @class = "form-control", id = "UnitOfMeasure", @readonly = "readonly", autofocus = "" })
-                                            @Html.ValidationMessageFor(model => model.UnitOfMeasure, "", new { @class = "" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label">Item Cost</label>
-                                            @Html.TextBoxFor(model => model.cost, new { @class = "form-control", @readonly = "readonly", id = "cost", autofocus = "" })
-                                            @Html.ValidationMessageFor(model => model.cost, "", new { @class = "" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="SelectDate">Requisition Date</label>
-                                            @Html.TextBoxFor(model => model.SelectDate, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.SelectDate, "", new { @class = "" })
-                                            <div class="valid-feedback">Looks good!</div>
-                                            <div class="invalid-feedback">The  date must be selected</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label">No of Items</label>
-                                            @Html.TextBoxFor(model => model.NOofItems, new { @class = "form-control", id = "NOofItems", autofocus = "" })
-                                            @Html.ValidationMessageFor(model => model.NOofItems, "", new { @class = "" })
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="form-control-label">Comment</label>
-                                            @Html.TextAreaFor(model => model.Comment, new { @class = "form-control", id = "Comment", autofocus = "" })
-                                            @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "" })
-                                        </div>
-                                    </div>
-                                </div>
+ <div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">Purchase Requisition</li>
+        <li class="breadcrumb-item active">@Html.Raw(ViewBag.WordHtml)</li>
+    </ol>
+    <!-- Leave-->
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-suitcase"></i>
+            Purchase Requisition Information
+        </div>
+        <form novalidate="" action="#" method="POST" id="CreatePurchaseForm" autocomplete="off">
+            @*<div class="card-body">*@
+            <div class="row mb-1">
+                <div class="col-md-4 mb-4">
+                    <div>Create Purchase Requisation</div>
+                    <div class="text-muted small"></div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="Items" class="form-control-label">ITEMS LIST</label>
+                                <select Class="form-control" ID="Items" name="items" AutoPostBack="false" style="width:100%">
+                                    <option selected value="0">---Select---</option>
+                                    @*@foreach (var item in ViewBag.items)
+                                    {
+                                        <option value="@item" customAttribute="item.SomethingSpecial">
+                                            @item
+                                        </option>
+                                    }*@
+                                </select>
+                                <div class="valid-feedback">Looks good!</div>
+                                <div class="invalid-feedback">The Items must be selected</div>
                             </div>
                         </div>
-                        <!--Chack Conditions here-->
-                        @if (!String.IsNullOrEmpty(Request["status"]) && Request["status"] == "Open")
-                        {
-                            <div class="card-footer bg-light text-right">
-                                <button id="delete_record" class="btn btn-danger">Delete</button>
-                                <button id="save_record" class="btn btn-primary">Save</button>
-                                <button id="submit_record" class="btn btn-success">Submit</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Item Description</label>
+                                @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @readonly = "readonly", id = "Description", autofocus = "" })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "" })
                             </div>
-                        }
-                        @if (!String.IsNullOrEmpty(Request["status"]) && Request["status"] == "Pending")
-                        {
-                            <div class="card-footer bg-light text-right">
-                                <button id="delegate_record" class="btn btn-success">Delegate Application</button>
-                                <button id="cancel_record" class="btn btn-warning">Cancel</button>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Unit Of Measure</label>
+                                @Html.TextBoxFor(model => model.UnitOfMeasure, new { @class = "form-control", id = "UnitOfMeasure", @readonly = "readonly", autofocus = "" })
+                                @Html.ValidationMessageFor(model => model.UnitOfMeasure, "", new { @class = "" })
                             </div>
-                        }
-                    </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Item Cost</label>
+                                @Html.TextBoxFor(model => model.cost, new { @class = "form-control", @readonly = "readonly", id = "cost", autofocus = "" })
+                                @Html.ValidationMessageFor(model => model.cost, "", new { @class = "" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="SelectDate">Requisition Date</label>
+                                @Html.TextBoxFor(model => model.SelectDate, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.SelectDate, "", new { @class = "" })
+                                <div class="valid-feedback">Looks good!</div>
+                                <div class="invalid-feedback">The  date must be selected</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label">No of Items</label>
+                                @Html.TextBoxFor(model => model.NOofItems, new { @class = "form-control", id = "NOofItems", autofocus = "" })
+                                @Html.ValidationMessageFor(model => model.NOofItems, "", new { @class = "" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-control-label">Comment</label>
+                                @Html.TextAreaFor(model => model.Comment, new { @class = "form-control", id = "Comment", autofocus = "" })
+                                @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "" })
+                            </div>
+                        </div>
                     </div>
                 </div>
-    </main>
+            </div>
+            <!--Chack Conditions here-->
+            @if (!String.IsNullOrEmpty(Request["status"]) && Request["status"] == "Open")
+            {
+                <div class="card-footer bg-light text-right">
+                    <button id="delete_record" class="btn btn-danger">Delete</button>
+                    <button id="save_record" class="btn btn-primary">Save</button>
+                    <button id="submit_record" class="btn btn-success">Submit</button>
+                </div>
+            }
+            @if (!String.IsNullOrEmpty(Request["status"]) && Request["status"] == "Pending")
+            {
+                <div class="card-footer bg-light text-right">
+                    <button id="delegate_record" class="btn btn-success">Delegate Application</button>
+                    <button id="cancel_record" class="btn btn-warning">Cancel</button>
+                </div>
+            }
+        </form>
+        </div>
+    </div>
+</main>
     <link href="~/Assest/css/select2.min.css" rel="stylesheet" />
     <!--jQUERY date picker--->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

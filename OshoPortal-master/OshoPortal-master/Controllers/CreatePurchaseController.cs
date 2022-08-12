@@ -21,26 +21,47 @@ namespace OshoPortal.Controllers
             return View();
         }        
         public ActionResult CreatePurchase()
-        {          
-            //first get itemlist to sent to view
+        {
+            var log1 = System.Web.HttpContext.Current.Session["logged"] = "yes";
             try
             {
-                var username = System.Web.HttpContext.Current.Session["Username"].ToString();
+                if ((string)log1 == "No")
+                {
+                    Response.Redirect("/Account/Login");
+                }
+                else
+                {
+                    var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
+                    Session["IsAdvanceActive"] = "";
 
-                var productslist = createRequisition.Requisition(username);
+                    if ((object)passRequired == "true")
+                    {
+                        Response.Redirect("/Account/OneTimePassword");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            var username = System.Web.HttpContext.Current.Session["Username"].ToString();
 
-                var array = productslist.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                            var productslist = createRequisition.Requisition(username);
 
-                var myList = new List<KeyValuePair<string, string>>(array);
+                            var array = productslist.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
-                Dictionary<string, string> dictionary = new Dictionary<string, string>(array);
+                            var myList = new List<KeyValuePair<string, string>>(array);
 
-                List<string> ValueList = (from KeyValuePair<string, string> item in dictionary
-                                          let data = item.Key + "  " + item.Value
-                                          select data).ToList();
-                ViewBag.Leaves = ValueList;
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>(array);
+                          
+                        }
+                        catch (Exception es)
+                        {
+                            SystemLogs.WriteLog(es.Message);
+                            return RedirectToAction("");
+                        }
+                    }
+                }
             }
-            catch(Exception es)
+            catch (Exception es)
             {
                 SystemLogs.WriteLog(es.Message);
                 return RedirectToAction("");
@@ -55,6 +76,7 @@ namespace OshoPortal.Controllers
             string Description = NewMethod();
             string UnitOfMeasure = NewMethod();
             string Cost = NewMethod();
+            string Response = NewMethod();
             try
             {
                 string name = param1;
@@ -70,18 +92,36 @@ namespace OshoPortal.Controllers
             }
             catch (Exception e)
             {
-                Console.Write(e);
+                Response = e.Message;
             }
-            var detail = new Models.ItemDescription
+            var detail = new ItemDescription
             {
                 Status = Status,
                 ItemNo = ItemNo,
                 Description = Description,
                 UnitOfMeasure = UnitOfMeasure,
                 Cost = Cost,
+                Response = Response
 
             };
             return Json(JsonConvert.SerializeObject(detail), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GLaccount(string param1)
+        {
+            List<Models.Item> dropdown = new List<Models.Item>();
+            var productslist = XMLRequest.GetGLlist(param1);
+                var array = productslist.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+                var myList = new List<KeyValuePair<string, string>>(array);
+
+                Dictionary<string, string> dictionary = new Dictionary<string, string>(array);
+
+                List<string> ValueList = (from KeyValuePair<string, string> item in dictionary
+                                          let data = item.Key + "  " + item.Value
+                                          select data).ToList();
+
+            return Json(JsonConvert.SerializeObject(ValueList), JsonRequestBehavior.AllowGet); ;
         }
 
         private static string NewMethod()

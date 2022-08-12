@@ -5,9 +5,8 @@
 }
 
 <main id="main" class="main">
-
     <form novalidate="" action="#" method="POST" id="CreatePurchaseForm" autocomplete="off">
-        @*<div class="card-body">*@
+        <div class="card-body">
             <div class="row mb-1">
                 <div class="col-md-4 mb-4">
                     <div>Create Purchase Requisation</div>
@@ -17,14 +16,14 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="Leave_Type" class="form-control-label">TYPE</label>
+                                <label for="Item" class="form-control-label">TYPE</label>
                                 <select Class="form-control" ID="Type" name="Type" AutoPostBack="false" style="width:100%">
-                                    <option selected value="0">---Select---</option>
-                                    @*@foreach (var item in ViewBag.Leaves)
-                                    {
-                        <option value="@item" customAttribute="item.SomethingSpecial">
-                            @item
-                        </option>}*@
+                                    <option></option>
+                                    <option>GL Account</option>
+                                    <option>Item</option>
+                                    <option>Resource</option>
+                                    <option>Fixed Asset</option>
+                                    <option>Charged(Item)</option>
                                 </select>
                                 <div class="valid-feedback">Looks good!</div>
                                 <div class="invalid-feedback">The type must be selected</div>
@@ -32,14 +31,15 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="Leave_Type" class="form-control-label">Item Specific</label>
+                                <label for="Item_Type" class="form-control-label">Item Specific</label>
                                 <select Class="form-control" ID="Items" name="items" AutoPostBack="false" style="width:100%">
-                                    <option selected value="0">---Select---</option>
-                                    @foreach (var item in ViewBag.Leaves)
-                                    {
-                        <option value="@item" customAttribute="item.SomethingSpecial">
-                            @item
-                        </option>}
+                                    <option selected value="0"></option>
+                                    @*@foreach (var item in ViewBag.Leaves)
+                                {
+                                    <option value="@item" customAttribute="item.SomethingSpecial">
+                                        @item
+                                    </option>
+                                }*@
                                 </select>
                                 <div class="valid-feedback">Looks good!</div>
                                 <div class="invalid-feedback">The item must be selected</div>
@@ -88,7 +88,7 @@
                                 @Html.TextBoxFor(model => model.NOofItems, new { @class = "form-control", id = "NOofItems", autofocus = "" })
                                 @Html.ValidationMessageFor(model => model.NOofItems, "", new { @class = "" })
                             </div>
-                        </div>              
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-control-label">Amount</label>
@@ -108,35 +108,39 @@
                         </div>
                     </div>
                 </div>
+            </div>           
+            <div class="card-footer bg-light text-right">
+                <button id="Save" class="btn btn-success">Add Item Line</button>               
             </div>
-         <hr>
-                <div class="row mb-5">
-                <div class="col-md-12"> 
-                <div class="col-md-4 mb-4">
-                    <div>Staff claim Lines</div>
-                    <div class="text-muted small">Add your staff claim lines here</div>
-                </div>                 
+            <hr>
+            <div class="row mb-5">
+                <div class="col-md-12">
+                    <div class="col-md-4 mb-4">
+                        <div>Items Lines</div>
+                        <div class="text-muted small">Add Item lines here</div>
+                    </div>
                     <div class="row">
-                        <div class="col-md-12">                          
-                            <div class="text-right">
-                                <a id="AddAppraisal" class="btn btn-success" href="#" data-toggle="modal" data-target="#AddAdvanceRequestLine" data-title="Create new Staff Claim line" title="Add Staff Claim line">Requisition</a>                                             
-                            </div>                      
-                                   
-                            <br>    
+                        <div class="col-md-12">
+                            @*<div class="text-right">
+                                <a id="AddAppraisal" class="btn btn-success" href="#" data-toggle="modal" data-target="#AddRequestLine" data-title="Create new Item line" title="Add Item line"> Item Requisition</a>
+                            </div>*@
+                            <br>
                             <div class="table-responsive">
-                                <asp:PlaceHolder ID="placeholder" runat="server" />     
+                                @* <asp:PlaceHolder ID="placeholder" runat="server" />*@
+                                @Html.Raw(ViewBag.Itemtable)
                             </div>
                         </div>
-                        </div>
                     </div>
-                </div> 
-                <hr>
-        <div class="card-footer bg-light text-right">
-            <button id="Save" class="btn btn-outline-success">Save</button>
-            <button id="Submit" class="btn btn-outline-primary">Submit</button>
-        </div>
-    </form>
+                </div>
+            </div>
+            <hr>
+            <div class="card-footer bg-light text-right">
+                <button id="Save" class="btn btn-outline-success">Save</button>
+                <button id="Submit" class="btn btn-outline-primary">Submit</button>
+            </div>
+</form>
 </main>
+
 <link href="~/Assest/css/select2.min.css" rel="stylesheet" />
 <!--jQUERY date picker--->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -160,7 +164,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
 <script type="text/javascript">
-    var jQuery_3_3_1 = $.noConflict(true);
+    var jQuery_3_3_1 = $.noConflict( true );
 </script>
 <script src="~/Assest/js/jquery.toast.js"></script>
 <script>
@@ -184,7 +188,10 @@
                  $("#LeaveEndDay").datepicker("option", "minDate", date);
                  $("#LeaveEndDay").datepicker("option", "maxDate", '+2y');
              }
-         }).val();
+         } ).val();
+        
+           
+        
         //hide upload
          $( '#UploadDiv' ).hide();
          $( '#NOofItems' ).change(
@@ -215,7 +222,34 @@
                              $( '#Description' ).val( data.Description);
                              $( '#UnitOfMeasure' ).val( data.UnitOfMeasure);
                              $( '#cost' ).val( data.Cost);
-                             
+                             bootbox.alert( data.Response );
+                         }
+                     }
+                 });
+         } );
+         $("#Type").change(function () {
+             var data = $('#Type').val();
+
+             //post the selected item to controller
+             jQuery.ajax({
+                 url:"@Url.Action("GLaccount", "CreatePurchase")",
+                 type: "POST",
+                 data: '{param1:"' + data + '" }',
+                 dataType: "json",
+                 contentType: "application/json; charset=utf-8",
+                 success: function (response) {
+                     // console.log(JSON.stringify(response));
+                         if (response != null ) {
+                             var data = $.parseJSON(response);;
+                            console.log(data);
+                             //set fields values
+                         
+                             var s = '<option value="-1">Please Select a Item</option>';
+                             for ( var i = 0; i < data.length; i++ ) {
+                                 s += '<option value="' + data[i] + '">' + data[i] + '</option>';
+                             }
+                             $("#Items").html( s );
+
                          }
                      }
                  });
@@ -241,9 +275,9 @@
                  $("#ReturnDate").val('');
              }
          });
-    
+
          //days applied events
-        
+
          //save button to controller save function
          jQuery_3_3_1("#Save").click(function (event) {
              event.preventDefault();
@@ -329,7 +363,7 @@
                  // Perform ajax submit here...
                  showToast('Submitting application');
                  $.ajax({
-                     
+
                      data: formdata,
                      cache: false,
                      contentType: false,

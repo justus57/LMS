@@ -15,50 +15,51 @@ namespace OshoPortal.Modules
     {
         public static string GetUserInformation(string EmpNo)
         {
-            var req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+            var req = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                     <Body>
                                         <GetEmployeeHomeData xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
-                                            <employeeNo>" + EmpNo + @"</employeeNo>
+                                            <employeeNo>{EmpNo}</employeeNo>
                                         </GetEmployeeHomeData>
                                     </Body>
                                 </Envelope>";
-            return WSConnection.GetJSONResponse(WSConnection.CallWebServicePortal(req));
+            var response = WSConnection.CallWebServicePortal(req);
+            return WSConnection.GetJSONResponse(response);
         }
         public static string SaveRequisition(string documentNo,string EmpNo,string EmpName,string Item, string description,string quantity,string unitOfMeasure,string amount,string dateofSelection)
-        {
-            string req = @" <Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
-                                     <Body>
-                                            <SaveRequisitionDetails xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
+        {        
+
+            string req = $@" <Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                                        <Body>
+                                            <GetSaveRequisitionDetail xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
                                                 <requisitionDetail>
                                                     <RequisitionHeader xmlns=""urn:microsoft-dynamics-nav/xmlports/x51202"">
                                                         <DocumentType>1</DocumentType>
                                                         <DocumentNo></DocumentNo>
-                                                        <RequestByNo></RequestByNo>
-                                                        <RequestByName></RequestByName>
+                                                        <RequestByNo>{EmpNo}</RequestByNo>
+                                                        <RequestByName>{EmpName}</RequestByName>
                                                         <CurrencyCode></CurrencyCode>
                                                         <ShortcutDimCode1></ShortcutDimCode1>
                                                         <ShortcutDimCode2></ShortcutDimCode2>
-                                                        <RequestDate>" + dateofSelection + @"</RequestDate>
+                                                        <RequestDate>{dateofSelection}</RequestDate>
                                                         <ValidToDate></ValidToDate>
-                                                        <RequestedReceiptDate></RequestedReceiptDate>
+                                                        <RequestedReceiptDate>{dateofSelection}</RequestedReceiptDate>
                                                         <StatusAsText></StatusAsText>
                                                         <Approver></Approver>
                                                         <RequisitionHdrLine>
-                                                            <Type>ITEM</Type>
-                                                            <No>" + Item + @"</No>
-                                                            <Description>"+ description + @"</Description>
-                                                            <Quantity>"+ quantity + @"</Quantity>
+                                                            <Type></Type>
+                                                             <No>{Item}</No>
+                                                            <Description>{description}</Description>
+                                                            <Quantity>{quantity}</Quantity>
                                                             <LocationCode></LocationCode>
                                                             <UnitofMeasureCode></UnitofMeasureCode>
-                                                       
-                                                            <UnitCostLCY>0</UnitCostLCY>
+                                                            <UnitCostLCY></UnitCostLCY>
                                                         </RequisitionHdrLine>
                                                     </RequisitionHeader>
                                                 </requisitionDetail>
-                                                <documentNo>" + documentNo + @"</documentNo>
-                                                <employeeNo>"+ EmpNo + @"</employeeNo>
+                                                <documentNo>{documentNo}</documentNo>
+                                                <employeeNo>{EmpNo}</employeeNo>
                                                 <operation>IMPORT</operation>
-                                            </SaveRequisitionDetails>
+                                            </GetSaveRequisitionDetail>
                                         </Body>
                                     </Envelope>";
             string response = WSConnection.CallWebServicePortal(req);
@@ -66,17 +67,83 @@ namespace OshoPortal.Modules
         }
         public static string DeleteDocument(string documentNo,string documentArea, string employee)
         {
-            var req = @" <Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+            var req = $@" <Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                     <Body>
                                         <DeleteDocument xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
-                                            <documentArea>[string]</documentArea>
-                                            <documentNo>"+documentNo+@"</documentNo>
-                                            <employee>"+employee+@"</employee>
+                                            <documentArea></documentArea>
+                                            <documentNo>{documentNo}</documentNo>
+                                            <employee>{employee}</employee>
                                         </DeleteDocument>
                                     </Body>
                                 </Envelope>";
             string response = WSConnection.CallWebServicePortal(req);
             return WSConnection.GetJSONResponse(response);
+        }
+        public static string GetRequisitionLine(string documentNo, string Operation, string employee)
+        {
+            var req =$@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                                <Body>
+                                    <GetRequisitionLineDetail xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
+                                        <requisitionLineDetail>
+                                            <!-- Optional -->
+                                            <RequisitionHeaderLine xmlns=""urn:microsoft-dynamics-nav/xmlports/x51204"">
+                                                <DocumentNo></DocumentNo>
+                                                <LineNo></LineNo>
+                                                <No></No>
+                                                <LineType></LineType>
+                                                <Description></Description>
+                                                <Description2></Description2>
+                                                <Specification></Specification>
+                                                <Quantity></Quantity>
+                                                <UoMCode></UoMCode>
+                                                <UnitCost></UnitCost>
+                                                <LineAmount></LineAmount>
+                                            </RequisitionHeaderLine>
+                                        </requisitionLineDetail>
+                                        <documentNo>{documentNo}</documentNo>
+                                        <lineNo></lineNo>
+                                        <employeeNo>{employee}</employeeNo>
+                                        <operation>{Operation}</operation>
+                                    </GetRequisitionLineDetail>
+                                </Body>
+                            </Envelope>";
+            return WSConnection.CallWebServicePortal(req);           
+        }
+            public static IDictionary<string, string> GetGLlist(string GLAccountname)
+        {
+
+            var dictionary = new Dictionary<string, string>();
+            var req = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                                    <Body>
+                                        <GetWebGLList xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
+                                            <gLList>
+                                                <GLAccount xmlns=""urn:microsoft-dynamics-nav/xmlports/x51203"">
+                                                    <GLAccountNo></GLAccountNo>
+                                                    <GLAccountName>{GLAccountname}</GLAccountName>
+                                                </GLAccount>
+                                            </gLList>
+                                            <employeeNo>[string]</employeeNo>
+                                        </GetWebGLList>
+                                    </Body>
+                                </Envelope>";
+
+            string response1 = WSConnection.CallWebServicePortal(req);
+            XmlDocument xmlSoapRequest = new XmlDocument();
+            xmlSoapRequest.LoadXml(response1);
+            int count = 0;
+            foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("GLAccount"))
+            {
+                XmlNode NodeEmpCode = xmlSoapRequest.GetElementsByTagName("GLAccountNo")[count];
+                string ItemNo = NodeEmpCode.InnerText;
+
+                XmlNode NodeEmployeeName = xmlSoapRequest.GetElementsByTagName("GLAccountName")[count];
+                string ItemDescription = NodeEmployeeName.InnerText;
+
+                dictionary.Add(ItemNo, ItemDescription);
+
+                count++;
+            }
+            return dictionary;
         }
         public static string GetitemTable(string AdvanceRequestHdrNo, string status)
         {
@@ -229,11 +296,11 @@ namespace OshoPortal.Modules
     {
         public static string UserLogin(string username, string password)
         {
-            string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+            string req = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                 <Body>
                                     <ConfirmEmployeePassword xmlns=""urn:microsoft-dynamics-schemas/codeunit/PortalLogin"">
-                                        <employeeNo>" + username + @"</employeeNo>
-                                        <password>" + password + @"</password>
+                                        <employeeNo>{username}</employeeNo>
+                                        <password>{password}</password>
                                     </ConfirmEmployeePassword>
                                 </Body>
                             </Envelope>";
@@ -245,12 +312,12 @@ namespace OshoPortal.Modules
     {
         public static string ChangePassword(string username, string oldpass, string newpass)
         {
-            string req = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+            string req = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                     <Body>
                                         <ChangeEmployeePassword xmlns=""urn:microsoft-dynamics-schemas/codeunit/PortalLogin"">
-                                            <employeeNo>" + username + @"</employeeNo>
-                                            <oldPassword>" + oldpass + @"</oldPassword>
-                                            <newPassword>" + newpass + @"</newPassword>
+                                            <employeeNo>{username}</employeeNo>
+                                            <oldPassword>{oldpass}</oldPassword>
+                                            <newPassword>{newpass}</newPassword>
                                         </ChangeEmployeePassword>
                                     </Body>
                                 </Envelope>";
@@ -262,10 +329,10 @@ namespace OshoPortal.Modules
     {
         public static string ForgotPassword(string username)
         {
-            string ResetPassresponseString = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+            string ResetPassresponseString = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                                     <Body>
                                                         <RecoverLostPassword xmlns=""urn:microsoft-dynamics-schemas/codeunit/PortalLogin"">
-                                                            <employeeNo>" + username + @"</employeeNo>
+                                                            <employeeNo>{username}</employeeNo>
                                                         </RecoverLostPassword>
                                                     </Body>
                                                 </Envelope>";
@@ -277,8 +344,8 @@ namespace OshoPortal.Modules
     {
         public static IDictionary<string, string> Requisition(string name)
         {
-            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-            string listdata = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+            var dictionary = new Dictionary<string, string>();
+            string listdata = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                 <Body>
                                     <GetWebItemList xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
                                         <itemList>
@@ -287,7 +354,7 @@ namespace OshoPortal.Modules
                                                 <ItemDescription></ItemDescription>
                                             </Item>
                                         </itemList>
-                                        <employeeNo>" + name + @"</employeeNo>
+                                        <employeeNo>{name}</employeeNo>
                                     </GetWebItemList>
                                 </Body>
                             </Envelope>";
@@ -312,10 +379,10 @@ namespace OshoPortal.Modules
         }
         public static string GetitemDetails(string value)
         {
-            string details = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+            string details = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                                 <Body>
                                                     <GetItemDetails xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
-                                                        <itemNo>"+ value + @"</itemNo>
+                                                        <itemNo>{value}</itemNo>
                                                     </GetItemDetails>
                                                 </Body>
                                             </Envelope>";
@@ -433,7 +500,7 @@ namespace OshoPortal.Modules
     {
         public static string Getitemlist(string EmpNo,string RequestAS,string status)
         {
-            string reqitem = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+            string reqitem = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                     <Body>
                                         <GetRequisitionList xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
                                             <requisitionList>
@@ -452,9 +519,9 @@ namespace OshoPortal.Modules
                                                     <Approver></Approver>
                                                 </RequisitionHeader>
                                             </requisitionList>
-                                            <employeeNo> "+EmpNo+@" </employeeNo>
-                                            <requestAs > "+RequestAS+@" </requestAs>
-                                            <approvalStatus> "+status+@" </approvalStatus>
+                                            <employeeNo> {EmpNo} </employeeNo>
+                                            <requestAs > {RequestAS} </requestAs>
+                                            <approvalStatus> {status} </approvalStatus>
                                         </GetRequisitionList>
                                     </Body>
                                 </Envelope>";
@@ -464,10 +531,10 @@ namespace OshoPortal.Modules
 
         public static string Getitemdetail(string EmpNo, string DocumentNo, string status)
         {
-            string reqitem = @"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+            string reqitem = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                             <Body>
                                                 <GetAppliedItemDetail xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
-                                                    <documentNo>"+DocumentNo+@"</documentNo>
+                                                    <documentNo>{DocumentNo}</documentNo>
                                                 </GetAppliedItemDetail>
                                             </Body>
                                         </Envelope>";

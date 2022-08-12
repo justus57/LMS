@@ -15,7 +15,10 @@ namespace OshoPortal.Models
         public string Comment { get; set; }
         public string SelectDate { get; set; }
         public string Amount { get; set; }
-
-
+    }
+    public class Items
+    {
+        public string Value { get; set; }
+        public string Key { get; set; }
     }
 }

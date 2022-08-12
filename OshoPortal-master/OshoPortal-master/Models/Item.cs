@@ -7,8 +7,8 @@ namespace OshoPortal.Models
 {
     public class Item
     {
-        public string name { get; set; }
-        public string Description { get; set; }
+        public string Key { get; set; }
+        public string Value { get; set; }
     }
     public class ItemDescription
     {
@@ -17,5 +17,6 @@ namespace OshoPortal.Models
         public string Description { get; set; }
         public string UnitOfMeasure { get; set; }
         public string Cost { get; set; }
+        public string Response { get; set; }
     }
 }

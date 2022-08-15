@@ -132,6 +132,7 @@
                 <button id="Save" class="btn btn-outline-success">Save</button>
                 <button id="Submit" class="btn btn-outline-primary">Submit</button>
             </div>
+            </div>
 </form>
 </main>
 
@@ -200,6 +201,7 @@
          $("#Items").change(function () {
              var data = $('#Items').val();
              var type = $( '#Type' ).val();
+
              //post the selected item to controller
              jQuery.ajax({
                  url:"@Url.Action("GetitemDetails", "CreatePurchase")",
@@ -217,13 +219,14 @@
                              $( '#UnitOfMeasure' ).val( data.UnitOfMeasure);
                              $( '#cost' ).val( data.Cost);
                              bootbox.alert( data.Response );
+                           
                          }
                      }
                  });
          } );
          $("#Type").change(function () {
              var data = $('#Type').val();
-
+             
              //post the selected item to controller
              jQuery.ajax({
                  url:"@Url.Action("GLaccount", "CreatePurchase")",
@@ -237,13 +240,12 @@
                              var data = $.parseJSON(response);;
                             console.log(data);
                              //set fields values
-
                              var s = '<option value="-1">Please Select a Item</option>';
                              for ( var i = 0; i < data.length; i++ ) {
                                  s += '<option value="' + data[i] + '">' + data[i] + '</option>';
                              }
                              $("#Items").html( s );
-
+                             
                          }
                      }
                  });

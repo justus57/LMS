@@ -67,7 +67,6 @@ namespace OshoPortal.Modules
         }
         public static string SaveItemLine(string documentNo, string type, string EmpNo, string operation, string Item, string description, string quantity, string unitOfMeasure, string amount, string dateofSelection)
         {
-
             var req = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                 <Body>
                                     <GetRequisitionLineDetail xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
@@ -95,10 +94,9 @@ namespace OshoPortal.Modules
                                     </GetRequisitionLineDetail>
                                 </Body>
                             </Envelope>";
-            
             return WSConnection.CallWebServicePortal(req); ;
         }
-        public static string DeleteDocument(string documentNo,string documentArea, string employee)
+        public static string DeleteDocument(string documentNo, string documentArea, string employee)
         {
             var req = $@" <Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                     <Body>
@@ -142,40 +140,88 @@ namespace OshoPortal.Modules
                             </Envelope>";
             return WSConnection.CallWebServicePortal(req);           
         }
-        public static IDictionary<string, string> GetGLlist(string GLAccountname)
+        public static IDictionary<string, string> GetGLlist(string GLAccountname, string empNo)
         {
-
+            var req = "";
+            var node = "";
             var dictionary = new Dictionary<string, string>();
-            var req = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
-                                    <Body>
-                                        <GetWebGLList xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
-                                            <gLList>
-                                                <GLAccount xmlns=""urn:microsoft-dynamics-nav/xmlports/x51203"">
-                                                    <GLAccountNo></GLAccountNo>
-                                                    <GLAccountName>{GLAccountname}</GLAccountName>
-                                                </GLAccount>
-                                            </gLList>
-                                            <employeeNo>[string]</employeeNo>
-                                        </GetWebGLList>
-                                    </Body>
-                                </Envelope>";
-
+           
+            if (GLAccountname == "Item")
+            {
+                req = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                                <Body>
+                                    <GetWebItemList xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
+                                        <itemList>
+                                            <Item xmlns=""urn:microsoft-dynamics-nav/xmlports/x51200"">
+                                                <ItemNo></ItemNo>
+                                                <ItemDescription></ItemDescription>
+                                            </Item>
+                                        </itemList>
+                                        <employeeNo>{empNo}</employeeNo>
+                                    </GetWebItemList>
+                                </Body>
+                            </Envelope>";
+            }
+            else
+            {
+                 req = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                                        <Body>
+                                            <GetWebGLList xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
+                                                <gLList>
+                                                    <GLAccount xmlns=""urn:microsoft-dynamics-nav/xmlports/x51203"">
+                                                        <GLAccountNo></GLAccountNo>
+                                                        <GLAccountName>{GLAccountname}</GLAccountName>
+                                                    </GLAccount>
+                                                </gLList>
+                                                <employeeNo></employeeNo>
+                                            </GetWebGLList>
+                                        </Body>
+                                    </Envelope>";
+            }
             string response1 = WSConnection.CallWebServicePortal(req);
             XmlDocument xmlSoapRequest = new XmlDocument();
             xmlSoapRequest.LoadXml(response1);
             int count = 0;
-            foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("GLAccount"))
+            XmlNode xmlNode1 = xmlSoapRequest.GetElementsByTagName("Item")[count];
+            switch (xmlNode1)
             {
-                XmlNode NodeEmpCode = xmlSoapRequest.GetElementsByTagName("GLAccountNo")[count];
-                string ItemNo = NodeEmpCode.InnerText;
+                case null:
+                    {
+                        foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("GLAccount"))
+                        {
+                            XmlNode NodeEmpCode = xmlSoapRequest.GetElementsByTagName("GLAccountNo")[count];
+                            string ItemNo = NodeEmpCode.InnerText;
 
-                XmlNode NodeEmployeeName = xmlSoapRequest.GetElementsByTagName("GLAccountName")[count];
-                string ItemDescription = NodeEmployeeName.InnerText;
+                            XmlNode NodeEmployeeName = xmlSoapRequest.GetElementsByTagName("GLAccountName")[count];
+                            string ItemDescription = NodeEmployeeName.InnerText;
 
-                dictionary.Add(ItemNo, ItemDescription);
+                            dictionary.Add(ItemNo, ItemDescription);
 
-                count++;
+                            count++;
+                        }
+
+                        break;
+                    }
+
+                default:
+                    {
+                        foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("Item"))
+                        {
+                            XmlNode NodeEmpCode = xmlSoapRequest.GetElementsByTagName("ItemNo")[count];
+                            string ItemNo = NodeEmpCode.InnerText;
+
+                            XmlNode NodeEmployeeName = xmlSoapRequest.GetElementsByTagName("ItemDescription")[count];
+                            string ItemDescription = NodeEmployeeName.InnerText;
+
+                            dictionary.Add(ItemNo, ItemDescription);
+
+                            count++;
+                        }
+
+                        break;
+                    }
             }
+
             return dictionary;
         }
         public static string GetitemTable(string AdvanceRequestHdrNo, string status)

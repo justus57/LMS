@@ -109,8 +109,9 @@ namespace OshoPortal.Controllers
 
         public ActionResult GLaccount(string param1)
         {
+            string EmployeeID = System.Web.HttpContext.Current.Session["Username"].ToString();
             List<Models.Item> dropdown = new List<Models.Item>();
-            var productslist = XMLRequest.GetGLlist(param1);
+            var productslist = XMLRequest.GetGLlist(param1, EmployeeID);
                 var array = productslist.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
                 var myList = new List<KeyValuePair<string, string>>(array);
@@ -226,10 +227,10 @@ namespace OshoPortal.Controllers
                         switch (param8)
                         {
                             case "GL Account":
-                                type = "0";
+                                type = "GL Account";
                                 break;
                             default:
-                                type = "1";
+                                type = "Item";
                                 break;
                         }
                         try

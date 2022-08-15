@@ -69,7 +69,7 @@ namespace OshoPortal.Controllers
             return View();
 
         }
-        public JsonResult GetitemDetails(string param1)
+        public JsonResult GetitemDetails(string param1 ,string param2)
         {
             string Status = NewMethod();
             string ItemNo = NewMethod();
@@ -82,9 +82,9 @@ namespace OshoPortal.Controllers
                 string name = param1;
                 string code = name.Split(' ').First();
 
-                dynamic json = JObject.Parse(createRequisition.GetitemDetails(code));
+                dynamic json = JObject.Parse(createRequisition.GetitemDetails(code,param2));
                 Status = json.Status;
-                ItemNo = json.ItemNo;
+                ItemNo = json.No;
                 Description = json.Description;
                 UnitOfMeasure = json.UnitOfMeasure;
                 Cost = json.Cost;
@@ -129,7 +129,7 @@ namespace OshoPortal.Controllers
             return "";
         }
 
-        public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7)
+        public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7,string param8)
         {
             string response = NewMethod();
             string status = "000";
@@ -157,9 +157,19 @@ namespace OshoPortal.Controllers
                         string DateofSelection = param5;
                         string Comment = param6;
                         string unitofMeasure = param7;
+                        string type = "";
+                        switch (param8)
+                        {
+                            case "GL Account":
+                                type = "0";
+                                break;
+                            default:
+                                type = "1";
+                                break;
+                        }
                         try
                         {
-                            var saverequisition = XMLRequest.SaveRequisition(DocumentNo, EmployeeID, EmployeeName, Item, Description, Quatity, unitofMeasure, Amount, DateofSelection);
+                            var saverequisition = XMLRequest.SaveRequisition(DocumentNo,type, EmployeeID, EmployeeName, Item, Description, Quatity, unitofMeasure, Amount, DateofSelection);
                         }
                         catch (Exception es)
                         {
@@ -184,7 +194,71 @@ namespace OshoPortal.Controllers
             };
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
+        public JsonResult Saveline(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8)
+        {
+            string response = NewMethod();
+            string status = "000";
+            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string DocumentNo = NewMethod();
+            string DocumentNoResponse = GetDocumentNumber();
+            dynamic json = JObject.Parse(DocumentNoResponse);
+            status = json.Status;
+            string code = param1.Split(' ').First();
+            switch (status)
+            {
+                case "000":
+                    {
 
+                        DocumentNo = json.DocumentNo;
+                        string EmployeeID = System.Web.HttpContext.Current.Session["Username"].ToString();
+                        string EmployeeName = System.Web.HttpContext.Current.Session["Profile"].ToString();
+                        string RequestDate = DateTime.Now.ToString("dd-MM-yyyy");//d/m/Y
+                        string DateCreated = DateTime.Now.ToString("dd-MM-yyyy");
+                        string AccountId = System.Web.HttpContext.Current.Session["Username"].ToString();
+                        string Item = code;
+                        string Description = param2;
+                        string Quatity = param3;
+                        string Amount = param4;
+                        string DateofSelection = param5;
+                        string Comment = param6;
+                        string unitofMeasure = param7;
+                        string type = "";
+                        switch (param8)
+                        {
+                            case "GL Account":
+                                type = "0";
+                                break;
+                            default:
+                                type = "1";
+                                break;
+                        }
+                        try
+                        {
+                            var saverequisition = XMLRequest.SaveItemLine(DocumentNo, type, EmployeeID, "IMPORT", Item, Description, Quatity, unitofMeasure, Amount, DateofSelection);
+                        }
+                        catch (Exception es)
+                        {
+                            response = es.ToString();
+                            status = "999";
+                        }
+
+                        break;
+                    }
+
+                default:
+                    response = json.Msg;
+                    status = "999";
+                    break;
+            }
+
+            var _RequestResponse = new RequestResponse
+            {
+                Message = response,
+
+                Status = status
+            };
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
+        }
         public JsonResult Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7)
         {
             //get Leave number 

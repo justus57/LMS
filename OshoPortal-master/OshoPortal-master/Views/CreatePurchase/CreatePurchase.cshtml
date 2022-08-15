@@ -21,9 +21,9 @@
                                     <option></option>
                                     <option>GL Account</option>
                                     <option>Item</option>
-                                    <option>Resource</option>
+                                    @*<option>Resource</option>
                                     <option>Fixed Asset</option>
-                                    <option>Charged(Item)</option>
+                                    <option>Charged(Item)</option>*@
                                 </select>
                                 <div class="valid-feedback">Looks good!</div>
                                 <div class="invalid-feedback">The type must be selected</div>
@@ -33,13 +33,7 @@
                             <div class="form-group">
                                 <label for="Item_Type" class="form-control-label">Item Specific</label>
                                 <select Class="form-control" ID="Items" name="items" AutoPostBack="false" style="width:100%">
-                                    <option selected value="0"></option>
-                                    @*@foreach (var item in ViewBag.Leaves)
-                                {
-                                    <option value="@item" customAttribute="item.SomethingSpecial">
-                                        @item
-                                    </option>
-                                }*@
+                                    <option selected value="0"></option>                       
                                 </select>
                                 <div class="valid-feedback">Looks good!</div>
                                 <div class="invalid-feedback">The item must be selected</div>
@@ -58,7 +52,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-control-label">Unit Of Measure</label>
-                                @Html.TextBoxFor(model => model.UnitOfMeasure, new { @class = "form-control", id = "UnitOfMeasure", @readonly = "readonly", autofocus = "" })
+                                @Html.TextBoxFor(model => model.UnitOfMeasure, new { @class = "form-control", id = "UnitOfMeasure", autofocus = "" })
                                 @Html.ValidationMessageFor(model => model.UnitOfMeasure, "", new { @class = "" })
                             </div>
                         </div>
@@ -67,7 +61,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-control-label">Item Cost</label>
-                                @Html.TextBoxFor(model => model.cost, new { @class = "form-control", @readonly = "readonly", id = "cost", autofocus = "" })
+                                @Html.TextBoxFor(model => model.cost, new { @class = "form-control", id = "cost", autofocus = "" })
                                 @Html.ValidationMessageFor(model => model.cost, "", new { @class = "" })
                             </div>
                         </div>
@@ -110,7 +104,7 @@
                 </div>
             </div>           
             <div class="card-footer bg-light text-right">
-                <button id="Save" class="btn btn-success">Add Item Line</button>               
+                <button id="Saveline" class="btn btn-success">Add Item Line</button>               
             </div>
             <hr>
             <div class="row mb-5">
@@ -189,9 +183,9 @@
                  $("#LeaveEndDay").datepicker("option", "maxDate", '+2y');
              }
          } ).val();
-        
-           
-        
+
+
+
         //hide upload
          $( '#UploadDiv' ).hide();
          $( '#NOofItems' ).change(
@@ -205,12 +199,12 @@
          );
          $("#Items").change(function () {
              var data = $('#Items').val();
-
+             var type = $( '#Type' ).val();
              //post the selected item to controller
              jQuery.ajax({
                  url:"@Url.Action("GetitemDetails", "CreatePurchase")",
                  type: "POST",
-                 data: '{param1:"' + data + '" }',
+                 data: '{param1:"' + data + '", param2:"' + type + '" }',
                  dataType: "json",
                  contentType: "application/json; charset=utf-8",
                  success: function (response) {
@@ -243,7 +237,7 @@
                              var data = $.parseJSON(response);;
                             console.log(data);
                              //set fields values
-                         
+
                              var s = '<option value="-1">Please Select a Item</option>';
                              for ( var i = 0; i < data.length; i++ ) {
                                  s += '<option value="' + data[i] + '">' + data[i] + '</option>';
@@ -307,11 +301,83 @@
                          var SelectDate = $('#SelectDate').val();
                          var items = $('#items').val();
                          var Comment = $('#Comment').val();
-                         var UnitOfMeasure = $('#UnitOfMeasure').val();
+                         var UnitOfMeasure = $( '#UnitOfMeasure' ).val();
+                         var Type = $( '#Type' ).val();
                          jQuery.ajax({
                              url:"@Url.Action("Save", "CreatePurchase")",
                              type: "POST",
-                             data: '{param1:"' + data + '", param2:"' + Description + '", param3:"' + NOofItems + '", param4:"' + cost + '", param5:"' + SelectDate + '", param6:"' + Comment + '" , param7:"' + UnitOfMeasure + '"}',
+                             data: '{param1:"' + data + '", param2:"' + Description + '", param3:"' + NOofItems + '", param4:"' + cost + '", param5:"' + SelectDate + '", param6:"' + Comment + '" , param7:"' + UnitOfMeasure + '", param8:"' + Type + '"}',
+                             dataType: "json",
+                             contentType: "application/json; charset=utf-8",
+                             success: function (response) {
+                                 console.log(data);
+                                 if (response != null ) {
+                                     //we need to parse it to JSON
+                                     data = $.parseJSON(response);
+                                     hideLoading();
+                                     bootbox.alert(data.Message);
+                                     //reset fields
+                                     $("#CreatePurchaseForm")[0].reset();
+                                     $("#Items").select2("val", "");
+                                 }
+                             }
+                         });
+                     },
+                     xhr: function () {
+                         var fileXhr = $.ajaxSettings.xhr();
+                         if (fileXhr.upload) {
+                             $("progress").show();
+                             fileXhr.upload.addEventListener("progress", function (e) {
+                                 if (e.lengthComputable) {
+                                     $("#fileProgress").attr({
+                                         value: e.loaded,
+                                         max: e.total
+                                     });
+                                 }
+                             }, false);
+                         }
+                         return fileXhr;
+                     }
+                 });
+             }
+             //uncomment below
+             event.preventDefault();
+         } );
+          //save button to controller save function
+         jQuery_3_3_1("#Saveline").click(function (event) {
+             event.preventDefault();
+
+             // Fetch form to apply custom Bootstrap validation
+             var form = $("#CreatePurchaseForm")
+             console.log(form);
+             if (form[0].checkValidity() === false) {
+                 event.preventDefault()
+                 event.stopPropagation()
+                 form.addClass('was-validated');
+             } else if (form[0].checkValidity() === true) {
+                 // Perform ajax submit here...
+                 showToast('Saving application');
+                 //function for checkig fileupload
+
+                 $.ajax({
+                     data: new FormData( $('#CreatePurchaseForm')[0]) ,
+                     cache: false,
+                     contentType: false,
+                     processData: false,
+                     success: function (file) {
+                         var data = $( '#Items' ).val();
+                         var Description = $('#Description').val();
+                         var cost = $('#cost').val();
+                         var NOofItems = $('#NOofItems').val();
+                         var SelectDate = $('#SelectDate').val();
+                         var items = $('#items').val();
+                         var Comment = $('#Comment').val();
+                         var UnitOfMeasure = $( '#UnitOfMeasure' ).val();
+                         var Type = $( '#Type' ).val();
+                         jQuery.ajax({
+                             url:"@Url.Action("Saveline", "CreatePurchase")",
+                             type: "POST",
+                             data: '{param1:"' + data + '", param2:"' + Description + '", param3:"' + NOofItems + '", param4:"' + cost + '", param5:"' + SelectDate + '", param6:"' + Comment + '" , param7:"' + UnitOfMeasure + '", param8:"' + Type + '"}',
                              dataType: "json",
                              contentType: "application/json; charset=utf-8",
                              success: function (response) {

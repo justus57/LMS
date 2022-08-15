@@ -21,20 +21,13 @@ namespace OshoPortal.Controllers
         public ActionResult EditRequisition()
         {
             var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
-            //bool passRequired = (bool)System.Web.HttpContext.Current.Session["RequirePasswordChange"];
             switch (log)
             {
                 case "No":
                     Response.Redirect("/Account/login");
                     break;
                 case "yes":
-                    {
-                        //if (passRequired == true)
-                        //{
-                        //    Response.Redirect("/Account/OneTimePassword");
-                        //}
-                        //else
-                        //{
+                    {                    
                         string s = Request.QueryString["id"].Trim();
                         switch (s)
                         {
@@ -54,8 +47,7 @@ namespace OshoPortal.Controllers
                         }
 
                         break;
-                        //}
-                    }
+                     }
             }
             return View();
         }
@@ -94,12 +86,12 @@ namespace OshoPortal.Controllers
             {
                 string documentNo = Functions.Base64Decode(param1);
                 ////send XML req to delete record
-                //string CancelOpenLeaveresponseString = LeavesXMLRequests.CancelOpenLeave(documentNo);
+                string CancelresponseString = XMLRequest.CancelRequisition(documentNo);
 
-                //dynamic json = JObject.Parse(CancelOpenLeaveresponseString);
+                dynamic json = JObject.Parse(CancelresponseString);
 
-                //status = json.Status;
-                //Message = json.Message;
+                status = json.Status;
+                Message = json.Message;
             }
             catch (Exception es)
             {

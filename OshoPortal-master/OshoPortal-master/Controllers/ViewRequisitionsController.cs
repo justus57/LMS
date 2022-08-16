@@ -137,7 +137,6 @@ namespace OshoPortal.Controllers
                 try
                 {
                     //string SubmitOpenLeaveresponseString = LeavesXMLRequests.SubmitOpenLeave(LeaveHeaderNo);
-
                     //dynamic json = JObject.Parse(SubmitOpenLeaveresponseString);
                     //response = json.Msg;
                     //status = json.Status;

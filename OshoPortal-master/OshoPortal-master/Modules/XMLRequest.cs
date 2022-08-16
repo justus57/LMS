@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Mvc;
 using System.Xml;
 
 namespace OshoPortal.Modules
@@ -138,17 +139,19 @@ namespace OshoPortal.Modules
                                     </GetRequisitionLineDetail>
                                 </Body>
                             </Envelope>";
-            return WSConnection.CallWebServicePortal(req);           
+            return WSConnection.CallWebServicePortal(req); 
+            
         }
         public static IDictionary<string, string> GetGLlist(string GLAccountname, string empNo)
         {
             var req = "";
             var node = "";
             var dictionary = new Dictionary<string, string>();
-           
-            if (GLAccountname == "Item")
+
+            switch (GLAccountname)
             {
-                req = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                case "Item":
+                    req = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                 <Body>
                                     <GetWebItemList xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
                                         <itemList>
@@ -161,10 +164,9 @@ namespace OshoPortal.Modules
                                     </GetWebItemList>
                                 </Body>
                             </Envelope>";
-            }
-            else
-            {
-                 req = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                    break;
+                default:
+                    req = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                         <Body>
                                             <GetWebGLList xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
                                                 <gLList>
@@ -177,6 +179,7 @@ namespace OshoPortal.Modules
                                             </GetWebGLList>
                                         </Body>
                                     </Envelope>";
+                    break;
             }
             string response1 = WSConnection.CallWebServicePortal(req);
             XmlDocument xmlSoapRequest = new XmlDocument();
@@ -224,152 +227,7 @@ namespace OshoPortal.Modules
 
             return dictionary;
         }
-        public static string GetitemTable(string AdvanceRequestHdrNo, string status)
-        {
-            //string Uploadspath = HttpContext.Current.Server.MapPath("~/Uploads/");
-
-            //string AdvanceRequestJSON = AdvanceRequestsXMLRequests.GetAdvanceRequests("StaffClaim", AdvanceRequestHdrNo);
-            //AdvanceRequestHeader bsObj = JsonConvert.DeserializeObject<AdvanceRequestHeader>(AdvanceRequestJSON);
-
-
-            //string GetDimensionCodesresponseString = CreateAdvanceRequestXMLRequests.GetDimensionCodes();
-            ////dynamic json = JObject.Parse(GetDimensionCodesresponseString);
-            //string ShortcutDimCode3 = json.ShortcutDimension3Code;
-
-            //double sum = 0;
-            //foreach (var item in bsObj._AdvanceRequestLines)
-            //{
-            //    if (item.Item != "")
-            //    {
-            //        string itemamount = item.ClaimedAmountLCY;
-            //        itemamount = itemamount.Replace(",", "");
-
-            //        double itemAmount = 0;
-
-            //        if (itemamount != "")
-            //        {
-            //            itemAmount = Convert.ToDouble(itemamount);
-            //        }
-
-            //        sum = sum + itemAmount;
-            //    }
-            //}
-
-            StringBuilder html = new StringBuilder();
-            //Table start.
-            html.Append("<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>");
-            //Building the Header row.
-            html.Append("<thead>");
-            html.Append("<tr>");
-            html.Append("<th></th>");
-            //html.Append("<th>Item</th>");
-            html.Append("<th>Item Description</th>");
-            html.Append("<th>Purpose</th>");
-            html.Append("<th>Unit of Measure</th>");
-            html.Append("<th>Unit Cost</th>");
-            html.Append("<th>No. Of Units</th>");
-            html.Append("<th>Currency</th>");
-            //html.Append("<th>Attachment</th>");
-            html.Append("<th>Amount(LCY)</th>");
-            html.Append("<th>Action</th>");
-            html.Append("</tr>");
-            html.Append("</thead>");
-
-            html.Append("<tfoot>");
-            html.Append("<tr>");
-            html.Append("<th></th>");
-            //html.Append("<th></th>");
-            html.Append("<th></th>");
-            html.Append("<th></th>");
-            html.Append("<th></th>");
-            html.Append("<th></th>");
-            html.Append("<th></th>");
-            html.Append("<th></th>");
-            //html.Append("<th></th>");
-            //html.Append("<th>" + string.Format("{0:N2}", sum) + "</th>");
-            html.Append("<th></th>");
-            html.Append("</tr>");
-            html.Append("</tfoot>");
-
-            //Building the Data rows.
-            html.Append("<tbody>");
-
-            //foreach (var item in bsObj._AdvanceRequestLines)
-            //{
-            //    if (item.Item != "")
-            //    {
-            //        html.Append("<tr>");
-
-            //        if (status == "Open")
-            //        {
-            //            html.Append("<td>" + item.ShortcutDimCode3 + "</td>");
-            //            //html.Append("<td>" + item.Item + "</td>");
-            //            html.Append("<td>" + item.ItemDescription + "</td>");
-            //            html.Append("<td>" + item.Purpose + "</td>");
-            //            html.Append("<td>" + item.UnitOfMeasure + "</td>");
-            //            html.Append("<td>" + item.UnitCost + "</td>");
-            //            html.Append("<td>" + item.NoOfUnits + "</td>");
-            //            html.Append("<td>" + item.Currency + "</td>");
-            //            //if (item.AttachmentName != "")
-            //            //{
-            //            //    string FileName = item.AttachmentName;
-
-            //            //    string exportToPath = Uploadspath + FileName;
-
-            //            //    WebService.ExportAttachmentsToFile("StaffClaim", AdvanceRequestHdrNo, item.No, exportToPath);
-
-            //            //    html.Append("<td>" + item.AttachmentName + " <a class = 'btn btn-danger btn-xs delete_advanceClaimLineAttachment' data-id=" + item.AttachmentId + " href = 'javascript:void(0)' data-toggle='tooltip' title='Delete line attachment'><span class = 'fa fa-trash' > </span></a>" +
-            //            //        "<a class = 'btn btn-primary btn-xs downloadfile' href = " + Uri.EscapeUriString(exportToPath) + " data-id=" + Uri.EscapeUriString(FileName) + " download><span class = 'fa fa-download' > </span></a></td>");
-            //            //}
-            //            //else
-            //            //{
-            //            //    html.Append("<td></td>");
-            //            //}
-            //            html.Append("<td>" + item.ClaimedAmountLCY + "</td>");
-            //            html.Append("<td><a class = 'btn btn-danger btn-xs delete_advanceRequestLines' data-id=" + item.No + " href = 'javascript:void(0)' data-toggle='tooltip' title='Delete advance request line'><span class = 'fa fa-trash-alt' > </span></a> " +
-            //                            "<a class = 'btn btn-secondary btn-xs EditAdvanceReqLine' data-id=" + item.No + " href = 'javascript:void(0)' data-toggle='tooltip' title='Edit advance request line'><span class = 'fa fa-pencil-alt' > </span></a></td>");
-
-            //        }
-            //        else
-            //        {
-            //            html.Append("<td>" + item.ShortcutDimCode3 + "</td>");
-            //            //html.Append("<td>" + item.Item + "</td>");
-            //            html.Append("<td>" + item.ItemDescription + "</td>");
-            //            html.Append("<td>" + item.Purpose + "</td>");
-            //            html.Append("<td>" + item.UnitOfMeasure + "</td>");
-            //            html.Append("<td>" + item.UnitCost + "</td>");
-            //            html.Append("<td>" + item.NoOfUnits + "</td>");
-            //            html.Append("<td>" + item.Currency + "</td>");
-            //            //if (item.AttachmentName != "")
-            //            //{
-            //            //    string FileName = item.AttachmentName;
-
-            //            //    string exportToPath = Uploadspath + FileName;
-
-            //            //    WebService.ExportAttachmentsToFile("StaffClaim", AdvanceRequestHdrNo, item.No, exportToPath);
-
-            //            //    html.Append("<td>" + item.AttachmentName + " <a class = 'btn btn-danger btn-xs delete_advanceSurrenderLineAttachment' data-id=" + item.AttachmentId + " href = 'javascript:void(0)' data-toggle='tooltip' title='Delete line attachment'><span class = 'fa fa-trash' > </span></a>" +
-            //            //        "<a class = 'btn btn-primary btn-xs downloadfile' href = " + Uri.EscapeUriString(exportToPath) + " data-id=" + Uri.EscapeUriString(FileName) + " download><span class = 'fa fa-download' > </span></a></td>");
-            //            //}
-            //            //else
-            //            //{
-            //            //    html.Append("<td></td>");
-            //            //}
-            //            html.Append("<td>" + item.ClaimedAmountLCY + "</td>");
-            //            html.Append("<td></td>");
-            //        }
-
-            //        html.Append("</tr>");
-            //    }
-            //}
-            html.Append("</tbody>");
-            //Table end.
-            html.Append("</table>");
-            string strText = html.ToString();
-
-            return strText;
-        }
-        public static string CancelRequisition(string document)
+         public static string CancelRequisition(string document)
         {
           var req = $@" <Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                 <Body>

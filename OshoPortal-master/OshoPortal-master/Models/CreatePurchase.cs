@@ -7,7 +7,7 @@ namespace OshoPortal.Models
 {
     public class CreatePurchase
     {
-        public string Date { get; set; }
+        public string DocumentNo { get; set; }
         public string Description { get; set; }
         public string cost { get; set; }
         public string UnitOfMeasure { get; set; }
@@ -20,5 +20,19 @@ namespace OshoPortal.Models
     {
         public string Value { get; set; }
         public string Key { get; set; }
+    }
+    public  class itemdetails
+    {
+        public string DocumentType { get; set; }
+        public string DocumentNo { get; set; }
+        public string LineNo { get; set; }
+        public string LineType { get; set; }
+        public string No { get; set; }
+        public string Description { get; set; }
+        public string Quantity { get; set; }
+        public string UoMCode { get; set; }
+        public string UnitCost { get; set; }
+        public string LineAmount { get; set; }
+
     }
 }

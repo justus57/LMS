@@ -244,7 +244,7 @@ namespace OshoPortal.Controllers
                 saveline = GetitemTable(DocumentNo, type, EmployeeID, EmployeeName, "IMPORT", Item, Description, Quatity, unitofMeasure, Amount, DateofSelection);
 
             }
-            catch (Exception es)
+            catch (Exception)
             {
                 
             }

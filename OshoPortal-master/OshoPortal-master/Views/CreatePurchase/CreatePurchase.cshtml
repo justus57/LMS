@@ -46,7 +46,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label">Document Number</label>
-                                    <input type="text" id="DocumentNo" name="DocumentNo" value="@Html.Raw(ViewBag.DocumentNo)">
+                                    <input type="text" id="DocumentNo" name="DocumentNo" value="@Html.Raw(ViewBag.DocumentNo) ">
                                 </div>
                             </div>
                         </div>
@@ -363,10 +363,11 @@
                          var Comment = $('#Comment').val();
                          var UnitOfMeasure = $( '#UnitOfMeasure' ).val();
                          var Type = $( '#Type' ).val();
+                         var DocumentNo = $( '#DocumentNo' ).val();
                          jQuery.ajax({
                              url:"@Url.Action("Save", "CreatePurchase")",
                              type: "POST",
-                             data: '{param1:"' + data + '", param2:"' + Description + '", param3:"' + NOofItems + '", param4:"' + cost + '", param5:"' + SelectDate + '", param6:"' + Comment + '" , param7:"' + UnitOfMeasure + '", param8:"' + Type + '"}',
+                             data: '{param1:"' + data + '", param2:"' + Description + '", param3:"' + NOofItems + '", param4:"' + cost + '", param5:"' + SelectDate + '", param6:"' + Comment + '" , param7:"' + UnitOfMeasure + '",param8:"' + Type + '", param9:"' + DocumentNo + '"}',
                              dataType: "json",
                              contentType: "application/json; charset=utf-8",
                              success: function (response) {
@@ -433,10 +434,11 @@
                          var Comment = $('#Comment').val();
                          var UnitOfMeasure = $( '#UnitOfMeasure' ).val();
                          var Type = $( '#Type' ).val();
+                         var DocumentNo = $( '#DocumentNo' ).val();
                          jQuery.ajax({
                              url:"@Url.Action("Saveline", "CreatePurchase")",
                              type: "POST",
-                             data: '{param1:"' + data + '", param2:"' + Description + '", param3:"' + NOofItems + '", param4:"' + cost + '", param5:"' + SelectDate + '", param6:"' + Comment + '" , param7:"' + UnitOfMeasure + '", param8:"' + Type + '"}',
+                             data: '{param1:"' + data + '", param2:"' + Description + '", param3:"' + NOofItems + '", param4:"' + cost + '", param5:"' + SelectDate + '", param6:"' + Comment + '" , param7:"' + UnitOfMeasure + '", param8:"' + Type + '",param9:"' + DocumentNo + '"}',
                              dataType: "json",
 
                              contentType: "application/json; charset=utf-8",

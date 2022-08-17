@@ -57,7 +57,7 @@ namespace OshoPortal.Controllers
 
                             Dictionary<string, string> dictionary = new Dictionary<string, string>(array);
                             dynamic DocumentNo = NewMethod1();
-                            System.Web.HttpContext.Current.Session["DocumentNo"] = DocumentNo;
+                            ViewBag.DocumentNo = DocumentNo;
                         }
                         catch (Exception es)
                         {
@@ -145,7 +145,7 @@ namespace OshoPortal.Controllers
             return "";
         }
 
-        public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7,string param8)
+        public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7,string param8, string param9)
         {
             string response = NewMethod();
             string status = "000";
@@ -210,12 +210,12 @@ namespace OshoPortal.Controllers
             };
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Saveline(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8)
+        public ActionResult Saveline(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8,string param9)
         {
             string response = NewMethod();
             string status = "000";
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
-            string DocumentNo = System.Web.HttpContext.Current.Session["DocumentNo"].ToString();
+            string DocumentNo = param9;
             string code = param1.Split(' ').First();
             string EmployeeID = System.Web.HttpContext.Current.Session["Username"].ToString();
             string EmployeeName = System.Web.HttpContext.Current.Session["Profile"].ToString();
@@ -247,7 +247,7 @@ namespace OshoPortal.Controllers
             //PREQ00008463"
             return Json(JsonConvert.SerializeObject(data), JsonRequestBehavior.AllowGet);
         }
-        public JsonResult Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7)
+        public JsonResult Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
             //get Leave number 
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -260,64 +260,40 @@ namespace OshoPortal.Controllers
             //can user apply a backdated Leaave?
             string CanApplyBackdatedLeave = System.Web.HttpContext.Current.Session["CanApplyBackdatedLeave"].ToString();
 
-            //if (/*LeaveStartDay < DateTime.Today && CanApplyBackdatedLeave == "FALSE"*/)
-            //{
-            //    //status = "999";
-            //    //response = "Leave Start Date must be on or later than the current date";
-            //}
-            //else
-            //{
-                string DocumentNoResponse = GetDocumentNumber();
-                dynamic json = JObject.Parse(DocumentNoResponse);
-                status = json.Status;
-
-            switch (status)
+            DocumentNo = param9;
+            string EmployeeID = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
+            string EmployeeName = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string RequestDate = DateTime.Now.ToString("dd/MM/yyyy");//d/m/Y
+            string DateCreated = DateTime.Now.ToString("dd/MM/yyyy");
+            string AccountId = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
+            string ReturnDate = param1;
+            string LeaveCode = param2;
+            string Description = param3;
+            Description = Functions.EscapeInvalidXMLCharacters(Description);
+            string StartDate = param4;
+            string EndDate = param5;
+            string LeaveDays = param6;
+            string uploadpath = param7;
+            string folderPath = System.Web.HttpContext.Current.Server.MapPath("~/Uploads/");
+            string documentpath = folderPath + param7;
+            try
             {
-                case "000":
-                    {
-                        DocumentNo = json.DocumentNo;
-                        string EmployeeID = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
-                        string EmployeeName = System.Web.HttpContext.Current.Session["Username"].ToString();
-                        string RequestDate = DateTime.Now.ToString("dd/MM/yyyy");//d/m/Y
-                        string DateCreated = DateTime.Now.ToString("dd/MM/yyyy");
-                        string AccountId = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
-                        string ReturnDate = param1;
-                        string LeaveCode = param2;
-                        string Description = param3;
-                        Description = Functions.EscapeInvalidXMLCharacters(Description);
-                        string StartDate = param4;
-                        string EndDate = param5;
-                        string LeaveDays = param6;
-                        string uploadpath = param7; 
-                        string folderPath = System.Web.HttpContext.Current.Server.MapPath("~/Uploads/");
-                        string documentpath = folderPath + param7;
-                        try
-                        {
 
-                        }
-                        catch (Exception es)
-                        {
-                            response = es.Message;
-                            status = "999";
-                            SystemLogs.WriteLog(es.Message);
-                        }
-
-                        break;
-                    }
-
-                default:
-                    response = json.Msg;
-                    status = "999";
-                    break;
             }
-            //}
-            //var _RequestResponse = new RequestResponse
-            //{
-            //    Message = response,
-            //    Status = status
-            //};
+            catch (Exception es)
+            {
+                response = es.Message;
+                status = "999";
+                SystemLogs.WriteLog(es.Message);
+            }
 
-            return Json(JsonConvert.SerializeObject(""), JsonRequestBehavior.AllowGet);
+            var _RequestResponse = new RequestResponse
+            {
+                Message = response,
+                Status = status
+            };
+
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
         private static string GetDocumentNumber()
         {

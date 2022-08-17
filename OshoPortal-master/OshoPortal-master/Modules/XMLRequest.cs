@@ -66,36 +66,49 @@ namespace OshoPortal.Modules
             string response = WSConnection.CallWebServicePortal(req);
             return WSConnection.GetJSONResponse(response);
         }
-        public static string SaveItemLine(string documentNo, string type, string EmpNo, string operation, string Item, string description, string quantity, string unitOfMeasure, string amount, string dateofSelection)
+        public static string SaveItemLine(string documentNo, string type, string EmpNo, string EmpName, string operation, string Item, string description, string quantity, string unitOfMeasure, string amount, string dateofSelection)
         {
             var req = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
-                                <Body>
-                                    <GetRequisitionLineDetail xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
-                                        <requisitionLineDetail>
-                                            <!-- Optional -->
-                                            <RequisitionHeaderLine xmlns=""urn:microsoft-dynamics-nav/xmlports/x51204"">
-                                                <DocumentType>1</DocumentType>
-                                                <DocumentNo>{documentNo}</DocumentNo>
-                                                <LineNo>0</LineNo>
-                                                <LineType>{type}</LineType>
-                                                <No>{Item}</No>
-                                                <Description>{description}</Description>
-                                                <Description2>{description}</Description2>
-                                                <Specification>{description}</Specification>
-                                                <Quantity>{quantity}</Quantity>
-                                                <UoMCode>{unitOfMeasure}</UoMCode>
-                                                <UnitCost>{amount}</UnitCost>
-                                                <LineAmount>{amount}</LineAmount>
-                                            </RequisitionHeaderLine>
-                                        </requisitionLineDetail>
-                                        <documentNo></documentNo>
-                                        <lineNo>0</lineNo>
-                                        <employeeNo>{EmpNo}</employeeNo>
-                                        <operation>{operation}</operation>
-                                    </GetRequisitionLineDetail>
-                                </Body>
-                            </Envelope>";
-            return WSConnection.CallWebServicePortal(req); ;
+                                        <Body>
+                                            <GetSaveRequisitionDetail xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
+                                                <requisitionDetail>
+                                                    <RequisitionHeader xmlns=""urn:microsoft-dynamics-nav/xmlports/x51201"">
+                                                        <DocumentType>1</DocumentType>
+                                                        <DocumentNo>{documentNo}</DocumentNo>
+                                                        <RequestByNo>{EmpNo}</RequestByNo>
+                                                        <RequestByName>{EmpName}</RequestByName>
+                                                        <CurrencyCode></CurrencyCode>
+                                                        <ShortcutDimCode1></ShortcutDimCode1>
+                                                        <ShortcutDimCode2></ShortcutDimCode2>
+                                                        <RequestDate>{dateofSelection}</RequestDate>
+                                                        <ValidToDate></ValidToDate>
+                                                        <RequestedReceiptDate>{dateofSelection}</RequestedReceiptDate>
+                                                        <StatusAsText></StatusAsText>
+                                                        <!-- Optional -->
+                                                        <RequisitionHeaderLine>
+                                                            <DocumentType></DocumentType>
+                                                            <DocumentNo></DocumentNo>
+                                                            <LineNo></LineNo>
+                                                            <LineType></LineType>
+                                                            <No></No>
+                                                            <Description></Description>
+                                                            <Description2></Description2>
+                                                            <Specification></Specification>
+                                                            <Quantity></Quantity>
+                                                            <UoMCode></UoMCode>
+                                                            <UnitCost></UnitCost>
+                                                            <LineAmount></LineAmount>
+                                                        </RequisitionHeaderLine>
+                                                    </RequisitionHeader>
+                                                </requisitionDetail>
+                                                <documentNo>{documentNo}</documentNo>
+                                                <employeeNo>{EmpNo}</employeeNo>
+                                                <operation>IMPORT</operation>
+                                            </GetSaveRequisitionDetail>
+                                        </Body>
+                                    </Envelope>";
+            string response = WSConnection.CallWebServicePortal(req);
+            return WSConnection.GetJSONResponse(response);
         }
         public static string DeleteDocument(string documentNo, string documentArea, string employee)
         {

@@ -18,13 +18,13 @@ namespace OshoPortal.Controllers
 {
     public class CreatePurchaseController : Controller
     {
-        private object data;
+        private object saveline;
 
         // GET: CreatePurchase view
         public ActionResult Index()
         {
             return View();
-        }        
+        }
         public ActionResult CreatePurchase()
         {
             var log1 = System.Web.HttpContext.Current.Session["logged"] = "yes";
@@ -84,7 +84,7 @@ namespace OshoPortal.Controllers
             return DocumentNo;
         }
 
-        public JsonResult GetitemDetails(string param1 ,string param2)
+        public JsonResult GetitemDetails(string param1, string param2)
         {
             string Status = NewMethod();
             string ItemNo = NewMethod();
@@ -97,7 +97,7 @@ namespace OshoPortal.Controllers
                 string name = param1;
                 string code = name.Split(' ').First();
 
-                dynamic json = JObject.Parse(createRequisition.GetitemDetails(code,param2));
+                dynamic json = JObject.Parse(createRequisition.GetitemDetails(code, param2));
                 Status = json.Status;
                 ItemNo = json.No;
                 Description = json.Description;
@@ -127,15 +127,15 @@ namespace OshoPortal.Controllers
             string EmployeeID = System.Web.HttpContext.Current.Session["Username"].ToString();
             List<Models.Item> dropdown = new List<Models.Item>();
             var productslist = XMLRequest.GetGLlist(param1, EmployeeID);
-                var array = productslist.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            var array = productslist.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
-                var myList = new List<KeyValuePair<string, string>>(array);
+            var myList = new List<KeyValuePair<string, string>>(array);
 
-                Dictionary<string, string> dictionary = new Dictionary<string, string>(array);
+            Dictionary<string, string> dictionary = new Dictionary<string, string>(array);
 
-                List<string> ValueList = (from KeyValuePair<string, string> item in dictionary
-                                          let data = item.Key + "  " + item.Value
-                                          select data).ToList();
+            List<string> ValueList = (from KeyValuePair<string, string> item in dictionary
+                                      let data = item.Key + "  " + item.Value
+                                      select data).ToList();
 
             return Json(JsonConvert.SerializeObject(ValueList), JsonRequestBehavior.AllowGet); ;
         }
@@ -145,12 +145,12 @@ namespace OshoPortal.Controllers
             return "";
         }
 
-        public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7,string param8, string param9)
+        public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
             string response = NewMethod();
             string status = "000";
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
-            string DocumentNo = NewMethod();           
+            string DocumentNo = NewMethod();
             string DocumentNoResponse = GetDocumentNumber();
             dynamic json = JObject.Parse(DocumentNoResponse);
             status = json.Status;
@@ -185,7 +185,7 @@ namespace OshoPortal.Controllers
                         }
                         try
                         {
-                            var saverequisition = XMLRequest.SaveRequisition(DocumentNo,type, EmployeeID, EmployeeName, Item, Description, Quatity, unitofMeasure, Amount, DateofSelection);
+                            var saverequisition = XMLRequest.SaveRequisition(DocumentNo, type, EmployeeID, EmployeeName, Item, Description, Quatity, unitofMeasure, Amount, DateofSelection);
                         }
                         catch (Exception es)
                         {
@@ -210,19 +210,17 @@ namespace OshoPortal.Controllers
             };
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Saveline(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8,string param9)
+        public ActionResult Saveline(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
-            string response = NewMethod();
-            string status = "000";
+
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string DocumentNo = param9;
-            string code = param1.Split(' ').First();
+            string Item = param1.Split(' ').First();
             string EmployeeID = System.Web.HttpContext.Current.Session["Username"].ToString();
             string EmployeeName = System.Web.HttpContext.Current.Session["Profile"].ToString();
             string RequestDate = DateTime.Now.ToString("dd-MM-yyyy");//d/m/Y
             string DateCreated = DateTime.Now.ToString("dd-MM-yyyy");
-            string AccountId = System.Web.HttpContext.Current.Session["Username"].ToString();
-            string Item = code;
+            string AccountId = System.Web.HttpContext.Current.Session["Username"].ToString();          
             string Description = param2;
             string Quatity = param3;
             string Amount = param4;
@@ -236,48 +234,55 @@ namespace OshoPortal.Controllers
                 case "GL Account":
                     type = "GL Account";
                     break;
+
                 default:
                     type = "Item";
                     break;
             }
+            try
+            {
+                saveline = GetitemTable(DocumentNo, type, EmployeeID, EmployeeName, "IMPORT", Item, Description, Quatity, unitofMeasure, Amount, DateofSelection);
 
-            data = GetitemTable(DocumentNo, type, EmployeeID, "IMPORT", Item, Description, Quatity, unitofMeasure, Amount, DateofSelection);
-            response = "Successful";
-            status = "000";
-            //PREQ00008463"
-            return Json(JsonConvert.SerializeObject(data), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception es)
+            {
+                
+            }
+
+            return Json(JsonConvert.SerializeObject(saveline), JsonRequestBehavior.AllowGet);
         }
         public JsonResult Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
-            //get Leave number 
-            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
-            string DocumentNo = NewMethod();
+
             string response = null;
             string status = null;
-
-            DateTime LeaveStartDay = Functions.GetDateTime(param4);
-
-            //can user apply a backdated Leaave?
-            string CanApplyBackdatedLeave = System.Web.HttpContext.Current.Session["CanApplyBackdatedLeave"].ToString();
-
-            DocumentNo = param9;
-            string EmployeeID = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
+            var DocumentNo = param9;
+            string EmployeeID = System.Web.HttpContext.Current.Session["Profile"].ToString();
             string EmployeeName = System.Web.HttpContext.Current.Session["Username"].ToString();
             string RequestDate = DateTime.Now.ToString("dd/MM/yyyy");//d/m/Y
             string DateCreated = DateTime.Now.ToString("dd/MM/yyyy");
-            string AccountId = System.Web.HttpContext.Current.Session["PayrollNo"].ToString();
-            string ReturnDate = param1;
-            string LeaveCode = param2;
-            string Description = param3;
-            Description = Functions.EscapeInvalidXMLCharacters(Description);
-            string StartDate = param4;
-            string EndDate = param5;
-            string LeaveDays = param6;
-            string uploadpath = param7;
-            string folderPath = System.Web.HttpContext.Current.Server.MapPath("~/Uploads/");
-            string documentpath = folderPath + param7;
+            string Item = param1.Split(' ').First();
+            string Description = param2;
+            string Quatity = param3;
+            string Amount = param4;
+            string DateofSelection = param5;
+            string Comment = param6;
+            string unitofMeasure = param7;
+            string type = NewMethod();
             try
             {
+
+                switch (param8)
+                {
+                    case "GL Account":
+                        type = "GL Account";
+                        break;
+
+                    default:
+                        type = "Item";
+                        break;
+                }
+                var submit = GetitemTable(DocumentNo, type, EmployeeID, EmployeeName, "IMPORT", Item, Description, Quatity, unitofMeasure, Amount, DateofSelection);
 
             }
             catch (Exception es)
@@ -303,35 +308,28 @@ namespace OshoPortal.Controllers
                                     <Body>
                                         <GetNewDocumentNo xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
                                             <documentNo></documentNo>
-                                            <employeeNo>"+username+@"</employeeNo>
+                                            <employeeNo>" + username + @"</employeeNo>
                                             <foreignRequisition>false</foreignRequisition>
                                         </GetNewDocumentNo>
                                     </Body>
                                 </Envelope>";
             string response = WSConnection.CallWebServicePortal(req);
-            var GetDocumentNumber = WSConnection.GetJSONResponse(response);           
+            var GetDocumentNumber = WSConnection.GetJSONResponse(response);
             return GetDocumentNumber;
         }
-       public static List<itemdetails> GetitemTable(string documentNo, string type, string EmpNo, string operation, string Item, string description, string quantity, string unitOfMeasure, string amount, string dateofSelection)
+        public static List<itemdetails> GetitemTable(string documentNo, string type, string EmpNo, string EmpName, string operation, string Item, string description, string quantity, string unitOfMeasure, string amount, string dateofSelection)
         {
             //string Uploadspath = HttpContext.Current.Server.MapPath("~/Uploads/");
 
-            string itemxml = XMLRequest.SaveItemLine(documentNo, type, EmpNo, "IMPORT", Item, description, quantity, unitOfMeasure, amount, dateofSelection);
+            string itemxml = XMLRequest.SaveItemLine(documentNo, type, EmpNo, EmpName, operation, Item, description, quantity, unitOfMeasure, amount, dateofSelection);
             List<itemdetails> itemdetails = new List<itemdetails>();
             XmlDocument xmlSoapRequest = new XmlDocument();
             xmlSoapRequest.LoadXml(itemxml);
             int count = 0;
-            DataTable table = new DataTable();
-            table.Columns.Add("No", typeof(string));
-            table.Columns.Add("Description", typeof(string));
-            table.Columns.Add("Quantity", typeof(string));
-            table.Columns.Add("UoMCode", typeof(string));
-            table.Columns.Add("UnitCost", typeof(string));
-            table.Columns.Add("LineAmount", typeof(string));        
-            table.Columns.Add("View", typeof(string));
+         
             if (xmlSoapRequest.GetElementsByTagName("RequisitionHeaderLine").Count > 0)
             {
-                
+
                 foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("RequisitionHeaderLine"))
                 {
 
@@ -365,7 +363,7 @@ namespace OshoPortal.Controllers
                     XmlNode NodeLineAmount = xmlSoapRequest.GetElementsByTagName("LineAmount")[count];
                     string LineAmount = NodeLineAmount.InnerText;
 
-                    itemdetails.Add(new Models.itemdetails 
+                    itemdetails.Add(new Models.itemdetails
                     {
                         Description = Description,
                         DocumentNo = DocumentNo,
@@ -378,14 +376,9 @@ namespace OshoPortal.Controllers
                         UnitCost = UnitCost,
                         UoMCode = UoMCode
                     });
-
                 }
-          
-                   
             }
             return itemdetails;
         }
-
-
     }
 }

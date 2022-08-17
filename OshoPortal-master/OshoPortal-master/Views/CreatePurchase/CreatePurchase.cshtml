@@ -43,10 +43,10 @@
                     </div>
                     <fieldset novalidate="" action="#" method="POST" id="CreateForm" autocomplete="off">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="form-control-label">Document Number</label>
-                                    <input type="text" id="DocumentNo" name="DocumentNo" value="@Html.Raw(ViewBag.DocumentNo) ">
+                                    <label class="form-control-label">Document Number</label>                        
+                                    <input type="text" class="form-control" disabled="disabled" id="DocumentNo" value="@Html.Raw(ViewBag.DocumentNo)" style="width:100%">
                                 </div>
                             </div>
                         </div>
@@ -238,14 +238,15 @@
 
              $('#count_message').html(text_remaining + 'remaining');
          } );
-
-
-         //date picker for the leavestartday
+         $( "#SelectDate").datepicker( {
+             minDate: 0
+         } );
+         //date picker for the SelectDate
          $("#SelectDate").datepicker({
              dateFormat: 'dd/mm/yy',
-             onSelect: function (date) {
-                 $("#LeaveEndDay").datepicker("option", "minDate", date);
-                 $("#LeaveEndDay").datepicker("option", "maxDate", '+2y');
+             onSelect: function (today) {
+                 $("#SelectDate").datepicker("option", "minDate", date);
+                 $("#SelectDate").datepicker("option", "maxDate", '+2y');
              }
          } ).val();
         //hide upload
@@ -309,26 +310,18 @@
 
              } );
          });
-         // LeaveStartDay datepicker event handler
+         //  datepicker event handler
          $("#SelectDate").change(function () {
              //when the date is changed
-             if ($("#Leave_Type").val() == "0") {
+             if ( $("#Items").val() == "0") {
                  //alert user to select a leave type first
-                 bootbox.alert("Please select a Leave Type", function () {
-                     //set leave start date value to blank
+                 bootbox.alert("Please select a Item type and Item", function () {
+                     //set SelectDate sdate value to blank
                      $("#SelectDate").val('');
                  });
              }
-             //reset selection fields
-             if ($("#LeaveEndDay").val() != '') {
-                 $("#LeaveEndDay").val('');
-             }
-             if ($("#LeaveDaysApplied").val() != '') {
-                 $("#LeaveDaysApplied").val('');
-             }
-             if ($("#ReturnDate").val() != '') {
-                 $("#ReturnDate").val('');
-             }
+           
+            
          });
 
          //days applied events
@@ -409,7 +402,7 @@
 
          jQuery_3_3_1("#Saveline").click(function (event) {
              event.preventDefault();
-
+             
              // Fetch form to apply custom Bootstrap validation
              var form = $("#CreatePurchaseForm")
 
@@ -418,7 +411,7 @@
                  event.stopPropagation()
                  form.addClass('was-validated');
              } else if (form[0].checkValidity() === true) {
-
+                
                  $.ajax({
                      data: new FormData( $('#CreatePurchaseForm')[0]) ,
                      cache: false,
@@ -429,7 +422,7 @@
                          var Description = $('#Description').val();
                          var cost = $('#cost').val();
                          var NOofItems = $('#NOofItems').val();
-                         var SelectDate = $('#SelectDate').val();
+                         var SelectDate = $( '#SelectDate' ).val();
                          var items = $('#items').val();
                          var Comment = $('#Comment').val();
                          var UnitOfMeasure = $( '#UnitOfMeasure' ).val();

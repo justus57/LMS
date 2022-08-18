@@ -52,7 +52,7 @@ namespace OshoPortal.Controllers
                                     DocumentNo = Requisition;
                                     ViewBag.WordHtml = Requisition;
                                    /*dynamic json =*/ LoadDetails(Requisition);
-                                    ViewBag.data = r;
+                                    ViewBag.data = requisitions;
                                     break;
                                 }
                         }

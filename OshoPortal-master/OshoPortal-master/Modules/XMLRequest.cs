@@ -66,6 +66,46 @@ namespace OshoPortal.Modules
             string response = WSConnection.CallWebServicePortal(req);
             return WSConnection.GetJSONResponse(response);
         }
+        public static string ExportRequisition(string EmpNo, string documentNo,  string Status, string EmpName, string operation)
+        {
+            var req = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                                    <Body>
+                                        <GetSaveRequisitionDetail xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
+                                            <requisitionDetail>
+                                                <RequisitionHeader xmlns=""urn:microsoft-dynamics-nav/xmlports/x51202"">
+                                                    <DocumentType>1</DocumentType>
+                                                    <DocumentNo>{documentNo}</DocumentNo>
+                                                    <RequestByNo>{EmpNo}</RequestByNo>
+                                                    <RequestByName>{EmpName}</RequestByName>
+                                                    <CurrencyCode></CurrencyCode>
+                                                    <ShortcutDimCode1></ShortcutDimCode1>
+                                                    <ShortcutDimCode2></ShortcutDimCode2>
+                                                    <RequestDate></RequestDate>
+                                                    <ValidToDate></ValidToDate>
+                                                    <RequestedReceiptDate></RequestedReceiptDate>
+                                                    <StatusAsText>{Status}</StatusAsText>
+                                                    <Approver></Approver>
+                                                    <RequisitionHdrLine>
+                                                        <Type></Type>
+                                                        <No></No>
+                                                        <Description></Description>
+                                                        <Quantity></Quantity>
+                                                        <LocationCode></LocationCode>
+                                                        <UnitofMeasureCode></UnitofMeasureCode>
+                                                        <UnitCostLCY></UnitCostLCY>
+                                                    </RequisitionHdrLine>
+                                                </RequisitionHeader>
+                                            </requisitionDetail>
+                                            <documentNo>{documentNo}</documentNo>
+                                            <employeeNo>{EmpNo}</employeeNo>
+                                            <operation>{operation}</operation>
+                                        </GetSaveRequisitionDetail>
+                                    </Body>
+                                </Envelope>";
+
+            return WSConnection.CallWebServicePortal(req);
+        }
+
         public static string SaveItemLine(string documentNo, string type, string EmpNo, string EmpName, string operation, string Item, string description, string quantity, string unitOfMeasure, string amount, string dateofSelection)
         {
             var req = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
@@ -111,37 +151,7 @@ namespace OshoPortal.Modules
             string response = WSConnection.CallWebServicePortal(req);
             return WSConnection.GetJSONResponse(response);
         }
-        public static string GetRequisitionLine(string documentNo, string Operation, string employee)
-        {
-            var req =$@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
-                                <Body>
-                                    <GetRequisitionLineDetail xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
-                                        <requisitionLineDetail>
-                                            <!-- Optional -->
-                                            <RequisitionHeaderLine xmlns=""urn:microsoft-dynamics-nav/xmlports/x51204"">
-                                                <DocumentNo></DocumentNo>
-                                                <LineNo></LineNo>
-                                                <No></No>
-                                                <LineType></LineType>
-                                                <Description></Description>
-                                                <Description2></Description2>
-                                                <Specification></Specification>
-                                                <Quantity></Quantity>
-                                                <UoMCode></UoMCode>
-                                                <UnitCost></UnitCost>
-                                                <LineAmount></LineAmount>
-                                            </RequisitionHeaderLine>
-                                        </requisitionLineDetail>
-                                        <documentNo>{documentNo}</documentNo>
-                                        <lineNo></lineNo>
-                                        <employeeNo>{employee}</employeeNo>
-                                        <operation>{Operation}</operation>
-                                    </GetRequisitionLineDetail>
-                                </Body>
-                            </Envelope>";
-            return WSConnection.CallWebServicePortal(req); 
-            
-        }
+      
         public static IDictionary<string, string> GetGLlist(string GLAccountname, string empNo)
         {
             var req = "";

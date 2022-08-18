@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using OshoPortal.Models;
 using OshoPortal.Models.Classes;
 using OshoPortal.Modules;
 using System;
@@ -7,17 +8,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using System.Xml;
 
 namespace OshoPortal.Controllers
 {
     public class EditRequisitionController : Controller
     {
-        public string documentNo { get; private set; }
+        public string DocumentNo { get; private set; }
+        public string LineAmount { get; private set; }
+        public string Description { get; private set; }
+        public string No { get; private set; }
+        public string UoMCode { get; private set; }
+        public string UnitCost { get; private set; }
+        public string Quantity { get; private set; }
+
         // GET: EditRequisition
         public ActionResult Index()
         {
             return View();
         }
+        EditRequisition Edit = new EditRequisition();
         public ActionResult EditRequisition()
         {
             var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
@@ -37,11 +48,9 @@ namespace OshoPortal.Controllers
                             default:
                                 {
                                     string Requisition = Functions.Base64Decode(s);
-                                    documentNo = Requisition;
+                                    DocumentNo = Requisition;
                                     ViewBag.WordHtml = Requisition;
-                                    string username = System.Web.HttpContext.Current.Session["Username"].ToString();
-                                    var datavalues = GetItemsList.Getitemdetail(username, Requisition, "self");
-                                    dynamic json = JObject.Parse(datavalues);
+                                   /*dynamic json =*/ LoadDetails(Requisition);
                                     break;
                                 }
                         }
@@ -49,8 +58,71 @@ namespace OshoPortal.Controllers
                         break;
                      }
             }
-            return View();
+            return View(Edit);
         }
+
+        private string  LoadDetails(string Requisition)
+        {
+            var json = "";
+            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            string EmpName = System.Web.HttpContext.Current.Session["Profile"].ToString();
+            string operation = "Export";
+            var RequisitionDetails = XMLRequest.ExportRequisition(username, Requisition, "self", EmpName, operation);
+            XmlDocument xmlSoapRequest = new XmlDocument();
+            xmlSoapRequest.LoadXml(RequisitionDetails);
+            int count = 0;
+
+            if (xmlSoapRequest.GetElementsByTagName("RequisitionHeaderLine").Count > 0)
+            {
+
+                foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("RequisitionHeaderLine"))
+                {
+
+                    XmlNode NodeDocumentType = xmlSoapRequest.GetElementsByTagName("DocumentType")[count];
+                    string DocumentType = NodeDocumentType.InnerText;
+
+                    XmlNode NodeDocumentNo = xmlSoapRequest.GetElementsByTagName("DocumentNo")[count];
+                     DocumentNo = NodeDocumentNo.InnerText;
+
+                    XmlNode NodeLineNo = xmlSoapRequest.GetElementsByTagName("LineNo")[count];
+                    string LineNo = NodeLineNo.InnerText;
+
+                    XmlNode NodeLineType = xmlSoapRequest.GetElementsByTagName("LineType")[count];
+                    string LineType = NodeLineType.InnerText;
+
+                    XmlNode NodeNo = xmlSoapRequest.GetElementsByTagName("No")[count];
+                     No = NodeNo.InnerText;
+
+                    XmlNode NodeDescription = xmlSoapRequest.GetElementsByTagName("Description")[count];
+                     Description = NodeDescription.InnerText;
+
+                    XmlNode NodeQuantity = xmlSoapRequest.GetElementsByTagName("Quantity")[count];
+                    Quantity = NodeQuantity.InnerText;
+
+                    XmlNode NodeUoMCode = xmlSoapRequest.GetElementsByTagName("UoMCode")[count];
+                    UoMCode = NodeUoMCode.InnerText;
+
+                    XmlNode NodeUnitCost = xmlSoapRequest.GetElementsByTagName("UnitCost")[count];
+                    UnitCost = NodeUnitCost.InnerText;
+
+                    XmlNode NodeLineAmount = xmlSoapRequest.GetElementsByTagName("LineAmount")[count];
+                     LineAmount = NodeLineAmount.InnerText;
+
+                   
+
+
+                }
+                Edit.Amount = LineAmount;
+                Edit.Description = Description;
+                Edit.DocumentNo = DocumentNo;
+                Edit.No = No;
+                Edit.NOofItems = Quantity;
+                Edit.cost = UnitCost;
+                Edit.UnitOfMeasure = UoMCode;
+            }
+            return json;
+        }
+
         public JsonResult DeleteOpenRequisition(string param1)
         {
             string status = "";

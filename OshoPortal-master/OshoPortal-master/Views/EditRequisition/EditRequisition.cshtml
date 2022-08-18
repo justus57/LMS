@@ -148,18 +148,17 @@
                                         </tr>
                                         @foreach (var item in ViewBag.data)
                                         {
-                                            <tr>
-                                                <td>@item.No</td>
-                                                  <td> @item.Description</td>
-                                                  <td>@item.NOofItems</td> 
-                                                  <td>@item.UnitOfMeasure</td>
-                                                  <td>@item.cost</td>                                                  
-                                                 <td>@item.Amount</td>
-                                                <td>
-                                                    @Html.ActionLink("Edit", "Edit", new { id = item.No }) |                                              
-                                                    @Html.ActionLink("Delete", "Delete", new { id = item.No  })
-                                                </td>
-                                            </tr>
+                                    <tr>
+                                        <td>@item.No</td>
+                                        <td> @item.Description</td>
+                                        <td>@item.NOofItems</td>
+                                        <td>@item.UnitOfMeasure</td>
+                                        <td>@item.cost</td>
+                                        <td>@item.Amount</td>
+                                        <td>
+                                            <a class='btn btn-danger btn-xs delete' data-id="@item.No" href='javascript:void(0)' data-toggle='tooltip' title='Delete'><span class='fa fa-trash-alt'></span> </a>
+                                        </td>
+                                    </tr>
                                         }
                                         </table>
                                 </div>

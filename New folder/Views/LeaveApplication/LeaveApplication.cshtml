@@ -223,7 +223,10 @@
              $('#count_message').html(text_remaining + 'remaining');
          });
          //date picker for the leavestartday
-         $("#LeaveStartDay").datepicker({
+
+         $( "#LeaveStartDay" ).datepicker( {
+            
+           
              dateFormat: 'dd/mm/yy',
              onSelect: function (date) {
                  $("#LeaveEndDay").datepicker("option", "minDate", date);

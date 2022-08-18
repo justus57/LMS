@@ -21,86 +21,137 @@
             Purchase Requisition Information
         </div>
         <form novalidate="" action="#" method="POST" id="CreatePurchaseForm" autocomplete="off">
-            @*<div class="card-body">*@
-            <div class="row mb-1">
-                <div class="col-md-4 mb-4">
-                    <div>Create Purchase Requisation</div>
-                    <div class="text-muted small"></div>
-                </div>
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="Items" class="form-control-label">ITEMS LIST</label>
-                                <select Class="form-control" ID="Items" name="items" AutoPostBack="false" style="width:100%">
-                                    <option selected value="0">---Select---</option>
-                                    @*@foreach (var item in ViewBag.items)
-                                    {
-                                        <option value="@item" customAttribute="item.SomethingSpecial">
-                                            @item
-                                        </option>
-                                    }*@
-                                </select>
-                                <div class="valid-feedback">Looks good!</div>
-                                <div class="invalid-feedback">The Items must be selected</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-control-label">Item Description</label>
-                                @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @readonly = "readonly", id = "Description", autofocus = "" })
-                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "" })
-                            </div>
-                        </div>
+            <div class="card-body">
+                <div class="row mb-1">
+                    <div class="col-md-4 mb-4">
+                        <div>Create Purchase Requisation</div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-control-label">Unit Of Measure</label>
-                                @Html.TextBoxFor(model => model.UnitOfMeasure, new { @class = "form-control", id = "UnitOfMeasure", @readonly = "readonly", autofocus = "" })
-                                @Html.ValidationMessageFor(model => model.UnitOfMeasure, "", new { @class = "" })
-                            </div>
-                        </div>
+                        <div class="text-muted small"></div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-control-label">Item Cost</label>
-                                @Html.TextBoxFor(model => model.cost, new { @class = "form-control", @readonly = "readonly", id = "cost", autofocus = "" })
-                                @Html.ValidationMessageFor(model => model.cost, "", new { @class = "" })
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="Item" class="form-control-label">TYPE</label>
+                                    <select Class="form-control" ID="Type" name="Type" AutoPostBack="false" style="width:100%">
+                                        <option></option>
+                                        <option>GL Account</option>
+                                        <option>Item</option>
+                                        @*<option>Resource</option>
+                                    <option>Fixed Asset</option>
+                                    <option>Charged(Item)</option>*@
+                                    </select>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The type must be selected</div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="Item_Type" class="form-control-label">Item Specific</label>
+                                    <select Class="form-control" ID="Items" name="items" AutoPostBack="false" style="width:100%">
+                                        <option selected value="0"></option>
+                                    </select>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The item must be selected</div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-control-label" for="SelectDate">Requisition Date</label>
-                                @Html.TextBoxFor(model => model.SelectDate, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.SelectDate, "", new { @class = "" })
-                                <div class="valid-feedback">Looks good!</div>
-                                <div class="invalid-feedback">The  date must be selected</div>
+                        <fieldset novalidate="" action="#" method="POST" id="CreateForm" autocomplete="off">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Document Number</label>
+                                        <input type="text" class="form-control" disabled="disabled" id="DocumentNo" value="@Html.Raw(ViewBag.DocumentNo)" style="width:100%">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-control-label">No of Items</label>
-                                @Html.TextBoxFor(model => model.NOofItems, new { @class = "form-control", id = "NOofItems", autofocus = "" })
-                                @Html.ValidationMessageFor(model => model.NOofItems, "", new { @class = "" })
-                            </div>
-                        </div>
 
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Item Description</label>
+                                        @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @readonly = "readonly", id = "Description", autofocus = "" })
+                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Unit Of Measure</label>
+                                        @Html.TextBoxFor(model => model.UnitOfMeasure, new { @class = "form-control", id = "UnitOfMeasure", autofocus = "" })
+                                        @Html.ValidationMessageFor(model => model.UnitOfMeasure, "", new { @class = "" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Item Cost</label>
+                                        @Html.TextBoxFor(model => model.cost, new { @class = "form-control", id = "cost", autofocus = "" })
+                                        @Html.ValidationMessageFor(model => model.cost, "", new { @class = "" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="SelectDate">Requisition Date</label>
+                                        @Html.TextBoxFor(model => model.SelectDate, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.SelectDate, "", new { @class = "" })
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">The  date must be selected</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">No of Items</label>
+                                        @Html.TextBoxFor(model => model.NOofItems, new { @class = "form-control", id = "NOofItems", autofocus = "" })
+                                        @Html.ValidationMessageFor(model => model.NOofItems, "", new { @class = "" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Amount</label>
+                                        @Html.TextBoxFor(model => model.Amount, new { @class = "form-control", id = "Amount", autofocus = "" })
+                                        @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "" })
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </fieldset>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="form-control-label">Comment</label>
-                                @Html.TextAreaFor(model => model.Comment, new { @class = "form-control", id = "Comment", autofocus = "" })
-                                @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "" })
+                </div>
+                <div class="card-footer bg-light text-right">
+                    <button id="Saveline" class="btn btn-success">Add Item Line</button>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-md-12">
+                        <div class="col-md-4 mb-4">
+                            <div>Items Lines</div>
+                            <div class="text-muted small">Add Item lines here</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>
+                                        <tr>
+                                            <th>No </th>
+                                            <th>Description</th>
+                                            <th>Quantity </th>
+                                            <th>UoMCode</th>
+                                            <th>UnitCost</th>
+                                            <th>LineAmount</th>
+                                            <th>View</th>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+              
             </div>
             <!--Chack Conditions here-->
             @if (!String.IsNullOrEmpty(Request["status"]) && Request["status"] == "Open")
@@ -119,7 +170,7 @@
                 </div>
             }
         </form>
-        </div>
+       
     </div>
 </main>
     <link href="~/Assest/css/select2.min.css" rel="stylesheet" />

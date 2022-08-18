@@ -29,6 +29,7 @@ namespace OshoPortal.Controllers
             return View();
         }
         EditRequisition Edit = new EditRequisition();
+        List<EditRequisition> requisitions = new List<EditRequisition>(); 
         public ActionResult EditRequisition()
         {
             var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
@@ -51,6 +52,7 @@ namespace OshoPortal.Controllers
                                     DocumentNo = Requisition;
                                     ViewBag.WordHtml = Requisition;
                                    /*dynamic json =*/ LoadDetails(Requisition);
+                                    ViewBag.data = r;
                                     break;
                                 }
                         }
@@ -58,7 +60,7 @@ namespace OshoPortal.Controllers
                         break;
                      }
             }
-            return View(Edit);
+            return View();
         }
 
         private string  LoadDetails(string Requisition)
@@ -82,7 +84,7 @@ namespace OshoPortal.Controllers
                     string DocumentType = NodeDocumentType.InnerText;
 
                     XmlNode NodeDocumentNo = xmlSoapRequest.GetElementsByTagName("DocumentNo")[count];
-                     DocumentNo = NodeDocumentNo.InnerText;
+                    DocumentNo = NodeDocumentNo.InnerText;
 
                     XmlNode NodeLineNo = xmlSoapRequest.GetElementsByTagName("LineNo")[count];
                     string LineNo = NodeLineNo.InnerText;
@@ -91,10 +93,10 @@ namespace OshoPortal.Controllers
                     string LineType = NodeLineType.InnerText;
 
                     XmlNode NodeNo = xmlSoapRequest.GetElementsByTagName("No")[count];
-                     No = NodeNo.InnerText;
+                    No = NodeNo.InnerText;
 
                     XmlNode NodeDescription = xmlSoapRequest.GetElementsByTagName("Description")[count];
-                     Description = NodeDescription.InnerText;
+                    Description = NodeDescription.InnerText;
 
                     XmlNode NodeQuantity = xmlSoapRequest.GetElementsByTagName("Quantity")[count];
                     Quantity = NodeQuantity.InnerText;
@@ -106,12 +108,27 @@ namespace OshoPortal.Controllers
                     UnitCost = NodeUnitCost.InnerText;
 
                     XmlNode NodeLineAmount = xmlSoapRequest.GetElementsByTagName("LineAmount")[count];
-                     LineAmount = NodeLineAmount.InnerText;
+                    LineAmount = NodeLineAmount.InnerText;
 
-                   
+                    requisitions.Add(new EditRequisition 
+                    {
+                        Amount = LineAmount,
+                    Description = Description,
+                    DocumentNo = DocumentNo,
+                    No = No,
+                    NOofItems = Quantity,
+                    cost = UnitCost,
+                    UnitOfMeasure = UoMCode
+                });
 
 
                 }
+                AdditemModules();
+            }
+            return json;
+
+            void AdditemModules()
+            {
                 Edit.Amount = LineAmount;
                 Edit.Description = Description;
                 Edit.DocumentNo = DocumentNo;
@@ -120,7 +137,6 @@ namespace OshoPortal.Controllers
                 Edit.cost = UnitCost;
                 Edit.UnitOfMeasure = UoMCode;
             }
-            return json;
         }
 
         public JsonResult DeleteOpenRequisition(string param1)

@@ -146,20 +146,17 @@
                                             <th>LineAmount</th>
                                             <th>View</th>
                                         </tr>
-                                        @foreach (var item in Model)
+                                        @foreach (var item in ViewBag.data)
                                         {
                                             <tr>
+                                                <td>@item.No</td>
+                                                  <td> @item.Description</td>
+                                                  <td>@item.NOofItems</td> 
+                                                  <td>@item.UnitOfMeasure</td>
+                                                  <td>@item.cost</td>                                                  
+                                                 <td>@item.Amount</td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.No)
-                                                    @Html.DisplayFor(modelItem => item.Description)
-                                                    @Html.DisplayFor(modelItem => item.NOofItems)
-                                                    @Html.DisplayFor(modelItem => item.UnitOfMeasure)
-                                                    @Html.DisplayFor(modelItem => item.cost)
-                                                    @Html.DisplayFor(modelItem => item.Amount)
-                                                </td>
-                                                <td>
-                                                    @Html.ActionLink("Edit", "Edit", new { id = item.No }) |
-                                                    @Html.ActionLink("Details", "Details", new { id = item.No }) |
+                                                    @Html.ActionLink("Edit", "Edit", new { id = item.No }) |                                              
                                                     @Html.ActionLink("Delete", "Delete", new { id = item.No  })
                                                 </td>
                                             </tr>

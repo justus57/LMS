@@ -124,16 +124,6 @@ namespace OshoPortal.Controllers
             string response = null;
             string status = null;
 
-            ////can user apply a backdated Leaave?
-            //string CanApplyBackdatedLeave = System.Web.HttpContext.Current.Session["CanApplyBackdatedLeave"].ToString();
-
-            //if (LeaveStartDay < DateTime.Today && CanApplyBackdatedLeave == "FALSE")
-            //{
-            //    response = "You cannot apply a backdated leave";
-            //    status = "999";
-            //}
-            //else
-            //{
                 try
                 {
                     //string SubmitOpenLeaveresponseString = LeavesXMLRequests.SubmitOpenLeave(LeaveHeaderNo);
@@ -147,7 +137,6 @@ namespace OshoPortal.Controllers
                     status = "999";
                     Console.Write(es);
                 }
-            //}
 
             var _RequestResponse = new RequestResponse
             {

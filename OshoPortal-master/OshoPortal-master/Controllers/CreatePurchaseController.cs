@@ -25,6 +25,7 @@ namespace OshoPortal.Controllers
         {
             return View();
         }
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public ActionResult CreatePurchase()
         {
             var log1 = System.Web.HttpContext.Current.Session["logged"] = "yes";
@@ -319,8 +320,7 @@ namespace OshoPortal.Controllers
         }
         public static List<itemdetails> GetitemTable(string documentNo, string type, string EmpNo, string EmpName, string operation, string Item, string description, string quantity, string unitOfMeasure, string amount, string dateofSelection)
         {
-            //string Uploadspath = HttpContext.Current.Server.MapPath("~/Uploads/");
-
+          
             string itemxml = XMLRequest.SaveItemLine(documentNo, type, EmpNo, EmpName, operation, Item, description, quantity, unitOfMeasure, amount, dateofSelection);
             List<itemdetails> itemdetails = new List<itemdetails>();
             XmlDocument xmlSoapRequest = new XmlDocument();

@@ -17,5 +17,10 @@ namespace OshoPortal
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+        protected void Application_PreSendRequestHeaders(Object sender, EventArgs e)
+        {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetAllowResponseInBrowserHistory(false);
+        }
     }
 }

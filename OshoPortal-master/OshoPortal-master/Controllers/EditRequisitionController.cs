@@ -39,7 +39,7 @@ namespace OshoPortal.Controllers
                     Response.Redirect("/Account/login");
                     break;
                 case "yes":
-                    {                    
+                    {
                         string s = Request.QueryString["id"].Trim();
                         switch (s)
                         {
@@ -51,7 +51,7 @@ namespace OshoPortal.Controllers
                                     string Requisition = Functions.Base64Decode(s);
                                     DocumentNo = Requisition;
                                     ViewBag.WordHtml = Requisition;
-                                   /*dynamic json =*/ LoadDetails(Requisition);
+                                    LoadDetails(Requisition);
                                     ViewBag.data = requisitions;
                                     break;
                                 }

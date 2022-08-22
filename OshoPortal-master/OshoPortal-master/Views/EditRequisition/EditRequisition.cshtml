@@ -748,7 +748,7 @@
                         jQuery.ajax({
                             url: "@Url.Action("DeleteOpenRequisition", "EditRequisition")",
                             type: "POST",
-                            data: '{param1:"' + $('#LeaveCodeTxt').val() + '"}',
+                            data: '{param1:"' + $('#DocumentNo').val() + '"}',
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {

@@ -142,11 +142,7 @@
 
                                 if (response != null) {
                                     var data = $.parseJSON(response);
-
-                                    hideLoading();
-
                                     bootbox.alert(data.Message);
-
                                     window.setTimeout(function () {
                                         location.reload()
                                     }, 1000);

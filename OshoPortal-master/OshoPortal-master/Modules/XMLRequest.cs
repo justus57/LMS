@@ -142,7 +142,7 @@ namespace OshoPortal.Modules
             var req = $@" <Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                     <Body>
                                         <DeleteDocument xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
-                                            <documentArea></documentArea>
+                                            <documentArea>PurchaseRequisition</documentArea>
                                             <documentNo>{documentNo}</documentNo>
                                             <employee>{employee}</employee>
                                         </DeleteDocument>

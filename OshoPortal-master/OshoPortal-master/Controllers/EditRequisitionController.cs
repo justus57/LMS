@@ -266,7 +266,7 @@ namespace OshoPortal.Controllers
         {
             string status = "";
             string Message = "";
-            string documentNo = Functions.Base64Decode(param1);
+            string documentNo = param1;
             //send XML req to delete record
             try
             {

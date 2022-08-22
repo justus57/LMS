@@ -28,105 +28,191 @@
 
                         <div class="text-muted small"></div>
                     </div>
-                    <div class="col-md-8">
+                    <fieldset novalidate="" action="#" method="POST" id="CreateForm" autocomplete="off">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="Item" class="form-control-label">TYPE</label>
-                                    <select Class="form-control" ID="Type" name="Type" AutoPostBack="false" style="width:100%">
-                                        <option></option>
-                                        <option>GL Account</option>
-                                        <option>Item</option>
-                                        @*<option>Resource</option>
-                                    <option>Fixed Asset</option>
-                                    <option>Charged(Item)</option>*@
-                                    </select>
-                                    <div class="valid-feedback">Looks good!</div>
-                                    <div class="invalid-feedback">The type must be selected</div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="Item_Type" class="form-control-label">Item Specific</label>
-                                    <select Class="form-control" ID="Items" name="items" AutoPostBack="false" style="width:100%">
-                                        <option selected value="0"></option>
-                                    </select>
-                                    <div class="valid-feedback">Looks good!</div>
-                                    <div class="invalid-feedback">The item must be selected</div>
+                                    <label class="form-control-label">Document Number</label>
+                                    @Html.TextBoxFor(model => model.DocumentNo, new { @class = "form-control", @readonly = "readonly", id = "DocumentNo", value = ViewBag.WordHtml, autofocus = "", style = "width:100%" })
+                                    @Html.ValidationMessageFor(model => model.DocumentNo, "", new { @class = "" })
                                 </div>
                             </div>
                         </div>
-                        <fieldset novalidate="" action="#" method="POST" id="CreateForm" autocomplete="off">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Document Number</label>                        
-                                        @Html.TextBoxFor(model => model.DocumentNo, new { @class = "form-control", @readonly = "readonly", id = "Description", autofocus = "" , style = "width:100%" })
-                                        @Html.ValidationMessageFor(model => model.DocumentNo, "", new { @class = "" })
-                                    </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Employee Number</label>
+                                    @Html.TextBoxFor(model => model.EmployeeNo, new { @class = "form-control", @readonly = "readonly", id = "EmployeeName", autofocus = "" })
+                                    @Html.ValidationMessageFor(model => model.EmployeeNo, "", new { @class = "" })
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Item Description</label>
-                                        @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @readonly = "readonly", id = "Description", autofocus = "" })
-                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "" })
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Unit Of Measure</label>
-                                        @Html.TextBoxFor(model => model.UnitOfMeasure, new { @class = "form-control", id = "UnitOfMeasure", autofocus = "" })
-                                        @Html.ValidationMessageFor(model => model.UnitOfMeasure, "", new { @class = "" })
-                                    </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Date submitted</label>
+                                    @Html.TextBoxFor(model => model.Datesubmitted, new { @class = "form-control", id = "Datesubmitted", autofocus = "" })
+                                    @Html.ValidationMessageFor(model => model.Datesubmitted, "", new { @class = "" })
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Item Cost</label>
-                                        @Html.TextBoxFor(model => model.cost, new { @class = "form-control", id = "cost", autofocus = "" })
-                                        @Html.ValidationMessageFor(model => model.cost, "", new { @class = "" })
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="SelectDate">Requisition Date</label>
-                                        @Html.TextBoxFor(model => model.SelectDate, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.SelectDate, "", new { @class = "" })
-                                        <div class="valid-feedback">Looks good!</div>
-                                        <div class="invalid-feedback">The  date must be selected</div>
-                                    </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Requested by</label>
+                                    @Html.TextBoxFor(model => model.Requestedby, new { @class = "form-control", id = "Requestedby", autofocus = "" })
+                                    @Html.ValidationMessageFor(model => model.Requestedby, "", new { @class = "" })
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-control-label">No of Items</label>
-                                        @Html.TextBoxFor(model => model.NOofItems, new { @class = "form-control", id = "NOofItems", autofocus = "" })
-                                        @Html.ValidationMessageFor(model => model.NOofItems, "", new { @class = "" })
-                                    </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="SelectDate">Validate To Date</label>
+                                    @Html.TextBoxFor(model => model.ValidToDate, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ValidToDate, "", new { @class = "" })
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">The  date must be selected</div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Amount</label>
-                                        @Html.TextBoxFor(model => model.Amount, new { @class = "form-control", id = "Amount", autofocus = "" })
-                                        @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "" })
-                                    </div>
-                                </div>
-
                             </div>
+                        </div>
+                    </fieldset>
 
-                        </fieldset>
-                    </div>
                 </div>
                 <div class="card-footer bg-light text-right">
-                    <button id="Saveline" class="btn btn-success">Add Item Line</button>
+                    @*  <button id="Saveline" class="btn btn-success">Add Item Line</button>*@
+                    <div class="text-right">
+                        <a id="AddAppraisal" class="btn btn-success" href="#" data-toggle="modal" data-target="#AddRequestLine" data-title="Create new Staff Claim line" title="Add Staff Claim line">Add Item Line</a>
+                    </div>
                 </div>
+                <!-- Scroll to Top Button-->
+                <a class="scroll-to-top rounded" href="#page-top">
+                    <i class="fas fa-angle-up"></i>
+                </a>
+                <div class="modal fade" id="AddRequestLine">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
 
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Add Item Lines</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <fieldset novalidate="" action="#" method="POST" id="CreateStaffImprestLines" autocomplete="off">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="Item" class="form-control-label">TYPE</label>
+                                                <select Class="form-control" ID="Type" name="Type" AutoPostBack="false" style="width:100%">
+                                                    <option></option>
+                                                    <option>GL Account</option>
+                                                    <option>Item</option>
+                                                    @*<option>Resource</option>
+                                            <option>Fixed Asset</option>
+                                            <option>Charged(Item)</option>*@
+                                                </select>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The type must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="Item_Type" class="form-control-label">Item Specific</label>
+                                                <select Class="form-control" ID="Items" name="items" AutoPostBack="false" style="width:100%">
+                                                    <option selected value="0"></option>
+                                                </select>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The item must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Document Number</label>
+                                                @Html.TextBoxFor(model => model.DocumentNo, new { @class = "form-control", @readonly = "readonly", id = "DocumentNo", autofocus = "", style = "width:100%" })
+                                                @Html.ValidationMessageFor(model => model.DocumentNo, "", new { @class = "" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Item Description</label>
+                                                @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @readonly = "readonly", id = "Description" })
+                                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Unit Of Measure</label>
+                                                @Html.TextBoxFor(model => model.UnitOfMeasure, new { @class = "form-control", id = "UnitOfMeasure", autofocus = "" })
+                                                @Html.ValidationMessageFor(model => model.UnitOfMeasure, "", new { @class = "" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Item Cost</label>
+                                                @Html.TextBoxFor(model => model.cost, new { @class = "form-control", id = "cost", autofocus = "" })
+                                                @Html.ValidationMessageFor(model => model.cost, "", new { @class = "" })
+                                            </div>
+                                        </div>                                  
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="SelectDate">Requisition Date</label>
+                                                @Html.TextBoxFor(model => model.SelectDate, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.SelectDate, "", new { @class = "" })
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The  date must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label">No of Items</label>
+                                                @Html.TextBoxFor(model => model.NOofItems, new { @class = "form-control", id = "NOofItems", autofocus = "" })
+                                                @Html.ValidationMessageFor(model => model.NOofItems, "", new { @class = "" })
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">The  date must be selected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Amount</label>
+                                            @Html.TextBoxFor(model => model.Amount, new { @class = "form-control", id = "Amount", autofocus = "" })
+                                            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "" })
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">The  date must be selected</div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="AdvanceRequestLineNo" name="AdvanceRequestLineNo" value="">
+                                    <input type="hidden" id="ExchangeRate" name="ExchangeRate" value="">
+                                </fieldset>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                <div id="DivSubmit">
+                                    <button class="btn btn-primary" type="button" id="CreateItemLines">Save</button>
+                                </div>
+                                <div id="DivUpdate">
+                                    <button class="btn btn-success" type="button" id="UpdateitemLines">Update</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
                 <div class="row mb-5">
                     <div class="col-md-12">
                         <div class="col-md-4 mb-4">
@@ -148,25 +234,25 @@
                                         </tr>
                                         @foreach (var item in ViewBag.data)
                                         {
-                                    <tr>
-                                        <td>@item.No</td>
-                                        <td> @item.Description</td>
-                                        <td>@item.NOofItems</td>
-                                        <td>@item.UnitOfMeasure</td>
-                                        <td>@item.cost</td>
-                                        <td>@item.Amount</td>
-                                        <td>
-                                            <a class='btn btn-danger btn-xs delete' data-id="@item.No" href='javascript:void(0)' data-toggle='tooltip' title='Delete'><span class='fa fa-trash-alt'></span> </a>
-                                        </td>
-                                    </tr>
+                                            <tr>
+                                                <td>@item.No</td>
+                                                <td> @item.Description</td>
+                                                <td>@item.NOofItems</td>
+                                                <td>@item.UnitOfMeasure</td>
+                                                <td>@item.cost</td>
+                                                <td>@item.Amount</td>
+                                                <td>
+                                                    <a class='btn btn-danger btn-xs delete' data-id="@item.No" href='javascript:void(0)' data-toggle='tooltip' title='Delete'><span class='fa fa-trash-alt'></span> </a>
+                                                </td>
+                                            </tr>
                                         }
-                                        </table>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-              
+
             </div>
             <!--Chack Conditions here-->
             @if (!String.IsNullOrEmpty(Request["status"]) && Request["status"] == "Open")
@@ -238,15 +324,24 @@
              }
          }).val();
         //hide upload
-         $('#UploadDiv').hide();
+         $( '#UploadDiv' ).hide();
+         $( '#NOofItems' ).change(
+             function () {
+
+                 var cost = $( '#cost' ).val();
+                 var noofitem = $( '#NOofItems' ).val();
+                 var total = cost * noofitem;
+                 $( '#Amount' ).val( total );
+             }
+         );
          $("#Items").change(function () {
              var data = $('#Items').val();
-
+             var type = $( '#Type' ).val();
              //post the selected item to controller
              jQuery.ajax({
                  url:"@Url.Action("GetitemDetails", "CreatePurchase")",
                  type: "POST",
-                 data: '{param1:"' + data + '" }',
+                 data: '{param1:"' + data + '", param2:"' + type + '" }',
                  dataType: "json",
                  contentType: "application/json; charset=utf-8",
                  success: function (response) {
@@ -258,10 +353,36 @@
                              $( '#Description' ).val( data.Description);
                              $( '#UnitOfMeasure' ).val( data.UnitOfMeasure);
                              $( '#cost' ).val( data.Cost);
-
+                             bootbox.alert( data.Response );
                          }
                      }
                  });
+         } );
+         $("#Type").change(function () {
+             var data = $('#Type').val();
+             //post the selected item to controller
+             jQuery.ajax({
+                 url:"@Url.Action("GLaccount", "CreatePurchase")",
+                 type: "POST",
+                 data: '{param1:"' + data + '" }',
+                 dataType: "json",
+                 contentType: "application/json; charset=utf-8",
+                 success: function (response) {
+                     // console.log(JSON.stringify(response));
+                         if (response != null ) {
+                             var data = $.parseJSON(response);;
+                            console.log(data);
+                             //set fields values
+                             var s = '<option value="-1">Please Select a Item</option>';
+                             for ( var i = 0; i < data.length; i++ ) {
+                                 s += '<option value="' + data[i] + '">' + data[i] + '</option>';
+                             }
+                             $("#Items").html( s );
+
+                         }
+                 }
+
+             } );
          });
          // SelectDate datepicker event handler
          $("#SelectDate").change(function () {
@@ -285,7 +406,68 @@
              //}
          });
 
-         //days applied events
+          jQuery_3_3_1("#Saveline").click(function (event) {
+             event.preventDefault();
+
+             // Fetch form to apply custom Bootstrap validation
+              var form = $("#CreateStaffImprestLines")
+
+             if (form[0].checkValidity() === false) {
+                 event.preventDefault()
+                 event.stopPropagation()
+                 form.addClass('was-validated');
+             } else if (form[0].checkValidity() === true) {
+
+                 $.ajax({
+                     data: new FormData( $('#CreateStaffImprestLines')[0]) ,
+                     cache: false,
+                     contentType: false,
+                     processData: false,
+                     success: function (file) {
+                         var data = $( '#Items' ).val();
+                         var Description = $('#Description').val();
+                         var cost = $('#cost').val();
+                         var NOofItems = $('#NOofItems').val();
+                         var SelectDate = $( '#SelectDate' ).val();
+                         var items = $('#items').val();
+                         var Comment = $('#Comment').val();
+                         var UnitOfMeasure = $( '#UnitOfMeasure' ).val();
+                         var Type = $( '#Type' ).val();
+                         var DocumentNo = $( '#DocumentNo' ).val();
+                         jQuery.ajax({
+                             url:"@Url.Action("Saveline", "CreatePurchase")",
+                             type: "POST",
+                             data: '{param1:"' + data + '", param2:"' + Description + '", param3:"' + NOofItems + '", param4:"' + cost + '", param5:"' + SelectDate + '", param6:"' + Comment + '" , param7:"' + UnitOfMeasure + '", param8:"' + Type + '",param9:"' + DocumentNo + '"}',
+                             dataType: "json",
+
+                             contentType: "application/json; charset=utf-8",
+                             success: function (response) {
+                                 if (response != null ) {
+                                     //we need to parse it to JSON
+                                     data = $.parseJSON( response );
+                                     console.log( data );
+                                     var tblitem = $( "#dataTable" );
+                                     $.each( data, function ( index, d ) {
+                                         var tr = $( "<tr></tr>" );
+                                         tr.html( ( "<td>" + d.No + "</td>" )
+                                             + " " + ( "<td>" + d.Description + "</td>" )
+                                             + " " + ( "<td>" + d.Quantity + "</td>" )
+                                             + " " + ( "<td>" + d.UoMCode + "</td>" )
+                                             + " " + ( "<td>" + d.UnitCost + "</td>" )
+                                             + " " + ( "<td>" + d.LineAmount + "</td>" )
+                                             + " " + ( "<td><a class = 'btn btn-danger btn-xs delete' data-id=" + d.No + " href = 'javascript:void(0)' data-toggle='tooltip' title='Delete'><span class = 'fa fa-trash-alt' ></td>" ));
+                                         tblitem.append( tr );
+                                     } );
+                                 }
+                             }
+                         });
+                     },
+
+                 });
+             }
+             //uncomment below
+             event.preventDefault();
+         });
 
          //save button to controller save function
          jQuery_3_3_1("#Save").click(function (event) {

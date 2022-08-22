@@ -51,6 +51,12 @@ namespace OshoPortal.Modules
             }
             return formattedDate;
         }
+        public static string ConvertToTime(string _TrainingDateString)
+        {
+            DateTime mmddyyy = Convert.ToDateTime(DateTime.ParseExact(_TrainingDateString, "ddMMyyyy", CultureInfo.InvariantCulture));
+            string dateddMMyyyy = mmddyyy.ToString("dd/MM/yyyy");
+            return dateddMMyyyy;
+        }
         public static string ConvertToNavTime(string _TrainingDateString)
         {
             string formattedTime = "";

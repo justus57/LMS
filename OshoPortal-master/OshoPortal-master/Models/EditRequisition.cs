@@ -15,5 +15,11 @@ namespace OshoPortal.Models
         public string No { get; set; }
         public string SelectDate { get; set; }
         public string Amount { get; set; }
+        public string Datesubmitted { get; set; }
+        public string EmployeeNo { get; set; }
+        public string Requestedby { get; set; }
+        public string ValidToDate { get; set; }
+        public string RequestByNo { get; set; }
+
     }
 }

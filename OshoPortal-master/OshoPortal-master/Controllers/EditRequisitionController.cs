@@ -262,8 +262,6 @@ namespace OshoPortal.Controllers
             }
             return itemdetails;
         }
-
-
         public JsonResult DeleteOpenRequisition(string param1)
         {
             string status = "";

@@ -105,7 +105,18 @@ namespace OshoPortal.Modules
 
             return WSConnection.CallWebServicePortal(req);
         }
-
+        public static string SendforApproval(string documentNo)
+        {
+            var req = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
+                            <Body>
+                                <SendRequisitionApprovalRequest xmlns=""urn:microsoft-dynamics-schemas/codeunit/webportal"">
+                                    <documentNo>{documentNo}</documentNo>
+                                </SendRequisitionApprovalRequest>
+                            </Body>
+                        </Envelope>";
+            var response = WSConnection.CallWebServicePortal(req);
+            return WSConnection.GetJSONResponse(response);
+        }
         public static string SaveItemLine(string documentNo, string type, string EmpNo, string EmpName, string operation, string Item, string description, string quantity, string unitOfMeasure, string amount, string dateofSelection)
         {
             var req = $@"<Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">

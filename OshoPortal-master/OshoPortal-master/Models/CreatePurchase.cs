@@ -33,6 +33,6 @@ namespace OshoPortal.Models
         public string UoMCode { get; set; }
         public string UnitCost { get; set; }
         public string LineAmount { get; set; }
-
+        public string Message { get; set; }
     }
 }

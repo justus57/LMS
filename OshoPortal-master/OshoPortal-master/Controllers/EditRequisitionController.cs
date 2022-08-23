@@ -142,8 +142,8 @@ namespace OshoPortal.Controllers
                         UnitOfMeasure = UoMCode
                     });
                 }
-                RequestD = Functions.ConvertToTime(RequestDate);
-                ValidDate = Functions.ConvertToTime(ValidToDate);
+                RequestD = Functions.ConvertTime(RequestDate);
+                ValidDate = Functions.ConvertTime(ValidToDate);
                 AdditemModules();
             }
             return json;
@@ -259,6 +259,16 @@ namespace OshoPortal.Controllers
                         UoMCode = UoMCode
                     });
                 }
+            }
+            else
+            {
+                XmlNode Nodefaultstring = xmlSoapRequest.GetElementsByTagName("faultstring")[count];
+                string faultstring = Nodefaultstring.InnerText;
+                itemdetails.Add(new Models.itemdetails
+                {
+                    Message = faultstring
+                });
+
             }
             return itemdetails;
         }

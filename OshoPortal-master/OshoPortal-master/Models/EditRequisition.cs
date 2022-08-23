@@ -19,7 +19,7 @@ namespace OshoPortal.Models
         public string EmployeeNo { get; set; }
         public string Requestedby { get; set; }
         public string ValidToDate { get; set; }
-        public string RequestByNo { get; set; }
+        public string Message { get; set; }
 
     }
 }

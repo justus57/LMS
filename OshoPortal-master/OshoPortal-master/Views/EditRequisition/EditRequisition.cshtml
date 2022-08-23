@@ -441,26 +441,36 @@
 
                              contentType: "application/json; charset=utf-8",
                              success: function (response) {
-                                 if (response != null ) {
+                                 if ( response != null ) {
                                      //we need to parse it to JSON
                                      data = $.parseJSON( response );
                                      console.log( data );
-                                     var tblitem = $( "#dataTable" );
-                                     $.each( data, function ( index, d ) {
-                                         var tr = $( "<tr></tr>" );
-                                         tr.html( ( "<td>" + d.No + "</td>" )
-                                             + " " + ( "<td>" + d.Description + "</td>" )
-                                             + " " + ( "<td>" + d.Quantity + "</td>" )
-                                             + " " + ( "<td>" + d.UoMCode + "</td>" )
-                                             + " " + ( "<td>" + d.UnitCost + "</td>" )
-                                             + " " + ( "<td>" + d.LineAmount + "</td>" )
-                                             + " " + ( "<td><a class = 'btn btn-danger btn-xs delete' data-id=" + d.No + " href = 'javascript:void(0)' data-toggle='tooltip' title='Delete'><span class = 'fa fa-trash-alt' ></td>" ));
-                                         tblitem.append( tr );
-                                     } );
-                                 }
+                                     if ( data.Message == "" ) {
+                                         var tblitem = $( "#dataTable" );
+                                         $.each( data, function ( index, d ) {
+                                             var tr = $( "<tr></tr>" );
+                                             tr.html( ( "<td>" + d.No + "</td>" )
+                                                 + " " + ( "<td>" + d.Description + "</td>" )
+                                                 + " " + ( "<td>" + d.Quantity + "</td>" )
+                                                 + " " + ( "<td>" + d.UoMCode + "</td>" )
+                                                 + " " + ( "<td>" + d.UnitCost + "</td>" )
+                                                 + " " + ( "<td>" + d.LineAmount + "</td>" )
+                                                 + " " + ( "<td><a class = 'btn btn-danger btn-xs delete' data-id=" + d.No + " href = 'javascript:void(0)' data-toggle='tooltip' title='Delete'><span class = 'fa fa-trash-alt' ></td>" ) );
+                                             tblitem.append( tr );
+                                         } );
+
+                                         $( 'input[type=text]' ).each( function () {
+                                             $( "#CreateItemLinesform" ).val( '' );
+                                         } );
+                                     }
+                                     else if ( data.Message != null )
+                                     {
+                                         bootbox.alert( data.Message );
+                                     }
+                                 } 
                              }
                          } );
-                 form.reset();
+                
              }
          } );
          jQuery_3_3_1( '#UpdateitemLines' ).on( 'click', function ( event ) {

@@ -490,9 +490,9 @@ namespace OshoPortal.Modules
                                                     <Approver></Approver>
                                                 </RequisitionHeader>
                                             </requisitionList>
-                                            <employeeNo> {EmpNo} </employeeNo>
-                                            <requestAs > {RequestAS} </requestAs>
-                                            <approvalStatus> {status} </approvalStatus>
+                                            <employeeNo>{EmpNo}</employeeNo>
+                                            <requestAs >{RequestAS}</requestAs>
+                                            <approvalStatus>{status}</approvalStatus>
                                         </GetRequisitionList>
                                     </Body>
                                 </Envelope>";

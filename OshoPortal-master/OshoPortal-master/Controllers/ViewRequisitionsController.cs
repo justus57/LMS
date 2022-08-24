@@ -59,7 +59,7 @@ namespace OshoPortal.Controllers
 
             switch (owner)
             {
-                case "self":
+                case "Employee":
                     dt = ProductsXMLRequests.GetPageData(status, owner, endpoint);
                     break;
                 case "others":
@@ -119,24 +119,24 @@ namespace OshoPortal.Controllers
         public JsonResult SubmitOpenRequisition(string param1, string param2)
         {
             string HeaderNo = Functions.Base64Decode(param1);
-
             DateTime date = Functions.GetDateTime(param2);
             string response = null;
             string status = null;
 
-                try
-                {
-                    //string SubmitOpenLeaveresponseString = LeavesXMLRequests.SubmitOpenLeave(LeaveHeaderNo);
-                    //dynamic json = JObject.Parse(SubmitOpenLeaveresponseString);
-                    //response = json.Msg;
-                    //status = json.Status;
-                }
-                catch (Exception es)
-                {
-                    response = es.Message;
-                    status = "999";
-                    Console.Write(es);
-                }
+            try
+            {
+                //string SubmitOpenLeaveresponseString = XMLRequest.SaveRequisition(/*LeaveHeaderNo*/);
+                //dynamic json = JObject.Parse(SubmitOpenLeaveresponseString);
+                //response = json.Msg;
+                //status = json.Status;
+                var approvalrequest = XMLRequest.SendforApproval(HeaderNo);
+            }
+            catch (Exception es)
+            {
+                response = es.Message;
+                status = "999";
+                Console.Write(es);
+            }
 
             var _RequestResponse = new RequestResponse
             {

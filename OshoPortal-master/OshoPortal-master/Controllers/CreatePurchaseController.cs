@@ -284,7 +284,7 @@ namespace OshoPortal.Controllers
                         break;
                 }
                 var submit = GetitemTable(DocumentNo, type, EmployeeID, EmployeeName, "IMPORT", Item, Description, Quatity, unitofMeasure, Amount, DateofSelection);
-
+                var approvalrequest = XMLRequest.SendforApproval(DocumentNo);
             }
             catch (Exception es)
             {

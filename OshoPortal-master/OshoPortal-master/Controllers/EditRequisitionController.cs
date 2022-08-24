@@ -69,7 +69,6 @@ namespace OshoPortal.Controllers
             }
             return View(Edit);
         }
-
         private string LoadDetails(string Requisition)
         {
             var json = "";

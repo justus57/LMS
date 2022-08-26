@@ -45,8 +45,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="form-control-label">Document Number</label>                        
-                                    <input type="text" class="form-control" disabled="disabled" id="DocumentNo" value="@Html.Raw(ViewBag.DocumentNo)" style="width:100%">
+                                    <label class="form-control-label">Document Number</label>
+                                    @Html.TextBoxFor(model => model.DocumentNo, new { @class = "form-control", @readonly = "readonly", id = "DocumentNo", autofocus = "" , style = "width:100%" })
+                                    @Html.ValidationMessageFor(model => model.DocumentNo, "", new { @class = "" })
                                 </div>
                             </div>
                         </div>
@@ -278,7 +279,8 @@
                          //set fields values
                              $( '#Description' ).val( data.Description);
                              $( '#UnitOfMeasure' ).val( data.UnitOfMeasure);
-                             $( '#cost' ).val( data.Cost);
+                             $( '#cost' ).val( data.Cost );
+                             $( '#DocumentNo' ).val( data.DocumentNumber );
                              bootbox.alert( data.Response );
                          }
                      }
@@ -320,8 +322,8 @@
                      $("#SelectDate").val('');
                  });
              }
-           
-            
+
+
          });
 
          //days applied events
@@ -397,12 +399,35 @@
              //uncomment below
              event.preventDefault();
          } );
-          //save button to controller save function
-
+         //save button to controller save function
+         jQuery_3_3_1( "#Document" ).click( function ( event ) {
+             $.ajax( {
+                 data: new FormData( $( '#CreatePurchaseForm' )[ 0 ] ),
+                 cache: false,
+                 contentType: false,
+                 processData: false,
+                 success: function ( file ) {
+                     jQuery.ajax( {
+                         url: "@Url.Action("GetDocumentNo", " CreatePurchase")",
+                         type: "POST",
+                         data: '{param1:"' + $( '#Items' ).val() + '"',
+                         dataType: "json",
+                         contentType: "application/json; charset=utf-8",
+                         success: function ( response ) {
+                             if ( response != null ) {
+                                 //we need to parse it to JSON
+                                 data = $.parseJSON( response );
+                                 $( '#DocumentNo' ).val( data.DocumentNo );
+                             }
+                         }
+                     } );
+                 }
+             } );
+         });
 
          jQuery_3_3_1("#Saveline").click(function (event) {
              event.preventDefault();
-             
+
              // Fetch form to apply custom Bootstrap validation
              var form = $("#CreatePurchaseForm")
 
@@ -411,7 +436,7 @@
                  event.stopPropagation()
                  form.addClass('was-validated');
              } else if (form[0].checkValidity() === true) {
-                
+
                  $.ajax({
                      data: new FormData( $('#CreatePurchaseForm')[0]) ,
                      cache: false,
@@ -461,7 +486,10 @@
              }
              //uncomment below
              event.preventDefault();
-         });
+         } );
+         $( '#dataTable' ).dataTable( {
+             stateSave: true
+         } );
          //submit to controller submit function
          jQuery_3_3_1("#Submit").click(function (e) {
              // Fetch form to apply custom Bootstrap validation

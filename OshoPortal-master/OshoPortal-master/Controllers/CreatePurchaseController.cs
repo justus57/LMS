@@ -20,6 +20,8 @@ namespace OshoPortal.Controllers
     {
         private object saveline;
 
+        
+
         // GET: CreatePurchase view
         public ActionResult Index()
         {
@@ -28,44 +30,53 @@ namespace OshoPortal.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public ActionResult CreatePurchase()
         {
+            
             var log1 = System.Web.HttpContext.Current.Session["logged"] = "yes";
             try
             {
-                if ((string)log1 == "No")
+                switch (log1)
                 {
-                    Response.Redirect("/Account/Login");
-                }
-                else
-                {
-                    var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
-                    Session["IsAdvanceActive"] = "";
-
-                    if ((object)passRequired == "true")
-                    {
-                        Response.Redirect("/Account/OneTimePassword");
-                    }
-                    else
-                    {
-                        try
+                    case "No":
+                        Response.Redirect("/Account/Login");
+                        break;
+                    default:
                         {
-                            var username = System.Web.HttpContext.Current.Session["Username"].ToString();
+                            var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
+                            Session["IsAdvanceActive"] = "";
 
-                            var productslist = createRequisition.Requisition(username);
+                            switch (passRequired)
+                            {
+                                case "true":
+                                    Response.Redirect("/Account/OneTimePassword");
+                                    break;
+                                default:
+                                    {
+                                        try
+                                        {
+                                            var username = System.Web.HttpContext.Current.Session["Username"].ToString();
 
-                            var array = productslist.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                                            var productslist = createRequisition.Requisition(username);
 
-                            var myList = new List<KeyValuePair<string, string>>(array);
+                                            var array = productslist.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>(array);
-                            dynamic DocumentNo = NewMethod1();
-                            ViewBag.DocumentNo = DocumentNo;
+                                            var myList = new List<KeyValuePair<string, string>>(array);
+
+                                            Dictionary<string, string> dictionary = new Dictionary<string, string>(array);
+                                           
+
+                                        }
+                                        catch (Exception es)
+                                        {
+                                            SystemLogs.WriteLog(es.Message);
+                                            return RedirectToAction("");
+                                        }
+
+                                        break;
+                                    }
+                            }
+
+                            break;
                         }
-                        catch (Exception es)
-                        {
-                            SystemLogs.WriteLog(es.Message);
-                            return RedirectToAction("");
-                        }
-                    }
                 }
             }
             catch (Exception es)
@@ -77,11 +88,16 @@ namespace OshoPortal.Controllers
 
         }
 
-        private static dynamic NewMethod1()
+        public static string GetDocumentidentity(string param1)
         {
+            string name = param1;
             string DocumentNoResponse = GetDocumentNumber();
-            dynamic json = JObject.Parse(DocumentNoResponse);
+            dynamic json = JObject.Parse(DocumentNoResponse);          
             var DocumentNo = json.DocumentNo;
+            var Status = json.Status;
+            System.Web.HttpContext.Current.Session["DocumentNo"] = DocumentNo;
+
+
             return DocumentNo;
         }
 
@@ -93,17 +109,28 @@ namespace OshoPortal.Controllers
             string UnitOfMeasure = NewMethod();
             string Cost = NewMethod();
             string Response = NewMethod();
+            string DocumentNumber = NewMethod();
             try
             {
                 string name = param1;
                 string code = name.Split(' ').First();
-
+         
                 dynamic json = JObject.Parse(createRequisition.GetitemDetails(code, param2));
                 Status = json.Status;
                 ItemNo = json.No;
                 Description = json.Description;
                 UnitOfMeasure = json.UnitOfMeasure;
                 Cost = json.Cost;
+                try
+                {
+                    DocumentNumber = System.Web.HttpContext.Current.Session["DocumentNo"].ToString();
+                }
+                catch (Exception)
+                {
+                    DocumentNumber = GetDocumentidentity(Status);
+                }
+               
+              
 
             }
             catch (Exception e)
@@ -117,7 +144,8 @@ namespace OshoPortal.Controllers
                 Description = Description,
                 UnitOfMeasure = UnitOfMeasure,
                 Cost = Cost,
-                Response = Response
+                Response = Response,
+                DocumentNumber = DocumentNumber
 
             };
             return Json(JsonConvert.SerializeObject(detail), JsonRequestBehavior.AllowGet);
@@ -152,7 +180,7 @@ namespace OshoPortal.Controllers
             string status = "000";
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string DocumentNo = NewMethod();
-            string DocumentNoResponse = GetDocumentNumber();
+            string DocumentNoResponse = System.Web.HttpContext.Current.Session["DocumentNo"].ToString(); 
             dynamic json = JObject.Parse(DocumentNoResponse);
             status = json.Status;
             string code = param1.Split(' ').First();
@@ -161,7 +189,7 @@ namespace OshoPortal.Controllers
                 case "000":
                     {
 
-                        DocumentNo = json.DocumentNo;
+                        DocumentNo = System.Web.HttpContext.Current.Session["DocumentNo"].ToString(); 
                         string EmployeeID = System.Web.HttpContext.Current.Session["Username"].ToString();
                         string EmployeeName = System.Web.HttpContext.Current.Session["Profile"].ToString();
                         string RequestDate = DateTime.Now.ToString("dd-MM-yyyy");//d/m/Y

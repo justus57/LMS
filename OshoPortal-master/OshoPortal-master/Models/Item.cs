@@ -18,5 +18,6 @@ namespace OshoPortal.Models
         public string UnitOfMeasure { get; set; }
         public string Cost { get; set; }
         public string Response { get; set; }
+        public string DocumentNumber { get;  set; }
     }
 }

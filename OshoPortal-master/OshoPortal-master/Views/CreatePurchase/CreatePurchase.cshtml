@@ -436,7 +436,6 @@
                  event.stopPropagation()
                  form.addClass('was-validated');
              } else if (form[0].checkValidity() === true) {
-
                  $.ajax({
                      data: new FormData( $('#CreatePurchaseForm')[0]) ,
                      cache: false,

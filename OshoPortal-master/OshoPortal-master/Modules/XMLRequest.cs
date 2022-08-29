@@ -161,8 +161,7 @@ namespace OshoPortal.Modules
                                 </Envelope>";
             string response = WSConnection.CallWebServicePortal(req);
             return WSConnection.GetJSONResponse(response);
-        }
-      
+        }  
         public static IDictionary<string, string> GetGLlist(string GLAccountname, string empNo)
         {
             var req = "";
@@ -248,7 +247,7 @@ namespace OshoPortal.Modules
 
             return dictionary;
         }
-         public static string CancelRequisition(string document)
+        public static string CancelRequisition(string document)
         {
           var req = $@" <Envelope xmlns=""http://schemas.xmlsoap.org/soap/envelope/"">
                                 <Body>

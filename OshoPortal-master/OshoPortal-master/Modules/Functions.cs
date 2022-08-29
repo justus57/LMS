@@ -9,6 +9,7 @@ using System.Text;
 using System.Web;
 using System.Xml;
 using OshoPortal.Models.Classes;
+using OshoPortal.Models;
 
 namespace OshoPortal.Modules
 {
@@ -285,6 +286,80 @@ namespace OshoPortal.Modules
                 Console.Write(es);
             }
             return Daata;
+        }
+        public static List<itemdetails> GetitemTable(string documentNo, string type, string EmpNo, string EmpName,
+                                                    string operation, string Item, string description, string quantity,
+                                                    string unitOfMeasure, string amount, string dateofSelection)
+        {
+
+            string itemxml = XMLRequest.SaveItemLine(documentNo, type, EmpNo, EmpName, operation, Item, description, quantity, unitOfMeasure, amount, dateofSelection);
+            List<itemdetails> itemdetails = new List<itemdetails>();
+            XmlDocument xmlSoapRequest = new XmlDocument();
+            xmlSoapRequest.LoadXml(itemxml);
+            int count = 0;
+
+            if (xmlSoapRequest.GetElementsByTagName("RequisitionHeaderLine").Count > 0)
+            {
+
+                foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("RequisitionHeaderLine"))
+                {
+
+                    XmlNode NodeDocumentType = xmlSoapRequest.GetElementsByTagName("DocumentType")[count];
+                    string DocumentType = NodeDocumentType.InnerText;
+
+                    XmlNode NodeDocumentNo = xmlSoapRequest.GetElementsByTagName("DocumentNo")[count];
+                    string DocumentNo = NodeDocumentNo.InnerText;
+
+                    XmlNode NodeLineNo = xmlSoapRequest.GetElementsByTagName("LineNo")[count];
+                    string LineNo = NodeLineNo.InnerText;
+
+                    XmlNode NodeLineType = xmlSoapRequest.GetElementsByTagName("LineType")[count];
+                    string LineType = NodeLineType.InnerText;
+
+                    XmlNode NodeNo = xmlSoapRequest.GetElementsByTagName("No")[count];
+                    string No = NodeNo.InnerText;
+
+                    XmlNode NodeDescription = xmlSoapRequest.GetElementsByTagName("Description")[count];
+                    string Description = NodeDescription.InnerText;
+
+                    XmlNode NodeQuantity = xmlSoapRequest.GetElementsByTagName("Quantity")[count];
+                    string Quantity = NodeQuantity.InnerText;
+
+                    XmlNode NodeUoMCode = xmlSoapRequest.GetElementsByTagName("UoMCode")[count];
+                    string UoMCode = NodeUoMCode.InnerText;
+
+                    XmlNode NodeUnitCost = xmlSoapRequest.GetElementsByTagName("UnitCost")[count];
+                    string UnitCost = NodeUnitCost.InnerText;
+
+                    XmlNode NodeLineAmount = xmlSoapRequest.GetElementsByTagName("LineAmount")[count];
+                    string LineAmount = NodeLineAmount.InnerText;
+
+                    itemdetails.Add(new Models.itemdetails
+                    {
+                        Description = Description,
+                        DocumentNo = DocumentNo,
+                        DocumentType = DocumentType,
+                        LineAmount = LineAmount,
+                        LineNo = LineNo,
+                        LineType = LineType,
+                        No = No,
+                        Quantity = Quantity,
+                        UnitCost = UnitCost,
+                        UoMCode = UoMCode
+                    });
+                }
+            }
+            else
+            {
+                XmlNode Nodefaultstring = xmlSoapRequest.GetElementsByTagName("faultstring")[count];
+                string faultstring = Nodefaultstring.InnerText;
+                itemdetails.Add(new Models.itemdetails
+                {
+                    Message = faultstring
+                });
+
+            }
+            return itemdetails;
         }
     }
     class TimeManager

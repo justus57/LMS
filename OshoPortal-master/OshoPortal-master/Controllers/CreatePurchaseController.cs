@@ -55,15 +55,18 @@ namespace OshoPortal.Controllers
                                         {
                                             var username = System.Web.HttpContext.Current.Session["Username"].ToString();
 
-                                            var productslist = createRequisition.Requisition(username);
 
-                                            var array = productslist.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                                            var documentnumber =System.Web.HttpContext.Current.Session["DocumentNo"];
+                                            string EmployeeID = System.Web.HttpContext.Current.Session["Username"].ToString();
+                                            string EmployeeName = System.Web.HttpContext.Current.Session["Profile"].ToString();
+                                            string RequestDate = DateTime.Now.ToString("dd-MM-yyyy");//d/m/Y
+                                            string DateCreated = DateTime.Now.ToString("dd-MM-yyyy");
+                                            string AccountId = System.Web.HttpContext.Current.Session["Username"].ToString();
+                                            if (documentnumber != null)
+                                            {
+                                                saveline = Functions.GetitemTable(documentnumber, "", EmployeeID, EmployeeName, "EXPORT", "", "", "", "", "", "");
 
-                                            var myList = new List<KeyValuePair<string, string>>(array);
-
-                                            Dictionary<string, string> dictionary = new Dictionary<string, string>(array);
-                                           
-
+                                            }
                                         }
                                         catch (Exception es)
                                         {

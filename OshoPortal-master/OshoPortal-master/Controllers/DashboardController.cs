@@ -20,6 +20,7 @@ namespace OshoPortal.Controllers
         {
             string GetUserInformationresponseString = null;
             var log1 = System.Web.HttpContext.Current.Session["logged"] = "yes";
+            System.Web.HttpContext.Current.Session["supervisor"] = "";
             try
             {
                 if ((string)log1 == "No")
@@ -59,7 +60,9 @@ namespace OshoPortal.Controllers
                         dashboard.BirthDate = json.BirthDate;
                        
                         dashboard.email = json.Email;
-                        dashboard.Title = json.Title;                     
+                        dashboard.Title = json.Title;
+                        var title =json.Title;
+                        System.Web.HttpContext.Current.Session["supervisor"] = title;
                         string EmploymentDate = json.EmploymentDate;
                       
 

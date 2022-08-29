@@ -130,22 +130,24 @@
                     <i class="bi bi-cart"></i><span>Purchase Requisation</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                   
+
                     <a class="dropdown-item" href="@Url.Action("CreatePurchase","CreatePurchase")">Create Purchase Requisition</a>
                     <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">My Summaries:</h6>
+                    <h6 class="dropdown-header">Employee:</h6>
                     <a class="dropdown-item" href="@Url.Action("ViewRequisitions", "ViewRequisitions", new { status = "Open",owner="Employee" })">Open</a>
                     <a class="dropdown-item" href="@Url.Action("ViewRequisitions", "ViewRequisitions", new { status = "Pending",owner="Employee" })">Pending</a>
                     <a class="dropdown-item" href="@Url.Action("ViewRequisitions", "ViewRequisitions", new { status = "Approved",owner="Employee" })">Approved</a>
-                    <a class="dropdown-item" href="@Url.Action("ViewRequisitions", "ViewRequisitions", new { status = "Rejected",owner="Employee" })">Rejected</a>                 
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">Supervisor:</h6>
-                    <a class="dropdown-item" href="@Url.Action("ViewRequisitions", "ViewRequisitions", new { status = "Open",owner="supervisor" })">Open</a>
-                    <a class="dropdown-item" href="@Url.Action("ViewRequisitions", "ViewRequisitions", new { status = "Pending",owner="supervisor" })">Pending</a>
-                    <a class="dropdown-item" href="@Url.Action("ViewRequisitions", "ViewRequisitions", new { status = "Approved",owner="supervisor" })">Approved</a>
-                    <a class="dropdown-item" href="@Url.Action("ViewRequisitions", "ViewRequisitions", new { status = "Rejected",owner="supervisor" })">Rejected</a>
-
-                </ul>
+                    <a class="dropdown-item" href="@Url.Action("ViewRequisitions", "ViewRequisitions", new { status = "Rejected",owner="Employee" })">Rejected</a>
+                    @if (HttpContext.Current.Session["Supervisor"].ToString() == "TRUE")
+                    {
+                      <div class="dropdown-divider"></div>
+                      <h6 class="dropdown-header">Supervisor:</h6>
+                      <a class="dropdown-item" href="@Url.Action("ViewRequisitions", "ViewRequisitions", new { status = "Open", owner = "supervisor" })">Open</a>
+                      <a class="dropdown-item" href="@Url.Action("ViewRequisitions", "ViewRequisitions", new { status = "Pending", owner = "supervisor" })">Pending</a>
+                      <a class="dropdown-item" href="@Url.Action("ViewRequisitions", "ViewRequisitions", new { status = "Approved", owner = "supervisor" })">Approved</a>
+                      <a class="dropdown-item" href="@Url.Action("ViewRequisitions", "ViewRequisitions", new { status = "Rejected", owner = "supervisor" })">Rejected</a>
+                    }
+                   </ul>
             </li>
     <!-- End Components Nav -->
 

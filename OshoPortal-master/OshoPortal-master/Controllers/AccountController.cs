@@ -56,7 +56,7 @@ namespace OshoPortal.Controllers
 
                     switch (RequirePassChnage)
                     {
-                        case "Yes":
+                        case "No":
                             if (ModelState.IsValid)
                             {
                                 ModelState.AddModelError("", Msg);

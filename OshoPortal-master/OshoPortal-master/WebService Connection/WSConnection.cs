@@ -5,6 +5,8 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Xml;
 
@@ -14,11 +16,16 @@ namespace OshoPortal.WebService_Connection
     {
         //making connection to web service
         private static string responseString = null;
+
+        public static string username { get; private set; }
+        public static string Password { get; private set; }
+        public static string IsPasswordEncrypted { get; private set; }
+
         public static string CallWebService(string req)
         {
             string action = "";
-            //var _url = "http://btl-svr-01.btl.local:8047/BC180-1/WS/Osho%20Chemical%20Industries%20Ltd/Codeunit/PortalLogin";
-            var _url = ConfigurationManager.AppSettings["webservice"];
+            var _url = ConfigurationManager.AppSettings["OshoPortal_WebRef_PortalLogin"];
+            
             var _action = action;
             try
             {
@@ -67,33 +74,13 @@ namespace OshoPortal.WebService_Connection
                 //code specifically for a WebException ProtocolError
                 ex.Message.ToString();
             }
-            //catch (WebException ex) when ((ex.Response as HttpWebResponse)?.StatusCode == HttpStatusCode.NotFound)
-            //{
-            //    //code specifically for a WebException NotFound
-            //    responseString = ParseExceptionRespose(ex);
-            //}
-            //catch (WebException ex) when ((ex.Response as HttpWebResponse)?.StatusCode == HttpStatusCode.InternalServerError)
-            //{
-            //    //code specifically for a WebException InternalServerError
-            //    responseString = ParseExceptionRespose(ex);
-            //}
-            //catch (WebException ex) when (ex.Status == WebExceptionStatus.Timeout)
-            //{
-            //    //code specifically for a WebException InternalServerError
-            //    responseString = ParseExceptionRespose(ex);
-            //}
-            //finally
-            //{
-            //    //call this if exception occurs or not
-            //    //wc?.Dispose();
-            //}
 
             return responseString;
         }
         public static string CallWebServicePortal(string req)
         {
             string action = "";
-            var _url = "http://btl-svr-01.btl.local:8047/BC180-1/WS/Osho%20Chemical%20Industries%20Ltd/Codeunit/webportal";
+            var _url = ConfigurationManager.AppSettings["OshoPortal_WebPortal_webportal"];
             var _action = action;
             try
             {
@@ -167,6 +154,22 @@ namespace OshoPortal.WebService_Connection
         }
         private static HttpWebRequest CreateWebRequest(string url, string action)
         {
+            username = ConfigurationManager.AppSettings["Username"];
+            Password = ConfigurationManager.AppSettings["Password"];
+            IsPasswordEncrypted = ConfigurationManager.AppSettings["IsEncrypted"];
+
+            if (IsPasswordEncrypted == "N")
+            {
+                string EncryptedPassword = EncryptDecrypt.Encrypt(Password, true);
+                //updateConfig
+                UpdateAppSettings("IsEncrypted", "Y");
+                UpdateAppSettings("Password", EncryptedPassword);
+            }
+            else if (IsPasswordEncrypted == "Y")
+            {
+                Password = EncryptDecrypt.Decrypt(Password, true);
+            }
+
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
@@ -179,7 +182,7 @@ namespace OshoPortal.WebService_Connection
             webRequest.Method = "POST";
             /////////////////webRequest.Credentials = CredentialCache.DefaultCredentials;
             webRequest.Timeout = 10000; //time-out value in milliseconds
-            NetworkCredential creds = new System.Net.NetworkCredential("BTL\\Kasyoki.justus", @"$BTL@2022&*");
+            NetworkCredential creds = new System.Net.NetworkCredential(username, Password);
             webRequest.Credentials = creds;
             webRequest.PreAuthenticate = true;
             webRequest.UseDefaultCredentials = true;
@@ -240,7 +243,100 @@ namespace OshoPortal.WebService_Connection
 
             return resp;
         }
+        private static void UpdateAppSettings(string key, string value)
+        {
+            System.Configuration.Configuration configFile = null;
+            if (System.Web.HttpContext.Current != null)
+            {
+                configFile =
+                    System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("~");
+            }
+            else
+            {
+                configFile =
+                    ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            }
+            var settings = configFile.AppSettings.Settings;
+            if (settings[key] == null)
+            {
+                settings.Add(key, value);
+            }
+            else
+            {
+                settings[key].Value = value;
+            }
+            configFile.Save(ConfigurationSaveMode.Modified);
+            //ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
+        }
 
+    }
+    class EncryptDecrypt
+    {
+        static string Password = "thusendhcgpadwuf"; // Key for Encrypting & Decrypting Password -> Should be kept private
+        public static string Encrypt(string toEncrypt, bool useHashing)
+        {
+            byte[] keyArray;
+            byte[] toEncryptArray = UTF8Encoding.UTF8.GetBytes(toEncrypt);
 
+            System.Configuration.AppSettingsReader settingsReader = new AppSettingsReader();
+            // Get the key from config file
+            string key = Password;// (string)settingsReader.GetValue("SecurityKey", typeof(String));
+
+            //System.Windows.Forms.MessageBox.Show(key);
+            if (useHashing)
+            {
+                MD5CryptoServiceProvider hashmd5 = new MD5CryptoServiceProvider();
+                keyArray = hashmd5.ComputeHash(UTF8Encoding.UTF8.GetBytes(key));
+                hashmd5.Clear();
+            }
+            else
+                keyArray = UTF8Encoding.UTF8.GetBytes(key);
+
+            TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider();
+            tdes.Key = keyArray;
+            tdes.Mode = CipherMode.ECB;
+            tdes.Padding = PaddingMode.PKCS7;
+
+            ICryptoTransform cTransform = tdes.CreateEncryptor();
+            byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
+            tdes.Clear();
+            return Convert.ToBase64String(resultArray, 0, resultArray.Length);
+        }
+        /// <summary>
+        /// DeCrypt a string using dual encryption method. Return a DeCrypted clear string
+        /// </summary>
+        /// <param name="cipherString">encrypted string</param>
+        /// <param name="useHashing">Did you use hashing to encrypt this data? pass true is yes</param>
+        /// <returns></returns>
+        public static string Decrypt(string cipherString, bool useHashing)
+        {
+            byte[] keyArray;
+            byte[] toEncryptArray = Convert.FromBase64String(cipherString);
+
+            System.Configuration.AppSettingsReader settingsReader = new AppSettingsReader();
+            //System.Configuration.AppSettingsReader settingsReader = new AppSettingsReader();
+            //Get your key from config file to open the lock!
+            string key = Password;// (string)settingsReader.GetValue("SecurityKey", typeof(String));
+
+            if (useHashing)
+            {
+                MD5CryptoServiceProvider hashmd5 = new MD5CryptoServiceProvider();
+                keyArray = hashmd5.ComputeHash(UTF8Encoding.UTF8.GetBytes(key));
+                hashmd5.Clear();
+            }
+            else
+                keyArray = UTF8Encoding.UTF8.GetBytes(key);
+
+            TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider();
+            tdes.Key = keyArray;
+            tdes.Mode = CipherMode.ECB;
+            tdes.Padding = PaddingMode.PKCS7;
+
+            ICryptoTransform cTransform = tdes.CreateDecryptor();
+            byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
+
+            tdes.Clear();
+            return UTF8Encoding.UTF8.GetString(resultArray);
+        }
     }
 }

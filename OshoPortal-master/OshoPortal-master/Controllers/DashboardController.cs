@@ -23,67 +23,72 @@ namespace OshoPortal.Controllers
             System.Web.HttpContext.Current.Session["supervisor"] = "";
             try
             {
-                if ((string)log1 == "No")
+                switch (log1)
                 {
-                    Response.Redirect("/Account/Login");
-                }
-                else
-                {
-                    var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
-                    Session["IsAdvanceActive"] = "";
+                    case "No":
+                        Response.Redirect("/Account/Login");
+                        break;
+                    default:
+                        {
+                            var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
+                            Session["IsAdvanceActive"] = "";
 
-                    if ((object)passRequired == "true")
-                    {
-                        Response.Redirect("/Account/OneTimePassword");
-                    }
-                    else
-                    {
-                        var FullName = System.Web.HttpContext.Current.User.Identity.Name;
-                        var UserFullName = System.Web.HttpContext.Current.Session["Profile"];
-                        string name = UserFullName.ToString();
-                        string code = name.Split(' ').First();
-                        ViewBag.user = code +"'s";
-                        string name1 = UserFullName.ToString();
-                        string code1 = name.Split(' ').Last();
+                            switch (passRequired)
+                            {
+                                case "true":
+                                    Response.Redirect("/Account/OneTimePassword");
+                                    break;
+                                default:
+                                    {
+                                        var FullName = System.Web.HttpContext.Current.User.Identity.Name;
+                                        var UserFullName = System.Web.HttpContext.Current.Session["Profile"].ToString();
 
-                        //get user information
-                        string username = System.Web.HttpContext.Current.Session["Username"].ToString();
-                        GetUserInformationresponseString = XMLRequest.GetUserInformation(username);
-                        dynamic json = JObject.Parse(GetUserInformationresponseString);
-                        string Status = json.Status;
-                        string EmployeeName = json.EmployeeName;
-                        dashboard.Username = json.EmployeeNo;
-                        dashboard.FirstName = code;
-                        dashboard.LastName = code1;
-                        dashboard.BankBranch = json.BankBranch;
-                        dashboard.BankAccountNo = json.BankAccountNo;
-                        dashboard.BirthDate = json.BirthDate;
-                       
-                        dashboard.email = json.Email;
-                        dashboard.Title = json.Title;
-                        var title =json.Title;
-                        System.Web.HttpContext.Current.Session["supervisor"] = title;
-                        string EmploymentDate = json.EmploymentDate;
-                      
+                                        string name = UserFullName.Split(' ').First();                                       
+                                        ViewBag.user = name + "'s";                                      
+                                        string name1 = UserFullName.Split(' ').Last();
 
-                        if (EmploymentDate != "")
-                        {
-                            DateTime oDate = DateTime.ParseExact(EmploymentDate, "MM/dd/yy", System.Globalization.CultureInfo.InvariantCulture);
-                            dashboard.EmploymentDate = oDate.ToString("MMMM dd yyyy");
+                                        //get user information
+                                        string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+                                        GetUserInformationresponseString = XMLRequest.GetUserInformation(username);
+                                        dynamic json = JObject.Parse(GetUserInformationresponseString);
+
+                                        //pass details to view
+                                        string Status = json.Status;
+                                        string EmployeeName = json.EmployeeName;
+                                        dashboard.Username = json.EmployeeNo;
+                                        dashboard.FirstName = name;
+                                        dashboard.LastName = name1;
+                                        dashboard.BankBranch = json.BankBranch;
+                                        dashboard.BankAccountNo = json.BankAccountNo;
+                                        dashboard.BirthDate = json.BirthDate;
+                                        dashboard.email = json.Email;
+                                        dashboard.Title = json.Title;
+                                        var title = json.Title;
+
+                                        System.Web.HttpContext.Current.Session["supervisor"] = title;
+                                        string EmploymentDate = json.EmploymentDate;
+                                        if (EmploymentDate != "")
+                                        {
+                                            DateTime oDate = DateTime.ParseExact(EmploymentDate, "MM/dd/yy", System.Globalization.CultureInfo.InvariantCulture);
+                                            dashboard.EmploymentDate = oDate.ToString("MMMM dd yyyy");
+                                        }
+                                        if (DateTime.Now.Hour < 12)
+                                        {
+                                            ViewBag.Greetings = " " + "Good Morning <br/>" + name + "!";
+                                        }
+                                        else if (DateTime.Now.Hour < 17)
+                                        {
+                                            ViewBag.Greetings = " " + "Good Afternoon <br/>" + name;
+                                        }
+                                        else
+                                        {
+                                            ViewBag.Greetings = " " + "Good Evening <br/>" + name;
+                                        }
+                                        break;
+                                    }
+                            }
+                            break;
                         }
-                        if (DateTime.Now.Hour < 12)
-                        {
-                            ViewBag.Greetings= " "+"Good Morning <br/>" + code +"!";
-                        }
-                        else if (DateTime.Now.Hour < 17)
-                        {
-                            ViewBag.Greetings = " " + "Good Afternoon <br/>" + code;
-                        }
-                        else
-                        {
-                            ViewBag.Greetings = " " + "Good Evening <br/>" + code;
-                        }
-                    }
                 }
             }
             catch (Exception ex)

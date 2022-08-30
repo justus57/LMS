@@ -13,9 +13,24 @@ using OshoPortal.Models;
 
 namespace OshoPortal.Modules
 {
+   
     public class Functions
     {
         static string responseString;
+        
+        public static string LineAmount { get; private set; }
+        public static string Description { get; private set; }
+        public static  string No { get; private set; }
+        public static string UoMCode { get; private set; }
+        public static string UnitCost { get; private set; }
+        public static string Quantity { get; private set; }
+        public static string RequestByName { get; private set; }
+        public static string RequestByNo { get; private set; }
+        public static string RequestD { get; private set; }
+        public static string ValidDate { get; private set; }
+        public static string ValidToDate { get; private set; }
+        public static string RequestDate { get; private set; }
+        public static string documentNo { get; private set; }
         //delete old file
         public static bool DeleteFilesOlderThanDayOld(string dir)
         {
@@ -230,7 +245,6 @@ namespace OshoPortal.Modules
             string date = null;
 
             DateString = DateString.Replace("/", "");
-
             try
             {
                 DateTime oDate = DateTime.ParseExact(DateString, "M/d/yyyy hh:mm", new System.Globalization.CultureInfo("pt-BR"));
@@ -278,7 +292,6 @@ namespace OshoPortal.Modules
             try
             {
                 var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
-
                 Daata = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
             }
             catch (Exception es)
@@ -361,6 +374,88 @@ namespace OshoPortal.Modules
             }
             return itemdetails;
         }
+        public static List<EditRequisition> LoadDetails(string Requisition)
+        {
+            EditRequisition Edit = new EditRequisition();
+            List<EditRequisition> requisitions = new List<EditRequisition>();
+
+            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+
+            string EmpName = System.Web.HttpContext.Current.Session["Profile"].ToString();
+
+            string operation = "Export";
+
+            var RequisitionDetails = XMLRequest.ExportRequisition(username, Requisition, "self", EmpName, operation);
+            XmlDocument xmlSoapRequest = new XmlDocument();
+            xmlSoapRequest.LoadXml(RequisitionDetails);
+            int count = 0;
+
+            if (xmlSoapRequest.GetElementsByTagName("RequisitionHeaderLine").Count > 0)
+            {
+                foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("RequisitionHeaderLine"))
+                {
+                    XmlNode NodeDocumentType = xmlSoapRequest.GetElementsByTagName("DocumentType")[count];
+                    string DocumentType = NodeDocumentType.InnerText;
+
+                    XmlNode NodeDocumentNo = xmlSoapRequest.GetElementsByTagName("DocumentNo")[count];
+                    documentNo = NodeDocumentNo.InnerText;
+
+                    XmlNode NodeRequestByNo = xmlSoapRequest.GetElementsByTagName("RequestByNo")[count];
+                    RequestByNo = NodeRequestByNo.InnerText;
+
+                    XmlNode NodeRequestByName = xmlSoapRequest.GetElementsByTagName("RequestByName")[count];
+                    RequestByName = NodeRequestByName.InnerText;
+
+                    XmlNode NodeRequestDate = xmlSoapRequest.GetElementsByTagName("RequestDate")[count];
+                    RequestDate = NodeRequestDate.InnerText;
+
+                    XmlNode NodeValidToDate = xmlSoapRequest.GetElementsByTagName("ValidToDate")[count];
+                    ValidToDate = NodeValidToDate.InnerText;
+
+                    XmlNode NodeLineNo = xmlSoapRequest.GetElementsByTagName("LineNo")[count];
+                    string LineNo = NodeLineNo.InnerText;
+
+                    XmlNode NodeLineType = xmlSoapRequest.GetElementsByTagName("LineType")[count];
+                    string LineType = NodeLineType.InnerText;
+
+                    XmlNode NodeNo = xmlSoapRequest.GetElementsByTagName("No")[count];
+                    No = NodeNo.InnerText;
+
+                    XmlNode NodeDescription = xmlSoapRequest.GetElementsByTagName("Description")[count];
+                    Description = NodeDescription.InnerText;
+
+                    XmlNode NodeQuantity = xmlSoapRequest.GetElementsByTagName("Quantity")[count];
+                    Quantity = NodeQuantity.InnerText;
+
+                    XmlNode NodeUoMCode = xmlSoapRequest.GetElementsByTagName("UoMCode")[count];
+                    UoMCode = NodeUoMCode.InnerText;
+
+                    XmlNode NodeUnitCost = xmlSoapRequest.GetElementsByTagName("UnitCost")[count];
+                    UnitCost = NodeUnitCost.InnerText;
+
+                    XmlNode NodeLineAmount = xmlSoapRequest.GetElementsByTagName("LineAmount")[count];
+                    LineAmount = NodeLineAmount.InnerText;
+
+
+
+                    requisitions.Add(new EditRequisition
+                    {
+                        Amount = LineAmount,
+                        Description = Description,
+                        DocumentNo = documentNo,
+                        No = No,
+                        NOofItems = Quantity,
+                        cost = UnitCost,
+                        UnitOfMeasure = UoMCode
+                    });
+                }
+                RequestD = Functions.ConvertTime(RequestDate);
+                ValidDate = Functions.ConvertTime(ValidToDate);
+            
+            }
+            return requisitions;
+
+        }
     }
     class TimeManager
     {
@@ -406,5 +501,9 @@ namespace OshoPortal.Modules
             }
             return (long)Math.Ceiling(Number);
         }
+    }
+    internal class editdetails
+    {
+      
     }
 }

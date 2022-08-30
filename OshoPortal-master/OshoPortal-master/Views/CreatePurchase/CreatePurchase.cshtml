@@ -9,8 +9,7 @@
         <div class="card-body">
             <div class="row mb-1">
                 <div class="col-md-4 mb-4">
-                    <div>Create Purchase Requisation</div>
-                   
+                    <div>Create Purchase Requisation</div>                  
                     <div class="text-muted small"></div>
                 </div>
                 <div class="col-md-8">
@@ -233,15 +232,15 @@
 
          var text_max = 250;
          $('#count_message').html(text_max + 'remaining');
-         $('#Comment').keyup(function () {
+         $( '#Comment' ).keyup( function () {
              var text_length = $('#Comment').val().length;
              var text_remaining = text_max - text_length;
-
              $('#count_message').html(text_remaining + 'remaining');
          } );
          $( "#SelectDate").datepicker( {
              minDate: 0
          } );
+
          //date picker for the SelectDate
          $("#SelectDate").datepicker({
              dateFormat: 'dd/mm/yy',
@@ -254,7 +253,6 @@
          $( '#UploadDiv' ).hide();
          $( '#NOofItems' ).change(
              function () {
-
                  var cost = $( '#cost' ).val();
                  var noofitem = $( '#NOofItems' ).val();
                  var total = cost * noofitem;
@@ -271,12 +269,11 @@
                  data: '{param1:"' + data + '", param2:"' + type + '" }',
                  dataType: "json",
                  contentType: "application/json; charset=utf-8",
-                 success: function (response) {
-                     // console.log(JSON.stringify(response));
+                 success: function (response) {                    
                          if (response != null ) {
                              var data = $.parseJSON(response);;
                              console.log(data);
-                         //set fields values
+                               //set fields values
                              $( '#Description' ).val( data.Description);
                              $( '#UnitOfMeasure' ).val( data.UnitOfMeasure);
                              $( '#cost' ).val( data.Cost );
@@ -287,7 +284,8 @@
                  });
          } );
          $("#Type").change(function () {
-             var data = $('#Type').val();
+             var data = $( '#Type' ).val();
+             console.log( data );
              //post the selected item to controller
              jQuery.ajax({
                  url:"@Url.Action("GLaccount", "CreatePurchase")",
@@ -296,22 +294,20 @@
                  dataType: "json",
                  contentType: "application/json; charset=utf-8",
                  success: function (response) {
-                     // console.log(JSON.stringify(response));
-                         if (response != null ) {
-                             var data = $.parseJSON(response);;
-                            console.log(data);
-                             //set fields values
-                             var s = '<option value="-1">Please Select a Item</option>';
-                             for ( var i = 0; i < data.length; i++ ) {
-                                 s += '<option value="' + data[i] + '">' + data[i] + '</option>';
-                             }
-                             $("#Items").html( s );
-
-                         }
+                    if (response != null ) {
+                        var data = $.parseJSON(response);               
+                        //set fields values
+                        var s = '<option value="-1">Please Select a Item</option>';
+                        for ( var i = 0; i < data.length; i++ ) {
+                            s += '<option value="' + data[i] + '">' + data[i] + '</option>';
+                        }
+                        $("#Items").html( s );
+                    }
                  }
 
              } );
-         });
+         } );
+
          //  datepicker event handler
          $("#SelectDate").change(function () {
              //when the date is changed
@@ -322,16 +318,11 @@
                      $("#SelectDate").val('');
                  });
              }
-
-
-         });
-
-         //days applied events
+         } );
 
          //save button to controller save function
          jQuery_3_3_1("#Save").click(function (event) {
              event.preventDefault();
-
              // Fetch form to apply custom Bootstrap validation
              var form = $("#CreatePurchaseForm")
              console.log(form);
@@ -339,9 +330,11 @@
                  event.preventDefault()
                  event.stopPropagation()
                  form.addClass('was-validated');
-             } else if (form[0].checkValidity() === true) {
+             }
+             else if ( form[ 0 ].checkValidity() === true ) {
                  // Perform ajax submit here...
-                 showToast('Saving application');
+                 showToast( 'Saving application' );
+
                  //function for checkig fileupload
                  $.ajax({
                      data: new FormData( $('#CreatePurchaseForm')[0]) ,
@@ -399,6 +392,7 @@
              //uncomment below
              event.preventDefault();
          } );
+
          //save button to controller save function
          jQuery_3_3_1( "#Document" ).click( function ( event ) {
              $.ajax( {
@@ -430,18 +424,20 @@
 
              // Fetch form to apply custom Bootstrap validation
              var form = $("#CreatePurchaseForm")
-
+            
              if (form[0].checkValidity() === false) {
                  event.preventDefault()
                  event.stopPropagation()
                  form.addClass('was-validated');
-             } else if (form[0].checkValidity() === true) {
+             }
+             else if ( form[ 0 ].checkValidity() === true ) {
                  $.ajax({
                      data: new FormData( $('#CreatePurchaseForm')[0]) ,
                      cache: false,
                      contentType: false,
                      processData: false,
-                     success: function (file) {
+                     success: function ( file ) {
+
                          var data = $( '#Items' ).val();
                          var Description = $('#Description').val();
                          var cost = $('#cost').val();
@@ -452,6 +448,7 @@
                          var UnitOfMeasure = $( '#UnitOfMeasure' ).val();
                          var Type = $( '#Type' ).val();
                          var DocumentNo = $( '#DocumentNo' ).val();
+
                          jQuery.ajax({
                              url:"@Url.Action("Saveline", "CreatePurchase")",
                              type: "POST",
@@ -463,7 +460,7 @@
                                  if (response != null ) {
                                      //we need to parse it to JSON
                                      data = $.parseJSON( response );
-                                     console.log( data );
+
                                      var tblitem = $( "#dataTable" );
                                      $.each( data, function ( index, d ) {
                                          var tr = $( "<tr></tr>" );
@@ -476,28 +473,34 @@
                                              + " " + ( "<td><a class = 'btn btn-danger btn-xs delete' data-id=" + d.No + " href = 'javascript:void(0)' data-toggle='tooltip' title='Delete'><span class = 'fa fa-trash-alt' ></td>" ));
                                          tblitem.append( tr );
                                      } );
-                                      $( '#Items' ).val('');
-                                      $( '#Description' ).val('');
-                                      $( '#cost' ).val('');
-                                     $( '#NOofItems' ).val('');
-                                      $( '#SelectDate' ).val('');
-                                      $( '#items' ).val('');                                     
-                                     $( '#UnitOfMeasure' ).val('');
-                                      $( '#Type' ).val('');
-                                     $( '#Amount' ).val('');
+
+                                      $('#Items').val('');
+                                      $('#Description' ).val('');
+                                      $('#cost').val('');
+                                      $('#NOofItems').val('');
+                                      $('#SelectDate').val('');
+                                      $('#items').val('');                                     
+                                      $('#UnitOfMeasure').val('');
+                                      $('#Type').val('');
+                                      $('#Amount').val('');
+
+                                     $('#dataTable').dataTable( {
+                                         stateSave: true,
+                                        
+                                     } );
                                  }
                              }
-                         });
+                         } );
+
                      },
 
-                 });
+                 } );
+            
              }
              //uncomment below
              event.preventDefault();
          } );
-         $( '#dataTable' ).dataTable( {
-             stateSave: true
-         } );
+        
          //submit to controller submit function
          jQuery_3_3_1("#Submit").click(function (e) {
              // Fetch form to apply custom Bootstrap validation
@@ -507,7 +510,8 @@
                  event.preventDefault()
                  event.stopPropagation()
                  form.addClass('was-validated');
-             } else if (form[0].checkValidity() === true) {
+             }
+             else if ( form[ 0 ].checkValidity() === true ) {
 
                  var formdata = new FormData( $('#CreatePurchaseForm')[0]);
                  // Perform ajax submit here...
@@ -518,7 +522,8 @@
                      cache: false,
                      contentType: false,
                      processData: false,
-                     success: function (file) {
+                     success: function ( file ) {
+
                          var Description = $( '#Description' ).val();
                          var cost = $('#cost').val();
                          var NOofItems = $( '#NOofItems' ).val();
@@ -530,21 +535,16 @@
                          jQuery.ajax({
                              url:"@Url.Action("Submit", " CreatePurchase")",
                              type: "POST",
-
                              dataType: "json",
                              contentType: "application/json; charset=utf-8",
                              success: function (response) {
-
                                  if (response != null ) {
-
                                      //we need to parse it to JSON
                                      data = $.parseJSON(response);
-
                                      hideLoading();
-
                                      bootbox.alert(data.Message);
                                      //reset fields
-                                     $("#LeaveApplicationForm")[0].reset();
+                                     $("#CreatePurchaseForm")[0].reset();
                                    //  $("#Leave_Type").select2("val", "");
                                  }
                              }
@@ -569,62 +569,63 @@
              }
              event.preventDefault();
          } );
+
           jQuery_3_3_1( "#dataTable" ).on( "click", ".delete", function ( e ) {
-        e.preventDefault();
-
-        var pid = $( this ).attr( 'data-id' );
-
-        bootbox.confirm( {
-            title: "<i class='fa fa-trash-alt'></i> Delete ?",
-            message: "Do you wish to delete this record?",
-            buttons: {
-                confirm: {
-                    label: 'Yes',
-                    className: 'btn-success'
-                },
-                cancel: {
-                    label: 'No',
-                    className: 'btn-danger'
-                }
-            },
-            callback: function ( result ) {
-
-                if ( result == true ) {
-
-                    //showToast('Deleting advance request line');
-                    // showToast(pid);
-
-                    jQuery.ajax( {
-                        url:"@Url.Action("DeleteAdvanceRequestLines", "CreateStaffClaims")",
-                        type: "POST",
-                        data: '{param1:"' + pid + '"}',
-                        dataType: "json",
-                        contentType: "application/json; charset=utf-8",
-                        success: function ( response ) {
-
-                            if ( response != null ) {
-                                var data = $.parseJSON( response );
-
-                                // hideLoading();
-
-                                bootbox.alert( {
-                                    message: data.Message,
-                                    callback: function () {
-                                        location.reload();
-                                    }
-                                } )
-                            }
+                e.preventDefault();
+                var pid = $( this ).attr( 'data-id' );
+                bootbox.confirm( {
+                    title: "<i class='fa fa-trash-alt'></i> Delete ?",
+                    message: "Do you wish to delete this record?",
+                    buttons: {
+                        confirm: {
+                            label: 'Yes',
+                            className: 'btn-success'
                         },
-                        error: function () {
-                            bootbox.error( { title: "System error", message: "An error occured." } );
+                        cancel: {
+                            label: 'No',
+                            className: 'btn-danger'
                         }
-                    } );
-                }
-            }
-        } );
-    } );
-     });
+                    },
+                    callback: function ( result ) {
 
+                        if ( result == true ) {
+                            jQuery.ajax( {
+                                url:"@Url.Action("DeleteAdvanceRequestLines", "CreateStaffClaims")",
+                                type: "POST",
+                                data: '{param1:"' + pid + '"}',
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8",
+                                success: function ( response ) {
+                                    if ( response != null ) {
+                                        var data = $.parseJSON( response );
+                                        // hideLoading();
+                                        bootbox.alert( {
+                                            message: data.Message,
+                                            callback: function () {
+                                                location.reload();
+                                            }
+                                        } )
+                                    }
+                                },
+                                error: function () {
+                                    bootbox.error( { title: "System error", message: "An error occured." } );
+                                }
+                            } );
+                        }
+                    }
+                } );
+          } );
+     } );
+
+    $( '#datatable' ).dataTable( {
+        stateSave: true,
+        stateSaveCallback: function ( settings, data ) {
+            localStorage.setItem( 'DataTables_' + settings.sInstance, JSON.stringify( data ) )
+        },
+        stateLoadCallback: function ( settings ) {
+            return JSON.parse( localStorage.getItem( 'DataTables_' + settings.sInstance ) )
+        }
+    } );
      //dateConverter
      function convertDate(date, symbol, new_symbol) {
 

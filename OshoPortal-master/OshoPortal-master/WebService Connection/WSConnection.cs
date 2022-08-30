@@ -1,6 +1,7 @@
 ﻿using OshoPortal.Modules;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -16,7 +17,8 @@ namespace OshoPortal.WebService_Connection
         public static string CallWebService(string req)
         {
             string action = "";
-            var _url = "http://btl-svr-01.btl.local:8047/BC180-1/WS/Osho%20Chemical%20Industries%20Ltd/Codeunit/PortalLogin";
+            //var _url = "http://btl-svr-01.btl.local:8047/BC180-1/WS/Osho%20Chemical%20Industries%20Ltd/Codeunit/PortalLogin";
+            var _url = ConfigurationManager.AppSettings["webservice"];
             var _action = action;
             try
             {

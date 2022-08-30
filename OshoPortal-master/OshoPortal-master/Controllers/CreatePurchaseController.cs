@@ -54,9 +54,7 @@ namespace OshoPortal.Controllers
                                         try
                                         {
                                             var username = System.Web.HttpContext.Current.Session["Username"].ToString();
-
-
-                                            var documentnumber =System.Web.HttpContext.Current.Session["DocumentNo"];
+                                            var documentnumber = System.Web.HttpContext.Current.Session["DocumentNo"]; 
                                             string EmployeeID = System.Web.HttpContext.Current.Session["Username"].ToString();
                                             string EmployeeName = System.Web.HttpContext.Current.Session["Profile"].ToString();
                                             string RequestDate = DateTime.Now.ToString("dd-MM-yyyy");//d/m/Y
@@ -64,7 +62,7 @@ namespace OshoPortal.Controllers
                                             string AccountId = System.Web.HttpContext.Current.Session["Username"].ToString();
                                             if (documentnumber != null)
                                             {
-                                                saveline = Functions.GetitemTable(documentnumber, "", EmployeeID, EmployeeName, "EXPORT", "", "", "", "", "", "");
+                                                List<EditRequisition> RequisitionDetails = Functions.LoadDetails(documentnumber.ToString());
 
                                             }
                                         }
@@ -157,8 +155,11 @@ namespace OshoPortal.Controllers
         public ActionResult GLaccount(string param1)
         {
             string EmployeeID = System.Web.HttpContext.Current.Session["Username"].ToString();
+
             List<Models.Item> dropdown = new List<Models.Item>();
+
             var productslist = XMLRequest.GetGLlist(param1, EmployeeID);
+
             var array = productslist.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
             var myList = new List<KeyValuePair<string, string>>(array);
@@ -191,7 +192,6 @@ namespace OshoPortal.Controllers
             {
                 case "000":
                     {
-
                         DocumentNo = System.Web.HttpContext.Current.Session["DocumentNo"].ToString(); 
                         string EmployeeID = System.Web.HttpContext.Current.Session["Username"].ToString();
                         string EmployeeName = System.Web.HttpContext.Current.Session["Profile"].ToString();
@@ -217,7 +217,7 @@ namespace OshoPortal.Controllers
                         }
                         try
                         {
-                            var saverequisition = XMLRequest.SaveRequisition(DocumentNo, type, EmployeeID, EmployeeName, Item, Description, Quatity, unitofMeasure, Amount, DateofSelection);
+                            string saverequisition = XMLRequest.SaveRequisition(DocumentNo, type, EmployeeID, EmployeeName, Item, Description, Quatity, unitofMeasure, Amount, DateofSelection);
                         }
                         catch (Exception es)
                         {
@@ -285,7 +285,6 @@ namespace OshoPortal.Controllers
         }
         public JsonResult Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
-
             string response = null;
             string status = null;
             var DocumentNo = param9;
@@ -360,7 +359,6 @@ namespace OshoPortal.Controllers
          
             if (xmlSoapRequest.GetElementsByTagName("RequisitionHeaderLine").Count > 0)
             {
-
                 foreach (XmlNode xmlNode in xmlSoapRequest.DocumentElement.GetElementsByTagName("RequisitionHeaderLine"))
                 {
 

@@ -25,7 +25,6 @@
                     <div class="row mb-1">
                         <div class="col-md-4 mb-4">
                             <div>Create Purchase Requisation</div>
-
                             <div class="text-muted small"></div>
                         </div>
                         <fieldset novalidate="" action="#" method="POST" id="CreateForm" autocomplete="off">
@@ -38,7 +37,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -47,7 +45,6 @@
                                         @Html.ValidationMessageFor(model => model.EmployeeNo, "", new { @class = "" })
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-control-label">Date submitted</label>
@@ -75,15 +72,12 @@
                                 </div>
                             </div>
                         </fieldset>
-
                     </div>
-                    <div class="card-footer bg-light text-right">
-                        @*  <button id="Saveline" class="btn btn-success">Add Item Line</button>*@
+                    <div class="card-footer bg-light text-right">                        
                         <div class="text-right">
                             <a id="AddAppraisal" class="btn btn-success" href="#" data-toggle="modal" data-target="#AddRequestLine" data-title="Create new Staff Claim line" title="Add Staff Claim line">Add Item Line</a>
                         </div>
                     </div>
-
                     <div class="row mb-5">
                         <div class="col-md-12">
                             <div class="col-md-4 mb-4">
@@ -123,7 +117,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <!--Chack Conditions here-->
                 @if (!String.IsNullOrEmpty(Request["status"]) && Request["status"] == "Open")
@@ -142,7 +135,6 @@
                     </div>
                 }
             </form>
-
         </div>
         <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">
@@ -151,17 +143,14 @@
         <div class="modal fade" id="AddRequestLine">
             <div class="modal-dialog">
                 <div class="modal-content">
-
                     <!-- Modal Header -->
                     <div class="modal-header">
                         <h4 class="modal-title">Add Item Lines</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-
                     <!-- Modal body -->
                     <div class="modal-body">
                         <form novalidate="" action="#" method="POST" id="CreateItemLinesform" autocomplete="off">
-
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -191,7 +180,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -259,17 +247,13 @@
                             <input type="hidden" id="ExchangeRate" name="ExchangeRate" value="">
                         </form>
                     </div>
-
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                         <div id="DivSubmit">
                             <button class="btn btn-primary" type="button" id="CreateItemLines">Save</button>
-                        </div>
-                      
-
+                        </div>                      
                     </div>
-
                 </div>
             </div>
         </div>
@@ -300,21 +284,11 @@
     <script src="~/Assest/js/jquery.toast.js"></script>
     <script>
      $(function () {
-         //calculate the words in textarea
-         $(".MultiLineLimit").on('change keydown paste input', function () {
-             this.value = (this.value.length <= 250 ? this.value : this.value.substring(0, 250));
-         });
-         var text_max = 250;
-         $('#count_message').html(text_max + 'remaining');
-         $('#Comment').keyup(function () {
-             var text_length = $('#Comment').val().length;
-             var text_remaining = text_max - text_length;
-
-             $('#count_message').html(text_remaining + 'remaining');
-         } );
+   
          $( "#SelectDate" ).datepicker( {
              minDate: 0
          } );
+
          //date picker for the SelectDate
          $("#SelectDate").datepicker({
              dateFormat: 'dd/mm/yy',
@@ -322,21 +296,21 @@
                  $("#SelectDate").datepicker("option", "minDate", date);
                  $("#SelectDate").datepicker("option", "maxDate", '+2y');
              }
-         }).val();
-        //hide upload
-         $( '#UploadDiv' ).hide();
+         } ).val();
+
          $( '#NOofItems' ).change(
              function () {
-
                  var cost = $( '#cost' ).val();
                  var noofitem = $( '#NOofItems' ).val();
                  var total = cost * noofitem;
                  $( '#Amount' ).val( total );
              }
          );
-         $("#Items").change(function () {
+         $( "#Items" ).change( function () {
+
              var data = $('#Items').val();
              var type = $( '#Type' ).val();
+
              //post the selected item to controller
              jQuery.ajax({
                  url:"@Url.Action("GetitemDetails", "CreatePurchase")",
@@ -345,21 +319,22 @@
                  dataType: "json",
                  contentType: "application/json; charset=utf-8",
                  success: function (response) {
-                     // console.log(JSON.stringify(response));
-                         if (response != null ) {
-                             var data = $.parseJSON(response);;
-                             console.log(data);
-                         //set fields values
-                             $( '#Description' ).val( data.Description);
-                             $( '#UnitOfMeasure' ).val( data.UnitOfMeasure);
-                             $( '#cost' ).val( data.Cost);
-                             bootbox.alert( data.Response );
-                         }
+                        if (response != null ) {
+                            var data = $.parseJSON(response);
+                                //set fields values
+                            $( '#Description' ).val( data.Description);
+                            $( '#UnitOfMeasure' ).val( data.UnitOfMeasure);
+                            $( '#cost' ).val( data.Cost);
+                            bootbox.alert( data.Response );
+                        }
                      }
                  });
          } );
-         $("#Type").change(function () {
-             var data = $('#Type').val();
+
+         $( "#Type" ).change( function () {
+
+             var data = $( '#Type' ).val();
+
              //post the selected item to controller
              jQuery.ajax({
                  url:"@Url.Action("GLaccount", "CreatePurchase")",
@@ -368,109 +343,99 @@
                  dataType: "json",
                  contentType: "application/json; charset=utf-8",
                  success: function (response) {
-                     // console.log(JSON.stringify(response));
-                         if (response != null ) {
-                             var data = $.parseJSON(response);;
-                            console.log(data);
-                             //set fields values
-                             var s = '<option value="-1">Please Select a Item</option>';
-                             for ( var i = 0; i < data.length; i++ ) {
-                                 s += '<option value="' + data[i] + '">' + data[i] + '</option>';
-                             }
-                             $("#Items").html( s );
+                     if ( response != null ) {
 
+                            var data = $.parseJSON(response);;                           
+                            //set fields values
+                            var s = '<option value="-1">Please Select a Item</option>';
+                            for ( var i = 0; i < data.length; i++ ) {
+                                s += '<option value="' + data[i] + '">' + data[i] + '</option>';
+                            }
+                            $("#Items").html( s );
                          }
                  }
 
              } );
-         });
+         } );
+
          // SelectDate datepicker event handler
          $("#SelectDate").change(function () {
              //when the date is changed
-             if ($("#Leave_Type").val() == "0") {
+             if ( $("#SelectDate").val() == "0") {
                  //alert user to select a leave type first
                  bootbox.alert("Please select a Leave Type", function () {
                      //set leave start date value to blank
                      $("#SelectDate").val('');
                  });
              }
-             ////reset selection fields
-             //if ($("#LeaveEndDay").val() != '') {
-             //    $("#LeaveEndDay").val('');
-             //}
-             //if ($("#LeaveDaysApplied").val() != '') {
-             //    $("#LeaveDaysApplied").val('');
-             //}
-             //if ($("#ReturnDate").val() != '') {
-             //    $("#ReturnDate").val('');
-             //}
          } );
-         jQuery_3_3_1( '#CreateItemLines' ).on( 'click', function ( event ) {
-             event.preventDefault();
 
+         jQuery_3_3_1( '#CreateItemLines' ).on( 'click', function ( event ) {
+
+             event.preventDefault();
              var title = 'Creating item line';
              var icon = 'loading';
              var duration = 50000 * 1;
 
              //validate
              var form = $( "#CreateItemLinesform" )
-             console.log( form );
              if ( form[ 0 ].checkValidity() === false ) {
                  event.preventDefault()
                  event.stopPropagation()
                  form.addClass( 'was-validated' );
-             } else if ( form[ 0 ].checkValidity() === true ) {
+             }
+             else if ( form[ 0 ].checkValidity() === true ) {
 
-                         var data = $( '#Items' ).val();
-                         var Description = $('#Description').val();
-                         var cost = $('#cost').val();
-                         var NOofItems = $('#NOofItems').val();
-                         var SelectDate = $( '#SelectDate' ).val();
-                         var items = $('#items').val();
-                         var Comment = $('#Comment').val();
-                         var UnitOfMeasure = $( '#UnitOfMeasure' ).val();
-                         var Type = $( '#Type' ).val();
-                         var DocumentNo = $( '#DocumentNo' ).val();
-                         jQuery.ajax({
-                             url:"@Url.Action("Saveline", "EditRequisition")",
-                             type: "POST",
-                             data: '{param1:"' + data + '", param2:"' + Description + '", param3:"' + NOofItems + '", param4:"' + cost + '", param5:"' + SelectDate + '", param6:"' + Comment + '" , param7:"' + UnitOfMeasure + '", param8:"' + Type + '",param9:"' + DocumentNo + '"}',
-                             dataType: "json",
+                var data = $( '#Items' ).val();
+                var Description = $('#Description').val();
+                var cost = $('#cost').val();
+                var NOofItems = $('#NOofItems').val();
+                var SelectDate = $( '#SelectDate' ).val();
+                var items = $('#items').val();
+                var Comment = $('#Comment').val();
+                var UnitOfMeasure = $( '#UnitOfMeasure' ).val();
+                var Type = $( '#Type' ).val();
+                 var DocumentNo = $( '#DocumentNo' ).val();
 
-                             contentType: "application/json; charset=utf-8",
-                             success: function (response) {
-                                 if ( response != null ) {
-                                     //we need to parse it to JSON
-                                     data = $.parseJSON( response );
-                                     console.log( data );
-                                     if ( data.Message == "" ) {
-                                         var tblitem = $( "#dataTable" );
-                                         $.each( data, function ( index, d ) {
-                                             var tr = $( "<tr></tr>" );
-                                             tr.html( ( "<td>" + d.No + "</td>" )
-                                                 + " " + ( "<td>" + d.Description + "</td>" )
-                                                 + " " + ( "<td>" + d.Quantity + "</td>" )
-                                                 + " " + ( "<td>" + d.UoMCode + "</td>" )
-                                                 + " " + ( "<td>" + d.UnitCost + "</td>" )
-                                                 + " " + ( "<td>" + d.LineAmount + "</td>" )
-                                                 + " " + ( "<td><a class = 'btn btn-danger btn-xs delete' data-id=" + d.No + " href = 'javascript:void(0)' data-toggle='tooltip' title='Delete'><span class = 'fa fa-trash-alt' ></td>" ) );
-                                             tblitem.append( tr );
-                                         } );
+                jQuery.ajax({
+                    url:"@Url.Action("Saveline", "EditRequisition")",
+                    type: "POST",
+                    data: '{param1:"' + data + '", param2:"' + Description + '", param3:"' + NOofItems + '", param4:"' + cost + '", param5:"' + SelectDate + '", param6:"' + Comment + '" , param7:"' + UnitOfMeasure + '", param8:"' + Type + '",param9:"' + DocumentNo + '"}',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
+                        if ( response != null ) {
 
-                                         $( 'input[type=text]' ).each( function () {
-                                             $( "#CreateItemLinesform" ).val( '' );
-                                         } );
-                                     }
-                                     else if ( data.Message != null )
-                                     {
-                                         bootbox.alert( data.Message );
-                                     }
-                                 } 
-                             }
-                         } );
-                
+                            //we need to parse it to JSON
+                            data = $.parseJSON( response );
+                            if ( data.Message == "" ) {
+                                var tblitem = $( "#dataTable" );
+                                $.each( data, function ( index, d ) {
+                                    var tr = $( "<tr></tr>" );
+                                    tr.html( ( "<td>" + d.No + "</td>" )
+                                        + " " + ( "<td>" + d.Description + "</td>" )
+                                        + " " + ( "<td>" + d.Quantity + "</td>" )
+                                        + " " + ( "<td>" + d.UoMCode + "</td>" )
+                                        + " " + ( "<td>" + d.UnitCost + "</td>" )
+                                        + " " + ( "<td>" + d.LineAmount + "</td>" )
+                                        + " " + ( "<td><a class = 'btn btn-danger btn-xs delete' data-id=" + d.No + " href = 'javascript:void(0)' data-toggle='tooltip' title='Delete'><span class = 'fa fa-trash-alt' ></td>" ) );
+                                    tblitem.append( tr );
+                                } );
+
+                                $( 'input[type=text]' ).each( function () {
+                                    $( "#CreateItemLinesform" ).val( '' );
+                                } );
+                            }
+                            else if ( data.Message != null )
+                            {
+                                bootbox.alert( data.Message );
+                            }
+                        } 
+                    }
+                } );                
              }
          } );
+
          jQuery_3_3_1( '#UpdateitemLines' ).on( 'click', function ( event ) {
              event.preventDefault();
 
@@ -485,45 +450,46 @@
                  event.preventDefault()
                  event.stopPropagation()
                  form.addClass( 'was-validated' );
-             } else if ( form[ 0 ].checkValidity() === true ) {
+             }
+             else if ( form[ 0 ].checkValidity() === true ) {
 
-                  var data = $( '#Items' ).val();
-                         var Description = $('#Description').val();
-                         var cost = $('#cost').val();
-                         var NOofItems = $('#NOofItems').val();
-                         var SelectDate = $( '#SelectDate' ).val();
-                         var items = $('#items').val();
-                         var Comment = $('#Comment').val();
-                         var UnitOfMeasure = $( '#UnitOfMeasure' ).val();
-                         var Type = $( '#Type' ).val();
-                         var DocumentNo = $( '#DocumentNo' ).val();
-                         jQuery.ajax({
-                             url:"@Url.Action("Saveline", "EditRequisition")",
-                             type: "POST",
-                             data: '{param1:"' + data + '", param2:"' + Description + '", param3:"' + NOofItems + '", param4:"' + cost + '", param5:"' + SelectDate + '", param6:"' + Comment + '" , param7:"' + UnitOfMeasure + '", param8:"' + Type + '",param9:"' + DocumentNo + '"}',
-                             dataType: "json",
+                 var data = $( '#Items' ).val();
+                 var Description = $('#Description').val();
+                 var cost = $('#cost').val();
+                 var NOofItems = $('#NOofItems').val();
+                 var SelectDate = $( '#SelectDate' ).val();
+                 var items = $('#items').val();
+                 var Comment = $('#Comment').val();
+                 var UnitOfMeasure = $( '#UnitOfMeasure').val();
+                 var Type = $( '#Type' ).val();
+                 var DocumentNo = $('#DocumentNo').val();
 
-                             contentType: "application/json; charset=utf-8",
-                             success: function (response) {
-                                 if (response != null ) {
-                                     //we need to parse it to JSON
-                                     data = $.parseJSON( response );
-                                     console.log( data );
-                                     var tblitem = $( "#dataTable" );
-                                     $.each( data, function ( index, d ) {
-                                         var tr = $( "<tr></tr>" );
-                                         tr.html( ( "<td>" + d.No + "</td>" )
-                                             + " " + ( "<td>" + d.Description + "</td>" )
-                                             + " " + ( "<td>" + d.Quantity + "</td>" )
-                                             + " " + ( "<td>" + d.UoMCode + "</td>" )
-                                             + " " + ( "<td>" + d.UnitCost + "</td>" )
-                                             + " " + ( "<td>" + d.LineAmount + "</td>" )
-                                             + " " + ( "<td><a class = 'btn btn-danger btn-xs delete' data-id=" + d.No + " href = 'javascript:void(0)' data-toggle='tooltip' title='Delete'><span class = 'fa fa-trash-alt' ></td>" ));
-                                         tblitem.append( tr );
-                                     } );
-                                 }
-                             }
-                         });
+                jQuery.ajax({
+                    url:"@Url.Action("Saveline", "EditRequisition")",
+                    type: "POST",
+                    data: '{param1:"' + data + '", param2:"' + Description + '", param3:"' + NOofItems + '", param4:"' + cost + '", param5:"' + SelectDate + '", param6:"' + Comment + '" , param7:"' + UnitOfMeasure + '", param8:"' + Type + '",param9:"' + DocumentNo + '"}',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function ( response ) {
+                        if (response != null ) {
+                            //we need to parse it to JSON
+                            data = $.parseJSON( response );
+
+                            var tblitem = $( "#dataTable" );
+                            $.each( data, function ( index, d ) {
+                                var tr = $( "<tr></tr>" );
+                                tr.html( ( "<td>" + d.No + "</td>" )
+                                    + " " + ( "<td>" + d.Description + "</td>" )
+                                    + " " + ( "<td>" + d.Quantity + "</td>" )
+                                    + " " + ( "<td>" + d.UoMCode + "</td>" )
+                                    + " " + ( "<td>" + d.UnitCost + "</td>" )
+                                    + " " + ( "<td>" + d.LineAmount + "</td>" )
+                                    + " " + ( "<td><a class = 'btn btn-danger btn-xs delete' data-id=" + d.No + " href = 'javascript:void(0)' data-toggle='tooltip' title='Delete'><span class = 'fa fa-trash-alt' ></td>" ));
+                                tblitem.append( tr );
+                            } );
+                        }
+                    }
+                });
              }
          } );
           jQuery_3_3_1("#Saveline").click(function (event) {
@@ -536,14 +502,16 @@
                  event.preventDefault()
                  event.stopPropagation()
                  form.addClass('was-validated');
-             } else if (form[0].checkValidity() === true) {
+             }
+             else if ( form[ 0 ].checkValidity() === true ) {
 
                  $.ajax({
                      data: new FormData( $('#CreateStaffImprestLines')[0]) ,
                      cache: false,
                      contentType: false,
                      processData: false,
-                     success: function (file) {
+                     success: function ( file ) {
+
                          var data = $( '#Items' ).val();
                          var Description = $('#Description').val();
                          var cost = $('#cost').val();
@@ -554,18 +522,18 @@
                          var UnitOfMeasure = $( '#UnitOfMeasure' ).val();
                          var Type = $( '#Type' ).val();
                          var DocumentNo = $( '#DocumentNo' ).val();
+
                          jQuery.ajax({
                              url:"@Url.Action("Saveline", "CreatePurchase")",
                              type: "POST",
                              data: '{param1:"' + data + '", param2:"' + Description + '", param3:"' + NOofItems + '", param4:"' + cost + '", param5:"' + SelectDate + '", param6:"' + Comment + '" , param7:"' + UnitOfMeasure + '", param8:"' + Type + '",param9:"' + DocumentNo + '"}',
                              dataType: "json",
-
                              contentType: "application/json; charset=utf-8",
                              success: function (response) {
-                                 if (response != null ) {
+                                 if ( response != null ) {
+
                                      //we need to parse it to JSON
                                      data = $.parseJSON( response );
-                                     console.log( data );
                                      var tblitem = $( "#dataTable" );
                                      $.each( data, function ( index, d ) {
                                          var tr = $( "<tr></tr>" );
@@ -582,7 +550,6 @@
                              }
                          });
                      },
-
                  });
              }
              //uncomment below
@@ -618,7 +585,8 @@
                          var SelectDate = $('#SelectDate').val();
                          var items = $('#items').val();
                          var Comment = $('#Comment').val();
-                         var UnitOfMeasure = $('#UnitOfMeasure').val();
+                         var UnitOfMeasure = $( '#UnitOfMeasure' ).val();
+
                          jQuery.ajax({
                              url:"@Url.Action("Save", "CreatePurchase")",
                              type: "POST",
@@ -674,12 +642,12 @@
                  // Perform ajax submit here...
                  showToast('Submitting application');
                  $.ajax({
-
                      data: formdata,
                      cache: false,
                      contentType: false,
                      processData: false,
-                     success: function (file) {
+                     success: function ( file ) {
+
                          var Description = $( '#Description' ).val();
                          var cost = $('#cost').val();
                          var NOofItems = $( '#NOofItems' ).val();
@@ -691,22 +659,17 @@
                          jQuery.ajax({
                              url:"@Url.Action("Submit", " CreatePurchase")",
                              type: "POST",
-
                              dataType: "json",
                              contentType: "application/json; charset=utf-8",
                              success: function (response) {
 
                                  if (response != null ) {
-
                                      //we need to parse it to JSON
                                      data = $.parseJSON(response);
-
                                      hideLoading();
-
                                      bootbox.alert(data.Message);
                                      //reset fields
-                                     $("#LeaveApplicationForm")[0].reset();
-                                   //  $("#Leave_Type").select2("val", "");
+                                     $("#CreatePurchaseForm")[0].reset();
                                  }
                              }
                          });
@@ -763,11 +726,8 @@
 
                                 if (response != null) {
                                     var data = $.parseJSON(data);
-
                                     hideLoading();;
-
                                     bootbox.alert(data.Message);
-                                    //
                                     window.setTimeout(function () {
                                         parent.history.back();
                                     }, 2000);
@@ -780,7 +740,8 @@
                     }
                 }
             });
-           } );
+         } );
+
          jQuery_3_3_1('#cancel_record').click(function (e) {
 
             e.preventDefault();
@@ -801,9 +762,7 @@
                 callback: function (result) {
 
                     if (result == true) {
-
                         showToast('Cancelling application');
-
                         jQuery.ajax({
                             url: "@Url.Action("CancelLeave", "EditRequisition")",
                             type: "POST",
@@ -814,9 +773,7 @@
 
                                 if (response != null) {
                                     var data = $.parseJSON(data);
-
                                     hideLoading();;
-
                                     bootbox.alert(data.Message);
                                     parent.history.back();
                                     //window.setTimeout(function () {
@@ -854,7 +811,6 @@
                     if (result == true) {
 
                         showToast('Delegating application');
-
                         jQuery.ajax({
                             url:"@Url.Action("DelegatePendingLeave", "ViewLeave")",
                             type: "POST",
@@ -864,7 +820,7 @@
                             success: function (response) {
 
                                 if (response != null) {
-                                    var data = $.parseJSON(data);
+                                    var data = $.parseJSON( data );
 
                                     hideLoading();
 
@@ -884,7 +840,7 @@
             });
         });
      } );
-          $(function () {
+   $(function () {
         var table = $('#dataTable').DataTable({
             lengthChange: false,
             buttons: ['copy', 'excel', 'pdf', 'colvis'],
@@ -913,7 +869,6 @@
                 callback: function (result) {
 
                     if (result == true) {
-
                         showToast('Deleting application');
                         jQuery.ajax({
                             url: "@Url.Action("DeleteOpenRequisition", "EditRequisition")",
@@ -986,7 +941,6 @@
 
                                         bootbox.error({ title: "Application error", message: data.Message });
                                     }
-
                                 }
                             },
                             error: function () {
@@ -1070,42 +1024,42 @@
                 },
                 callback: function (result) {
 
-                    if (result == true) {
+                if (result == true) {
 
-                        showToast('Delegating application');
+                showToast('Delegating application');
 
-                        jQuery.ajax({
-                            url:"@Url.Action("DelegatePendingRequisition", "EditRequisition")",
-                            type: "POST",
-                            data: '{param1:"' + pid + '"}',
-                            dataType: "json",
-                            contentType: "application/json; charset=utf-8",
-                            success: function (response) {
+                jQuery.ajax({
+                    url:"@Url.Action("DelegatePendingRequisition", "EditRequisition")",
+                    type: "POST",
+                    data: '{param1:"' + pid + '"}',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
 
-                                if (response != null ) {
-                                    var data = $.parseJSON(response);
+                        if (response != null ) {
+                            var data = $.parseJSON(response);
 
-                                    hideLoading();
+                            hideLoading();
 
-                                    if (data.Status == "000") {
-                                        $('body').pleaseWait('stop');
-                                        bootbox.alert(data.Message);
-                                    } else {
-                                        $('body').pleaseWait('stop');
-                                        bootbox.error({ title: "Application error", message: data.Message });
-                                    }
-
-                                    //window.setTimeout(function () {
-                                    //    location.reload()
-                                    //}, 3000);
-                                }
-                            },
-                            error: function () {
-                                bootbox.error({ title: "System error", message: "An error occured." });
+                            if (data.Status == "000") {
+                                $('body').pleaseWait('stop');
+                                bootbox.alert(data.Message);
+                            } else {
+                                $('body').pleaseWait('stop');
+                                bootbox.error({ title: "Application error", message: data.Message });
                             }
-                        });
+
+                            //window.setTimeout(function () {
+                            //    location.reload()
+                            //}, 3000);
+                        }
+                    },
+                    error: function () {
+                        bootbox.error({ title: "System error", message: "An error occured." });
                     }
+                });
                 }
+            }
             });
         });
     });

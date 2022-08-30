@@ -23,33 +23,45 @@ namespace OshoPortal.Controllers
         {
             var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
             var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
+
             //check if user is logged
-            if ((string)log == "No")
+            switch (log)
             {
-                Response.Redirect("/Account/login");
-            }
-            else if ((string)log == "yes")
-            {
-                if ((object)passRequired == "true")
-                {
-                    Response.Redirect("/Account/OneTimePassword");
-                }
-                else
-                {
-                    string status = Request.QueryString["status"];
-                    ViewBag.WordHtml = status;
-                    string owner = Request.QueryString["owner"];
-                    string endpoint = Url.Action("EditRequisition", "EditRequisition", new { id = "" });
-                    if (status == "" || owner == "")
+                case "No":
+                    Response.Redirect("/Account/login");
+                    break;
+                case "yes":
                     {
-                        Response.Redirect(Request.UrlReferrer.ToString());
+                        switch (passRequired)
+                        {
+                            case "true":
+                                Response.Redirect("/Account/OneTimePassword");
+                                break;
+                            default:
+                                {
+                                    string status = Request.QueryString["status"];
+
+                                    ViewBag.WordHtml = status;
+
+                                    string owner = Request.QueryString["owner"];
+
+                                    string endpoint = Url.Action("EditRequisition", "EditRequisition", new { id = "" });
+                                    if (status == "" || owner == "")
+                                    {
+                                        Response.Redirect(Request.UrlReferrer.ToString());
+                                    }
+                                    else
+                                    {
+                                        //load table data
+                                        LoadTable(status, owner, endpoint);
+                                    }
+
+                                    break;
+                                }
+                        }
+
+                        break;
                     }
-                    else
-                    {
-                        //load table data
-                        LoadTable(status, owner,endpoint);
-                    }
-                }
             }
             return View();
         }
@@ -125,10 +137,6 @@ namespace OshoPortal.Controllers
 
             try
             {
-                //string SubmitOpenLeaveresponseString = XMLRequest.SaveRequisition(/*LeaveHeaderNo*/);
-                //dynamic json = JObject.Parse(SubmitOpenLeaveresponseString);
-                //response = json.Msg;
-                //status = json.Status;
                 var approvalrequest = XMLRequest.SendforApproval(HeaderNo);
             }
             catch (Exception es)
@@ -151,12 +159,14 @@ namespace OshoPortal.Controllers
             string status = "";
             string Message = "";
             string documentNo = Functions.Base64Decode(param1);
+
             //send XML req to delete record
             try
             {
                 string username = System.Web.HttpContext.Current.Session["Username"].ToString();
                 string DeleteOpenRequisitionresponseString = XMLRequest.DeleteDocument(documentNo,"",username);
                 dynamic json = JObject.Parse(DeleteOpenRequisitionresponseString);
+
                 status = json.Status;
                 Message = json.Message;
             }
@@ -181,12 +191,7 @@ namespace OshoPortal.Controllers
             {
                 string documentNo = Functions.Base64Decode(param1);
                 ////send XML req to delete record
-                //string CancelOpenLeaveresponseString = LeavesXMLRequests.CancelOpenLeave(documentNo);
 
-                //dynamic json = JObject.Parse(CancelOpenLeaveresponseString);
-
-                //status = json.Status;
-                //Message = json.Message;
             }
             catch (Exception es)
             {
@@ -200,31 +205,6 @@ namespace OshoPortal.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-        public JsonResult DelegatePendingRequisition(string param1)
-        {
-            string username = null;
-            string HeaderNo = Functions.Base64Decode(param1);
-
-            //if (TempData.ContainsKey("mydata"))
-            //    username = TempData["mydata"].ToString();
-
-            string response = null;
-            string status = null;
-
-            //string xmlresponse = LeavesXMLRequests.DelegateApprovalRequest(LeaveHeaderNo.Trim(), username);
-
-            //dynamic json = JObject.Parse(xmlresponse);
-
-            //response = json.Msg;
-            //status = json.Status;
-
-            var _RequestResponse = new RequestResponse
-            {
-                Message = response,
-                Status = status
-            };
-
-            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
-        }
+    
     }
 }

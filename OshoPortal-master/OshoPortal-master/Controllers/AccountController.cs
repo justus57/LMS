@@ -25,14 +25,14 @@ namespace OshoPortal.Controllers
             //incomming data from view through model
             var username = login.Username;
             var password = login.Password;
-            string UserLoginresponseString = "";
-            string Msg = null;
-            string status = null;
-            string RequirePassChnage = null;
+            string UserLoginresponseString = string.Empty;
+            string Msg = string.Empty;
+            string status = string.Empty;
+            string RequirePassChnage = string.Empty;
 
             //hash password
             var hashpassword = Functions.ComputeSha256Hash(password);
-     
+    
             ///start session for user
             var profileData = new Login
             {
@@ -45,6 +45,7 @@ namespace OshoPortal.Controllers
             {
                 UserLoginresponseString = LoginXMLRequests.UserLogin(username, hashpassword);
                 LoginResponse json = JsonConvert.DeserializeObject<LoginResponse>(UserLoginresponseString);
+
                 RequirePassChnage = json.RequirePassChange;
                 status = json.Status;
                 string UserFullName = json.EmployeeName;
@@ -52,35 +53,36 @@ namespace OshoPortal.Controllers
                 {
                     System.Web.HttpContext.Current.Session["Username"] = username;
                     System.Web.HttpContext.Current.Session["Profile"] = UserFullName;
-                    if (RequirePassChnage == "Yes")
+
+                    switch (RequirePassChnage)
                     {
-                        if (ModelState.IsValid)
-                        {
-                            ModelState.AddModelError("", Msg);
-                            ViewBag.Message = Msg;
-                            //return RedirectToAction("OneTimePassword", "Account");
-                            return RedirectToAction("Dashboard", "Dashboard");
-                        }
-                    }
-                    else
-                    {
-                        Msg = "You have been successfully authenticated";
-                        if (status == "000")
-                        {
+                        case "Yes":
                             if (ModelState.IsValid)
                             {
                                 ModelState.AddModelError("", Msg);
                                 ViewBag.Message = Msg;
                                 return RedirectToAction("Dashboard", "Dashboard");
                             }
-                        }
-                        else
-                        {
-                            Msg = "Authentication failed. Wrong username or password. Kindly contact the administrator";
-                            ViewBag.Message = Msg;
-                            ModelState.AddModelError("",Msg);
-                            return View("Login");
-                        }
+                            break;
+                        default:
+                            Msg = "You have been successfully authenticated";
+                            if (status == "000")
+                            {
+                                if (ModelState.IsValid)
+                                {
+                                    ModelState.AddModelError("", Msg);
+                                    ViewBag.Message = Msg;
+                                    return RedirectToAction("Dashboard", "Dashboard");
+                                }
+                            }
+                            else
+                            {
+                                Msg = "Authentication failed. Wrong username or password. Kindly contact the administrator";
+                                ViewBag.Message = Msg;
+                                ModelState.AddModelError("", Msg);
+                                return View("Login");
+                            }
+                            break;
                     }
                 }
                 catch (Exception ex)
@@ -112,22 +114,27 @@ namespace OshoPortal.Controllers
         public ActionResult ForgotPassword(ForgotPassword forgot)
         {
             string EmployeeNo = forgot.EmployeeNumber;
-            string Msg = null;
-            string status = null;
+            string Msg = string.Empty;
+            string status = string.Empty;
             try
             {
                 dynamic json = ForgotPasswordXmlRequest.ForgotPassword(EmployeeNo);
                 status = json.Status;
                 Msg = json.Msg;
-                if (status == "000")
+
+                switch (status)
                 {
-                    status = "000";
-                    Msg = json.Msg;
-                }
-                else
-                {
-                    status = json.Status;
-                    Msg = json.Msg;
+                    case "000":
+                        status = "000";
+                        Msg = json.Msg;
+
+                        break;
+
+                    default:
+
+                        status = json.Status;
+                        Msg = json.Msg;
+                        break;
                 }
                 ViewBag.Message = Msg;
             }
@@ -159,16 +166,14 @@ namespace OshoPortal.Controllers
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string oldpass = password.OldPassword;
             string newpass = password.NewPassword;
-            string Status = "0";
-            string Msg = "";
-            string Hashdstring = "";
-            string OldPasswordHash = "";
+            string Status = string.Empty;
+            string Msg = string.Empty;
+        
             try
             {
-                Hashdstring = newpass;
-                OldPasswordHash = oldpass;
-                string ChangePasswordresponseString = OneTimePassXMLRequests.ChangePassword(username, OldPasswordHash, Hashdstring);
+                string ChangePasswordresponseString = OneTimePassXMLRequests.ChangePassword(username, oldpass, newpass);
                 dynamic json = JObject.Parse(ChangePasswordresponseString);
+
                 Status = json.Status;
                 Msg = json.Msg;
 

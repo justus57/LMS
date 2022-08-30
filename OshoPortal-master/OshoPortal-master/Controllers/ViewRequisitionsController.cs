@@ -23,8 +23,6 @@ namespace OshoPortal.Controllers
         {
             var log = System.Web.HttpContext.Current.Session["logged"] = "yes";
             var passRequired = System.Web.HttpContext.Current.Session["RequirePasswordChange"] = true || false;
-
-            //check if user is logged
             switch (log)
             {
                 case "No":
@@ -52,7 +50,6 @@ namespace OshoPortal.Controllers
                                     }
                                     else
                                     {
-                                        //load table data
                                         LoadTable(status, owner, endpoint);
                                     }
 
@@ -81,6 +78,7 @@ namespace OshoPortal.Controllers
                     dt = ProductsXMLRequests.GetPageData(status, owner, endpoint);
                     break;
             }
+
             //Building an HTML string.
             StringBuilder html = new StringBuilder();
             //Table start.
@@ -159,8 +157,6 @@ namespace OshoPortal.Controllers
             string status = "";
             string Message = "";
             string documentNo = Functions.Base64Decode(param1);
-
-            //send XML req to delete record
             try
             {
                 string username = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -184,13 +180,9 @@ namespace OshoPortal.Controllers
         }
         public JsonResult CancelOpenRequisition(string param1)
         {
-            string status = null;
-            string Message = null;
-
             try
             {
                 string documentNo = Functions.Base64Decode(param1);
-                ////send XML req to delete record
 
             }
             catch (Exception es)

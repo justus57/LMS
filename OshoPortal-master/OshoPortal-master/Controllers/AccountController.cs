@@ -22,7 +22,6 @@ namespace OshoPortal.Controllers
         [HttpPost]
         public ActionResult Login(Login login)
         {
-            //incomming data from view through model
             var username = login.Username;
             var password = login.Password;
             string UserLoginresponseString = string.Empty;
@@ -39,8 +38,6 @@ namespace OshoPortal.Controllers
                 Username = username
             };  
             this.Session["UserProfile"] = profileData;
-
-            //confirm details
             try
             {
                 UserLoginresponseString = LoginXMLRequests.UserLogin(username, hashpassword);

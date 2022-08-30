@@ -151,7 +151,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="GridView.cs" />
     <Compile Include="Models\Approvals.cs" />
     <Compile Include="Models\Classes.cs" />
     <Compile Include="Models\CreatePurchase.cs" />

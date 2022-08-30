@@ -60,13 +60,12 @@ namespace OshoPortal.Controllers
       
         public ActionResult Saveline(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
-
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string DocumentNo = param9;
             string Item = param1.Split(' ').First();
             string EmployeeID = System.Web.HttpContext.Current.Session["Username"].ToString();
             string EmployeeName = System.Web.HttpContext.Current.Session["Profile"].ToString();
-            string RequestDate = DateTime.Now.ToString("dd-MM-yyyy");//d/m/Y
+            string RequestDate = DateTime.Now.ToString("dd-MM-yyyy");
             string DateCreated = DateTime.Now.ToString("dd-MM-yyyy");
             string AccountId = System.Web.HttpContext.Current.Session["Username"].ToString();
             string Description = param2;
@@ -105,7 +104,6 @@ namespace OshoPortal.Controllers
             string Message = "";
             string documentNo = param1;
 
-            //send XML req to delete record
             try
             {
                 string username = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -130,7 +128,6 @@ namespace OshoPortal.Controllers
         {
             string status = null;
             string Message = null;
-
             try
             {
                 string documentNo = Functions.Base64Decode(param1);

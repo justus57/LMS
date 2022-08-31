@@ -237,13 +237,11 @@
              var text_remaining = text_max - text_length;
              $('#count_message').html(text_remaining + 'remaining');
          } );
-         $( "#SelectDate").datepicker( {
-             minDate: 0
-         } );
-
+       
          //date picker for the SelectDate
          $("#SelectDate").datepicker({
              dateFormat: 'dd/mm/yy',
+             minDate: 0,
              onSelect: function (today) {
                  $("#SelectDate").datepicker("option", "minDate", date);
                  $("#SelectDate").datepicker("option", "maxDate", '+2y');
@@ -341,7 +339,8 @@
                      cache: false,
                      contentType: false,
                      processData: false,
-                     success: function (file) {
+                     success: function ( file ) {
+
                          var data = $( '#Items' ).val();
                          var Description = $('#Description').val();
                          var cost = $('#cost').val();
@@ -352,6 +351,7 @@
                          var UnitOfMeasure = $( '#UnitOfMeasure' ).val();
                          var Type = $( '#Type' ).val();
                          var DocumentNo = $( '#DocumentNo' ).val();
+
                          jQuery.ajax({
                              url:"@Url.Action("Save", "CreatePurchase")",
                              type: "POST",
@@ -401,6 +401,7 @@
                  contentType: false,
                  processData: false,
                  success: function ( file ) {
+
                      jQuery.ajax( {
                          url: "@Url.Action("GetDocumentNo", " CreatePurchase")",
                          type: "POST",

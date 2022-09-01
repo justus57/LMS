@@ -142,7 +142,6 @@
       <DependentUpon>LogoutModal.aspx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ApprovalsController.cs" />
     <Compile Include="Controllers\CreatePurchaseController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\EditRequisitionController.cs" />
@@ -151,10 +150,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Approvals.cs" />
     <Compile Include="Models\Classes.cs" />
     <Compile Include="Models\CreatePurchase.cs" />
-    <Compile Include="Models\CreateStoreRequestion.cs" />
     <Compile Include="Models\Dashboard.cs" />
     <Compile Include="Models\EditRequisition.cs" />
     <Compile Include="Models\ForgotPassword.cs" />
@@ -2110,8 +2107,6 @@
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Dashboard\Dashboard.cshtml" />
     <Content Include="Views\CreatePurchase\CreatePurchase.cshtml" />
-    <Content Include="Views\Approvals\Approvals.cshtml" />
-    <Content Include="Views\CreateStoreRequestion\CreateStoreRequestion.cshtml" />
     <Content Include="Views\Account\OneTimePassword.cshtml" />
     <Content Include="Views\ViewRequisitions\ViewRequisitions.cshtml" />
     <Content Include="Web References\WebPortal\ItemList.datasource">

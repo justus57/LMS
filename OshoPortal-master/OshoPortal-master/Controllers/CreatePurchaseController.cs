@@ -173,6 +173,32 @@ namespace OshoPortal.Controllers
             return Json(JsonConvert.SerializeObject(ValueList), JsonRequestBehavior.AllowGet); ;
         }
 
+        public JsonResult DeleteOpenRequisition(string param1)
+        {
+            string status = "";
+            string Message = "";
+            string documentNo = param1;
+
+            try
+            {
+                string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+                string DeleteOpenRequisitionresponseString = XMLRequest.DeleteDocument(documentNo, "", username);
+                dynamic json = JObject.Parse(DeleteOpenRequisitionresponseString);
+                status = json.Status;
+                Message = json.Message;
+            }
+            catch (Exception es)
+            {
+                Console.Write(es);
+            }
+            var _RequestResponse = new RequestResponse
+            {
+                Message = Message,
+                Status = status
+            };
+
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
+        }
         private static string NewMethod()
         {
             return "";
@@ -242,6 +268,7 @@ namespace OshoPortal.Controllers
             };
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
+
         public ActionResult Saveline(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
 
@@ -283,6 +310,7 @@ namespace OshoPortal.Controllers
 
             return Json(JsonConvert.SerializeObject(saveline), JsonRequestBehavior.AllowGet);
         }
+
         public JsonResult Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
             string response = null;
@@ -331,6 +359,7 @@ namespace OshoPortal.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
+
         private static string GetDocumentNumber()
         {
             //get Leave number
@@ -348,6 +377,7 @@ namespace OshoPortal.Controllers
             var GetDocumentNumber = WSConnection.GetJSONResponse(response);
             return GetDocumentNumber;
         }
+
         public static List<itemdetails> GetitemTable(string documentNo, string type, string EmpNo, string EmpName, string operation, string Item, string description, string quantity, string unitOfMeasure, string amount, string dateofSelection)
         {
           

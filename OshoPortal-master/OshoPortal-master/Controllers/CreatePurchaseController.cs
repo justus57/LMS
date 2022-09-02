@@ -185,8 +185,8 @@ namespace OshoPortal.Controllers
             string username = System.Web.HttpContext.Current.Session["Username"].ToString();
             string DocumentNo = NewMethod();
             string DocumentNoResponse = System.Web.HttpContext.Current.Session["DocumentNo"].ToString(); 
-            dynamic json = JObject.Parse(DocumentNoResponse);
-            status = json.Status;
+            ////dynamic json = JObject.Parse(DocumentNoResponse);
+            //status = json.Status;
             string code = param1.Split(' ').First();
             switch (status)
             {
@@ -229,7 +229,7 @@ namespace OshoPortal.Controllers
                     }
 
                 default:
-                    response = json.Msg;
+                    //response = json.Msg;
                     status = "999";
                     break;
             }

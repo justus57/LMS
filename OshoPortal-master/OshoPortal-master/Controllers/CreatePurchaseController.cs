@@ -439,11 +439,6 @@ namespace OshoPortal.Controllers
             string UploadPath = param1;//full path+file name
             string DocumentNo = param2;
 
-            //save attachment if sick leave
-            //LeaveApplicationXMLRequests.UploadFile(DocumentNo, UploadPath);
-
-            //if uploaded delete file from uploads folder
-
             if (System.IO.File.Exists(UploadPath))
             {
                 System.IO.File.Delete(UploadPath);

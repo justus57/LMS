@@ -57,8 +57,7 @@ namespace LMS.Controllers
             {
                 var data = (item.Key, item.Value);
 
-                ValueList.Add(namelist = "" + data.Key + "," + data.Value);
-             
+                ValueList.Add(namelist = "" + data.Key + "," + data.Value);            
             }
             ViewBag.employees = ValueList;
         }

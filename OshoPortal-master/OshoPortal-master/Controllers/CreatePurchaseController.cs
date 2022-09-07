@@ -8,10 +8,13 @@ using OshoPortal.WebService_Connection;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using System.Xml;
 
 namespace OshoPortal.Controllers
@@ -19,8 +22,7 @@ namespace OshoPortal.Controllers
     public class CreatePurchaseController : Controller
     {
         private object saveline;
-
-        
+        private object _RequestResponse;
 
         // GET: CreatePurchase view
         public ActionResult Index()
@@ -88,7 +90,6 @@ namespace OshoPortal.Controllers
             return View();
 
         }
-
         public static string GetDocumentidentity(string param1)
         {
             string name = param1;
@@ -101,7 +102,6 @@ namespace OshoPortal.Controllers
 
             return DocumentNo;
         }
-
         public JsonResult GetitemDetails(string param1, string param2)
         {
             string Status = NewMethod();
@@ -151,7 +151,6 @@ namespace OshoPortal.Controllers
             };
             return Json(JsonConvert.SerializeObject(detail), JsonRequestBehavior.AllowGet);
         }
-
         public ActionResult GLaccount(string param1)
         {
             string EmployeeID = System.Web.HttpContext.Current.Session["Username"].ToString();
@@ -172,7 +171,6 @@ namespace OshoPortal.Controllers
 
             return Json(JsonConvert.SerializeObject(ValueList), JsonRequestBehavior.AllowGet); ;
         }
-
         public JsonResult DeleteOpenRequisition(string param1)
         {
             string status = "";
@@ -203,7 +201,6 @@ namespace OshoPortal.Controllers
         {
             return "";
         }
-
         public JsonResult Save(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
             string response = NewMethod();
@@ -268,7 +265,6 @@ namespace OshoPortal.Controllers
             };
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-
         public ActionResult Saveline(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
 
@@ -310,7 +306,6 @@ namespace OshoPortal.Controllers
 
             return Json(JsonConvert.SerializeObject(saveline), JsonRequestBehavior.AllowGet);
         }
-
         public JsonResult Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
             string response = null;
@@ -359,7 +354,6 @@ namespace OshoPortal.Controllers
 
             return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
-
         private static string GetDocumentNumber()
         {
             //get Leave number
@@ -377,7 +371,6 @@ namespace OshoPortal.Controllers
             var GetDocumentNumber = WSConnection.GetJSONResponse(response);
             return GetDocumentNumber;
         }
-
         public static List<itemdetails> GetitemTable(string documentNo, string type, string EmpNo, string EmpName, string operation, string Item, string description, string quantity, string unitOfMeasure, string amount, string dateofSelection)
         {
           
@@ -438,6 +431,64 @@ namespace OshoPortal.Controllers
                 }
             }
             return itemdetails;
+        }
+        public static void UploadAttachment(string param1, string param2)
+        {
+            string username = System.Web.HttpContext.Current.Session["Username"].ToString();
+
+            string UploadPath = param1;//full path+file name
+            string DocumentNo = param2;
+
+            //save attachment if sick leave
+            //LeaveApplicationXMLRequests.UploadFile(DocumentNo, UploadPath);
+
+            //if uploaded delete file from uploads folder
+
+            if (System.IO.File.Exists(UploadPath))
+            {
+                System.IO.File.Delete(UploadPath);
+            }
+        }
+        public JsonResult FileUploadHandler()
+        {
+           
+            if (Request.Files.Count > 1)
+            {
+                //Fetch the Uploaded File.
+                HttpPostedFileBase postedFile = Request.Files[0];
+                //Set the Folder Path.
+                string folderPath = Server.MapPath("~/Uploads/");
+                //Set the File Name.
+                string fileName = Path.GetFileName(postedFile.FileName);
+                string filePath = folderPath + fileName;
+                //if exists delete
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+                //Save the File in Folder.
+                postedFile.SaveAs(folderPath + fileName);
+                //Send File details in a JSON Response.
+                string json = new JavaScriptSerializer().Serialize(
+                    new
+                    {
+                        name = fileName,
+                        path = filePath,
+                        uploadspath = folderPath
+                    });
+                Response.StatusCode = (int)HttpStatusCode.OK;
+                Response.ContentType = "text/json";
+                Response.Write(json);
+                Response.End();
+
+                _RequestResponse = new RequestResponse
+                {
+                    Message = Response.StatusCode.ToString(),
+
+                    Status = "000"
+                };
+            }
+            return Json(JsonConvert.SerializeObject(_RequestResponse), JsonRequestBehavior.AllowGet);
         }
     }
 }

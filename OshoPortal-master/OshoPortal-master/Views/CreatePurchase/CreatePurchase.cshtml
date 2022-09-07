@@ -9,7 +9,7 @@
         <div class="card-body">
             <div class="row mb-1">
                 <div class="col-md-4 mb-4">
-                    <div>Create Purchase Requisation</div>                  
+                    <div>Create Purchase Requisation</div>
                     <div class="text-muted small"></div>
                 </div>
                 <div class="col-md-8">
@@ -22,8 +22,8 @@
                                     <option>GL Account</option>
                                     <option>Item</option>
                                     @*<option>Resource</option>
-                                        <option>Fixed Asset</option>
-                                        <option>Charged(Item)</option>*@
+                                <option>Fixed Asset</option>
+                                <option>Charged(Item)</option>*@
                                 </select>
                                 <div class="valid-feedback">Looks good!</div>
                                 <div class="invalid-feedback">The type must be selected</div>
@@ -45,12 +45,12 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-control-label">Document Number</label>
-                                    @Html.TextBoxFor(model => model.DocumentNo, new { @class = "form-control", @readonly = "readonly", id = "DocumentNo", autofocus = "" , style = "width:100%" })
+                                    @Html.TextBoxFor(model => model.DocumentNo, new { @class = "form-control", @readonly = "readonly", id = "DocumentNo", autofocus = "", style = "width:100%" })
                                     @Html.ValidationMessageFor(model => model.DocumentNo, "", new { @class = "" })
                                 </div>
                             </div>
                         </div>
-                       
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -102,15 +102,24 @@
                                 </div>
                             </div>
 
-                        </div>
-
+                        </div>                        
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="txt_name" class="form-control-label">Attachment File</label>
+                                    <input type="file" id="postedFile" name="postedFile" class="form-control-file"/>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">A file to upload must be chosen</div>
+                                </div>
+                            </div>
+                      
                     </fieldset>
                 </div>
             </div>
             <div class="card-footer bg-light text-right">
                 <button id="Saveline" class="btn btn-success">Add Item Line</button>
-            </div>
 
+            </div>
+         
             <div class="row mb-5">
                 <div class="col-md-12">
                     <div class="col-md-4 mb-4">

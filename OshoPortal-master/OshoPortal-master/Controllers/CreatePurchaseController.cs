@@ -62,7 +62,7 @@ namespace OshoPortal.Controllers
                                             string RequestDate = DateTime.Now.ToString("dd-MM-yyyy");//d/m/Y
                                             string DateCreated = DateTime.Now.ToString("dd-MM-yyyy");
                                             string AccountId = System.Web.HttpContext.Current.Session["Username"].ToString();
-                                            if (documentnumber != null)
+                                            if (documentnumber != string.Empty)
                                             {
                                                 List<EditRequisition> RequisitionDetails = Functions.LoadDetails(documentnumber.ToString());
 
@@ -308,8 +308,8 @@ namespace OshoPortal.Controllers
         }
         public JsonResult Submit(string param1, string param2, string param3, string param4, string param5, string param6, string param7, string param8, string param9)
         {
-            string response = null;
-            string status = null;
+            string response = string.Empty;
+            string status = string.Empty;
             var DocumentNo = param9;
             string EmployeeID = System.Web.HttpContext.Current.Session["Profile"].ToString();
             string EmployeeName = System.Web.HttpContext.Current.Session["Username"].ToString();

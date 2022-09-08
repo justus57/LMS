@@ -124,8 +124,8 @@ namespace OshoPortal.Controllers
         }
         public JsonResult CancelOpenRequisition(string param1)
         {
-            string status = null;
-            string Message = null;
+            string status = string.Empty;
+            string Message = string.Empty;
             try
             {
                 string documentNo = Functions.Base64Decode(param1);
@@ -150,10 +150,10 @@ namespace OshoPortal.Controllers
         }
         public JsonResult DelegatePendingRequisition(string param1)
         {
-            string username = null;
+            string username = string.Empty;
             string HeaderNo = Functions.Base64Decode(param1);
-            string response = null;
-            string status = null;
+            string response = string.Empty;
+            string status = string.Empty;
 
             var _RequestResponse = new RequestResponse
             {

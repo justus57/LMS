@@ -124,7 +124,6 @@ namespace OshoPortal.Controllers
                     case "000":
                         status = "000";
                         Msg = json.Msg;
-
                         break;
 
                     default:

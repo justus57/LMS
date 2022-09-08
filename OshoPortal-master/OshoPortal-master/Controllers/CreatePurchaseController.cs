@@ -445,8 +445,7 @@ namespace OshoPortal.Controllers
             }
         }
         public JsonResult FileUploadHandler()
-        {
-           
+        {          
             if (Request.Files.Count > 1)
             {
                 //Fetch the Uploaded File.

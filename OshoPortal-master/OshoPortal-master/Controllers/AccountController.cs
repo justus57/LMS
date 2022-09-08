@@ -173,15 +173,15 @@ namespace OshoPortal.Controllers
                 Status = json.Status;
                 Msg = json.Msg;
 
-                if (Status == "000")
+                switch (Status)
                 {
-                    Msg = "Password has been changed succesfully";
-                    Status = "000";
-                    System.Web.HttpContext.Current.Session["RequirePasswordChange"] = "FALSE";
-                    ViewBag.Message = Msg;
-                    return RedirectToAction("Login", "Account");
+                    case "000":
+                        Msg = "Password has been changed succesfully";
+                        Status = "000";
+                        System.Web.HttpContext.Current.Session["RequirePasswordChange"] = "FALSE";
+                        ViewBag.Message = Msg;
+                        return RedirectToAction("Login", "Account");
                 }
-
             }
             catch (Exception es)
             {

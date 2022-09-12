@@ -299,9 +299,9 @@ namespace OshoPortal.Controllers
                 saveline = GetitemTable(DocumentNo, type, EmployeeID, EmployeeName, "IMPORT", Item, Description, Quatity, unitofMeasure, Amount, DateofSelection);
 
             }
-            catch (Exception)
+            catch (Exception ES)
             {
-                
+                Console.WriteLine(ES);
             }
 
             return Json(JsonConvert.SerializeObject(saveline), JsonRequestBehavior.AllowGet);
@@ -325,7 +325,6 @@ namespace OshoPortal.Controllers
             string type = NewMethod();
             try
             {
-
                 switch (param8)
                 {
                     case "GL Account":

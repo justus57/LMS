@@ -40,7 +40,6 @@ namespace OshoPortal.Controllers
                                     string status = Request.QueryString["status"];
 
                                     ViewBag.WordHtml = status;
-
                                     string owner = Request.QueryString["owner"];
 
                                     string endpoint = Url.Action("EditRequisition", "EditRequisition", new { id = "" });

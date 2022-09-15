@@ -73,7 +73,7 @@ namespace OshoPortal.Controllers
             string DateofSelection = param5;
             string Comment = param6;
             string unitofMeasure = param7;
-            string type = "";
+            string type = string.Empty";
 
             switch (param8)
             {
@@ -98,8 +98,8 @@ namespace OshoPortal.Controllers
       
         public JsonResult DeleteOpenRequisition(string param1)
         {
-            string status = "";
-            string Message = "";
+            string status = string.Empty;
+            string Message = string.Empty;
             string documentNo = param1;
 
             try

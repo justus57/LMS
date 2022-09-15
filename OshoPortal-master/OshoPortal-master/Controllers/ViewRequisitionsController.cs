@@ -129,8 +129,8 @@ namespace OshoPortal.Controllers
         {
             string HeaderNo = Functions.Base64Decode(param1);
             DateTime date = Functions.GetDateTime(param2);
-            string response = null;
-            string status = null;
+            string response = string.Empty;
+            string status = string.Empty;
 
             try
             {
@@ -153,8 +153,8 @@ namespace OshoPortal.Controllers
         }
         public JsonResult DeleteOpenRequisition(string param1)
         {
-            string status = "";
-            string Message = "";
+            string status = string.Empty;
+            string Message =string.Empty;
             string documentNo = Functions.Base64Decode(param1);
             try
             {

@@ -1,0 +1,7 @@
+C:\Users\kasyoki.justus\Documents\Visual Studio 2019\projects\MathService\bin\Debug\MathService.dll.config
+C:\Users\kasyoki.justus\Documents\Visual Studio 2019\projects\MathService\bin\Debug\MathService.dll
+C:\Users\kasyoki.justus\Documents\Visual Studio 2019\projects\MathService\bin\Debug\MathService.pdb
+C:\Users\kasyoki.justus\Documents\Visual Studio 2019\projects\MathService\obj\Debug\MathService.csproj.AssemblyReference.cache
+C:\Users\kasyoki.justus\Documents\Visual Studio 2019\projects\MathService\obj\Debug\MathService.csproj.CoreCompileInputs.cache
+C:\Users\kasyoki.justus\Documents\Visual Studio 2019\projects\MathService\obj\Debug\MathService.dll
+C:\Users\kasyoki.justus\Documents\Visual Studio 2019\projects\MathService\obj\Debug\MathService.pdb

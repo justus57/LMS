@@ -8,6 +8,7 @@ namespace DATECS.Class
 {
     public class Invoice
     {
+        public string NoofLines { get; set; }
         public string cashier { get; set; }
         public int invoiceType { get; set; }
         public int transactionType { get; set; }
@@ -39,6 +40,16 @@ namespace DATECS.Class
     {
         public float amount { get; set; }
         public string paymentType { get; set; }
+    }
+    public class listitem
+    {
+        public string gtin { get; set; }
+        public string name { get; set; }
+        public float quantity { get; set; }
+        public string hsCode { get; set; }
+        public float unitPrice { get; set; }
+        public Description[] description { get; set; }
+        public float totalAmount { get; set; }
     }
 
     public class Item

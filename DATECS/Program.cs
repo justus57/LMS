@@ -2,12 +2,15 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
+using SimpleJson;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Helpers;
+using System.Web.Script.Serialization;
 
 namespace DATECS
 {
@@ -15,25 +18,105 @@ namespace DATECS
     {
         private static string pin;
 
+        public static Invoice invoice = new Invoice();
+        Item item = new Item();
+       public static string json = new JavaScriptSerializer().Serialize(invoice);
+        public static Invoice data = new JavaScriptSerializer().Deserialize<Invoice>(json);
         static void Main(string[] args)
-        {           
-            var statusreponse =GetStatus();
-            dynamic json = JObject.Parse(statusreponse);
-            string status = json.isPinRequired;
-            if (status == "true")
-            {
-                pin = GetPin("0000");
-            }
-            else
-            {
-                //string value = Invoice("");
-                //LastRequestID("");
-                //RelevantNumber("");
-               var invoicejsonbody = invoiceBody();
-                string value = Invoice(invoicejsonbody);
-                var data = GetReports("");
-            }
+        {
+            //var statusreponse =GetStatus();
+            //dynamic json = JObject.Parse(statusreponse);
+            //string status = json.isPinRequired;
+             CreateInvoiceHeader("0", "0","");
+            BuyersInfo("wer","wer","iwnrk","ewe");
+            CreateItemLines("2323", "name", 3, 2,"0");
+           
+            CreateItemLines("2323", "name", 3, 2, "0");
+            var json2 = JsonConvert.SerializeObject(imageArrayq, Formatting.Indented);
+            
+           
+            data.items = imageArrayq.ToArray();
+
+            //invoice.items = (Item[])item;
+            //var data = JObject.Parse(item.ToString());
+
+
+            //invoice.items = imageArrayq;
+
+            data.lines = new Line[]
+              {
+                      new Line {
+                          alignment = "LEFT",
+                          format = "TEXT",
+                          lineType = "BOLD",
+                          value = "500"
+                      }
+              };
+          
+            ;
+
+            json = new JavaScriptSerializer().Serialize(data);
+
+
+
+
+
+
+            //if (status == "true")
+            //{
+            //    pin = GetPin("0000");
+            //}
+            //else
+            //{
+            //    //string value = Invoice("");
+            //    //LastRequestID("");
+            //    //RelevantNumber("");
+            //    var invoicejsonbody = invoiceBody();
+            //    string value = Invoice(invoicejsonbody);
+            //    var data = GetReports("");
+            //}
         }
+
+        public static void CreateInvoiceHeader(string InvoiceNumber , string TransactionType,string NumberOfLines)
+        {
+            var data = new Invoice
+            {
+                transactionType =Convert.ToInt32(TransactionType),
+                relevantNumber = InvoiceNumber,
+                 NoofLines =NumberOfLines
+            };          
+        }
+        public static void BuyersInfo(string BuyerAddress, string BuyerName, string BuyerPhone,string PinOfBuyer)
+        {
+            data.buyer = new Buyer
+            {
+                buyerAddress = BuyerAddress,
+                buyerName = BuyerName,
+                buyerPhone = BuyerPhone,
+                pinOfBuyer = PinOfBuyer,                
+            };
+
+           
+        }
+        public static List<Item> imageArrayq = new List<Item>();
+        
+
+        public static void CreateItemLines(string HsCode, string ItemName, int Quantity, int UnitPrice,string CreditMemoAmount)
+        {
+            
+            var data = new Item
+            {
+                hsCode = HsCode,
+                name = ItemName,
+                quantity = Quantity,
+                unitPrice = UnitPrice,
+                totalAmount = Convert.ToInt32(CreditMemoAmount)
+            };
+            var stringjson = JsonConvert.SerializeObject(data);
+
+            imageArrayq.Add(data);
+            
+            }
 
         private static string invoiceBody()
         {
@@ -57,7 +140,9 @@ namespace DATECS
                 relevantNumber = "0000000000000000003",               
                 payment = new Payment[]
                 {
-                        new Payment { amount = 2, paymentType = "CASH" }
+                        new Payment { 
+                            amount = 2, 
+                            paymentType = "CASH" }
                 },
                 buyer = new Buyer
                 {

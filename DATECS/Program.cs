@@ -33,7 +33,6 @@ namespace DATECS
                 string value = Invoice(invoicejsonbody);
                 var data = GetReports("");
             }
-
         }
 
         private static string invoiceBody()

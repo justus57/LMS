@@ -38,7 +38,7 @@ namespace DATECS.Class
     public class Payment
     {
         public float amount { get; set; }
-        public int paymentType { get; set; }
+        public string paymentType { get; set; }
     }
 
     public class Item
@@ -68,6 +68,18 @@ namespace DATECS.Class
     public class Reports
     {
         public int reportType { get; set; }
+    }
+
+    public class InvoiceResponse
+    {
+        public DateTime DateTime { get; set; }
+        public string invoiceExtension { get; set; }
+        public string invoiceCounter { get; set; }
+        public string mtn { get; set; }
+        public string verificationUrl { get; set; }
+        public string messages { get; set; }
+        public float totalAmount { get; set; }
+        public string msn { get; set; }
     }
 
 }

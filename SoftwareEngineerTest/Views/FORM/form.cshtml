@@ -1,0 +1,106 @@
+﻿@model SoftwareEngineerTest.Models.Home
+
+@{
+    ViewBag.Title = "form";
+}
+
+
+<!-- Vendor CSS Files -->
+<link href="~/Content/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="~/Content/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<link href="~/Content/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+<!-- Template Main CSS File -->
+<link href="~/Content/assets/css/style.css" rel="stylesheet">
+<main id="main" class="main">
+    <div class="container">
+        @using (Html.BeginForm(FormMethod.Post))
+        {
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+                    <div class="d-flex justify-content-center py-4">
+
+                    </div><!-- End Logo -->
+
+                    <div class="card mb-3">
+
+                        <div class="card-body">
+                            <div class="pt-4 pb-2">
+                                <h5 class="card-title text-center pb-0 fs-4">Please Fill In The Details</h5>
+                            </div>
+                            <form class="row g-3 needs-validation" novalidate id="myForm">
+
+                                <div class="col-12">
+                                    <label for="yourFullName" class="form-label">Full Name</label>
+
+                                    @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", id = "FullName" })
+                                    @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger" })
+                                    <div class="invalid-feedback">Please enter your Email!</div>
+
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="yourEmail" class="form-label">Email</label>
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", id = "Email" })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                    <div class="invalid-feedback">Please enter your Email!</div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="yourPhone" class="form-label">Phone</label>
+                                    @Html.TextBoxFor(model => model.phone, new { @class = "form-control", id = "phone" })
+                                    @Html.ValidationMessageFor(m => m.phone, "", new { @class = "text-danger" })
+                                    <div class="invalid-feedback">Please enter your phone!</div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="youraddress" class="form-label">Address</label>
+                                    @Html.TextBoxFor(model => model.address, new { @class = "form-control", id = "address" })
+                                    @Html.ValidationMessageFor(m => m.address, "", new { @class = "text-danger" })
+                                    <div class="invalid-feedback">Please enter your address!</div>
+                                </div>
+                                @if (TempData["Message"] != null)
+                                {
+                                    <script type="text/javascript">
+                                            window.onload = function () {
+                                                swal("", '@TempData["Message"]', '@TempData["status"]');
+                                                event.preventDefault();
+                                            }
+                                    </script>
+                                }
+                                <div class="col-12">
+                                    <br />
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100" type="submit" id="btnlogin">Submit</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</main><!-- End #main -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="~/Content/assets/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="~/Content/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/Content/assets/vendor/chart.js/chart.min.js"></script>
+<script src="~/Content/assets/vendor/echarts/echarts.min.js"></script>
+<script src="~/Content/assets/vendor/quill/quill.min.js"></script>
+<script src="~/Content/assets/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="~/Content/assets/vendor/tinymce/tinymce.min.js"></script>
+<script src="~/Content/assets/vendor/php-email-form/validate.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+<link media="screen" rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.min.css" />
+<link media="screen" rel="stylesheet" href='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.css' />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.min.js"></script>
+<link href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+
+

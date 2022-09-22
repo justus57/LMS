@@ -24,24 +24,16 @@ namespace DATECS
         public static Invoice data = new JavaScriptSerializer().Deserialize<Invoice>(json);
         static void Main(string[] args)
         {
-            //var statusreponse =GetStatus();
-            //dynamic json = JObject.Parse(statusreponse);
-            //string status = json.isPinRequired;
-             CreateInvoiceHeader("0", "0","");
+            var statusreponse = GetStatus();
+            dynamic json = JObject.Parse(statusreponse);
+            string status = json.isPinRequired;
+            CreateInvoiceHeader("0", "0","");
             BuyersInfo("wer","wer","iwnrk","ewe");
-            CreateItemLines("2323", "name", 3, 2,"0");
-           
+            CreateItemLines("2323", "name", 3, 2,"0");           
             CreateItemLines("2323", "name", 3, 2, "0");
             var json2 = JsonConvert.SerializeObject(imageArrayq, Formatting.Indented);
-            
-           
+                      
             data.items = imageArrayq.ToArray();
-
-            //invoice.items = (Item[])item;
-            //var data = JObject.Parse(item.ToString());
-
-
-            //invoice.items = imageArrayq;
 
             data.lines = new Line[]
               {

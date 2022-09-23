@@ -49,24 +49,19 @@ namespace DATECS
 
             json = new JavaScriptSerializer().Serialize(data);
 
-
-
-
-
-
-            //if (status == "true")
-            //{
-            //    pin = GetPin("0000");
-            //}
-            //else
-            //{
-            //    //string value = Invoice("");
-            //    //LastRequestID("");
-            //    //RelevantNumber("");
-            //    var invoicejsonbody = invoiceBody();
-            //    string value = Invoice(invoicejsonbody);
-            //    var data = GetReports("");
-            //}
+            if (status == "true")
+            {
+                pin = GetPin("0000");
+            }
+            else
+            {
+                //string value = Invoice("");
+                //LastRequestID("");
+                //RelevantNumber("");
+                var invoicejsonbody = invoiceBody();
+                string value = Invoice(json);
+                var data = GetReports("");
+            }
         }
 
         public static void CreateInvoiceHeader(string InvoiceNumber , string TransactionType,string NumberOfLines)

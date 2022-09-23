@@ -55,9 +55,9 @@ namespace DATECS
             }
             else
             {
-                //string value = Invoice("");
-                //LastRequestID("");
-                //RelevantNumber("");
+                string value = Invoice("");
+                LastRequestID("");
+                RelevantNumber("");
                 var invoicejsonbody = invoiceBody();
                 string value = Invoice(json);
                 var data = GetReports("");

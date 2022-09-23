@@ -59,7 +59,7 @@ namespace DATECS
                 LastRequestID("");
                 RelevantNumber("");
                 var invoicejsonbody = invoiceBody();
-                string value = Invoice(json);
+                string value1 = Invoice(json);
                 var data = GetReports("");
             }
         }

@@ -156,6 +156,7 @@ namespace OshoPortal.WebService_Connection
         {
             username = ConfigurationManager.AppSettings["Username"];
             Password = ConfigurationManager.AppSettings["Password"];
+
             IsPasswordEncrypted = ConfigurationManager.AppSettings["IsEncrypted"];
 
             if (IsPasswordEncrypted == "N")

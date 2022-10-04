@@ -43,10 +43,7 @@ namespace DATECS
                           lineType = "BOLD",
                           value = "500"
                       }
-              };
-          
-            ;
-
+              };          
             json = new JavaScriptSerializer().Serialize(data);
 
             if (status == "true")

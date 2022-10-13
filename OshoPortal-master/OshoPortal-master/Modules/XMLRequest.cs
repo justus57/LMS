@@ -363,15 +363,11 @@ namespace OshoPortal.Modules
     {
         public static DataTable GetPageData(string status, string RequestAS,string endpoint)
         {
-            string AppliedAs = null;
-
             switch (status)
             {
                 case "self":
-                    AppliedAs = "Employee";
                     break;
                 case "others":
-                    AppliedAs = "AppliedForAnother";
                     break;
             }
             switch (status)

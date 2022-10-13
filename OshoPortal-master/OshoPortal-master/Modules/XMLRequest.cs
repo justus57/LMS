@@ -260,7 +260,6 @@ namespace OshoPortal.Modules
             return WSConnection.GetJSONResponse(response);
         }
     }
-   
     public class LoginXMLRequests
     {
         public static string UserLogin(string username, string password)
@@ -364,7 +363,6 @@ namespace OshoPortal.Modules
     {
         public static DataTable GetPageData(string status, string RequestAS,string endpoint)
         {
-            string Status = null;
             string AppliedAs = null;
 
             switch (status)
@@ -376,20 +374,15 @@ namespace OshoPortal.Modules
                     AppliedAs = "AppliedForAnother";
                     break;
             }
-
             switch (status)
             {
                 case "Open":
-                    Status = "Open";
                     break;
                 case "Pending":
-                    Status = "PendingApproval";
                     break;
                 case "Approved":
-                    Status = "Approved";
                     break;
                 case "Rejected":
-                    Status = "Rejected";
                     break;
             }
 
